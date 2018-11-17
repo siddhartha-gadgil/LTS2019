@@ -1,0 +1,78 @@
+---
+layout: default
+---
+
+      <h1>UM 102: Analysis and Linear Algebra II </h1>
+      <div id="desc" class="section">
+        <h3> Course Syllabus </h3>
+          <p>
+            Linear Algebra continued: Inner products and Orthogonality; Determinants; Eigenvalues and
+            Eigenvectors; Diagonalisation of Symmetric matrices. Multivariable calculus: Functions on $R^n$
+          </p>
+          <p>
+            Partial and Total derivatives; Chain rule; Maxima, minima and saddles; Lagrange multipliers;
+            Integration in $R^n$, change of variables, Fubini's theorem; Gradient, Divergence and Curl; Line
+            and Surface integrals in $R^2$
+            and $R^3$
+            ; Stokes, Green's and Divergence theorems.
+          </p>
+          <p>
+            Introduction to Ordinary Differential Equations; Linear ODEs and Canonical forms for linear
+            transformations.
+          </p>
+
+
+
+      </div>
+
+
+
+
+      <div class="section" id ="Assignments">
+        <h3> Assignments </h3>
+        {% assign sorted = (site.assignments | sort: 'date') | reverse %}
+
+        <ul>
+
+          {% for ass in sorted  %}
+          <li>
+            <a href="{{ site.baseurl }}{{ ass.url }}.html"> {{ ass.title }}</a>, due {{ ass.date | date_to_long_string }}.
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+
+
+      <div id="refs" class="section">
+        <h3>Suggested books</h3>
+        <ol>
+          <li> T. M. Apostol, Calculus, Volume II, 2nd. Edition, Wiley Wiley India, 2007.</li>
+          <li> G. Strang, Linear Algebra And Its Applications, 4th Edition, Brooks/Cole, 2006</li>
+          <li> M. Artin, Algebra, Prentice Hall of India, 1994. </li>
+          <li> M. Hirsch, S. Smale, R. L. Devaney, Differential Equations, Dynamical Systems, and an
+          Introduction to Chaos, 2nd Edition, Academic Press, 2004. </li>
+        </ol>
+      </div>
+
+      <div id ="details" class="section">
+        <h3> Course Details</h3>
+        <ul>
+          <li><strong>Instructor:</strong> <a href="http://math.iisc.ac.in/~gadgil"> Siddhartha Gadgil</a></li>
+          <li><strong>E-mail:</strong> <em><a href="mailto:siddhartha.gadgil@gmail.com"> siddhartha.gadgil@gmail.com</a></em>
+          <li><strong>Timing: </strong> to be announced</li>
+          <li><strong>Venue: </strong> to be announced.</li>
+        </ul>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

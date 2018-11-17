@@ -1,0 +1,9 @@
+{% include header.html %}
+
+<h3>{{page.title}}</h3>
+Due by {{ page.date | date_to_long_string }}
+<p></p>
+
+    {{ content }}
+
+{% include footer.html %}

@@ -1,0 +1,10 @@
+{% include header.html %}
+
+<h2>{{page.title}}</h2>
+<h3>Date: {{page.date | date_to_long_string}}</h3>
+
+<p></p>
+
+    {{ content }}
+
+{% include footer.html %}
