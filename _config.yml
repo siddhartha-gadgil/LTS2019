@@ -19,7 +19,7 @@ description: > # this means to ignore newlines until "baseurl:"
   Website for the course Logic, Types and Spaces, 2019, IISc
 baseurl: "/~gadgil/LTS" # the subpath of your site, e.g. /blog
 url: "http://math.iisc.ac.in/" # the base hostname & protocol for your site
-twitter_username: SidGadil
+twitter_username: SidGadgil
 github_username:  siddhartha-gadgil
 
 # Build settings

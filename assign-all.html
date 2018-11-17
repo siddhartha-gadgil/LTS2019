@@ -4,7 +4,7 @@ title: Assignments
 
 <h2>Assignments</h2>
 
-{% assign sorted = (site.assignments | sort: 'date')  %}
+{% assign sorted = site.assignments | sort: 'date'  %}
 
 {% for ass in sorted %}
 

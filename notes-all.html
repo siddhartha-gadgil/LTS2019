@@ -2,7 +2,7 @@
 title: Notes
 ---
 
-{% assign sorted = (site.notes | sort: 'date')  %}
+{% assign sorted = site.notes | sort: 'date'  %}
 
 {% for note in sorted %}
 

@@ -9,8 +9,16 @@ layout: default
           <p>
             This course is an introduction to logic and foundations from both a modern point of view (based on type theory and its relations to topology) as well as in the traditional formulation based on first-order logic.
           </p>
+          <h4>Topics:</h4>
+        <ul>
 
-
+          <li>Basic type theory: terms and types, function types, dependent types, inductive types.</li>
+          <li>First order logic: First order languages, deduction and truth, Models, Godel’s completeness and compactness theorems.</li>
+          <li>Church-Turing unsolvability theorems, Godel’s incompleteness theorem.</li>
+          <li>Homotopy Type Theory: propositions as types, the identity type family, topological view of the identity type, foundations of homotopy type theory.</li>
+        </ul>
+        <p>Most of the material will be developed using the dependently typed language Idris. Connections with programming in functional languages will be explored.
+</p>
 
       </div>
 
@@ -20,7 +28,7 @@ layout: default
       <div class="section" id ="Assignments">
         <h3> <a href="assign-all.html">Assignments</a> </h3>
         <p>Assignments will be posted roughly once a week.</p>
-        {% assign sorted = (site.assignments | sort: 'date') | reverse %}
+        {% assign sorted = site.assignments | sort: 'date' | reverse %}
 
         <ul>
 
@@ -37,10 +45,10 @@ layout: default
       <div id="refs" class="section">
         <h3>Suggested books</h3>
         <ol>
-          <li> Edwin Brady, Type-Driven Development with Idris </li>
-          <li> <em><Homotopy Type Theory: Univalent Foundations of Mathematics</em>, Institute for Advanced Studies, Princeton 2013; available at <a href="http://homotopytypetheory.org/book/" target="_blank"> http://homotopytypetheory.org/book/</a>.</li>
+          <li> Edwin Brady, <em>Type-Driven Development with Idris</em>, Manning Publications. </li>
+          <li> <em>Homotopy Type Theory: Univalent Foundations of Mathematics</em>, Institute for Advanced Studies, Princeton 2013; available at <a href="http://homotopytypetheory.org/book/" target="_blank"> http://homotopytypetheory.org/book/</a>.</li>
           <li> Manin, Yu. I., <em>A Course in Mathematical Logic for Mathematicians</em>, Second Edition ,Graduate Texts in Mathematics, Springer-Verlag, 2010. </li>
-          <li> Srivastava, S. M., A Course on Mathematical Logic, Universitext, Springer-Verlag, 2008. </li>
+          <li> Srivastava, S. M., <em>A Course on Mathematical Logic</em>, Universitext, Springer-Verlag, 2008. </li>
         </ol>
       </div>
 
@@ -65,7 +73,7 @@ layout: default
 
     <div class="col-md-3 section" id ="Alerts">
       <h4> <a href="assign-all.html">Upcoming Assignments</a> </h4>
-      {% assign sorted = (site.assignments | sort: 'date') | reverse %}
+      {% assign sorted = site.assignments | sort: 'date' | reverse %}
       <ul>
 
         {% for ass in sorted  %}
@@ -75,7 +83,7 @@ layout: default
         {% endfor %}
       </ul>
       <h4>  <a href="announce-all.html">Announcements</a> </h4>
-      {% assign sorted = (site.announcements | sort: 'date') | reverse %}
+      {% assign sorted = site.announcements | sort: 'date' | reverse %}
       <ul>
       {% for ass in sorted  %}
       <li>
