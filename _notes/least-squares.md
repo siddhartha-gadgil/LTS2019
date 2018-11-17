@@ -14,7 +14,7 @@ In both cases, we should minimize some distance, which it is best to take as the
 
 #### The Regression problem
 
-This is the easier problem - we want to find the _best_ linear function $y = mx+ c$. If the points are $(x_i, y_i)$, the error is the function $E(m, c) = \sigma_i (y_i - (mx_i + c))^2$. So we have to minimize a function of two variables $m$ and $c$. We can do this with the first derivative test from calculus - fortunately this has a unique solution. 
+This is the easier problem - we want to find the _best_ linear function $y = mx+ c$. If the points are $(x_i, y_i)$, the error is the function $E(m, c) = \sigma_i (y_i - (mx_i + c))^2$. So we have to minimize a function of two variables $m$ and $c$. We can do this with the first derivative test from calculus - fortunately this has a unique solution.
 
 #### Best line in space
 

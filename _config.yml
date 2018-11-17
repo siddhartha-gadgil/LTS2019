@@ -19,8 +19,8 @@ description: > # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://siddhartha-gadgil.github.io/UM102/" # the base hostname & protocol for your site
+baseurl: "/~gadgil/UM102" # the subpath of your site, e.g. /blog
+url: "http://math.iisc.ac.in/" # the base hostname & protocol for your site
 twitter_username: jekyllrb
 github_username:  jekyll
 
@@ -34,10 +34,17 @@ collections:
   assignments:
       output: true
       permalink: /assignments/:title
+  draft-assignments:
+      output: true
+      permalink: /draft-assignments/:title
+  announcements:
+      output: true
+      permalink: /announcements/:title
   notes:
     output: true
     permalink: /notes/:title
 
+exclude: ["private/"]
 
 defaults:
   - scope:
@@ -50,6 +57,11 @@ defaults:
       type: assignments
     values:
       layout: assignment
+  - scope:
+      path: ""
+      type: draft-assignments
+    values:
+      layout: draft-assignment
   - scope:
       path: ""
       type: notes

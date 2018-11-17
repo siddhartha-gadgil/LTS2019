@@ -1,0 +1,16 @@
+---
+title: Assignments
+---
+
+<h2>Assignments</h2>
+
+{% assign sorted = (site.assignments | sort: 'date')  %}
+
+{% for ass in sorted %}
+
+<h2><a href="{{ site.baseurl}}{{ass.url}}.html">{{ ass.title }} </a> </h2>
+<h3>Due date: {{ ass.date | date: "%a, %d %b %Y" }}</h3>
+<div>
+{{ ass.content}}
+</div>
+{% endfor %}

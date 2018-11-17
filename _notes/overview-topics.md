@@ -3,7 +3,7 @@ title: Overview Topics
 date: 2017-04-28
 ---
 
-### Optimization
+#### Optimization
 * For functions of one variable, application of calculus.
 * Have first derivative and second derivative test.
 * In higher dimension:
@@ -12,7 +12,7 @@ date: 2017-04-28
   - we can also have interesting constraints.
   - even more generally, we have _calculus of variations_.
   
-### Linear Algebra
+#### Linear Algebra
  * Study linear maps on vector spaces, because: 
    - many maps are linear
    - many functions are quadratic - these also can be expressed in linear algebra
@@ -30,7 +30,7 @@ date: 2017-04-28
   - Jordan canonical form
 
 
-### Local to global
+#### Local to global
  * Differential calculus lets us study local properties of functions.
  * To deduce from this global behaviour, we _integrate_ and _solve differential equations_.
  

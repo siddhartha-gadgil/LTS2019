@@ -1,0 +1,13 @@
+collections:
+  assignments:
+      output: true
+      permalink: /assignments/:title
+  draft-assignments:
+      output: false
+      permalink: /draft-assignments/:title
+  announcements:
+      output: true
+      permalink: /announcements/:title
+  notes:
+    output: true
+    permalink: /notes/:title

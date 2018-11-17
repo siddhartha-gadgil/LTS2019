@@ -20,8 +20,8 @@
     <![endif]-->
 
     <script type="text/javascript" async
-      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-    </script>
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
     <!-- mathjax config similar to math.stackexchange -->
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -49,7 +49,7 @@ messageStyle: "none",
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <span class="navbar-brand">Instructor: <a href="http://math.iisc.ac.in/~gadgil">Siddhartha Gadgil</a></span>
+          <span class="navbar-brand">Instructor: <a href="http://math.iisc.ac.in/~gadgil" target="_blank">Siddhartha Gadgil</a></span>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -59,26 +59,53 @@ messageStyle: "none",
             <!-- <li><a href="{{ site.baseurl }}/index.html#refs">References</a></li>
             <li><a href="{{ site.baseurl }}/index.html#details">Details</a></li> -->
             <li class="dropdown">
-              <a href="{{ site.baseurl }}/index.html#assignments" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 Assignments<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <!-- <li class="dropdown-header">Assignments</li> -->
-                <li><strong>Assignments</strong></li>
+                <li class="dropdown-header"><strong>Assignments</strong></li>
                 {% assign sorted = (site.assignments | sort: 'date') | reverse %}
                 {% for ass in sorted  %}
                 <li>
                   <a href="{{ site.baseurl }}{{ ass.url }}.html"> {{ ass.title }}</a>
                 </li>
                 {% endfor %}
-
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Announcements<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header"><strong>Announcements</strong></li>
+                {% assign sorted = (site.announcements | sort: 'date') | reverse %}
+                {% for ass in sorted  %}
+                <li>
+                  <a href="{{ site.baseurl }}{{ ass.url }}.html"> {{ ass.title }}</a>
+                </li>
+                {% endfor %}
                 <!-- <li><a href="#">Something else here</a></li> -->
 
           </ul>
         </li>
-        <li><a href="{{ site.baseurl }}/notes-all.html">Notes</a></li>
+        <!-- <li><a href="{{ site.baseurl }}/notes-all.html">Notes</a></li> -->
       </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ site.baseurl }}/notes-all.html">Notes</a></li>
+            <li> <a href="http://math.iisc.ac.in/~gadgil/dyn/index.html" target="_blank">Linear ODE plots</a> </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Notes<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li class="dropdown-header">Assignments</li> -->
+                <li class="dropdown-header"><strong>Notes</strong></li>
+                {% assign sorted = (site.notes | sort: 'date')  %}
+                {% for ass in sorted  %}
+                <li>
+                  <a href="{{ site.baseurl }}{{ ass.url }}.html"> {{ ass.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+          </li>
+            <!-- <li><a href="{{ site.baseurl }}/notes-all.html">Notes</a></li> -->
 
           </ul>
         </div><!-- /.navbar-collapse -->

@@ -1,10 +1,14 @@
 {% include header.html %}
 
-<h2>{{page.title}}</h2>
-<h3>Date: {{page.date | date_to_long_string}}</h3>
+<h3>{{page.title}}</h3>
+<h4>Date: {{page.date | date_to_long_string}}</h4>
 
 <p></p>
 
     {{ content }}
+
+<br>
+
+<h3><a href="{{site.baseurl}}/notes-all.html">All notes</a></h3>
 
 {% include footer.html %}

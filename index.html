@@ -1,8 +1,9 @@
 ---
 layout: default
 ---
+  <div class="col-md-9">
 
-      <h1>UM 102: Analysis and Linear Algebra II </h1>
+        <h1>UM 102: Analysis and Linear Algebra II </h1>
       <div id="desc" class="section">
         <h3> Course Syllabus </h3>
           <p>
@@ -29,14 +30,15 @@ layout: default
 
 
       <div class="section" id ="Assignments">
-        <h3> Assignments </h3>
+        <h3> <a href="assign-all.html">Assignments</a> </h3>
+        <p>Assignments will be posted roughly once a week.</p>
         {% assign sorted = (site.assignments | sort: 'date') | reverse %}
 
         <ul>
 
           {% for ass in sorted  %}
           <li>
-            <a href="{{ site.baseurl }}{{ ass.url }}.html"> {{ ass.title }}</a>, due {{ ass.date | date_to_long_string }}.
+            <a href="{{ site.baseurl }}{{ ass.url }}.html"> {{ ass.title }}</a>, due by {{ ass.date | date: "%a, %d %b %Y" }}.
           </li>
           {% endfor %}
         </ul>
@@ -48,6 +50,8 @@ layout: default
         <h3>Suggested books</h3>
         <ol>
           <li> T. M. Apostol, Calculus, Volume II, 2nd. Edition, Wiley Wiley India, 2007.</li>
+          <li> Kalyan Mukherjea, Differential Calculas in Normed Linear Spaces (Texts and Readings in Mathematics), Hindustan Book Agency, 2007. </li>
+          <li> M. Spivak, Calculus on Manifolds. </li>
           <li> G. Strang, Linear Algebra And Its Applications, 4th Edition, Brooks/Cole, 2006</li>
           <li> M. Artin, Algebra, Prentice Hall of India, 1994. </li>
           <li> M. Hirsch, S. Smale, R. L. Devaney, Differential Equations, Dynamical Systems, and an
@@ -58,21 +62,64 @@ layout: default
       <div id ="details" class="section">
         <h3> Course Details</h3>
         <ul>
-          <li><strong>Instructor:</strong> <a href="http://math.iisc.ac.in/~gadgil"> Siddhartha Gadgil</a></li>
-          <li><strong>E-mail:</strong> <em><a href="mailto:siddhartha.gadgil@gmail.com"> siddhartha.gadgil@gmail.com</a></em>
-          <li><strong>Timing: </strong> to be announced</li>
-          <li><strong>Venue: </strong> to be announced.</li>
+          <li><strong>Instructor:</strong> <a href="http://math.iisc.ac.in/~gadgil" target="_blank"> Siddhartha Gadgil</a></li>
+          <li><strong>E-mail:</strong> <a href="mailto:siddhartha.gadgil@gmail.com" target="_blank"> siddhartha.gadgil@gmail.com</a>.</li>
+          <li> <strong>Office:</strong> N-15, Department of Mathematics. </li>
+          <li><strong>Timing: </strong>
+            <ul>
+              <li><strong>Lectures:</strong> Mon-Wed-Fri: 9:30 a.m. to 10:30 a.m.</li>
+              <li> <strong>Tutorials:</strong> Mon: 12:00 noon - 1:00 p.m. </li>
+            </ul>
+          </li>
+          <li><strong>Lecture Venue: </strong> Undergraduate main lecture hall</li>
+          <li><strong> Teaching Assistants: </strong>
+            <ul>
+              <li>
+                <a href="mailto:abusufian@iisc.ac.in" target="_blank"> Abu Sufian</a> (group <strong>A</strong>); <strong>office:</strong> N-07.
+              </li>
+              <li>
+                <a href="mailto:anindyab@iisc.ac.in" target="_blank"> Anindya Biswas</a> (group <strong>B</strong>); <strong>office:</strong> R-22;
+                <strong>office hours:</strong> Fri 9:00 pm to 10:00 pm.
+              </li>
+              <li>
+                <a href="mailto:tejag@iisc.ac.in" target="_blank"> G. V. K. Teja</a> (group <strong>C</strong>); <strong>office:</strong> R-21.
+              </li>
+              <li>
+                <a href="mailto:prateekv@iisc.ac.in" target="_blank"> Prateek Vishwakarma</a> (group <strong>D</strong>); <strong>office:</strong> R-24.
+              </li>
+              <li>
+                <a href="mailto:amarsarkar@iisc.ac.in" target="_blank"> Amardeep Sarkar </a> (co-ordinator); <strong>office:</strong> L-12.
+              </li>
+
+            </ul>
+          </li>
         </ul>
 
       </div>
 
+
+
     </div>
 
+    <div class="col-md-3 section" id ="Alerts">
+      <h4> <a href="assign-all.html">Upcoming Assignments</a> </h4>
+      {% assign sorted = (site.assignments | sort: 'date') | reverse %}
+      <ul>
 
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-  </body>
-</html>
+        {% for ass in sorted  %}
+        <li>
+          <a href="{{ site.baseurl }}{{ ass.url }}.html"> {{ ass.title }}</a>, due by {{ ass.date | date: "%a, %d %b %Y" }}.
+        </li>
+        {% endfor %}
+      </ul>
+      <h4>  <a href="announce-all.html">Announcements</a> </h4>
+      {% assign sorted = (site.announcements | sort: 'date') | reverse %}
+      <ul>
+      {% for ass in sorted  %}
+      <li>
+        <a href="{{ site.baseurl }}{{ ass.url }}.html"> {{ ass.title }}</a>
+        <div> {{ ass.content | truncatewords: 30 }}</div>
+      </li>
+      {% endfor %}
+    </ul>
+    </div>
