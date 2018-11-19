@@ -1,2 +1,2 @@
 bundle exec jekyll build --config _config.yml,_config-production.yml --destination ./_production-site
-rsync -avz ./_production-site/ math.iisc.ac.in:~/public_html/UM102
+rsync -avz ./_production-site/ math.iisc.ac.in:~/public_html/LTS
