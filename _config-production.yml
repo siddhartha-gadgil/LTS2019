@@ -1,3 +1,4 @@
+baseurl: "/~gadgil/LTS2019"
 collections:
   assignments:
       output: true
