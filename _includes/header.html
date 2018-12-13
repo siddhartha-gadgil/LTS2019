@@ -10,6 +10,7 @@
 
     <!-- Bootstrap -->
     <link href="{{ site.baseurl }}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ site.baseurl }}/css/extras.css" rel="stylesheet">
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -30,7 +31,7 @@ tex2jax: {
   inlineMath: [ ['$', '$'] ],
   displayMath: [ ['$$', '$$']],
   processEscapes: true,
-  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
 },
 messageStyle: "none",
 "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
@@ -93,17 +94,30 @@ messageStyle: "none",
             <li> <a href="https://www.idris-lang.org/" target="_blank">Idris-lang</a> </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                Notes<span class="caret"></span></a>
+                Links <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <!-- <li class="dropdown-header">Assignments</li> -->
-                <li class="dropdown-header"><strong>Notes</strong></li>
-                {% assign sorted = (site.notes | sort: 'date')  %}
-                {% for ass in sorted  %}
+                <!-- <li class="dropdown-header"><strong>Links</strong></li> -->
+
                 <li>
-                  <a href="{{ site.baseurl }}{{ ass.url }}.html"> {{ ass.title }}</a>
+                  <a href="https://www.ias.edu/ideas/2014/voevodsky-origins" target="_blank"> Voevodsky: The Origins and Motivations of Univalent Foundations</a>
+                  <a href="https://mail.haskell.org/pipermail/haskell-cafe/2003-May/004343.html" target="_blank">Conor McBride on no total self-interpreters (following Turing)</a>
                 </li>
-                {% endfor %}
             </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Notes <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <!-- <li class="dropdown-header">Assignments</li> -->
+              <!-- <li class="dropdown-header"><strong>Notes</strong></li> -->
+              {% assign sorted = (site.notes | sort: 'date')  %}
+              {% for ass in sorted  %}
+              <li>
+                <a href="{{ site.baseurl }}{{ ass.url }}.html"> {{ ass.title }}</a>
+              </li>
+              {% endfor %}
+          </ul>
           </li>
           <li> <a href="https://github.com/siddhartha-gadgil/LTS2019" target="_blank">
           <img src="{{ site.baseurl }}/GitHub-Mark-Light-32px.png" alt="Github"></img> </a> </li>
