@@ -1,6 +1,6 @@
 ---
-title: "Foundations of Mathematics: old and new"
-date: 2017-12-13
+title: "Foundations of Mathematics and Computation"
+date: 2017-12-12
 ---
 
 ### Axiomatic foundations
@@ -35,3 +35,23 @@ While natural langauges have a vocabulary that grows over time, the _parts of sp
   - indeed, types are _first-class_, i.e., we cna have functions (some of whose) arguments are types and functions whose results are types (or both).
 
 We shall see how to build such a type theory, and how it also forms foundations for _computation_.
+
+### Computation
+
+We communicate with computers using _programming languages_, which are languages in the above sense. However, with the most common style of programming, so called _imperative programming_, the program to describe a mathematical computation is very different from a mathematical description, as it is a set of instructions to output the result of the described objects.
+
+However, _functional languages_, building on Church's model of computation, have descriptions that are much closer to mathematical descriptions. For instance, in pseudo-code we may define `factorial(n)` as
+```
+$factorial(n)$ := if $n = 0$ then $1$ else $n\cdot factorial(n-1)$
+```
+which is just as good a mathematical definition as any. Moreg generally, the only form of _looping_ or used in functional programming is recursion, and there is no (explicit) _flow of control_.
+
+Indeed the foundations we study are to a substantial extent common for mathematics and computation, with the langauge for computation a restriction of the language used for mathematics. Code for a mathematical object is just an _effective_ description of that object, which merely means that it does not invoke axioms (including logical axioms such as the law of excluded middle). This would not be musch use if our foundations were Set Theory, as in set theory we use axioms at the drop of a hat. But in the Type Theoretic foundations we study, we use axioms only if there is a strong reason to use.
+
+Examples such as the factorial function, or typical mathematical problems such as solving equations, give a misleadingly limited view of what we mean by computation. Since computation should include all operations that a computer needs to perform, we should include _interpreters_, i.e. a function _eval_ so that
+```
+eval("$factorial(n)$ := if $n = 0$ then $1$ else $n\cdot factorial(n-1)$")($7$)
+```
+should give us `$factorial(7)$`.
+
+We can indeed write such interpreters, but such tasks will lead us to the deep unsolvability results of Turing and Godel.
