@@ -36,3 +36,13 @@ rev (S k) (a, b) = apptup k (rev k b) a
 revv: {n: Nat} -> tuple n -> tuple n
 revv {n = Z} () = ()
 revv {n = (S k)} (a, b) = apptup k (revv b) a
+
+total ack : Nat -> Nat -> Nat
+ack Z n = n + 1
+ack (S k) Z = ack k 1
+ack (S k) (S j) = ack k (ack (S k) j)
+
+
+rec : (a : Type) -> a -> (Nat -> a -> a) -> (Nat -> a)
+rec a x f Z = x
+rec a x f (S k) = f k (rec a x f k)
