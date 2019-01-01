@@ -22,12 +22,19 @@ layout: default
 
       </div>
 
+      <h3>Aims, Background etc</h3>
+      <p>The main aim of this course is to give a <em>self-contained</em> exposition of the <em>topological foundations of mathematics and computation</em> known as <em>Homotopy Type Theory</em>. These are foundations that are close to real-life mathematics and also allow an integration of programs and proofs. </p>
 
+      <p> The only background assumed is some basic mathematics, in particular being comfortable with proofs and with the concept of continuity (at least over real numbers). Some familiarity with programming will be helpful, but mainly a willingness to learn and write code. In particular no familiarity with <em>idris</em> or functional programming, or with formal logic, is assumed. </p>
+
+      <p>Note that the topic of this course is <strong>not</strong> a mature subject. In particular there is no book at this level. This will require some maturity and open-mindedness.</p>
+
+      <p>To get a head-start on the course, I recommend <a href="https://www.idris-lang.org/download/" target="_blank">installing idris</a>. Using idris is pleasant, but installation can be painful. On Windows, I suggest using the binary on that page. If you are using linux, you may find this <a href="https://www.reddit.com/r/Idris/comments/6hw2cz/trouble_installing_idris/" target="_blank">answer</a> helpful (i.e., use <code>stack</code>). You may also wish to get familiar with the version control system <code>git</code>. </p>
 
 
       <div class="section" id ="Assignments">
         <h3> <a href="assign-all.html">Assignments and Projects</a> </h3>
-        <p>At least 50% of the grade will be based on assignments and projects, which will be in <emph>idris</emph>. More details will be posted as the course gets underway.</p>
+        <p>At least 50% of the grade will be based on assignments and projects, which will be in <code>idris</code>. More details will be posted as the course gets underway.</p>
         {% assign sorted = site.assignments | sort: 'date' | reverse %}
 
         <ul>
@@ -49,6 +56,7 @@ layout: default
           <li> <em>Homotopy Type Theory: Univalent Foundations of Mathematics</em>, Institute for Advanced Studies, Princeton 2013; available at <a href="http://homotopytypetheory.org/book/" target="_blank"> http://homotopytypetheory.org/book/</a>.</li>
           <li> Manin, Yu. I., <em>A Course in Mathematical Logic for Mathematicians</em>, Second Edition ,Graduate Texts in Mathematics, Springer-Verlag, 2010. </li>
           <li> Srivastava, S. M., <em>A Course on Mathematical Logic</em>, Universitext, Springer-Verlag, 2008. </li>
+          <li> Abelson, Sussman and Sussman, <em>Structure and Interpretation of Computer Programs</em>, MIT Press, available at <a href="https://mitpress.mit.edu/sites/default/files/sicp/index.html" target="_blank">https://mitpress.mit.edu/sites/default/files/sicp/index.html</a>.</li>
         </ol>
       </div>
 
@@ -61,7 +69,8 @@ layout: default
           <li><strong>Timing: </strong>
             Tuesday, Thursday 8:30 - 10:00 am.
           </li>
-          <li><strong>Lecture Venue: </strong> LH-5, Department of Mathematics, IISc</li>
+          <li><strong>Lecture Venue: </strong> LH-5, Department of Mathematics, IISc.</li>
+          <li> <strong>First Lecture:</strong> Thursday, January 3, 2019. </li>
 
         </ul>
 
