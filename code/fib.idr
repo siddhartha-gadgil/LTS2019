@@ -46,3 +46,15 @@ ack (S k) (S j) = ack k (ack (S k) j)
 rec : (a : Type) -> a -> (Nat -> a -> a) -> (Nat -> a)
 rec a x f Z = x
 rec a x f (S k) = f k (rec a x f k)
+
+base : Nat -> Nat
+base k = k + 1
+
+s : (m : Nat) -> (ackm : Nat -> Nat) -> Nat -> Nat -> Nat
+s m ackm k j = ackm j
+
+step : Nat -> (Nat -> Nat) -> Nat -> Nat
+step m ackm = rec Nat (ackm 1)(s m ackm)
+
+ackrec : Nat -> Nat -> Nat
+ackrec = rec (Nat -> Nat) base step
