@@ -42,3 +42,13 @@ one = 1
 threeOdd : (IsEven 3) -> Void
 threeOdd (PlusTwo (S Z) ZeroEven) impossible
 threeOdd (PlusTwo (S Z) (PlusTwo _ _)) impossible
+
+thmEven : (n: Nat) -> Either (IsEven n) (IsEven (S n))
+thmEven Z = Left ZeroEven
+thmEven (S k) = case thmEven k of
+                     (Left l) => Right (PlusTwo k l)
+                     (Right r) => Left r
+
+divTwo: (n: Nat) -> IsEven n -> Nat
+divTwo Z ZeroEven = 0
+divTwo (S (S k)) (PlusTwo k x) = S (divTwo k x)
