@@ -40,4 +40,5 @@ one: Nat
 one = 1
 
 threeOdd : (IsEven 3) -> Void
-threeOdd (PlusTwo (S Z) x) = ?threeOdd_rhs_1
+threeOdd (PlusTwo (S Z) ZeroEven) impossible
+threeOdd (PlusTwo (S Z) (PlusTwo _ _)) impossible
