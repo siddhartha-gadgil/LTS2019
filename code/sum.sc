@@ -1,30 +1,40 @@
-def sum1(l: List[Int]) : Int = {
-  var tot = 0
-  var lst = l
-  while (lst.nonEmpty) {
-    tot += lst.head
-    lst = lst.tail
-  }
-  return tot
+var l = List(2, 3, 5, 9)
+var sum = 0
+
+while (l.nonEmpty) {
+  sum = sum + l.head
+  l = l.tail
 }
 
-println(sum1(List(2, 3, 7, 9)))
+println(sum)
 
-def sum2(l: List[Int]) : Int =
-  if (l.isEmpty) 0 else l.head + sum2(l.tail)
+def sum0(lst: List[Int]) : Int = {
+  var l = lst
+  var sum = 0
 
+  while (l.nonEmpty) {
+    sum = sum + l.head
+    l = l.tail
+  }
+  return sum
+}
 
-println(sum2(List(2, 3, 7, 9)))
+println(sum0(List(2, 3, 5, 9)))
 
-val sum3 : List[Int] => Int = {
+def sum1(lst: List[Int]) : Int =
+  if (lst.isEmpty) 0 else lst.head + sum1(lst.tail)
+
+println(sum1(List(2, 3, 5, 9)))
+
+val sum2 : List[Int] => Int = {
   case List() => 0
   case head :: tail => head + sum2(tail)
 }
 
-println(sum3(List(2, 3, 7, 9)))
+println(sum2(List(2, 3, 5, 9)))
 
 @annotation.tailrec
-def sum4(l: List[Int], accum: Int = 0) : Int =
-  if (l.isEmpty) accum else sum4(l.tail, accum + l.head)
+def sum3(lst: List[Int], accum: Int = 0): Int =
+  if (lst.isEmpty) accum else sum3(lst.tail, accum + lst.head)
 
-println(sum4(List(2, 3, 7, 9)))
+println(sum3(List(2, 3, 5, 9)))
