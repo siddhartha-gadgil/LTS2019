@@ -23,6 +23,12 @@ mul : Nat -> Nat -> Nat
 mul Z j = Z
 mul (S k) j = add j (mul k j)
 
+-- Does not work --
 sub : (n: Nat) -> (m : Nat) -> (LTE m n) -> Nat
 sub n Z LTEZero = n
 sub (S right) (S left) (LTESucc x) = sub right left x
+
+-- Seems to work --
+subt : (n: Nat) -> (m: Nat) -> {auto smaller = (LTE m n)} -> Nat
+subt n Z {smaller = LTEZero} = n
+subt (S right) (S left) {smaller = (LTESucc x)} = subt right left
