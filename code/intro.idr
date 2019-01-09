@@ -19,5 +19,10 @@ add : Nat -> Nat -> Nat
 add Z j = j
 add (S k) j = S (add k j)
 
+mul : Nat -> Nat -> Nat
+mul Z j = Z
+mul (S k) j = add j (mul k j)
+
 sub : (n: Nat) -> (m : Nat) -> (LTE m n) -> Nat
-sub n m x = ?sub_rhs
+sub n Z LTEZero = n
+sub (S right) (S left) (LTESucc x) = sub right left x
