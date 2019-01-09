@@ -18,6 +18,9 @@ zm Z LTEZero = ?zm_rhs_1
 es: (n: Nat) -> (m: Nat) -> (n = m) -> S n = S m
 es m m Refl = Refl
 
+ess: (n: Nat) -> (m: Nat) -> (n = m) -> (S (S n)) = (S (S m))
+ess m m Refl = Refl
+
 ans : (n: Nat) -> (m: Nat) -> (LTE n m) -> (LTE m n) -> n = m
 ans Z Z LTEZero LTEZero = Refl
 ans (S a) (S b) (LTESucc x) (LTESucc y) = es a b (ans a b x y)
@@ -52,3 +55,20 @@ thmEven (S k) = case thmEven k of
 divTwo: (n: Nat) -> IsEven n -> Nat
 divTwo Z ZeroEven = 0
 divTwo (S (S k)) (PlusTwo k x) = S (divTwo k x)
+
+notSS : (n: Nat) -> IsEven n -> IsEven (S n) -> Void
+notSS Z ZeroEven ZeroEven impossible
+notSS Z ZeroEven (PlusTwo _ _) impossible
+notSS (S (S k)) (PlusTwo k x) (PlusTwo (S k) y) = notSS k x y
+
+double: Nat -> Nat
+double Z = Z
+double (S k) = S (S (double k))
+
+apNat: (f: Nat -> Nat) -> (n: Nat) -> (m: Nat) -> n = m -> f n = f m
+apNat f m m Refl = Refl
+
+byTwo : (n: Nat) -> IsEven n -> (k: Nat ** (double k) = n)
+byTwo Z ZeroEven = (0 ** Refl)
+byTwo (S (S k)) (PlusTwo k x) = case byTwo k x of
+                                     (a ** pf) => ((S a) ** (apNat (\n => S (S n)) (double a) k pf))
