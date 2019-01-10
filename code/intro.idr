@@ -26,3 +26,22 @@ mul (S k) j = add j (mul k j)
 sub : (n: Nat) -> (m : Nat) -> (LTE m n) -> Nat
 sub n Z LTEZero = n
 sub (S right) (S left) (LTESucc x) = sub right left x
+
+oneLTEFour : LTE 1 4
+oneLTEFour = LTESucc LTEZero
+
+fourMinusOne : Nat
+fourMinusOne = sub 4 1 oneLTEFour
+
+reflLTE : (n: Nat) -> LTE n n
+reflLTE Z = LTEZero
+reflLTE (S k) = LTESucc (reflLTE k)
+
+sillyZero: Nat -> Nat
+sillyZero n = sub n n (reflLTE n)
+
+idNat : Nat -> Nat
+idNat = \x => x
+
+loop: Nat -> Nat
+loop k = loop (S k)
