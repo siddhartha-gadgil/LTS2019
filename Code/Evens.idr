@@ -1,5 +1,6 @@
 module Evens
 
+public export
 data IsEven : Nat -> Type where
   ZEven : IsEven 0
   SSEven : (n: Nat) -> IsEven n -> IsEven (S (S n))
