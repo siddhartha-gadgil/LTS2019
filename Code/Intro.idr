@@ -15,6 +15,7 @@ fbp (S k) = (snd (fbp k), fst (fbp k) + snd (fbp k))
 fib : Nat -> Nat
 fib n = fst (fbp n)
 
+public export
 add : Nat -> Nat -> Nat
 add Z j = j
 add (S k) j = S (add k j)
