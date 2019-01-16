@@ -58,8 +58,11 @@ isTrue : Bool -> Type
 isTrue True = Unit
 isTrue False = Void
 
-evenOdd : (n: Nat) -> isTrue (even n)
-evenOdd Z = ()
-evenOdd (S k) = case (even k) of
-                     False => ?evenOdd_rhs_1
-                     True => ?evenOdd_rhs_3
+oneOddFamily: Nat -> Type
+oneOddFamily Z = ()
+oneOddFamily (S Z) = Void
+oneOddFamily (S (S k)) = ()
+
+oneOddProof : (n: Nat) -> IsEven n -> oneOddFamily n
+oneOddProof Z ZEven = ()
+oneOddProof (S (S k)) (SSEven k x) = ()
