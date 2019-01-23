@@ -24,6 +24,7 @@ tofinNat: (a: Nat) -> (n: Nat) -> Fin n
 tofinNat Z (S j) = FZ
 tofinNat (S k) (S j) = FS (tofinNat (snd(Eucl k j)) j)
 
+--right strips FZ from lists
 strp: List (Fin n) -> List (Fin n)
 strp [] = []
 strp (x :: xs) = case x of
