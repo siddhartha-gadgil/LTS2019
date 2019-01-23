@@ -27,7 +27,7 @@ mergesort :Ord elem=>Vect n elem->Vect n elem
 mergesort []=[]
 mergesort [x] = [x]
 mergesort {n} xs = (the (Vect n elem ) (merge left right)) where
-  left = Vecttake s xs
-  right = Vecttake (cast ((cast n)-(cast s))) xs where
+  left = mergesort (Vecttake s xs)
+  right = mergesort (Vecttake (cast ((cast n)-(cast s))) xs) where
     s =cast((cast n)/2)
     -}
