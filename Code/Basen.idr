@@ -24,10 +24,16 @@ tofinNat: (a: Nat) -> (n: Nat) -> Fin n
 tofinNat Z (S j) = FZ
 tofinNat (S k) (S j) = FS (tofinNat (snd(Eucl k j)) j)
 
+strp: List (Fin n) -> List (Fin n)
+strp [] = []
+strp (x :: xs) = case x of
+                      FZ => strp(xs)
+                      (FS y) => x::xs
+
 -- Nat to List Fin n (base n representation)
 tofin: Nat -> (n: Nat) -> List (Fin n)
 tofin Z (S j) = [FZ]
-tofin (S k) (S j) = reverse(rem :: reverse(tofin q (S j))) where
+tofin (S k) (S j) = strp(reverse(rem :: reverse(tofin q (S j)))) where
                     rem = tofinNat (snd(Eucl (S k) (S j))) (S j)
                     q = fst(Eucl (S k) (S j))
 
@@ -36,4 +42,13 @@ addfin: (n: Nat) -> Fin (S n) -> Fin (S n) -> Fin (S n) -> (Fin (S n), Fin (S n)
 addfin n x y z = case (tofin ((tonatFin (S n) x)+ (tonatFin (S n) y) + (tonatFin (S n) z)) (S n)) of
                     [l] => (FZ, l)
                     [k, l] => (k,l)
-                    [j,k,l] => (k,l)
+
+--adding two reversed lists as specified
+addfinl: (n: Nat) -> List (Fin (S n)) -> List (Fin (S n)) -> List (Fin (S n))
+addfinl n [] ys = strp(ys)
+addfinl n (x :: xs) [] = strp(x::xs)
+addfinl n (x :: xs) (y :: ys) = (snd(addfin n FZ x y)::(addfinl n (addfinl n [fst(addfin n FZ x y)] xs) ys))
+
+--adding two lists
+addfinlist: (n: Nat) -> List (Fin (S n)) -> List (Fin (S n)) -> List (Fin (S n))
+addfinlist n xs ys = reverse(addfinl n (reverse xs) (reverse ys))
