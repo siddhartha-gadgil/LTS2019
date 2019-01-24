@@ -31,13 +31,23 @@ flattenTree = recNT (List Nat) leafCase nodeCase where
 
 data FinNatTree : Type where
   FLeaf : Nat -> FinNatTree
-  FNode : (n: Nat) -> ((Fin n) -> FinNatTree) -> FinNatTree
+  FNode : (n: Nat) -> ((Fin (S n)) -> FinNatTree) -> FinNatTree
 
-data Evil : Type where
-  Diag : (Evil -> Bool) -> Evil
+sumFinNat : (n: Nat) -> (Fin n -> Nat) -> Nat
+sumFinNat Z f = Z
+sumFinNat (S k) f = (f FZ) + tailsum where
+  tailsum = sumFinNat k (\ x : (Fin k) => f (FS x))
 
-evil : Evil -> Bool
-evil (Diag f) = not (f (Diag f))
+finSum : FinNatTree -> Nat
+finSum (FLeaf k) = k
+finSum (FNode n f) = sumFinNat (S n) treeSums where
+  treeSums = \index : Fin (S n) => finSum (f index)
 
-contra : Bool
-contra = evil (Diag evil)
+  data Evil : Type where
+    Diag : (Evil -> Bool) -> Evil
+
+  evil : Evil -> Bool
+  evil (Diag f) = not (f (Diag f))
+
+  contra : Bool
+  contra = evil (Diag evil)
