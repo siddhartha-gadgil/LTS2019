@@ -3,6 +3,7 @@ module sorting_with_proof
 import Data.Vect
 import Data.Fin
 import permutation
+import perm_cons
 
 data Finite : Nat -> Type where
     FinZ : (k : Nat) -> (Finite (S k))
