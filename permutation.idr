@@ -54,12 +54,6 @@ applyFun n (S k) v f pf = reverse((Vect.index (f (NatToFin k n pf)) v) :: revers
     prop (S a) (S b) (LTESucc pf2) = LTESucc (prop a b pf2)
     
 
-||| applying a permutation on a vector
-total
-applyPerm : (n : Nat) -> (v : NatVect n) -> (perm : Perm n) -> (NatVect n)
---applyPerm n v perm = applyFun n k v p n ?rhs where
---    p : F_Fin n
-  --  p = fst perm
 
 
 
