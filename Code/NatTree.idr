@@ -2,6 +2,7 @@ module NatTree
 
 import Data.Fin
 
+% access public export
 
 data NatTree : Type where
   Leaf : Nat -> NatTree

@@ -1,5 +1,7 @@
 module Intro
 
+% access public export
+
 sm : List Nat -> Nat
 sm [] = 0
 sm (x :: xs) = x + (sm xs)
