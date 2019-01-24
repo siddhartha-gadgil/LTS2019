@@ -1,1 +1,2 @@
-private/* filter=git-crypt diff=git-crypt 
+private/* filter=git-crypt diff=git-crypt
+assignments/* filter=git-crypt diff=git-crypt 
