@@ -12,6 +12,7 @@ tonat: (n: Nat) -> List (Fin(n)) -> Nat
 tonat n [] = Z
 tonat n (x :: xs) = (tonatFin n x)*(power n (length xs)) + (tonat n xs)
 
+
 --Euclid's div
 Eucl: (a: Nat) -> (b: Nat) -> (Nat, Nat)
 Eucl Z b = (0,0)
@@ -22,9 +23,11 @@ Eucl (S k) b = case (lte (S (S k)) b) of
 --Nat to Fin (modular values)
 tofinNat: (a: Nat) -> (n: Nat) -> Fin n
 tofinNat Z (S j) = FZ
-tofinNat (S k) (S j) = FS (tofinNat (snd(Eucl k j)) j)
+tofinNat (S k) (S j) = case lte (S k) (S j) of
+                True => FS (tofinNat k j)
+                False =>  (tofinNat (snd(Eucl (S k) (S j))) (S j))
 
---right strips FZ from lists
+--left strips FZ from lists
 strp: List (Fin n) -> List (Fin n)
 strp [] = []
 strp (x :: xs) = case x of
@@ -53,3 +56,24 @@ addfinl n (x :: xs) (y :: ys) = (snd(addfin n FZ x y)::(addfinl n (addfinl n [fs
 --adding two lists
 addfinlist: (n: Nat) -> List (Fin (S n)) -> List (Fin (S n)) -> List (Fin (S n))
 addfinlist n xs ys = reverse(addfinl n (reverse xs) (reverse ys))
+
+--embedding Fin n in Fin S n vertically
+embn: (n: Nat) -> Fin n -> Fin (S n)
+embn (S k) FZ = FZ
+embn (S k) (FS x) = FS (embn k x)
+
+--Unused mulfinNat - multiplies two Fin n's
+mulfinNat: (n: Nat) -> Fin (n) -> Fin (n) -> (Fin (n), Fin (n))
+mulfinNat (S n) x y =  case tofin ((tonatFin (S n) x)*(tonatFin (S n) y)) (S n) of
+                    [l] => (FZ, l)
+                    [k,l] => (k,l)
+
+--multiply two reversed lists in Fin S n
+mulfinl: (n: Nat) -> List (Fin (S n)) -> List (Fin (S n)) -> List (Fin (S n))
+mulfinl n xs [] = []
+mulfinl n xs (FZ :: ys) = FZ :: (mulfinl n xs ys)
+mulfinl n xs ((FS x) :: ys) = addfinl n (mulfinl n xs ((embn n x)::ys)) xs
+
+--multpily two lists
+mulfinList: (n: Nat) -> List (Fin (S n)) -> List (Fin (S n)) -> List (Fin (S n))
+mulfinList n xs ys = reverse(mulfinl n (reverse xs) (reverse ys))
