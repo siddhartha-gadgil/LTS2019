@@ -42,11 +42,11 @@ just the functions to compute the GCD in two different ways.
 {-}
 
 gcd2 : Nat -> Nat -> Nat
-gcd2 a b = (cast (((cast a)*(rightInt(Bezout a b))) + ((cast b)*(leftInt(Bezout a b)))))
+gcd2 a b = (cast (((cast a)*(snd (Bezout a b))) + ((cast b)*(fst (Bezout a b)))))
 
 gcdab : Nat -> Nat -> Nat
 gcdab b Z = b
-gcdab a b = gcdab b (rightNat (Eucl a b))
+gcdab a b = gcdab b (snd (Eucl a b))
 
 {-}
 given below are the auxilary functions to the proof that given a and b, there exist q and r such that a = b*q + r.
@@ -65,7 +65,7 @@ All these proofs (except maybe aux2f3) were necessary to avoid various type mism
 {-}
 
 apNat2 : (a : Nat) -> (b : Nat) -> (a = b) -> (S a = S b)
-apNat a a Refl = Refl
+apNat2 a a Refl = Refl
 
 aux1f2 : (a : Nat) -> (b : Nat) -> (LTE (S a) b) -> (LTE a b)
 aux1f2 Z Z LTEZero impossible
