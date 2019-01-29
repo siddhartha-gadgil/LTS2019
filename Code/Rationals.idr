@@ -1,11 +1,5 @@
 module Rationals
 
---Type for divisibility
-data isDivisor : Integer -> Integer -> Type where
-  AllDivZ : (m : Integer) -> isDivisor m 0
-  OneDivAll : (m : Integer) -> isDivisor 1 m
-  MulDiv : (c : Integer) -> isDivisor n m -> isDivisor ((\l => l*c) n) ((\l => l*c) m)
-
 isNotZero : Nat -> Bool
 isNotZero Z = False
 isNotZero (S k) = True
@@ -24,16 +18,20 @@ Eucl Z b = (0,0)
 Eucl (S k) b = case (lte (S (S k)) b) of
                     False => (S(fst(Eucl (minus (S k) b) b)), snd(Eucl (minus (S k) b) b))
                     True => (0, S k)
-{-
-gcdab : Nat -> Nat -> Nat -- Produces the GCD of two numbers. This will be useful to produce the simplified form of a rational number.
-gcdab b Z = b
-gcdab a b = gcdab b (snd (Eucl a b))
--}
+
+--Integer implemetation of gcd
+CalcGCD : (Integer, Integer) -> Integer
+CalcGCD (a, b) = if (isNotZero (toNat b)) then next else a where
+    next = CalcGCD (b, toIntegerNat (modNat (toNat a) (toNat b)))
+
+OnlyPositive : (x: Pair) -> Pair
+OnlyPositive x = (if (fst x)>0 then fst x else (-1)*(fst x), if(snd x)>0 then (snd x) else (-1)*(snd x))
 
 --Integer implemetation of gcd
 gccd : (Integer, Integer) -> Integer
-gccd (a, b) = if (isNotZero (toNat b)) then next else a where
-  next = gccd (b, toIntegerNat (modNat (toNat a) (toNat b)))
+gccd x = CalcGCD (OnlyPositive x)
+
+
 
 data NotZero : Integer -> Type where --Proof that a number is not zero, needed to construct Q
   OneNotZero : NotZero 1
