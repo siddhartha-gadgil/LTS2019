@@ -4,3 +4,7 @@ _production-site/
 .jekyll-cache/
 .jekyll-metadata
 *.ibc
+*.zip
+*.rar
+*.gz
+*.ZIP
