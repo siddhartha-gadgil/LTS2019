@@ -1,5 +1,10 @@
 module Rationals
 
+import Data.ZZ
+
+apInt : (f: Integer -> Integer) -> (n: Integer) -> (m: Integer) -> n = m -> f n = f m
+apInt f m m Refl = Refl
+
 isNotZero : Nat -> Bool
 isNotZero Z = False
 isNotZero (S k) = True
@@ -37,6 +42,12 @@ data NotZero : Integer -> Type where --Proof that a number is not zero, needed t
   OneNotZero : NotZero 1
   NegativeNotZero : ( n: Integer ) -> NotZero n -> NotZero (-n)
   PositiveNotZero : ( m: Integer ) -> LTE 1 (fromIntegerNat m)  -> NotZero m
+
+data ZZNotZero : ZZ -> Type where
+  ZZOneNotZero : ZZNotZero 1
+  ZZNegativeNotZero : ( n: ZZ ) -> ZZNotZero n -> ZZNotZero (-n)
+  ZZPositiveNotZero : ( m: ZZ ) -> LTE 1 (fromIntegerNat (cast(m)))  -> ZZNotZero m
+
 
 --Type for equality of two Rationals
 data EqRat : Pair -> Pair -> Type where
@@ -83,3 +94,27 @@ simplifyRational (a, b) = (sa, sb) where
     g = cast {from=Integer} {to=Double} (gccd (a,b))
 
 --Above, I will need to supply a proof that the GCD divides the two numbers. Then, the function defined above will produce the rational in simplified form.
+
+ZZPair : Type
+ZZPair = (ZZ, ZZ)
+
+makeZZPair : Pair -> ZZPair
+makeZZPair x = (fromInt(fst x), fromInt(snd x))
+
+makePairZZ : ZZPair -> Pair
+makePairZZ y = (cast(fst y), cast(fst y))
+
+xAndInverseNotZero : (x: Pair) -> (k: NotZero (snd x)) -> NotZero (snd (AddInverse x k))
+xAndInverseNotZero x (PositiveNotZero (snd x) y) = (PositiveNotZero (snd x) y)
+
+FirstIsInverted : (x: Pair) -> (k: NotZero (snd x)) -> (a: Integer) -> (a = (fst x)) -> (-a = fst (AddInverse x k))
+FirstIsInverted x k a prf = (apInt (\x => -x) a (fst x) prf)
+
+SecondStaysSame : (x: Pair) -> (k: NotZero (snd x)) -> (b: Integer) -> (b = (snd x)) -> (b = (snd (AddInverse x k)))
+SecondStaysSame x k b prf = (apInt (\x => x) b (snd x) prf)
+
+xplusinverse: (x: Pair) -> (k: NotZero (snd x)) -> Pair
+xplusinverse x k = AddRationals x k (AddInverse x k) (xAndInverseNotZero x k)
+
+addinverselemma1: (x: ZZ) -> ((x) + negate (x) = 0)
+addinverselemma1 x = plusNegateInverseLZ(x)
