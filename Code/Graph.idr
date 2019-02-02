@@ -42,6 +42,21 @@ AdjacentsAreConnected:(am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat)->Maybe (Path
 AdjacentsAreConnected am i j = case Isthereanedge am i j of
                                     Nothing => Nothing
                                     (Just x) => Just (Adjacent (Thereisanedge am i j x))
+                                    
+isInList  : (i:Nat)->List Nat ->Bool
+isInList i [] = False
+isInList i (x :: xs) = case (x==i) of
+                            False => isInList i xs
+                            True => True
+|||Updates an adjacency list if there is an edge between i and (S j) and calls the same function with j
+adja :(am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat)  ->List (s:Nat**Path am i s)->List (s:Nat**Path am i s)
+adja am i Z xs = xs
+adja am i (S k) xs = case AdjacentsAreConnected am i (S k) of
+                      Nothing => adja am i k xs
+                      (Just x) => adja am i k (((S k )**x)::xs)
+|||Returns a list of adjacent vectors to i with a proof that they are connected
+Adjacents :(am:(Vect n (Vect n Nat)))-> (i:Nat)->List (s:Nat**Path am i s)
+Adjacents {n} am i = adja am i n []
 {-
 
 Findpath :(am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat) ->Maybe(List Nat,Path am i j)
