@@ -28,6 +28,7 @@ data Edge :(am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat)->Type where
     Thereisanedge :(am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat)->(Accessnum am i j) =1 ->Edge am i j
 |||A type inhabited iff vertices i and j are connected by a path
 data Path : (am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat)->Type where
+  Self : (i:Nat)->Path am i i
   Adjacent : (Edge am i j) ->Path am i j
   Thereispath: (am:(Vect n (Vect n Nat)))-> (i:Nat)->(k:Nat) ->Path am i k->(Edge am k j)->Path am i j
 |||Returns Nothing if there is no edge or a proof that Accessnum am i j =1
@@ -42,7 +43,8 @@ AdjacentsAreConnected:(am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat)->Maybe (Path
 AdjacentsAreConnected am i j = case Isthereanedge am i j of
                                     Nothing => Nothing
                                     (Just x) => Just (Adjacent (Thereisanedge am i j x))
-                                    
+
+
 isInList  : (i:Nat)->List Nat ->Bool
 isInList i [] = False
 isInList i (x :: xs) = case (x==i) of
@@ -57,8 +59,31 @@ adja am i (S k) xs = case AdjacentsAreConnected am i (S k) of
 |||Returns a list of adjacent vectors to i with a proof that they are connected
 Adjacents :(am:(Vect n (Vect n Nat)))-> (i:Nat)->List (s:Nat**Path am i s)
 Adjacents {n} am i = adja am i n []
-{-
+Adjacentlist:(am:(Vect n (Vect n Nat)))-> (i:Nat)->List Nat
+Adjacentlist am i = map fst (Adjacents am i)
+|||Returns the list of elements in the first list, but not in the second
+Complement: List Nat ->List Nat ->List Nat
+Complement [] ys = []
+Complement (x :: xs) ys = case isInList x ys of
+                               False => x::(Complement xs ys)
+                               True => Complement xs ys
 
-Findpath :(am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat) ->Maybe(List Nat,Path am i j)
-Findpath am i j = ?Findpath_rhs
--}
+
+
+|||Does Depth first search of i and returns the list of elements connected to i
+Dfs :(am:(Vect n (Vect n Nat)))-> (i:Nat) ->List Nat->List Nat
+Dfs am i xs = case Complement (Adjacentlist am i) xs of
+                     []=>xs
+                     (j::ys)=>Dfs am i (Dfs am j (j::xs))
+
+|||A helper function for ConnectedComponents
+Connectedcompos: (am:(Vect n (Vect n Nat)))->List Nat ->List (List Nat)->(List (List Nat))
+Connectedcompos{n} am xs ys = case Complement [1..n] xs of
+                                [] => ys
+                                (x :: zs) => Connectedcompos am (xs++(Dfs am x [x])) ((Dfs am x [x])::ys)
+
+|||Gives the connected components of a graph as a list of lists                                
+ConnectedComponents :  (am:(Vect n (Vect n Nat)))->(List (List Nat))
+ConnectedComponents am = Connectedcompos am [] []
+
+
