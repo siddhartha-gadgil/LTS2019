@@ -2,8 +2,16 @@ module Rationals
 
 import Data.ZZ
 
-apInt : (f: Integer -> Integer) -> (n: Integer) -> (m: Integer) -> n = m -> f n = f m
-apInt f m m Refl = Refl
+%access public export
+
+Pair : Type
+Pair = (Integer, Integer)
+
+ZZPair : Type
+ZZPair = (ZZ, ZZ)
+
+apZZ : (f: ZZ -> ZZ) -> (n: ZZ) -> (m: ZZ) -> n = m -> f n = f m
+apZZ f m m Refl = Refl
 
 isNotZero : Nat -> Bool
 isNotZero Z = False
@@ -14,15 +22,6 @@ isFactorInt m n = (k : Integer ** (m * k = n))
 
 divides : (m: Integer) -> (n: Integer) -> (k: Integer ** (m * k = n)) -> Integer
 divides m n k = (fst k)
-
-Pair : Type
-Pair = (Integer, Integer)
-
-Eucl: (a: Nat) -> (b: Nat) -> (Nat, Nat) --Euclidean algorithm implemented by Chinmaya
-Eucl Z b = (0,0)
-Eucl (S k) b = case (lte (S (S k)) b) of
-                    False => (S(fst(Eucl (minus (S k) b) b)), snd(Eucl (minus (S k) b) b))
-                    True => (0, S k)
 
 --Integer implemetation of gcd
 CalcGCD : (Integer, Integer) -> Integer
@@ -35,8 +34,6 @@ OnlyPositive x = (if (fst x)>0 then fst x else (-1)*(fst x), if(snd x)>0 then (s
 --Integer implemetation of gcd
 gccd : (Integer, Integer) -> Integer
 gccd x = CalcGCD (OnlyPositive x)
-
-
 
 data NotZero : Integer -> Type where --Proof that a number is not zero, needed to construct Q
   OneNotZero : NotZero 1
@@ -60,23 +57,22 @@ make_rational p q x = (toIntegerNat(p), q)
 InclusionMap : (n : Nat) -> Pair --Includes the naturals in Q
 InclusionMap n = make_rational n 1 OneNotZero
 
-AddRationals : (x: Pair) -> NotZero (snd x) -> (y: Pair) -> NotZero (snd y) -> Pair
+AddRationals : (x: ZZPair) -> ZZNotZero (snd x) -> (y: ZZPair) -> ZZNotZero (snd y) -> ZZPair
 AddRationals x a y b = ((fst x)*(snd y) + (snd x)*(fst y), (snd x)*(snd y))
 
-MultiplyRationals : (x: Pair) -> NotZero (snd x) -> (y: Pair) -> NotZero (snd y) -> Pair
+MultiplyRationals : (x: ZZPair) -> ZZNotZero (snd x) -> (y: ZZPair) -> ZZNotZero (snd y) -> ZZPair
 MultiplyRationals x a y b =((fst x)*(fst y), (snd x)*(snd y))
 
---Need proof that MultInverse x * x = 1
-MultInverse : (x: Pair) -> NotZero (fst x) -> NotZero (snd x) -> Pair
+MultInverse : (x: ZZPair) -> ZZNotZero (fst x) -> ZZNotZero (snd x) -> ZZPair
 MultInverse x y z = ((snd x), (fst x))
 
-AddInverse : (x: Pair) -> NotZero (snd x) -> Pair
+AddInverse : (x: ZZPair) -> ZZNotZero (snd x) -> ZZPair
 AddInverse x a = (-(fst x), (snd x))
 
-Subtraction : (x: Pair) -> NotZero (snd x) -> (y: Pair) -> NotZero (snd y) -> Pair
+Subtraction : (x: ZZPair) -> ZZNotZero (snd x) -> (y: ZZPair) -> ZZNotZero (snd y) -> ZZPair
 Subtraction x a y b = AddRationals x a (AddInverse y b) b
 
-Division : (x: Pair) -> NotZero (snd x) -> (y: Pair) -> NotZero (fst y) -> NotZero (snd y) -> Pair
+Division : (x: ZZPair) -> ZZNotZero (snd x) -> (y: ZZPair) -> ZZNotZero (fst y) -> ZZNotZero (snd y) -> ZZPair
 Division x a y b c = MultiplyRationals x a (MultInverse y b c) b
 
 --SimplifyRational : (x: Pair) -> NotZero (snd x) -> Pair
@@ -95,26 +91,23 @@ simplifyRational (a, b) = (sa, sb) where
 
 --Above, I will need to supply a proof that the GCD divides the two numbers. Then, the function defined above will produce the rational in simplified form.
 
-ZZPair : Type
-ZZPair = (ZZ, ZZ)
+xAndInverseNotZero : (x: ZZPair) -> (k: ZZNotZero (snd x)) -> ZZNotZero (snd (AddInverse x k))
+xAndInverseNotZero x (ZZPositiveNotZero (snd x) y) = (ZZPositiveNotZero (snd x) y)
 
-makeZZPair : Pair -> ZZPair
-makeZZPair x = (fromInt(fst x), fromInt(snd x))
+FirstIsInverted : (x: ZZPair) -> (k: ZZNotZero (snd x)) -> (a: ZZ) -> (a = (fst x)) -> ((-a) = fst (AddInverse x k))
+FirstIsInverted x k a prf = (apZZ (\x => -x) a (fst x) prf)
 
-makePairZZ : ZZPair -> Pair
-makePairZZ y = (cast(fst y), cast(fst y))
+SecondStaysSame : (x: ZZPair) -> (k: ZZNotZero (snd x)) -> (b: ZZ) -> (b = (snd x)) -> (b = (snd (AddInverse x k)))
+SecondStaysSame x k b prf = (apZZ (\x => x) b (snd x) prf)
 
-xAndInverseNotZero : (x: Pair) -> (k: NotZero (snd x)) -> NotZero (snd (AddInverse x k))
-xAndInverseNotZero x (PositiveNotZero (snd x) y) = (PositiveNotZero (snd x) y)
-
-FirstIsInverted : (x: Pair) -> (k: NotZero (snd x)) -> (a: Integer) -> (a = (fst x)) -> (-a = fst (AddInverse x k))
-FirstIsInverted x k a prf = (apInt (\x => -x) a (fst x) prf)
-
-SecondStaysSame : (x: Pair) -> (k: NotZero (snd x)) -> (b: Integer) -> (b = (snd x)) -> (b = (snd (AddInverse x k)))
-SecondStaysSame x k b prf = (apInt (\x => x) b (snd x) prf)
-
-xplusinverse: (x: Pair) -> (k: NotZero (snd x)) -> Pair
+xplusinverse: (x: ZZPair) -> (k: ZZNotZero (snd x)) -> ZZPair
 xplusinverse x k = AddRationals x k (AddInverse x k) (xAndInverseNotZero x k)
 
-addinverselemma1: (x: ZZ) -> ((x) + negate (x) = 0)
-addinverselemma1 x = plusNegateInverseLZ(x)
+addinverselemma: (a: ZZ) -> (b: ZZ) -> ((-a)=b) -> (a + b = ((-a) + a)) -> ((-a)+a =0 ) -> (a + b = 0)
+addinverselemma a b prf prf1 prf2 = trans prf1 prf2
+
+addinverseFST: (x: ZZPair) -> (k: ZZNotZero (snd x)) -> (a: ZZ) -> (a = (fst x)) -> (fst (AddInverse x k) = b) -> ((-a) = b)
+addinverseFST x k a prf prf1 = trans (FirstIsInverted x k a prf) (prf1)
+
+addinverseSND: (x: ZZPair) -> (k: ZZNotZero (snd x)) -> (c: ZZ) -> (c = (snd x)) -> (snd (AddInverse x k) = b) -> (c = b)
+addinverseSND x k c prf prf1 = trans (SecondStaysSame x k c prf) (prf1)
