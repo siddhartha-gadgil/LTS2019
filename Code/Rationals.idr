@@ -2,6 +2,8 @@ module Rationals
 
 import Data.ZZ
 
+%access public export
+
 Pair : Type
 Pair = (Integer, Integer)
 
