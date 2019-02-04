@@ -23,7 +23,7 @@ Accessnum:Vect n (Vect n Nat)->(i:Nat)->(j:Nat)-> Nat
 Accessnum xs i j = case Access xs i j of
                     Nothing => 0
                     (Just x) => x
-|||A type inhabited if only if vertices i and j are connected
+|||A type inhabited if only if vertices i and j are connected by an edge
 data Edge :(am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat)->Type where
     Thereisanedge :(am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat)->(Accessnum am i j) =1 ->Edge am i j
 |||A type inhabited iff vertices i and j are connected by a path
@@ -82,8 +82,29 @@ Connectedcompos{n} am xs ys = case Complement [1..n] xs of
                                 [] => ys
                                 (x :: zs) => Connectedcompos am (xs++(Dfs am x [x])) ((Dfs am x [x])::ys)
 
-|||Gives the connected components of a graph as a list of lists                                
+|||Gives the connected components of a graph as a list of lists
 ConnectedComponents :  (am:(Vect n (Vect n Nat)))->(List (List Nat))
 ConnectedComponents am = Connectedcompos am [] []
 
+
+
+|||Modified depth first search which searches for a path between i and k. When there is no path, it behaves just like a depth first search from i
+Dfss :(am:(Vect n (Vect n Nat)))-> (i:Nat) ->(k:Nat)->(Found:Bool)->List Nat->List Nat->((List Nat,List Nat),Bool)
+Dfss am i k True path visit = ((path,visit),True)
+Dfss am i k False path visit = case Complement (Adjacentlist am i) visit of
+                     []=>(([],visit),False)
+                     (j::ys)=>(case (k==j) of
+                       True =>(((k::path),(j::visit)),True)
+                       False =>  let dps =(Dfss am j k False (j::path) (j::visit)) in (let pathn = (case (snd(dps)) of
+                                                                                             False => path
+                                                                                             True => (fst (fst (dps)))) in (Dfss am i k  (snd(dps)) pathn (snd (fst (dps))))))
+
+
+||| Ruturns a path between 2 vertices and returns Nothing if there is no path.
+FindPath :(am:(Vect n (Vect n Nat)))->(k:Nat)->(i:Nat)->Maybe (List Nat)
+FindPath am k i = case (k==i) of
+                  True => Just [i]
+                  False =>   (case isInList k (Dfs am  i [i])  of
+                     False => Nothing
+                     True => Just (fst (fst (Dfss am i k False [i] [i]))))
 
