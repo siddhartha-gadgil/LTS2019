@@ -2,35 +2,8 @@ module sorting_with_proof
 
 import Data.Vect
 import Data.Fin
-
-||| Vectors of Natural numbers
-total
-NatVect : Nat -> Type 
-NatVect n = Vect n Nat
-
-||| The type Fin n -> Fin n
-total
-F_Fin : Nat -> Type
-F_Fin n = (Fin n) -> (Fin n) 
-
-||| Identity function
-total
-Idt : (t : Type) -> t -> t
-Idt s a = a
-
-||| The type of permutation/bijection of {1,...,n}. 
-||| Notice that for finite sets one sided inverse is enough. 
-||| Also I have a strong feeling that using univalence the last part of the definition is 
-||| equivalent to saying that (g . f) and Idt are equivalent
-total
-Perm : Nat -> Type
-Perm n = ( f : F_Fin n ** ( g : F_Fin n ** ((a : (Fin n)) -> ((g (f a)) = a))))
-
-||| Second definition of perm. I have strong feeling that using univalence this is equivalent
-||| to the first definition.
-total
-Perm2 : Nat -> Type
-Perm2 n = ( f : F_Fin n ** ( g : F_Fin n ** ((g . f) = (Idt (Fin n)))))
+import permutation
+import perm_cons
 
 data Finite : Nat -> Type where
     FinZ : (k : Nat) -> (Finite (S k))
@@ -71,6 +44,7 @@ SortProof (S k) v l = LTE (Vect.index (pred l) v) (Vect.index l v)
 ||| Type of the sorted vectors.
 SortedVect : Type
 SortedVect = (n : Nat ** (v : (NatVect n)  ** ((k : Fin n) -> (SortProof n v k)))) 
+
 
 
 

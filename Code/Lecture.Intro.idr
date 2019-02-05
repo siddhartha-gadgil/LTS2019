@@ -48,3 +48,6 @@ idNat = \x => x
 
 loop: Nat -> Nat
 loop k = loop (S k)
+
+isFactor : Nat -> Nat -> Type
+isFactor m n = (k : Nat ** (m * k = n))

@@ -1,7 +1,5 @@
 module Evens
 
-% access public export
-
 public export
 data IsEven : Nat -> Type where
   ZEven : IsEven 0
@@ -17,6 +15,7 @@ half : (n: Nat) -> IsEven n -> Nat
 half Z ZEven = 0
 half (S (S k)) (SSEven k x) = S (half k x)
 
+public export
 double: Nat -> Nat
 double Z = Z
 double (S k) = S (S (double k))
