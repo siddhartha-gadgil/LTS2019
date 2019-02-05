@@ -1,11 +1,25 @@
 module Linear
 
+import Data.ZZ
 import Rationals
 import Data.Vect
 
 data SolExists : Type where
   YesExists : SolExists
   DNExists : SolExists
+
+ZeroSum: (a: Nat) -> (b: Nat) -> (a = 0) -> (b = 0) -> (a + b = 0)
+ZeroSum Z Z Refl Refl = Refl
+
+triviality: (a: Nat) -> (b = 0) -> (a*b=0)
+triviality a prf = trans (cong {f = \x => a*x} (prf)) (multZeroRightZero(a))
+
+triviality2: (a: Nat) -> (0*a=0)
+triviality2 a = Refl
+
+ZeroProof: (a: Nat) -> (b: Nat) -> (b = 0) -> (0*a + 1*b = 0)
+ZeroProof Z Z Refl = Refl
+ZeroProof (S k) Z Refl = Refl
 
 --Solving a linear equation ax + b = 0
 --zcase and ncase are proofs to be provided.
