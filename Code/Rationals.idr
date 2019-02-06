@@ -1,6 +1,6 @@
 module Rationals
 
-import Data.ZZ
+import ZZ
 
 %access public export
 
@@ -9,6 +9,12 @@ Pair = (Integer, Integer)
 
 ZZPair : Type
 ZZPair = (ZZ, ZZ)
+
+ZZtoDb : ZZ -> Double
+ZZtoDb x = cast{from=Integer}{to=Double} (cast{from=ZZ}{to=Integer} x)
+
+DbtoZZ : Double -> ZZ
+DbtoZZ x = cast{from=Integer}{to=ZZ} (cast{from=Double}{to=Integer} x)
 
 apZZ : (f: ZZ -> ZZ) -> (n: ZZ) -> (m: ZZ) -> n = m -> f n = f m
 apZZ f m m Refl = Refl
@@ -80,14 +86,18 @@ Division x a y b c = MultiplyRationals x a (MultInverse y b c) b
 
 --To prove that the SimplifyRational works, we can just check if the output is equal to the input
 -- To be done
-simplifyRational : (x : Pair) -> Pair
+
+simplifyRational : (x : ZZPair) -> ZZPair
 simplifyRational (a, b) = (sa, sb) where
-  sa = cast {from=Double} {to=Integer} (da / g) where
-    da = cast {from=Integer} {to=Double} a
-    g = cast {from=Integer} {to=Double} (gccd (a,b))
-  sb = cast {from=Double} {to=Integer} (db / g) where
-    db = cast {from=Integer} {to=Double} b
-    g = cast {from=Integer} {to=Double} (gccd (a,b))
+  sa = DbtoZZ (da / g) where
+    da = ZZtoDb a
+    g = cast {from=Integer} {to=Double}
+      (gccd (cast {from=ZZ} {to=Integer}a,cast {from=ZZ} {to=Integer}b))
+  sb = DbtoZZ (db / g) where
+    db = ZZtoDb b
+    g = cast {from=Integer} {to=Double}
+      (gccd (cast {from=ZZ} {to=Integer}a,cast {from=ZZ} {to=Integer}b))
+
 
 --Above, I will need to supply a proof that the GCD divides the two numbers. Then, the function defined above will produce the rational in simplified form.
 
