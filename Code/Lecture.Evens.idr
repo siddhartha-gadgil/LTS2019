@@ -73,3 +73,17 @@ oneOddFamily (S (S k)) = ()
 oneOddProof : (n : Nat) -> IsEven n -> oneOddFamily n
 oneOddProof Z ZEven = ()
 oneOddProof (S (S k)) (SSEven k x) = ()
+
+-- Examples
+
+halfRoof3 : Nat
+halfRoof3 = halfRoof 3 -- 2 : Nat
+
+-- Equality added
+
+thmAdd : (a: Nat) -> (b: Nat) -> (a = 0) -> (b = 0) -> (a + b = 0)
+thmAdd Z Z Refl Refl = Refl
+
+
+symmEq : (x : Type) -> (a: x) -> (b: x) -> (a = b) -> (b = a)
+symmEq x b b Refl = Refl

@@ -2,7 +2,18 @@ module Graphs
 
 import Data.Vect
 
---This works only for simple undirected graphs. and whenever I use "am" it means adjacency matrix. Please give a symmetric matrix for am
+{-This program works only for simple undirected graphs. and whenever I use "am" it means adjacency matrix.
+Please give a symmetric matrix for am. The main functions in this program are
+EdgeisPath
+ConnectedComponents
+PathWithProof
+AdjacentsAreConnected
+Here are some example graphs that can be used to check these functions
+:let exv = the (Vect 6 (Vect 6  Nat)) [[0,1,1,0,0,0],[1,0,1,0,0,0],[1,1,0,0,0,0],[0,0,0,0,1,0],[0,0,0,1,0,1],[0,0,0,0,1,0]]
+:let exv = the (Vect 6 (Vect 6  Nat)) [[0,1,1,0,0,0],[1,0,1,1,0,0],[1,1,0,0,0,1],[0,1,0,0,1,0],[0,0,0,1,0,1],[0,0,1,0,1,0]]
+:let exv = the (Vect 6 (Vect 6  Nat)) [[0,1,1,0,0,0],[1,0,1,1,0,0],[1,1,0,0,0,0],[0,1,0,0,1,0],[0,0,0,1,0,0],[0,0,0,0,0,0]]
+:let exv = the (Vect 8 (Vect 8  Nat)) [[0,1,1,0,0,0,0,0],[1,0,1,0,1,0,0,1],[1,1,0,1,0,0,0,0],[0,0,1,0,1,0,1,0],[0,1,0,1,0,1,1,0],[0,0,0,0,1,0,1,0],[0,0,0,1,1,1,0,0],[0,1,0,0,0,0,0,0]]
+-}
 |||Checks whether 2 numbers are equal and returns nothing or a proof of equality
 checkEqNat: (num1:Nat)->(num2:Nat)->Maybe (num1=num2)
 checkEqNat Z Z = Just Refl
@@ -23,14 +34,14 @@ Accessnum:Vect n (Vect n Nat)->(i:Nat)->(j:Nat)-> Nat
 Accessnum xs i j = case Access xs i j of
                     Nothing => 0
                     (Just x) => x
-|||A type inhabited if only if vertices i and j are connected
+|||A type inhabited if only if vertices i and j are connected by an edge
 data Edge :(am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat)->Type where
     Thereisanedge :(am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat)->(Accessnum am i j) =1 ->Edge am i j
 |||A type inhabited iff vertices i and j are connected by a path
 data Path : (am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat)->Type where
   Self : (i:Nat)->Path am i i
   Adjacent : (Edge am i j) ->Path am i j
-  Thereispath: (am:(Vect n (Vect n Nat)))-> (i:Nat)->(k:Nat) ->Path am i k->(Edge am k j)->Path am i j
+  Thereispath: (am:(Vect n (Vect n Nat)))-> (i:Nat)->(k:Nat) ->Path am i k->(Edge am j i)->Path am j k
 |||Returns Nothing if there is no edge or a proof that Accessnum am i j =1
 Isthereanedge: (am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat)->Maybe ( (Accessnum am i j ) = 1)
 Isthereanedge am i j = case Access am i j of
@@ -43,8 +54,12 @@ AdjacentsAreConnected:(am:(Vect n (Vect n Nat)))-> (i:Nat)->(j:Nat)->Maybe (Path
 AdjacentsAreConnected am i j = case Isthereanedge am i j of
                                     Nothing => Nothing
                                     (Just x) => Just (Adjacent (Thereisanedge am i j x))
+|||Proves that adjacent vertices (ie vertices that have an edge between them are connected)
+EdgeisPath :(am:(Vect n (Vect n Nat)))-> (Edge am i j)->Path am i j
+EdgeisPath am (Thereisanedge am i j prf) = Adjacent (Thereisanedge am i j prf)
 
 
+|||Checks whether a Natural number is in the list or not
 isInList  : (i:Nat)->List Nat ->Bool
 isInList i [] = False
 isInList i (x :: xs) = case (x==i) of
@@ -82,8 +97,50 @@ Connectedcompos{n} am xs ys = case Complement [1..n] xs of
                                 [] => ys
                                 (x :: zs) => Connectedcompos am (xs++(Dfs am x [x])) ((Dfs am x [x])::ys)
 
-|||Gives the connected components of a graph as a list of lists                                
+|||Gives the connected components of a graph as a list of lists
 ConnectedComponents :  (am:(Vect n (Vect n Nat)))->(List (List Nat))
 ConnectedComponents am = Connectedcompos am [] []
 
 
+
+|||Modified depth first search which searches for a path between i and k. When there is no path, it behaves just like a depth first search between
+Dfss :(am:(Vect n (Vect n Nat)))-> (i:Nat) ->(k:Nat)->(Found:Bool)->List Nat->List Nat->((List Nat,List Nat),Bool)
+Dfss am i k True path visit = ((path,visit),True)
+Dfss am i k False path visit = case Complement (Adjacentlist am i) visit of
+                     []=>(([],visit),False)
+                     (j::ys)=>(case (k==j) of
+                       True =>(((k::path),(j::visit)),True)
+                       False =>  let dps =(Dfss am j k False (j::path) (j::visit)) in (let pathn = (case (snd(dps)) of
+                                                                                             False => path
+                                                                                             True => (fst (fst (dps)))) in (Dfss am i k  (snd(dps)) pathn (snd (fst (dps))))))
+
+
+||| Ruturns a path between 2 vertices and returns Nothing if there is no path.
+FindPath :(am:(Vect n (Vect n Nat)))->(k:Nat)->(i:Nat)->Maybe (List Nat)
+FindPath am k i = case (k==i) of
+                  True => Just [i]
+                  False =>   (case isInList k (Dfs am  i [i])  of
+                     False => Nothing
+                     True => Just (fst (fst (Dfss am i k False [i] [i]))))
+|||Gives the proof that there is a path between i and k when the path is not just one vertex long
+Proofcon2 :(am:(Vect n (Vect n Nat)))-> List Nat -> (i:Nat)->(k:Nat)-> Path am i k
+Proofcon2 am [j,p] i k = case checkEqNat p k of
+                           (Just Refl) => (case AdjacentsAreConnected am i k of
+                                                (Just x) => x)
+Proofcon2 am (x::y::z::xs) i k =case AdjacentsAreConnected am i y of
+                                                           (Just (Adjacent x)) => (let loop = Proofcon2 am (y::z::xs) y k in
+                                                                 Thereispath am y k loop x )
+
+
+
+
+|||Gives proof for 1 vertex long paths and calls proofcon2 when there are at least 2 vertices in the path
+Proofcon :(am:(Vect n (Vect n Nat)))-> List Nat -> (i:Nat)->(k:Nat)-> Path am i k
+Proofcon am xs i k = case checkEqNat i k of
+                          (Just Refl) => Self i
+                          Nothing => Proofcon2 am xs i k
+|||Gives a path with proof when there is a path between k and i and Nothing when there is no path.
+PathWithProof :(am:(Vect n (Vect n Nat)))->(k:Nat)->(i:Nat)->Maybe((List Nat),Path am k i )
+PathWithProof am k i = case FindPath am k i of
+                        Nothing => Nothing
+                        Just x => Just (x,Proofcon am x k i)
