@@ -25,10 +25,16 @@ total
 Group_id : (grp : Type) -> ((*) : grp -> grp -> grp) -> (IsGroup grp (*)) -> (IdentityExists grp (*))
 Group_id grp (*) (pfAss,(pfId,pfInv)) = pfId
 
+||| Generates inverses with proofs
+total
+Inv_with_pf : (grp : Type) -> ((*) : grp -> grp -> grp) -> (pfgrp : IsGroup grp (*)) -> (x : grp) 
+              -> (y : grp ** (IsInverse grp (*) (fst (snd (snd pfgrp))) x y))
+Inv_with_pf grp (*) pfgrp x = (snd (snd (snd pfgrp))) x
+
 ||| Generates inverses
 total
 Inv: (grp : Type) -> ((*) : grp -> grp -> grp) -> IsGroup grp (*) -> (x: grp) -> grp
-Inv grp (*) y x = fst(snd(snd(snd(y))) x)
+Inv grp (*) pf x = fst(snd(snd(snd(pf))) x)
 
 ||| Given a group, the type of proofs that it is abelian
 total
