@@ -2,6 +2,9 @@ module Bezout
 
 import Data.Vect
 import Data.Fin
+import ZZ
+
+%access public export
 
 {-Copied from Chinmaya's code. Gives quotient and remainder on divison-}
 {-This just computes the qoutient and the remainder, but it doesn't prove that they indeed satisfy the conditions a = b*q + r and r < b -}
@@ -20,26 +23,25 @@ rem (S k) b = case (lte (S (S k)) b) of
 Let rk = ak*r0 + bk*r1 where r0 and r1 are the original inputs.Correspondingly  rsk = ask*r0 + bsk*r1 where sk = k+1
 Then the I am going to the next step in the Euclid algorithm and changing the coefficients.
 These formulas can be easily derived.-}
-Euclnos: (Int,Int,Int,Int,Int,Int)->(Int,Int,Int,Int,Int,Int)
+Euclnos: (Integer,Integer,Integer,Integer,Integer,Integer)->(Integer,Integer,Integer,Integer,Integer,Integer)
 Euclnos (rk, rsk ,ak ,ask, bk ,bsk) = (rsk,rssk,ask,assk,bsk,bssk) where
   rssk = cast(snd (Eucl (cast rk) (cast rsk)))
   bssk =bk-bsk* (cast(fst (Eucl (cast rk) (cast rsk))))
   assk =ak-ask* (cast(fst (Eucl (cast rk) (cast rsk))))
 {-Does the Euclnos repeatedy until the remainder is zero. Then the previous remainder is the GCD.-}
-Bezouttuple: (Int,Int,Int,Int,Int,Int)->(Int,Int,Int,Int,Int,Int)
+Bezouttuple: (Integer,Integer,Integer,Integer,Integer,Integer)->(Integer,Integer,Integer,Integer,Integer,Integer)
 Bezouttuple (rk, rsk ,ak ,ask, bk, bsk) = case rsk of
                                         0 => (rk, rsk, ak, ask, bk, bsk)
                                         _ => (Bezouttuple (Euclnos (rk ,rsk, ak ,ask ,bk ,bsk)))
-{-Returns 2 particular integers out of a 6 tuple-}
-returnab: (Int,Int,Int,Int,Int,Int)->(Int,Int)
-returnab (a ,b ,c ,d, e ,f)  = (c,e)
+{-Returns 2 particular Integers out of a 6 tuple-}
+returnab: (Integer,Integer,Integer,Integer,Integer,Integer)->(ZZ,ZZ)
+returnab (a ,b ,c ,d, e ,f)  = ((cast c),(cast e))
 {-Returns the Bezout coefficients-}
-Bezout : Nat ->Nat ->(Int, Int)
+Bezout : Nat ->Nat -> (ZZ, ZZ)
 Bezout k j =  (returnab(Bezouttuple((cast k) , (cast j),1, 0 ,0 ,1)))
 
 {-}
 just the functions to compute the GCD in two different ways.
-{-}
 
 gcd2 : Nat -> Nat -> Nat
 gcd2 a b = (cast (((cast a)*(snd (Bezout a b))) + ((cast b)*(fst (Bezout a b)))))
@@ -48,7 +50,6 @@ gcdab : Nat -> Nat -> Nat
 gcdab b Z = b
 gcdab a b = gcdab b (snd (Eucl a b))
 
-{-}
 given below are the auxilary functions to the proof that given a and b, there exist q and r such that a = b*q + r.
 The algorithm above just computes these two numbers, but it doesn't prove that (a = b*q + r and r < b)
 
