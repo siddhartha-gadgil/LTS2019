@@ -15,6 +15,7 @@ half : (n: Nat) -> IsEven n -> Nat
 half Z ZEven = 0
 half (S (S k)) (SSEven k x) = S (half k x)
 
+public export
 double: Nat -> Nat
 double Z = Z
 double (S k) = S (S (double k))
@@ -50,19 +51,24 @@ nSnNotBothEven Z ZEven ZEven impossible
 nSnNotBothEven Z ZEven (SSEven _ _) impossible
 nSnNotBothEven (S (S k)) (SSEven k x) (SSEven (S k) y) = nSnNotBothEven k x y
 
-even: Nat -> Bool
-even Z = True
-even (S k) = not (even k)
+notNandSnEven : (n: Nat) -> (IsEven n , IsEven (S n)) -> Void
+notNandSnEven n (a, b) = nSnNotBothEven n a b
 
-isTrue : Bool -> Type
-isTrue True = Unit
-isTrue False = Void
+apNat : (f: Nat -> Nat) -> (n: Nat) -> (m: Nat) -> n = m -> f n = f m
+apNat f m m Refl = Refl
 
-oneOddFamily: Nat -> Type
+
+byTwo : (n: Nat) -> IsEven n -> (k: Nat ** double k = n)
+byTwo Z ZEven = (0 ** Refl)
+byTwo (S (S k)) (SSEven k x) = step where
+  step = case (byTwo k x) of
+            (m ** pf) => ((S m) ** apNat (\l => S (S l)) (double m) k pf)
+
+oneOddFamily : Nat -> Type
 oneOddFamily Z = ()
 oneOddFamily (S Z) = Void
 oneOddFamily (S (S k)) = ()
 
-oneOddProof : (n: Nat) -> IsEven n -> oneOddFamily n
+oneOddProof : (n : Nat) -> IsEven n -> oneOddFamily n
 oneOddProof Z ZEven = ()
 oneOddProof (S (S k)) (SSEven k x) = ()
