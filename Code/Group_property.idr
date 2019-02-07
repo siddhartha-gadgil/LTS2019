@@ -2,6 +2,7 @@ module Group_property
 
 import Monoid
 import Group
+import congruence
 
 %access public export
 
@@ -49,8 +50,28 @@ Group_property_4 grp (*) pfgrp a b c pfEq = let pfid = (fst (snd (snd pfgrp)))
                                                 (rewrite (pfAss a_inv a c) in 
                                                 (Group_property_3 grp (*) pfgrp a_inv (a*b) (a*c) pfEq))))))              
                                                 
-                                                
-                                                
+||| Property 5 - b = c implies b*a = c*a 
+total
+Group_property_5 : (grp : Type) -> ((*) : grp -> grp -> grp) -> (pfgrp : IsGroup grp (*)) ->
+                   (a : grp) -> (b : grp) -> (c : grp) -> (b = c) -> ( (b*a) = (c*a) )
+Group_property_5 grp (*) pfgrp a b c pfEq = (congruence grp grp b c (\x : grp => x*a) pfEq) 
+
+||| Property 6 - b*a = c*a implies b = c
+total
+Group_property_6 : (grp : Type) -> ((*) : grp -> grp -> grp) -> (pfgrp : IsGroup grp (*)) ->
+                   (a : grp) -> (b : grp) -> (c : grp) -> (b*a = c*a) -> (b = c)
+Group_property_6 grp (*) pfgrp a b c pfEq = let pfid = (fst (snd (snd pfgrp))) 
+                                                a_inv = fst(Inv_with_pf grp (*) pfgrp a)
+                                                pf_inv = snd(Inv_with_pf grp (*) pfgrp a)
+                                                pfAss = fst pfgrp
+                                                in
+                                                (rewrite (sym (fst ((snd pfid) b))) in  
+                                                (rewrite (sym (fst ((snd pfid) c))) in 
+                                                (rewrite (sym (fst pf_inv)) in 
+                                                (rewrite (sym (pfAss b a a_inv)) in 
+                                                (rewrite (sym (pfAss c a a_inv)) in 
+                                                (Group_property_5 grp (*) pfgrp a_inv (b*a) (c*a) pfEq))))))              
+
                                                 
                                                 
                                                 
