@@ -10,7 +10,8 @@ gcdAux (S right) (S left) (LTESucc x) = ?EuclidIndAux_rhs_2
 switchLTE : (n: Nat) -> (m: Nat) -> (contra : (LTE n m) -> Void) -> LTE m n
 switchLTE Z m contra = void (contra (the (LTE Z m) LTEZero))
 switchLTE (S k) Z contra = LTEZero
-switchLTE (S k) (S j) contra = ?switchLTE_rhs_3
+switchLTE (S k) (S j) contra = LTESucc (switchLTE k j baseContra) where
+  baseContra = \pf : LTE k j => contra (LTESucc pf)
 
 
 {-Copied from Chinmaya's code. Gives quotient and remainder on divison-}
