@@ -35,3 +35,12 @@ recFin : (x: Type) ->
 recFin x base _ (S k) FZ = base k
 recFin x base step (S k) (FS y) = step k y previous where
   previous = recFin x base step k y
+
+-- The Ackermann function
+
+ack : Nat -> Nat -> Nat
+ack = recNat (Nat -> Nat) outerBase outerStep where
+  outerBase = \n => S n
+  outerStep =
+    \n : Nat => \ackm : Nat -> Nat =>
+      (recNat Nat (ackm (S Z)) (\n => \prev => ackm prev ))
