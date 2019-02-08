@@ -1,18 +1,14 @@
-module Graphs
-
+module Graphs1
 import Data.Vect
 
+%access public export
+
 {-This program works only for simple undirected graphs. and whenever I use "am" it means adjacency matrix.
-Please give a symmetric matrix for am. The main functions in this program are
+Please give a symmetric matrix for am. The important functions in this program are
 EdgeisPath
 ConnectedComponents
 PathWithProof
 AdjacentsAreConnected
-Here are some example graphs that can be used to check these functions
-:let exv = the (Vect 6 (Vect 6  Nat)) [[0,1,1,0,0,0],[1,0,1,0,0,0],[1,1,0,0,0,0],[0,0,0,0,1,0],[0,0,0,1,0,1],[0,0,0,0,1,0]]
-:let exv = the (Vect 6 (Vect 6  Nat)) [[0,1,1,0,0,0],[1,0,1,1,0,0],[1,1,0,0,0,1],[0,1,0,0,1,0],[0,0,0,1,0,1],[0,0,1,0,1,0]]
-:let exv = the (Vect 6 (Vect 6  Nat)) [[0,1,1,0,0,0],[1,0,1,1,0,0],[1,1,0,0,0,0],[0,1,0,0,1,0],[0,0,0,1,0,0],[0,0,0,0,0,0]]
-:let exv = the (Vect 8 (Vect 8  Nat)) [[0,1,1,0,0,0,0,0],[1,0,1,0,1,0,0,1],[1,1,0,1,0,0,0,0],[0,0,1,0,1,0,1,0],[0,1,0,1,0,1,1,0],[0,0,0,0,1,0,1,0],[0,0,0,1,1,1,0,0],[0,1,0,0,0,0,0,0]]
 -}
 |||Checks whether 2 numbers are equal and returns nothing or a proof of equality
 checkEqNat: (num1:Nat)->(num2:Nat)->Maybe (num1=num2)
@@ -103,7 +99,7 @@ ConnectedComponents am = Connectedcompos am [] []
 
 
 
-|||Modified depth first search which searches for a path between i and k. When there is no path, it behaves just like a depth first search between
+|||Modified depth first search which searches for a path between i and k. When there is no path, it behaves just like a depth first search from i
 Dfss :(am:(Vect n (Vect n Nat)))-> (i:Nat) ->(k:Nat)->(Found:Bool)->List Nat->List Nat->((List Nat,List Nat),Bool)
 Dfss am i k True path visit = ((path,visit),True)
 Dfss am i k False path visit = case Complement (Adjacentlist am i) visit of
