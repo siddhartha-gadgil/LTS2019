@@ -2,6 +2,7 @@ module Basen
 
 import Data.Fin
 
+%access public export
 --Fin to Nat
 tonatFin: (n: Nat) -> Fin(n) -> Nat
 tonatFin (S k) FZ = Z
