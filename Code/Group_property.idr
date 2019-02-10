@@ -59,7 +59,7 @@ total
 Group_property_5 : (grp : Type) -> ((*) : grp -> grp -> grp) -> (pfgrp : IsGroup grp (*)) ->
                    (a : grp) -> (b : grp) -> (c : grp) -> (b = c) -> ( (b*a) = (c*a) )
 Group_property_5 grp (*) pfgrp a b c pfEq = (congruence grp grp b c (\x : grp => x*a) pfEq) 
-{-
+
 ||| Property 6 - b*a = c*a implies b = c
 total
 Group_property_6 : (grp : Type) -> ((*) : grp -> grp -> grp) -> (pfgrp : IsGroup grp (*)) ->
@@ -75,7 +75,7 @@ Group_property_6 grp (*) pfgrp a b c pfEq = let pfid = (fst (snd (snd pfgrp)))
                                                 (rewrite (sym (pfAss b a a_inv)) in 
                                                 (rewrite (sym (pfAss c a a_inv)) in 
                                                 (Group_property_5 grp (*) pfgrp a_inv (b*a) (c*a) pfEq))))))
--}  
+
 ||| Auxilliary proof 1 - Two idenitities mentioned in the definition of the group 
 ||| (one in (fst (snd pfgrp)) another in (fst (snd (snd pfgrp))) are equal.
 total
