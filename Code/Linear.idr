@@ -1,5 +1,7 @@
 module Linear
 
+%access public export
+
 import ZZ
 import Rationals
 import Data.Vect
