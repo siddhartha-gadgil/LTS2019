@@ -1,5 +1,8 @@
 module Linear.MultiSolver
 
+--To make sure that all imports work, load in idris as
+--   idris Linear.MultiSolver.idr -p contrib
+
 import ZZ
 import Data.Matrix.Numeric
 import Data.Fin
@@ -170,6 +173,8 @@ Solving a system of n linear equations:
 
 -}
 
+--Solves a system ax = b.
+--The operation <> is matrix multiplication, defined in Matrix.Numeric
 solve : (n : Nat) -> (a : Matrix n n ZZPair) -> (b : Matrix n 1 ZZPair) ->
   Matrix n 1 ZZPair
 solve n a b = (invMat a) <> b
