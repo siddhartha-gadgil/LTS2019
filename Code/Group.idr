@@ -34,7 +34,8 @@ Inv_with_pf grp (*) pfgrp x = (snd (snd (snd pfgrp))) x
 ||| Generates inverses
 total
 Inv: (grp : Type) -> ((*) : grp -> grp -> grp) -> IsGroup grp (*) -> (x: grp) -> grp
-Inv grp (*) pf x = fst(snd(snd(snd(pf))) x)
+Inv grp (*) pf x = fst (Inv_with_pf grp (*) pf x)
+-- fst(snd(snd(snd(pf))) x)
 
 ||| Given a group, the type of proofs that it is abelian
 total
