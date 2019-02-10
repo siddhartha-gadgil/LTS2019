@@ -8,12 +8,16 @@ data SolExists : Type where
   YesExists : SolExists
   DNExist : SolExists
 
+isFactor : Nat -> Nat -> Type
+isFactor m n = (k : Nat ** (m * k = n)) -- will be useful in solving Diophantine equations:
+                                        -- if the denominator is a factor of the numerator, there is an integer solution
+
 is_a_zero: (a: ZZ) -> Bool
 is_a_zero (Pos Z) = True
 is_a_zero (Pos (S k)) = False
 is_a_zero (NegS k) = False
 
-ApZZ : (f: ZZ -> ZZ)-> n = m -> f n = f m
+ApZZ : (f: ZZ -> ZZ)-> n = m -> f n = f m -- like apNat, but for ZZ
 ApZZ f Refl = Refl
 
 -- Helper functions for the case ax = 0 --
@@ -62,7 +66,32 @@ eqSolver a b prf = case (is_a_zero(a)) of
   (True) => Right (DNExist)
   (False) => Left ((-b, a) ** (YesExists, (SolutionProof a b))) -- The solution is (-b/a), a rational number, with proof.
 
+-- Helper functions for ax + b = c
+
+helper1: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a*(c+(-b))= a*c + a*(-b))
+helper1 a b c = multDistributesOverPlusRightZ (a) (c) (-b)
+
+helper2: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> ( a*(c-b) + b*a = a*c+ a*(-b)+ b*a )
+helper2 a b c = ApZZ (\x => x+ b*a) (helper1 (a) (b) (c))
+
+helper3: (a: ZZ) -> (b: ZZ) -> (a*(-b)+b*a=0)
+helper3 a b = trans (trans (triviality5 a b) (triviality6 a b)) (triviality7 a b)
+
+helper4: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a*c + a*(-b) + b*a = a*c)
+helper4 a b c = ?hole -- There is some issue here with Idris ; no matter what, it doesn't seem to accept this equality,
+                      -- giving odd errors. This may be due to the fact that three numbers are being added, instead of two,
+                      -- as done previously.
+
+
+GeneralProof: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> ( a*(c-b) + b*a = a*c )
+GeneralProof a b c = trans (helper2 a b c) (helper4 a b c)
+
 -- Solving the linear equation ax + b = c (2x +3 = 7, for example) over the rationals
 
-SubtractC: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a*x + b = c) -> (a*x + b + (-c) = 0) -- a lemma, that a solution of ax+b=c is also a solution of ax + b+(-c)=0
-SubtractC a b c prf = trans (ApZZ (\x => x + (-c)) prf) (plusNegateInverseLZ(c))
+GeneralEqSolver: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: ZZNotZero a) -> (b0: ZZNotZero b) -> (c0: ZZNotZero c) ->
+(x : ZZPair ** (SolExists, a*(fst x) + b*(snd x) = (snd x)*c))
+GeneralEqSolver a b c a0 b0 c0 = ( ( (c-b) , a ) ** (YesExists, (GeneralProof a b c) )) -- Solves the equation with proof
+
+-- Now, we can use the rational solution of the linear equation ax + b = c to check whether this equation has an integer
+-- solution; if it did, the denominator of the rational solution would divide the numerator. If it didn't, the equation
+-- would have no solutions in the integers.
