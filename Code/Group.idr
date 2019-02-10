@@ -23,7 +23,7 @@ IsGroup grp (*) = (Associative grp (*), (IdentityExists grp (*), InverseExists g
 ||| Given a group gives it's identity with proof
 total
 Group_id : (grp : Type) -> ((*) : grp -> grp -> grp) -> (IsGroup grp (*)) -> (IdentityExists grp (*))
-Group_id grp (*) (pfAss,(pfId,pfInv)) = pfId
+Group_id grp (*) pfgrp = (fst (snd pfgrp))
 
 ||| Generates inverses with proofs
 total
