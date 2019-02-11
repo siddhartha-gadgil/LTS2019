@@ -1,0 +1,82 @@
+commit 5071a3bbe4ae3da0e2013e105ab3c20ae5aa6752
+Author: SS-C4 <srirams@iisc.ac.in>
+Date:   Sun Feb 10 09:16:59 2019 +0530
+
+    Added usage instructions
+
+commit bd1a129573b5308bcdd816ae828d01b50ca1fc5c
+Merge: 74a47fb 7c88b92
+Author: SS-C4 <srirams@iisc.ac.in>
+Date:   Sun Feb 10 09:13:41 2019 +0530
+
+    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
+
+commit 74a47fb42abdeb7281f7524a1460922cb7fb8bff
+Author: SS-C4 <srirams@iisc.ac.in>
+Date:   Sun Feb 10 09:09:13 2019 +0530
+
+    Changed input type to ZZPair and implemented a solver for a system of linear equations
+
+commit 228398917996fa51a64aa4eb5d312d59dc796a63
+Author: SS-C4 <srirams@iisc.ac.in>
+Date:   Sat Feb 9 21:42:41 2019 +0530
+
+    Defined inverses for matrices of ZZPairsand framework for solving systems of linear equations
+
+commit d5660fbfffb7a1514c2a90edde941f1d42487cfe
+Merge: 62a2c8e 84c75e3
+Author: SS-C4 <srirams@iisc.ac.in>
+Date:   Thu Feb 7 06:39:12 2019 +0530
+
+    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
+
+commit 62a2c8e960d6ecf9956b21e8d3037b0f71ac3521
+Author: SS-C4 <srirams@iisc.ac.in>
+Date:   Thu Feb 7 06:38:16 2019 +0530
+
+    Minor changes in Bezout (to ZZ) and almost complete proof of gcd dividing both a and b.
+
+commit ca6cffec7ef5c64102fa358f54dfafc2ad32fbec
+Merge: 4c3f412 2fb9a6f
+Author: SS-C4 <srirams@iisc.ac.in>
+Date:   Wed Feb 6 05:58:00 2019 +0530
+
+    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
+
+commit 4c3f41272d4ae7351a8dd44ba1012ed612f8a947
+Author: SS-C4 <srirams@iisc.ac.in>
+Date:   Wed Feb 6 05:56:57 2019 +0530
+
+    update simplifyRational and aux functions
+
+commit 6be8c52558546ca254c4b1bc498e3b257d4ca280
+Author: SS-C4 <srirams@iisc.ac.in>
+Date:   Wed Feb 6 05:55:44 2019 +0530
+
+    added ZZ.idr and converted some functions to ZZ
+
+commit 55bd91abd5b018088f85c3af26941d2d7a788f11
+Author: SS-C4 <srirams@iisc.ac.in>
+Date:   Mon Feb 4 13:04:20 2019 +0530
+
+    Added solver for single equation, also checking if the solution exists.
+    Proofs TBD.
+
+commit c92a54c3a915e40b049eabfa008c3bb482ca878a
+Author: SS-C4 <srirams@iisc.ac.in>
+Date:   Tue Jan 29 13:59:56 2019 +0530
+
+    Shifted Rationals.idr to Code/
+
+commit 20442039fe1f17278007c319120729b7755a2c89
+Author: SS-C4 <srirams@iisc.ac.in>
+Date:   Mon Jan 28 07:41:05 2019 +0530
+
+    Added equality type and simplifyRational
+
+commit f3333ebc609f4807cebee152a4b4691fdff298bb
+Author: SS-C4 <srirams@iisc.ac.in>
+Date:   Sun Jan 27 22:59:07 2019 +0530
+
+    Added function to simplify rationals and to generate inverses of rationals.
+    Proofs still remain to be done. Boolean version of equality implemented.
