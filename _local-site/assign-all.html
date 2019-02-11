@@ -12,6 +12,10 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/extras.css" rel="stylesheet">
 
+      <link rel="stylesheet" href="/css/zenburn.css" rel="stylesheet">
+        <script src="/js/highlight.js" rel="stylesheet"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -67,6 +71,10 @@ messageStyle: "none",
                 <li class="dropdown-header"><strong>Assignments</strong></li>
                 
                 
+                <li>
+                  <a href="/assignments/odds.html"> Odds and Evens</a>
+                </li>
+                
             </ul>
           </li>
           <li class="dropdown">
@@ -80,6 +88,52 @@ messageStyle: "none",
 
           </ul>
         </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Reports<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li class="dropdown-header"><strong>Reports</strong></li>
+              
+              <li>
+                <a href="/reports/adithya.html"> Adithya Upadhyay</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ar.html"> Abhishek Rajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/arka.html"> Arka Ghosh</a>
+              </li>
+              
+              <li>
+                <a href="/reports/chinmaya.html"> Chinmaya Kausik</a>
+              </li>
+              
+              <li>
+                <a href="/reports/nabarun.html"> Nabarun Deka</a>
+              </li>
+              
+              <li>
+                <a href="/reports/rohit.html"> Rohit Kumar</a>
+              </li>
+              
+              <li>
+                <a href="/reports/shafil.html"> Shafil Maheenn</a>
+              </li>
+              
+              <li>
+                <a href="/reports/sideart.html"> Sidharth Soundarrajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ss.html"> S Shriram</a>
+              </li>
+              
+              <!-- <li><a href="#">Something else here</a></li> -->
+
+        </ul>
+      </li>
         <!-- <li><a href="/notes-all.html">Notes</a></li> -->
       </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -119,9 +173,10 @@ messageStyle: "none",
               
           </ul>
           </li>
+
           <li> <a href="https://github.com/siddhartha-gadgil/LTS2019" target="_blank">
           <img src="/GitHub-Mark-Light-32px.png" alt="Github"></img> </a> </li>
-
+          <li> <a href="https://gitter.im/siddhartha-gadgil/LTS2019" target="_blank"> <img src="https://badges.gitter.im/siddhartha-gadgil/LTS2019.svg" alt="gitter"></a>  </img></li>
             <!-- <li><a href="/notes-all.html">Notes</a></li> -->
 
           </ul>
@@ -134,8 +189,38 @@ messageStyle: "none",
 
     <h2>Assignments</h2>
 
+Please e-mail your assignments to <a href="mailto:siddhartha.gadgil@gmail.com" target="_blank"> siddhartha.gadgil@gmail.com</a> with "LTS2019" in the subject. The submissions will be added to the repository the day after the due date, and no late submissions will be accepted.
 
 
+
+
+
+<h2><a href="/assignments/odds.html">Odds and Evens </a> </h2>
+<h3>Due date: Thu, 24 Jan 2019</h3>
+<div>
+<p>All problems should be solved in an <code class="highlighter-rouge">Idris</code> file which should be in a folder including the files <code class="highlighter-rouge">Intro.idr</code> and <code class="highlighter-rouge">Evens.idr</code> from the course. If your user name is <em>myusername@iisc.ac.in</em>, begin the idris file with the following.</p>
+
+<pre><code class="language-idris">module Myusername.Odds
+
+import Evens
+
+import Intro
+
+</code></pre>
+
+<ol>
+  <li>Define an inductive type family <code class="highlighter-rouge">IsOdd : Nat -&gt; Type</code> such that <code class="highlighter-rouge">IsOdd n</code> is inhabited if and only if <code class="highlighter-rouge">n</code> is odd.</li>
+  <li>Show that <code class="highlighter-rouge">$3$</code> is odd.</li>
+  <li>Show that <code class="highlighter-rouge">$2$</code> is not odd.</li>
+  <li>Show that if <code class="highlighter-rouge">n: Nat</code> is odd, then its successor <code class="highlighter-rouge">S n</code> is even.</li>
+  <li>Show that if <code class="highlighter-rouge">n: Nat</code> is even, then its successor <code class="highlighter-rouge">S n</code> is odd.</li>
+  <li>Show that every number <code class="highlighter-rouge">n : Nat</code> is either even or odd.</li>
+  <li>Show that no number <code class="highlighter-rouge">n: Nat</code> is both even and odd.</li>
+  <li>Show that if <code class="highlighter-rouge">n: Nat</code> and <code class="highlighter-rouge">m: Nat</code> are odd, then <code class="highlighter-rouge">add n m</code> is even (here add is from the intro).</li>
+  <li>Show that if <code class="highlighter-rouge">n: Nat</code> is odd, then there exists <code class="highlighter-rouge">m: Nat</code> such that <code class="highlighter-rouge">n = S (double m)</code>.</li>
+</ol>
+
+</div>
 
 
 
