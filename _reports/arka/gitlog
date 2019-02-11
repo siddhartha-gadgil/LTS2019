@@ -1,0 +1,131 @@
+commit 27328963239decafa1f4b329e01f33f8a3f102c1
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Sun Feb 10 23:03:09 2019 +0530
+
+    Minor changes
+
+commit c2d6523360ccc74ecb2b7c9b3e6dc57715786673
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Sun Feb 10 23:00:10 2019 +0530
+
+    Added a proof that for an element in a group, one sided inverse is the inverse.
+
+commit 68a7e1d329bf3fa3a32e7d7e88157b30263ae294
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Sun Feb 10 14:47:34 2019 +0530
+
+    Started a proof that f( inv(a)) = inv( f(a))
+
+commit 0768d716365ce23c89679d362f6191d28735a5f8
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Fri Feb 8 22:39:47 2019 +0530
+
+    Deleted misplaced file
+
+commit bbb05b601749b1a7e00434d57fd033b474d59567
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Fri Feb 8 22:39:25 2019 +0530
+
+    Deleted misplaced file
+
+commit cc067b2ecc8e738df4c15cfd4eca0565cd940eff
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Fri Feb 8 22:38:59 2019 +0530
+
+    Deleted misplaced file
+
+commit aabf62caef2348b1dfb423c82e5f3c60b63f242e
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Thu Feb 7 18:43:43 2019 +0530
+
+    Added right cancellation law
+
+commit 38e0e7d3c646ea9fee80b38c47c51680abc84f5e
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Thu Feb 7 15:07:31 2019 +0530
+
+    Added left cancellation law for groups.
+
+commit dc0e820bff69d118aeac360d8128fe49126887bf
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Thu Feb 7 11:22:22 2019 +0530
+
+    Added uniqueness property for inverses and identity for groups
+
+commit be4cb9499d6630ab0f9caa19ac1d3a7ce0672415
+Merge: bb58463 b0fe110
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Sat Feb 2 20:57:28 2019 +0530
+
+    Merge pull request #2 from siddhartha-gadgil/master
+
+    Updated on Feb 2
+
+commit bb58463b3ece9b9a4f03530cdcb5052cfc7984e3
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Thu Jan 31 02:02:53 2019 +0530
+
+    Added definition of commutative rings with identity.
+
+commit 0ee2f48e2700ff701aab0c39fb8e29bc56e902db
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Wed Jan 30 18:47:58 2019 +0530
+
+    Added a definition of rings in Rings.idr. Created a separate file for monoids.
+
+commit 9adb5a47218285d8df3d7020cc028ae3abcafe1f
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Wed Jan 30 17:34:42 2019 +0530
+
+    Some minor changes and addition in Groups.idr
+
+commit 1ffe495e7bc24dbcf2cbf0715c237e88d670e2ce
+Merge: 92e36c3 553da25
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Wed Jan 30 16:46:36 2019 +0530
+
+    Merge pull request #1 from siddhartha-gadgil/master
+
+    Updating on Jan 30
+
+commit 92e36c301d27377fea7165ea5e5bf2fbe3f47248
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Sat Jan 26 00:36:30 2019 +0530
+
+    Added a definition of Groups
+
+commit 37bfac50bf94c8ae7e0e46b4807bcc95d435a667
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Fri Jan 25 22:50:25 2019 +0530
+
+    Add files via upload
+
+    Divided the code into four files
+    1. Finite.idr - Defined the type Finite n(Finite set of n elements). It is same as the Fin except the 'n' is made explicit
+    2. perm_cons.idr - Defined permutation with constructors.
+    3. permutation.idr - Defined permutation as bijections
+    4. sorting_with_proof - Defined the required SortedVect type
+    Please check the documentations for explanations.
+
+commit b523f3d0518e18f068d3eeefd73614e13c635721
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Thu Jan 24 14:19:07 2019 +0530
+
+    Add files via upload
+
+    Added definition of Permutation using constructors (in the file perm_cons).
+
+commit 41b4b66608180d9ce5217bd929f9a217c5004531
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Thu Jan 24 12:31:04 2019 +0530
+
+    Add files via upload
+
+    Created a different file to deal with permutations.
+    Applying a permutation is getting too complicated.
+
+commit b0e48d69d487d4384481f5b1f19485210ee82bdb
+Author: Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+Date:   Thu Jan 24 00:50:28 2019 +0530
+
+    Add files via upload

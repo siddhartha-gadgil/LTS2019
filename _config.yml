@@ -50,6 +50,9 @@ collections:
   notes:
     output: true
     permalink: /notes/:title
+  reports:
+    output: true
+    permalink: /reports/:title
 
 exclude: ["private/"]
 
