@@ -1,0 +1,7 @@
+git log --author=AR-MA210 > _reports/ar/gitlog
+git log --author=Chinmaya > _reports/chinmaya/gitlog
+git log --author=Nabarun > _reports/nabarun/gitlog
+git log --author=rohit > _reports/rohit/gitlog
+git log --author=shaf > _reports/shafil/gitlog
+git log --author=SS > _reports/ss/gitlog
+git log --author=anotherArka > _reports/arka/gitlog

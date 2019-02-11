@@ -27,14 +27,15 @@ Group_id grp (*) pfgrp = (fst (snd pfgrp))
 
 ||| Generates inverses with proofs
 total
-Inv_with_pf : (grp : Type) -> ((*) : grp -> grp -> grp) -> (pfgrp : IsGroup grp (*)) -> (x : grp) 
+Inv_with_pf : (grp : Type) -> ((*) : grp -> grp -> grp) -> (pfgrp : IsGroup grp (*)) -> (x : grp)
               -> (y : grp ** (IsInverse grp (*) (fst (snd (snd pfgrp))) x y))
 Inv_with_pf grp (*) pfgrp x = (snd (snd (snd pfgrp))) x
 
 ||| Generates inverses
 total
 Inv: (grp : Type) -> ((*) : grp -> grp -> grp) -> IsGroup grp (*) -> (x: grp) -> grp
-Inv grp (*) pf x = fst(snd(snd(snd(pf))) x)
+Inv grp (*) pf x = fst (Inv_with_pf grp (*) pf x)
+-- fst(snd(snd(snd(pf))) x)
 
 ||| Given a group, the type of proofs that it is abelian
 total
@@ -49,27 +50,27 @@ Inj x y f = (a : x) -> (b : x) -> (f a = f b) -> (a = b)
 
 ||| The type of proofs that a function between groups is a group homomorphism
 total
-Hom: (grp : Type) -> ((*) : grp -> grp -> grp) -> (IsGroup grp (*)) -> 
+Hom: (grp : Type) -> ((*) : grp -> grp -> grp) -> (IsGroup grp (*)) ->
      (g : Type) -> ((+) : g -> g -> g) -> (IsGroup g (+)) ->
      (f : grp -> g) -> Type
 Hom grp (*) pf1 g (+) pf2 f  = ((IsIdentity g (+) e) , (
-                               (a : grp) -> (b : grp) -> ((f (a*b)) = ((f a) + (f b))))) where 
+                               (a : grp) -> (b : grp) -> ((f (a*b)) = ((f a) + (f b))))) where
                                e = f(fst (Group_id grp (*) pf1))
 
 ||| The type of proofs that a given group is a subgroup of another, via injective homorphisms
 total
-Subgroup: (h: Type) -> ((+) : h -> h -> h) -> (IsGroup h (+)) -> 
+Subgroup: (h: Type) -> ((+) : h -> h -> h) -> (IsGroup h (+)) ->
           (g: Type) -> ((*) : g -> g -> g) -> (IsGroup g (*)) -> Type
-Subgroup h (+) pfh g (*) pfg = ( f : (h -> g) ** 
-                               (Hom h (+) pfh g (*) pfg f , Inj h g f)) 
+Subgroup h (+) pfh g (*) pfg = ( f : (h -> g) **
+                               (Hom h (+) pfh g (*) pfg f , Inj h g f))
 --- DPair (h->g) (\f => ((Hom h (+) pfh g (*) pfg f), (Inj h g f)))
 
 ||| The type of proofs that a given subgroup is normal/self-conjugate
 total
-NSub: (h: Type) -> ((+) : h -> h -> h) -> (pfh: IsGroup h (+)) -> 
-      (g: Type) -> ((*) : g -> g -> g) -> (pfg: IsGroup g (*)) -> 
+NSub: (h: Type) -> ((+) : h -> h -> h) -> (pfh: IsGroup h (+)) ->
+      (g: Type) -> ((*) : g -> g -> g) -> (pfg: IsGroup g (*)) ->
       (Subgroup h (+) pfh g (*) pfg) -> Type
-NSub h (+) pfh g (*) pfg (f ** pff) = (a : h) -> (b : g) -> (x : h ** (b*(f a)*(inv b) = (f x))) where 
+NSub h (+) pfh g (*) pfg (f ** pff) = (a : h) -> (b : g) -> (x : h ** (b*(f a)*(inv b) = (f x))) where
      inv = Inv g (*) pfg
 
 {-
@@ -78,8 +79,8 @@ data Imgfn: (x: Type) -> (y: Type) -> (f: x -> y) -> Type where
   Gen: (q: y) -> ((p: x ** (f(p) = q)) -> Unit) -> Imgfn x y f
 
 -- Generates the coset over h of a given element in g
-Coset: (h: Type) -> ((+) : h -> h -> h) -> (pf1: IsGroup h (+)) -> (g: Type) -> 
-       ((*) : g -> g -> g) -> (pf2: IsGroup g (*)) -> 
+Coset: (h: Type) -> ((+) : h -> h -> h) -> (pf1: IsGroup h (+)) -> (g: Type) ->
+       ((*) : g -> g -> g) -> (pf2: IsGroup g (*)) ->
        (Subgroup h (+) pf1 g (*) pf2) -> (a: g) -> Type
 Coset h (+) pf1 g (*) pf2 sbgrp a =  Imgfn h g (\r => a*(fst(sbgrp) r))
 
@@ -88,9 +89,9 @@ Imgembed: (x: Type) -> (y: Type) -> (f: x -> y) -> (Imgfn x y f) -> y
 Imgembed x y f (Gen q pf) = q
 
 -- Embedding the coset in g
-Cosetembed: (h: Type) -> ((+) : h -> h -> h) -> (pf1: IsGroup h (+)) -> 
-            (g: Type) -> ((*) : g -> g -> g) -> (pf2: IsGroup g (*)) -> 
-            (sbgrp: Subgroup h (+) pf1 g (*) pf2) -> (a: g) -> 
+Cosetembed: (h: Type) -> ((+) : h -> h -> h) -> (pf1: IsGroup h (+)) ->
+            (g: Type) -> ((*) : g -> g -> g) -> (pf2: IsGroup g (*)) ->
+            (sbgrp: Subgroup h (+) pf1 g (*) pf2) -> (a: g) ->
             (Coset h (+) pf1 g (*) pf2 sbgrp a) -> g
 Cosetembed h (+) pf1 g (*) pf2 sbgrp a (Gen q pf) = q
 -}
