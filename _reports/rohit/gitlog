@@ -1,21 +1,36 @@
 commit c8ad0d45487523d6ad5fa570750350a7fcec07d3
-Author: rohit3499 <47004225+rohit3499@users.noreply.github.com>
-Date:   Mon Feb 11 01:27:40 2019 +0530
+Author:     rohit3499 <47004225+rohit3499@users.noreply.github.com>
+AuthorDate: Mon Feb 11 01:27:40 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 11 01:27:40 2019 +0530
 
     Add files via upload
 
+ bezout.idr | 204 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 204 insertions(+)
+
 commit 260b1e8ba1453a79e1c54f120656a8ae870546e7
-Author: rohit3499 <47004225+rohit3499@users.noreply.github.com>
-Date:   Tue Jan 29 22:47:58 2019 +0530
+Author:     rohit3499 <47004225+rohit3499@users.noreply.github.com>
+AuthorDate: Tue Jan 29 22:47:58 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Jan 29 22:47:58 2019 +0530
 
     Euclid's Division Lemma with partial proof
     
     proved that given a and b, there exist a quotient and a remainder (not necessarily unique)
 
+ Code/Bezout.idr | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
 commit 5d44076d116d6889499d7b97a90c15ccef9ae502
-Author: rohit3499 <47004225+rohit3499@users.noreply.github.com>
-Date:   Tue Jan 29 22:19:50 2019 +0530
+Author:     rohit3499 <47004225+rohit3499@users.noreply.github.com>
+AuthorDate: Tue Jan 29 22:19:50 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Jan 29 22:19:50 2019 +0530
 
     Euclid's division lemma with proof
     
     Provided a partial proof for Euclid's Division Lemma. Given a and b, there exist (not necessarily unique at this point) a quotient and remainder.
+
+ Code/Bezout.idr | 98 +++++++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 89 insertions(+), 9 deletions(-)

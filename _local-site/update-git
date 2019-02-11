@@ -1,9 +1,9 @@
-git log --author=AR-MA210 > _reports/ar/gitlog
-git log --author=Chinmaya > _reports/chinmaya/gitlog
-git log --author=Nabarun > _reports/nabarun/gitlog
-git log --author=rohit > _reports/rohit/gitlog
-git log --author=shaf > _reports/shafil/gitlog
-git log --author=SS > _reports/ss/gitlog
-git log --author=anotherArka > _reports/arka/gitlog
-git log --author=Sidh > _reports/sideart/gitlog
-git log --author=Adit > _reports/adithya/gitlog
+git log --pretty=fuller --stat --author=AR-MA210 > _reports/ar/gitlog
+git log --pretty=fuller --stat --author=Chinmaya > _reports/chinmaya/gitlog
+git log --pretty=fuller --stat --author=Nabarun > _reports/nabarun/gitlog
+git log --pretty=fuller --stat --author=rohit > _reports/rohit/gitlog
+git log --pretty=fuller --stat --author=shaf > _reports/shafil/gitlog
+git log --pretty=fuller --stat --author=SS > _reports/ss/gitlog
+git log --pretty=fuller --stat --author=anotherArka > _reports/arka/gitlog
+git log --pretty=fuller --stat --author=Sidh > _reports/sideart/gitlog
+git log --pretty=fuller --stat --author=Adit > _reports/adithya/gitlog

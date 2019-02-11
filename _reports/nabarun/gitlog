@@ -1,18 +1,30 @@
 commit 8171d1e58823ab87631c5acf5b0b773b21038f44
-Author: NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
-Date:   Tue Feb 5 16:28:21 2019 +0530
+Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
+AuthorDate: Tue Feb 5 16:28:21 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 5 16:28:21 2019 +0530
 
     Add files via upload
 
+ Code/Merge.idr | 112 +++++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 73 insertions(+), 39 deletions(-)
+
 commit c57cd4dc81f0c7dfcc45bf297555a6b5d4bf44a8
 Merge: 82c90fb 0b4ada4
-Author: NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
-Date:   Tue Feb 5 16:23:56 2019 +0530
+Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
+AuthorDate: Tue Feb 5 16:23:56 2019 +0530
+Commit:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
+CommitDate: Tue Feb 5 16:23:56 2019 +0530
 
     Merge remote-tracking branch 'upstream/master'
 
 commit 82c90fbff5e534addcc23a81a560f0781a5be349
-Author: NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
-Date:   Thu Jan 24 11:48:43 2019 +0530
+Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
+AuthorDate: Thu Jan 24 11:48:43 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Jan 24 11:48:43 2019 +0530
 
     Add files via upload
+
+ Code/gcd.idr | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)

@@ -1,146 +1,228 @@
 commit be28efe9bbe3c28da17edadb3d7770034a901178
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Sun Feb 10 15:31:31 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Feb 10 15:31:31 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Feb 10 15:31:31 2019 +0530
 
     Update gcd.idr
 
+ Code/gcd.idr | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
+
 commit 2ae94e1524a26642c9e76f6653d53b34864adab1
 Merge: c19cbf1 6e1a328
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Sun Feb 10 15:29:18 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Feb 10 15:29:18 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Feb 10 15:29:18 2019 +0530
 
     Merge pull request #6 from siddhartha-gadgil/master
     
     es
 
 commit c19cbf1c7064121fe551b75304ab797d95f739e2
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Fri Feb 8 19:33:09 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Feb 8 19:33:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 8 19:33:09 2019 +0530
 
     Rename graphexamples.idr to Graphexamples.idr
 
+ Code/{graphexamples.idr => Graphexamples.idr} | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
 commit 21b2fa9e938d2865e346187463663d90663905e3
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Fri Feb 8 19:32:33 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Feb 8 19:32:33 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 8 19:32:33 2019 +0530
 
     Create graphexamples.idr
 
+ Code/graphexamples.idr | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
 commit 50a4094370a05a05f8c38a08bfc1517ed1d68577
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Fri Feb 8 19:31:10 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Feb 8 19:31:10 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 8 19:31:10 2019 +0530
 
     Update Graph.idr
 
+ Code/Graph.idr | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
+
 commit 68535b34bcb78bcdcbea7a0484d18da7f2477929
 Merge: 8b7ad87 3535fdf
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Fri Feb 8 19:30:16 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Feb 8 19:30:16 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 8 19:30:16 2019 +0530
 
     Merge pull request #5 from siddhartha-gadgil/master
     
     est
 
 commit 8b7ad87014481460ee0440b37e9287332b9e2ef3
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Mon Feb 4 17:42:34 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Feb 4 17:42:34 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 4 17:42:34 2019 +0530
 
     Update Graph.idr
 
+ Code/Graph.idr | 44 ++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 40 insertions(+), 4 deletions(-)
+
 commit dee0bb9205182afbc82aea98586210b3c24bff1f
 Merge: 8afdd47 061bdbe
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Mon Feb 4 17:41:41 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Feb 4 17:41:41 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 4 17:41:41 2019 +0530
 
     Merge pull request #4 from siddhartha-gadgil/master
     
     Merge pull request #50 from shafilmaheenn/master
 
 commit 8afdd47a839d4991403158ceb3943dfcb15747de
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Mon Feb 4 15:11:15 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Feb 4 15:11:15 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 4 15:11:15 2019 +0530
 
     Update Graph.idr
 
+ Code/Graph.idr | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
+
 commit 3ca9fc8c4b7e36a18e4be909a0078c8df4e0c3af
 Merge: a9f7cc4 b8a80c7
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Mon Feb 4 15:08:44 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Feb 4 15:08:44 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 4 15:08:44 2019 +0530
 
     Merge pull request #3 from siddhartha-gadgil/master
     
     as
 
 commit a9f7cc46d45735ab8dbdf88bcf93fcaae0706843
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Sat Feb 2 11:59:38 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 2 11:59:38 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 11:59:38 2019 +0530
 
     Update Graph.idr
 
+ Code/Graph.idr | 35 ++++++++++++++++++++++++++++++-----
+ 1 file changed, 30 insertions(+), 5 deletions(-)
+
 commit 9fdb68956e6aa176f9fb2e5ba23c4411241852ff
 Merge: 289c482 1afaf38
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Sat Feb 2 11:58:59 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 2 11:58:59 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 11:58:59 2019 +0530
 
     Merge pull request #2 from siddhartha-gadgil/master
     
     Merge pull request #45 from shafilmaheenn/master
 
 commit 289c48281868bd78b149b27410dba3481d85ed34
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Sat Feb 2 10:16:44 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 2 10:16:44 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 10:16:44 2019 +0530
 
     Update Graph.idr
 
+ Code/Graph.idr | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
 commit 83c95e37422949efb7b51bc7920d46d996d09fca
 Merge: ae10a14 ea5982c
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Sat Feb 2 10:14:42 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 2 10:14:42 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 10:14:42 2019 +0530
 
     Merge pull request #1 from siddhartha-gadgil/master
     
     Merge pull request #44 from shafilmaheenn/master
 
 commit ae10a14435004be0a6fbcbc05455272c21c75b8e
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Sat Feb 2 07:26:29 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 2 07:26:29 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 07:26:29 2019 +0530
 
     Update Graph.idr
 
+ Code/Graph.idr | 39 ++++++++++++++++++++-------------------
+ 1 file changed, 20 insertions(+), 19 deletions(-)
+
 commit 5c75d0add5fe4527bfffc93ea9bb2a786b32ad6a
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Sat Feb 2 07:14:50 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 2 07:14:50 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 07:14:50 2019 +0530
 
     Create Graph.idr
 
+ Code/Graph.idr | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
+
 commit ff3a44a60c4ba678eb03dae47b46205fa7159e67
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Thu Jan 24 14:41:27 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Thu Jan 24 14:41:27 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Jan 24 14:41:27 2019 +0530
 
     Finding the Bezout coefficients
     
     The Bezout function in this program gives the coefficients in the Bezout Lemma
 
+ Code/Bezout.idr | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
+
 commit ad53e8b17293af28066f32bf8a35ef216d5c7f0b
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Wed Jan 23 21:44:39 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Jan 23 21:44:39 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Jan 23 21:44:39 2019 +0530
 
     Correction to merge function
     
     I have corrected the merge function and (i think) it works fine now.
     again, I couldnt do mergesort yet
 
+ Code/merge.idr | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
+
 commit 23a7fc48800b8d9aff18b5b74db4a20a6632520d
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Wed Jan 23 19:22:32 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Jan 23 19:22:32 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Jan 23 19:22:32 2019 +0530
 
     merge function for the mergesort
     
     I implemented the merge function required for mergesort. I had to change it a little so that the types matched. You will see that i had to transfer x from one vector to the other . I tried to implement mergesort. The code is given as comment. But it doesnt work (I think it is because it cant recognise that (n-s)+s =n )
 
+ Code/merge.idr | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
 commit a37ff8a84b5910ba896991a3994960d65269ab39
-Author: shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-Date:   Wed Jan 23 19:12:24 2019 +0530
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Jan 23 19:12:24 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Jan 23 19:12:24 2019 +0530
 
     The merge function for the mergesort
     
     I implemented the merge function required for mergesort. I had to change it a little so that the types matched. You will see that i had to transfer x from one vector to the other . I tried to implement mergesort. The code is given as comment. But it doesnt work (I think it is because it cant recognise that (n-s)+s =n )
+
+ Code/merge.idr | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)

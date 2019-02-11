@@ -1,6 +1,8 @@
 commit 0d831df109f93f942f3cd573f114b9b034fec627
-Author: Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
-Date:   Wed Jan 30 04:29:28 2019 +0530
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Wed Jan 30 04:29:28 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Jan 30 04:29:28 2019 +0530
 
     Proofs about the reverse function
     
@@ -11,54 +13,92 @@ Date:   Wed Jan 30 04:29:28 2019 +0530
     
     Along with 2 auxiliary lemmas
 
+ Code/BaseN.idr | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
 commit 99cda667088e58d66c547369d444a9da4bd0e0c3
-Author: Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
-Date:   Sun Jan 27 04:29:44 2019 +0530
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sun Jan 27 04:29:44 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Jan 27 04:29:44 2019 +0530
 
     Optional implementation of cosets as image types
     
     The issue is that it generates a "coset" for each element, whose embeddings are the same for elements with the same coset, but are otherwise different types
     This may or may not be advisable to use
 
+ Code/Group.idr | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
 commit bde218ab55db4c7adb09bf4fd83ec12b09fabd80
-Author: Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
-Date:   Sat Jan 26 20:21:35 2019 +0530
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Jan 26 20:21:35 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Jan 26 20:21:35 2019 +0530
 
     Added more definitions and infix operations for ease of use
     
     Definitions for abelian groups, subgroups, structure homomorphisms and self-conjugate subgroups
     Infix functions for group operations
 
+ Code/Group.idr | 55 ++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 42 insertions(+), 13 deletions(-)
+
 commit b99366a553e243e6eccace76db1b7d9056748689
-Author: Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
-Date:   Fri Jan 25 00:44:45 2019 +0530
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Jan 25 00:44:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Jan 25 00:44:45 2019 +0530
 
     Adding multiplication functions plus corrections in some auxiliary functions
     
     The arithmetic in base n is now set, if we are not considering subtraction
 
+ Code/Basen.idr | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
+
 commit dc2aa22fe52f716f85439d886d747b60b6b4d90c
-Author: Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
-Date:   Fri Jan 25 00:43:05 2019 +0530
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Jan 25 00:43:05 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Jan 25 00:43:05 2019 +0530
 
     Spacing and correcting my name's spelling (Pull when convenient)
     
     I apologize for the inconvenience caused.
 
+ Code/Bezout.idr | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
 commit a8a07b303eb11465720510985af0d844b95aa386
-Author: Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
-Date:   Thu Jan 24 04:39:11 2019 +0530
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Jan 24 04:39:11 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Jan 24 04:39:11 2019 +0530
 
     Update Basen.idr
 
+ Code/Basen.idr | 1 +
+ 1 file changed, 1 insertion(+)
+
 commit 36a46e23126bfa1fcf1651cde43ad39a72ece450
-Author: Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
-Date:   Thu Jan 24 04:34:55 2019 +0530
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Jan 24 04:34:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Jan 24 04:34:55 2019 +0530
 
     Adding lists
 
+ Code/Basen.idr | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
+
 commit 45de83dc108870c9805d204fa54cf5cfe3996ab2
-Author: Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
-Date:   Thu Jan 24 04:00:30 2019 +0530
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Jan 24 04:00:30 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Jan 24 04:00:30 2019 +0530
 
     Basen with conversions and adding two Fin Types
+
+ Code/Basen.idr | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
