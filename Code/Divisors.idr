@@ -25,3 +25,6 @@ MultDiv {d} (n**Refl) c =((n*c)** (rewrite sym (multAssociativeZ d n c) in (Refl
 |||The theorem d|a and d|b =>d|(a+b)
 PlusDiv : (isDivisible a d)->(isDivisible b d)->(isDivisible (a+b) d)
 PlusDiv {d}{a}{b} (n**prf1) (m**prf2) = ((n+m)**(DistributeProof a b d n m prf1 prf2))
+|||The theorem that  b|a and c|b =>c|a
+TransDivide : (isDivisible a b)->(isDivisible b c)->(isDivisible a c)
+TransDivide {c} (x ** pf1) (y ** pf2) = (y*x ** (rewrite  multAssociativeZ c y x in  (rewrite pf1 in (rewrite pf2 in Refl))))
