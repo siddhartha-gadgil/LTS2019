@@ -104,3 +104,14 @@ MakeColumnZero n x col (S k) = case (isLTE (S k) col) of
 
 -- The next step here is to use the above function to make a matrix upper triangular. This can be
 -- done by inducting on the number of columns.
+
+-- A helper function, which recursively fills zeros into columns.
+
+UpperTriangularize: (x: Matrix n n ZZPair) -> (iter: Nat) -> Matrix n n ZZPair
+UpperTriangularize {n} x Z = (MakeColumnZero n x Z (Pred n)) -- Column Zero is the base case
+UpperTriangularize {n} x (S k) = (MakeColumnZero n (MakeColumnZero n x k (Pred n)) (S k) (Pred n))
+
+-- Enter a matrix, get the upper triangular form.
+
+UpperTriangularForm: (x: Matrix n n ZZPair) -> Matrix n n ZZPair
+UpperTriangularForm {n} x = UpperTriangularize x (Pred (Pred n))
