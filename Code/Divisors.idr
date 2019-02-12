@@ -18,13 +18,24 @@ DistributeProof a b d n m pf1 pf2 = rewrite  (multDistributesOverPlusRightZ d n 
   v2 =plusConstantLeftZ b (d*m) (d*n) pf2
 
 |||The theorem d|a =>d|ac
-
 MultDiv:(isDivisible a d) ->(c:ZZ)->(isDivisible (a*c) d)
 MultDiv {d} (n**Refl) c =((n*c)** (rewrite sym (multAssociativeZ d n c) in (Refl)))
 
 |||The theorem d|a and d|b =>d|(a+b)
 PlusDiv : (isDivisible a d)->(isDivisible b d)->(isDivisible (a+b) d)
 PlusDiv {d}{a}{b} (n**prf1) (m**prf2) = ((n+m)**(DistributeProof a b d n m prf1 prf2))
-|||The theorem that  b|a and c|b =>c|a
+|||The theorem b|a and c|b =>c|a
 TransDivide : (isDivisible a b)->(isDivisible b c)->(isDivisible a c)
 TransDivide {c} (x ** pf1) (y ** pf2) = (y*x ** (rewrite  multAssociativeZ c y x in  (rewrite pf1 in (rewrite pf2 in Refl))))
+
+|||Any integer divides zero
+ZZDividesZero:(a:ZZ)->(isDivisible 0 a )
+ZZDividesZero a = (0**(sym (multZeroRightZeroZ a)))
+
+|||A type that is occupied iff c is a common factor of a and b
+isCommonFactorZ : (a:ZZ) -> (b:ZZ) -> (c:ZZ) -> Type
+isCommonFactorZ a b c = ((isDivisible a c),(isDivisible b c))
+
+|||The GCD type that is occupied iff d = gcd (a,b). Here GCD is defined as that positive integer such that any common factor of a and b divides it
+GCDZ : (a:ZZ) -> (b:ZZ) -> (d:ZZ) -> Type
+GCDZ a b d = ((IsPositive d),(isCommonFactorZ a b d),({c:ZZ}->(isCommonFactorZ a b c)->(isDivisible d c)))
