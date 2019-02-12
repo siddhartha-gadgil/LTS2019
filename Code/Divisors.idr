@@ -28,14 +28,43 @@ PlusDiv {d}{a}{b} (n**prf1) (m**prf2) = ((n+m)**(DistributeProof a b d n m prf1 
 TransDivide : (isDivisible a b)->(isDivisible b c)->(isDivisible a c)
 TransDivide {c} (x ** pf1) (y ** pf2) = (y*x ** (rewrite  multAssociativeZ c y x in  (rewrite pf1 in (rewrite pf2 in Refl))))
 
+
+|||If d divides a and b it divides a linear combination of a and b
+LinCombDiv:(m:ZZ)->(n:ZZ)->(isDivisible a d)->(isDivisible b d)->(isDivisible ((a*m)+(b*n)) d)
+LinCombDiv m n dDiva dDivb = PlusDiv (MultDiv  dDiva m) (MultDiv  dDivb n)
+
+
+EuclidConservesDivisor:(m:ZZ)->(isDivisible a d)->(isDivisible b d)->(isDivisible (a+(b*(-m))) d)
+EuclidConservesDivisor m dDiva dDivb = PlusDiv dDiva (MultDiv dDivb (-m) )
+
 |||Any integer divides zero
 ZZDividesZero:(a:ZZ)->(isDivisible 0 a )
 ZZDividesZero a = (0**(sym (multZeroRightZeroZ a)))
-
 |||A type that is occupied iff c is a common factor of a and b
 isCommonFactorZ : (a:ZZ) -> (b:ZZ) -> (c:ZZ) -> Type
 isCommonFactorZ a b c = ((isDivisible a c),(isDivisible b c))
-
 |||The GCD type that is occupied iff d = gcd (a,b). Here GCD is defined as that positive integer such that any common factor of a and b divides it
 GCDZ : (a:ZZ) -> (b:ZZ) -> (d:ZZ) -> Type
 GCDZ a b d = ((IsPositive d),(isCommonFactorZ a b d),({c:ZZ}->(isCommonFactorZ a b c)->(isDivisible d c)))
+|||Anything divides itself
+SelfDivide:(a:ZZ)->(isDivisible a a)
+SelfDivide a = (1**sym (multOneRightNeutralZ a))
+
+|||Generates the proof that if c is a common factor of a and 0 then c divides a
+GCDCondition : (a:ZZ) -> ({c:ZZ}->(isCommonFactorZ a 0 c)->(isDivisible a c))
+GCDCondition  a {c} (cDiva,cDiv0) = cDiva
+|||Proves that the GCD of a and 0 is a
+gcdOfZeroAndInteger:(a:ZZ)->IsPositive a ->GCDZ a 0 a
+gcdOfZeroAndInteger a pf = (pf,((SelfDivide a),(ZZDividesZero a)),((GCDCondition a)))
+
+dDividesNegative:(isDivisible a d)->(isDivisible  (-a) d)
+dDividesNegative{a}{d} (x ** pf) = ((-x)**(multNegateRightIsNegateZ a d x pf))
+
+cDivb :{p:ZZ} ->(cDIva :(isDivisible b c))->(cDIvExp:isDivisible (a+(b*p)) c)->(isDivisible a c)
+cDivb cDIva cDIvExp = ?PlusDiv
+
+helper :(f:({c:ZZ}->(isCommonFactorZ a b c)->(isDivisible d c)))->(({c:ZZ}->(isCommonFactorZ b (a+(b*(-m)))  c)->(isDivisible d c)))
+helper f (cDivb,cDivExp) = f((?cDiva,cDivb))
+
+gcdOfLinearCombination :(m:ZZ)->(GCDZ a b d)->(GCDZ b  (a+(b*(-m))) d)
+gcdOfLinearCombination m  (posProof, (dDiva,dDivb), f) = (posProof,(dDivb,(EuclidConservesDivisor m  dDiva dDivb)),helper f)
