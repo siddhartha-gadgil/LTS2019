@@ -361,3 +361,20 @@ plusConstantRightZ right right c Refl = Refl
 plusConstantLeftZ :(left : ZZ) ->
     (right : ZZ) -> (c : ZZ) -> (p : left = right) -> c + left = c + right
 plusConstantLeftZ right right c Refl = Refl
+
+
+|||A type that is occupied only when the integer is positive
+data IsPositive :ZZ->Type where
+  Positive : (IsPositive (Pos(S k)))
+
+|||Proof that 0 is not positive
+ZeroNOtPositive : IsPositive (Pos 0) -> Void
+ZeroNOtPositive Positive impossible
+|||Proof that negative numbers are not positive
+NegNotPositive : IsPositive (NegS k) -> Void
+NegNotPositive Positive impossible
+|||A function that returns either a proof that a function is positive or a contradiction
+DecidePositive:(a:ZZ)->Dec (IsPositive a)
+DecidePositive (Pos Z) = No ZeroNOtPositive
+DecidePositive (Pos (S k)) = Yes Positive
+DecidePositive (NegS k) = No (NegNotPositive)
