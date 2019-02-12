@@ -362,7 +362,6 @@ plusConstantLeftZ :(left : ZZ) ->
     (right : ZZ) -> (c : ZZ) -> (p : left = right) -> c + left = c + right
 plusConstantLeftZ right right c Refl = Refl
 
-
 |||A type that is occupied only when the integer is positive
 data IsPositive :ZZ->Type where
   Positive : (IsPositive (Pos(S k)))
@@ -378,3 +377,15 @@ DecidePositive:(a:ZZ)->Dec (IsPositive a)
 DecidePositive (Pos Z) = No ZeroNOtPositive
 DecidePositive (Pos (S k)) = Yes Positive
 DecidePositive (NegS k) = No (NegNotPositive)
+
+numbersSameNegativesSame: {a:ZZ}->{b:ZZ}->((a)=(b))->((-a)=(-b))
+numbersSameNegativesSame Refl = Refl
+negativesSameNumbersSame :{a:ZZ}->{b:ZZ}->((-a)=(-b))->((a)=(b))
+negativesSameNumbersSame {a} {b} prf = rewrite sym (doubleNegElim a) in (rewrite sym (doubleNegElim b) in (numbersSameNegativesSame prf))
+
+multNegateRightZ:(k, j : ZZ) -> k * (negate j) = negate (k * j)
+multNegateRightZ k j = (rewrite (multCommutativeZ k (-j)) in(rewrite ((multCommutativeZ k j)) in (multNegateLeftZ j k)))
+
+
+multNegateRightIsNegateZ:(a:ZZ)->(b:ZZ)->(c:ZZ)->(a=(b*c))->((-a)=(b*(-c)))
+multNegateRightIsNegateZ a b c prf = (rewrite (multNegateRightZ b c) in ( numbersSameNegativesSame prf))
