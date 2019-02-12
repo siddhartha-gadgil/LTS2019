@@ -6,16 +6,6 @@ import ZZ
 
 %access public export
 
-gcdAux: (n: Nat) -> (m: Nat) -> (LTE m n) -> Nat
-gcdAux n Z LTEZero = n
-gcdAux (S right) (S left) (LTESucc x) = ?EuclidIndAux_rhs_2
-
-switchLTE : (n: Nat) -> (m: Nat) -> (contra : (LTE n m) -> Void) -> LTE m n
-switchLTE Z m contra = void (contra (the (LTE Z m) LTEZero))
-switchLTE (S k) Z contra = LTEZero
-switchLTE (S k) (S j) contra = ?switchLTE_rhs_3
-
-
 {-Copied from Chinmaya's code. Gives quotient and remainder on divison-}
 {-This just computes the qoutient and the remainder, but it doesn't prove that they indeed satisfy the conditions a = b*q + r and r < b -}
 Eucl: (a: Nat) -> (b: Nat) -> (Nat, Nat)
