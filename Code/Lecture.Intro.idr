@@ -30,6 +30,11 @@ sub : (n: Nat) -> (m : Nat) -> (LTE m n) -> Nat
 sub n Z LTEZero = n
 sub (S right) (S left) (LTESucc x) = sub right left x
 
+superSub : (n: Nat) -> (m : Nat) -> (LTE m n) -> (diff: Nat ** LTE diff n)
+superSub n Z LTEZero = (n ** lteRefl)
+superSub (S n) (S m) (LTESucc x) = case (superSub n m x) of
+                                               (diff ** pf) => (diff ** lteSuccRight pf)
+
 oneLTEFour : LTE 1 4
 oneLTEFour = LTESucc LTEZero
 
