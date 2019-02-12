@@ -2,7 +2,7 @@ module Mergesort
 
 import Data.Vect
 
-import Evens
+import Lecture.Evens
 
 --Takes the first m elements from a vector
 Vecttake : (m:Nat)->Vect n elem->Vect m  elem
