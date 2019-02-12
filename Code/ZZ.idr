@@ -1,7 +1,7 @@
 module Data.ZZ
 
 import Decidable.Equality
-import Data.Sign
+import Sign
 
 %default total
 %access public export
@@ -353,3 +353,11 @@ multDistributesOverPlusLeftZ l c r = rewrite multCommutativeZ (l + c) r in
                                      rewrite multDistributesOverPlusRightZ r l c in
                                      rewrite multCommutativeZ r l in
                                      rewrite multCommutativeZ r c in Refl
+plusConstantRightZ : (left : ZZ) ->
+                    (right : ZZ) ->
+                    (c : ZZ) -> (left = right) -> left+c = right+c
+plusConstantRightZ right right c Refl = Refl
+
+plusConstantLeftZ :(left : ZZ) ->
+    (right : ZZ) -> (c : ZZ) -> (p : left = right) -> c + left = c + right
+plusConstantLeftZ right right c Refl = Refl
