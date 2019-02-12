@@ -1,0 +1,22 @@
+commit b9c13142932c1fbfb04b1e9e9e9e1173f5cd818f
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Sun Feb 10 22:05:12 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Sun Feb 10 22:05:12 2019 +0530
+
+    Corrected error in definition of Field (multiplicatiove inverse requires non zero elements)
+
+ Code/Field.idr | 24 +++++++++++++++++++++---
+ Code/Group.idr | 28 ++++++++++++++--------------
+ 2 files changed, 35 insertions(+), 17 deletions(-)
+
+commit e95b0ba8fec866be5370bd3fd843894b607ffd7a
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Sat Feb 9 19:50:36 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Sat Feb 9 19:50:36 2019 +0530
+
+    Create Field.idr
+
+ Code/Field.idr | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)

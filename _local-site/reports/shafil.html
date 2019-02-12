@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>MA 210: Logic, Types and Spaces</title>
+    <link rel="icon" href="/IIScLogo.jpg">
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/extras.css" rel="stylesheet">
+
+      <link rel="stylesheet" href="/css/zenburn.css" rel="stylesheet">
+        <script src="/js/highlight.js" rel="stylesheet"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+jax: ["input/TeX", "output/HTML-CSS"],
+tex2jax: {
+  inlineMath: [ ['$', '$'] ],
+  displayMath: [ ['$$', '$$']],
+  processEscapes: true,
+  skipTags: ['script', 'noscript', 'style', 'textarea']
+},
+messageStyle: "none",
+"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+});
+</script>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">Instructor: <a href="http://math.iisc.ac.in/~gadgil" target="_blank">Siddhartha Gadgil</a></span>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="/index.html#">Home</a></li>
+            <!-- <li><a href="/index.html#refs">References</a></li>
+            <li><a href="/index.html#details">Details</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Assignments<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li class="dropdown-header">Assignments</li> -->
+                <li class="dropdown-header"><strong>Assignments</strong></li>
+                
+                
+                <li>
+                  <a href="/assignments/odds.html"> Odds and Evens</a>
+                </li>
+                
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Announcements<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header"><strong>Announcements</strong></li>
+                
+                
+                <!-- <li><a href="#">Something else here</a></li> -->
+
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Reports<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li class="dropdown-header"><strong>Reports</strong></li>
+              
+              <li>
+                <a href="/reports/adithya.html"> Adithya Upadhyay</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ar.html"> Abhishek Rajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/arka.html"> Arka Ghosh</a>
+              </li>
+              
+              <li>
+                <a href="/reports/chinmaya.html"> Chinmaya Kausik</a>
+              </li>
+              
+              <li>
+                <a href="/reports/nabarun.html"> Nabarun Deka</a>
+              </li>
+              
+              <li>
+                <a href="/reports/rohit.html"> Rohit Kumar</a>
+              </li>
+              
+              <li>
+                <a href="/reports/shafil.html"> Shafil Maheenn</a>
+              </li>
+              
+              <li>
+                <a href="/reports/sideart.html"> Sidharth Soundarrajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ss.html"> S Shriram</a>
+              </li>
+              
+              <!-- <li><a href="#">Something else here</a></li> -->
+
+        </ul>
+      </li>
+        <!-- <li><a href="/notes-all.html">Notes</a></li> -->
+      </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li> <a href="https://www.idris-lang.org/" target="_blank">Idris-lang</a> </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Links <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li class="dropdown-header">Assignments</li> -->
+                <!-- <li class="dropdown-header"><strong>Links</strong></li> -->
+
+                <li>
+                  <a href="https://www.ias.edu/ideas/2014/voevodsky-origins" target="_blank"> Voevodsky: The Origins and Motivations of Univalent Foundations</a>
+                  <a href="https://mail.haskell.org/pipermail/haskell-cafe/2003-May/004343.html" target="_blank">Conor McBride on no total self-interpreters (following Turing)</a>
+                </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Notes <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <!-- <li class="dropdown-header">Assignments</li> -->
+              <!-- <li class="dropdown-header"><strong>Notes</strong></li> -->
+              
+              
+              <li>
+                <a href="/notes/meta.html"> About Notes</a>
+              </li>
+              
+              <li>
+                <a href="/notes/foundations.html"> Foundations of Mathematics and Computation</a>
+              </li>
+              
+              <li>
+                <a href="/notes/types-topics.html"> Type Theory topics</a>
+              </li>
+              
+          </ul>
+          </li>
+
+          <li> <a href="https://github.com/siddhartha-gadgil/LTS2019" target="_blank">
+          <img src="/GitHub-Mark-Light-32px.png" alt="Github"></img> </a> </li>
+          <li> <a href="https://gitter.im/siddhartha-gadgil/LTS2019" target="_blank"> <img src="https://badges.gitter.im/siddhartha-gadgil/LTS2019.svg" alt="gitter"></a>  </img></li>
+            <!-- <li><a href="/notes-all.html">Notes</a></li> -->
+
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container">
+
+
+<h2 class="text-center"> Project Report for Logic, Types, Spaces 2019 </h2>
+<h3 class="text-center"> Shafil Maheenn </h3>
+
+<h3 >Outline of the work done</h3>
+
+    <p>Please fill in this with references to code.</p>
+
+
+<h3> Log of git commits by author </h3>
+
+
+<pre><code class="plaintext">
+commit be28efe9bbe3c28da17edadb3d7770034a901178
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Feb 10 15:31:31 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Feb 10 15:31:31 2019 +0530
+
+    Update gcd.idr
+
+ Code/gcd.idr | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
+
+commit 2ae94e1524a26642c9e76f6653d53b34864adab1
+Merge: c19cbf1 6e1a328
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Feb 10 15:29:18 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Feb 10 15:29:18 2019 +0530
+
+    Merge pull request #6 from siddhartha-gadgil/master
+    
+    es
+
+commit c19cbf1c7064121fe551b75304ab797d95f739e2
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Feb 8 19:33:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 8 19:33:09 2019 +0530
+
+    Rename graphexamples.idr to Graphexamples.idr
+
+ Code/{graphexamples.idr => Graphexamples.idr} | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 21b2fa9e938d2865e346187463663d90663905e3
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Feb 8 19:32:33 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 8 19:32:33 2019 +0530
+
+    Create graphexamples.idr
+
+ Code/graphexamples.idr | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+commit 50a4094370a05a05f8c38a08bfc1517ed1d68577
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Feb 8 19:31:10 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 8 19:31:10 2019 +0530
+
+    Update Graph.idr
+
+ Code/Graph.idr | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
+
+commit 68535b34bcb78bcdcbea7a0484d18da7f2477929
+Merge: 8b7ad87 3535fdf
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Feb 8 19:30:16 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 8 19:30:16 2019 +0530
+
+    Merge pull request #5 from siddhartha-gadgil/master
+    
+    est
+
+commit 8b7ad87014481460ee0440b37e9287332b9e2ef3
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Feb 4 17:42:34 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 4 17:42:34 2019 +0530
+
+    Update Graph.idr
+
+ Code/Graph.idr | 44 ++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 40 insertions(+), 4 deletions(-)
+
+commit dee0bb9205182afbc82aea98586210b3c24bff1f
+Merge: 8afdd47 061bdbe
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Feb 4 17:41:41 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 4 17:41:41 2019 +0530
+
+    Merge pull request #4 from siddhartha-gadgil/master
+    
+    Merge pull request #50 from shafilmaheenn/master
+
+commit 8afdd47a839d4991403158ceb3943dfcb15747de
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Feb 4 15:11:15 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 4 15:11:15 2019 +0530
+
+    Update Graph.idr
+
+ Code/Graph.idr | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
+
+commit 3ca9fc8c4b7e36a18e4be909a0078c8df4e0c3af
+Merge: a9f7cc4 b8a80c7
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Feb 4 15:08:44 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 4 15:08:44 2019 +0530
+
+    Merge pull request #3 from siddhartha-gadgil/master
+    
+    as
+
+commit a9f7cc46d45735ab8dbdf88bcf93fcaae0706843
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 2 11:59:38 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 11:59:38 2019 +0530
+
+    Update Graph.idr
+
+ Code/Graph.idr | 35 ++++++++++++++++++++++++++++++-----
+ 1 file changed, 30 insertions(+), 5 deletions(-)
+
+commit 9fdb68956e6aa176f9fb2e5ba23c4411241852ff
+Merge: 289c482 1afaf38
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 2 11:58:59 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 11:58:59 2019 +0530
+
+    Merge pull request #2 from siddhartha-gadgil/master
+    
+    Merge pull request #45 from shafilmaheenn/master
+
+commit 289c48281868bd78b149b27410dba3481d85ed34
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 2 10:16:44 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 10:16:44 2019 +0530
+
+    Update Graph.idr
+
+ Code/Graph.idr | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+commit 83c95e37422949efb7b51bc7920d46d996d09fca
+Merge: ae10a14 ea5982c
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 2 10:14:42 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 10:14:42 2019 +0530
+
+    Merge pull request #1 from siddhartha-gadgil/master
+    
+    Merge pull request #44 from shafilmaheenn/master
+
+commit ae10a14435004be0a6fbcbc05455272c21c75b8e
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 2 07:26:29 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 07:26:29 2019 +0530
+
+    Update Graph.idr
+
+ Code/Graph.idr | 39 ++++++++++++++++++++-------------------
+ 1 file changed, 20 insertions(+), 19 deletions(-)
+
+commit 5c75d0add5fe4527bfffc93ea9bb2a786b32ad6a
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 2 07:14:50 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 07:14:50 2019 +0530
+
+    Create Graph.idr
+
+ Code/Graph.idr | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
+
+commit ff3a44a60c4ba678eb03dae47b46205fa7159e67
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Thu Jan 24 14:41:27 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Jan 24 14:41:27 2019 +0530
+
+    Finding the Bezout coefficients
+    
+    The Bezout function in this program gives the coefficients in the Bezout Lemma
+
+ Code/Bezout.idr | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
+
+commit ad53e8b17293af28066f32bf8a35ef216d5c7f0b
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Jan 23 21:44:39 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Jan 23 21:44:39 2019 +0530
+
+    Correction to merge function
+    
+    I have corrected the merge function and (i think) it works fine now.
+    again, I couldnt do mergesort yet
+
+ Code/merge.idr | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
+
+commit 23a7fc48800b8d9aff18b5b74db4a20a6632520d
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Jan 23 19:22:32 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Jan 23 19:22:32 2019 +0530
+
+    merge function for the mergesort
+    
+    I implemented the merge function required for mergesort. I had to change it a little so that the types matched. You will see that i had to transfer x from one vector to the other . I tried to implement mergesort. The code is given as comment. But it doesnt work (I think it is because it cant recognise that (n-s)+s =n )
+
+ Code/merge.idr | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit a37ff8a84b5910ba896991a3994960d65269ab39
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Jan 23 19:12:24 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Jan 23 19:12:24 2019 +0530
+
+    The merge function for the mergesort
+    
+    I implemented the merge function required for mergesort. I had to change it a little so that the types matched. You will see that i had to transfer x from one vector to the other . I tried to implement mergesort. The code is given as comment. But it doesnt work (I think it is because it cant recognise that (n-s)+s =n )
+
+ Code/merge.idr | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+</code></pre>
+
+</div>
+<div class="container-fluid">
+  <br><br><br>
+  <div class="footer navbar-fixed-bottom bg-primary">
+    <h4>
+    &nbsp;<a href="http://math.iisc.ac.in" target="_blank">&nbsp; Department of Mathematics,</a>
+
+    &nbsp;<a href="http://iisc.ac.in" target="_blank">Indian Institute of Science.</a>
+  </h4>
+
+  </div>
+
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src='/js/bootstrap.min.js'></script>
+
+</body>
+</html>
+

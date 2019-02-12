@@ -1,0 +1,39 @@
+commit c92719e20beb2ae30fac89775b1182aae9955104
+Merge: 5685ce5 0ef8186
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Mon Feb 11 10:37:36 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Mon Feb 11 10:37:36 2019 +0530
+
+    Merge remote-tracking branch 'upstream/master'
+
+commit 5685ce5964efeab8f358c470669c204c7c5a82d5
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Mon Feb 11 10:26:58 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Mon Feb 11 10:26:58 2019 +0530
+
+    Renamed Tools.idr to NatUtils.idr
+
+ Code/NatUtils.idr | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+commit d270141e2f7530ccbed618fac255d0c9ba7dd474
+Merge: de7bcec e481b3b
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sun Feb 10 22:13:24 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sun Feb 10 22:13:24 2019 +0530
+
+    Merge remote-tracking branch 'upstream/master'
+
+commit de7bcecfff1137ef62b3361f4e90350d9698b209
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sun Feb 10 22:08:11 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sun Feb 10 22:08:11 2019 +0530
+
+    Added Tools file
+
+ Code/Tools.idr | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)

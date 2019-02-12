@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>MA 210: Logic, Types and Spaces</title>
+    <link rel="icon" href="/IIScLogo.jpg">
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/extras.css" rel="stylesheet">
+
+      <link rel="stylesheet" href="/css/zenburn.css" rel="stylesheet">
+        <script src="/js/highlight.js" rel="stylesheet"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+jax: ["input/TeX", "output/HTML-CSS"],
+tex2jax: {
+  inlineMath: [ ['$', '$'] ],
+  displayMath: [ ['$$', '$$']],
+  processEscapes: true,
+  skipTags: ['script', 'noscript', 'style', 'textarea']
+},
+messageStyle: "none",
+"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+});
+</script>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">Instructor: <a href="http://math.iisc.ac.in/~gadgil" target="_blank">Siddhartha Gadgil</a></span>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="/index.html#">Home</a></li>
+            <!-- <li><a href="/index.html#refs">References</a></li>
+            <li><a href="/index.html#details">Details</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Assignments<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li class="dropdown-header">Assignments</li> -->
+                <li class="dropdown-header"><strong>Assignments</strong></li>
+                
+                
+                <li>
+                  <a href="/assignments/odds.html"> Odds and Evens</a>
+                </li>
+                
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Announcements<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header"><strong>Announcements</strong></li>
+                
+                
+                <!-- <li><a href="#">Something else here</a></li> -->
+
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Reports<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li class="dropdown-header"><strong>Reports</strong></li>
+              
+              <li>
+                <a href="/reports/adithya.html"> Adithya Upadhyay</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ar.html"> Abhishek Rajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/arka.html"> Arka Ghosh</a>
+              </li>
+              
+              <li>
+                <a href="/reports/chinmaya.html"> Chinmaya Kausik</a>
+              </li>
+              
+              <li>
+                <a href="/reports/nabarun.html"> Nabarun Deka</a>
+              </li>
+              
+              <li>
+                <a href="/reports/rohit.html"> Rohit Kumar</a>
+              </li>
+              
+              <li>
+                <a href="/reports/shafil.html"> Shafil Maheenn</a>
+              </li>
+              
+              <li>
+                <a href="/reports/sideart.html"> Sidharth Soundarrajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ss.html"> S Shriram</a>
+              </li>
+              
+              <!-- <li><a href="#">Something else here</a></li> -->
+
+        </ul>
+      </li>
+        <!-- <li><a href="/notes-all.html">Notes</a></li> -->
+      </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li> <a href="https://www.idris-lang.org/" target="_blank">Idris-lang</a> </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Links <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li class="dropdown-header">Assignments</li> -->
+                <!-- <li class="dropdown-header"><strong>Links</strong></li> -->
+
+                <li>
+                  <a href="https://www.ias.edu/ideas/2014/voevodsky-origins" target="_blank"> Voevodsky: The Origins and Motivations of Univalent Foundations</a>
+                  <a href="https://mail.haskell.org/pipermail/haskell-cafe/2003-May/004343.html" target="_blank">Conor McBride on no total self-interpreters (following Turing)</a>
+                </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Notes <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <!-- <li class="dropdown-header">Assignments</li> -->
+              <!-- <li class="dropdown-header"><strong>Notes</strong></li> -->
+              
+              
+              <li>
+                <a href="/notes/meta.html"> About Notes</a>
+              </li>
+              
+              <li>
+                <a href="/notes/foundations.html"> Foundations of Mathematics and Computation</a>
+              </li>
+              
+              <li>
+                <a href="/notes/types-topics.html"> Type Theory topics</a>
+              </li>
+              
+          </ul>
+          </li>
+
+          <li> <a href="https://github.com/siddhartha-gadgil/LTS2019" target="_blank">
+          <img src="/GitHub-Mark-Light-32px.png" alt="Github"></img> </a> </li>
+          <li> <a href="https://gitter.im/siddhartha-gadgil/LTS2019" target="_blank"> <img src="https://badges.gitter.im/siddhartha-gadgil/LTS2019.svg" alt="gitter"></a>  </img></li>
+            <!-- <li><a href="/notes-all.html">Notes</a></li> -->
+
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container">
+
+
+<h2 class="text-center"> Project Report for Logic, Types, Spaces 2019 </h2>
+<h3 class="text-center"> Abhishek Rajan </h3>
+
+<h3 >Outline of the work done</h3>
+
+    <p>Please fill in this with references to code.</p>
+
+
+<h3> Log of git commits by author </h3>
+
+
+<pre><code class="plaintext">
+commit 7a12fcc8932277255b89ad5143c43e0d5c01b7cc
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sun Feb 10 20:36:52 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Feb 10 20:36:52 2019 +0530
+
+    started Linear Dependence
+    
+    Checking if vectors are dependent can be done through the determinant. However, to check if vectors are linearly dependent (and to give a proof), we need a linear combination of them which is zero. For this, we can use standard elimination techniques in Linear Algebra. To do this, I started implementing elementary operations to do Gaussian elimination (row operations and swapping rows).
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 59 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
+
+commit 17fca0022588c0c3d3e7e3a69e7b634df61dc2a8
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sun Feb 10 20:35:27 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Feb 10 20:35:27 2019 +0530
+
+    public export
+    
+    added export
+
+ Code/Linear.idr | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 55fe7ea3e76e97f6fa4a7de852fec0ba9f3c93e2
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 9 19:49:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 9 19:49:07 2019 +0530
+
+    Done with 1 variable rational equations, moving to Diophantine
+    
+    The general linear equation ax+b=c can be solved using this with a proof that it is a solution. As explained in the program, I will extend this to Diophantine equations (this will require use of the quotient-remainder algorithm to check if the denominator is a divisor of the numerator, and if so, to print the quotient as the integer solution; details can be found in the previous update).
+    
+    Also, unfortunately, I am not able to prove that ( a*c + a*(-b) + b*a = a*c ) in the function helper4; the methods which worked to transform equalities in other helper functions somehow lead to type errors in this. I have left it as a hole for now.
+    
+    -- Abishek (AR-MA210)
+
+ Code/Linear.idr | 35 ++++++++++++++++++++++++++++++++---
+ 1 file changed, 32 insertions(+), 3 deletions(-)
+
+commit 0d2a515ea420abcfa9b0eb8a91b901d32db2dc01
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Feb 7 14:21:39 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 7 14:21:39 2019 +0530
+
+    Added the proof of ncase
+    
+    I added the solution of (ax + b = 0) with proof. I also showed the equivalence between (ax + b = c) and (ax + b + (-c) = 0), so this solution technique can be extended to solve any equation ax + b = c over the rationals. Regarding the solution of Diophantine equations, I think the next step could be proving the reverse implication (any solution of such an equation is of this form) and conclude that the Diophantine equation in one variable has a solution iff the denominator of the rational is 1 or -1.
+    
+    --Abishek (AR-MA210)
+
+ Code/Linear.idr | 54 +++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 45 insertions(+), 9 deletions(-)
+
+commit 1f7cab801381a1f2b7e5c14c712d0893bc62effa
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Wed Feb 6 16:48:46 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 6 16:48:46 2019 +0530
+
+    Finished the proof of zcase
+    
+    The equation has been split into two cases based on the value of b. I added in the proof of zcase (the case where b = 0), using a bunch of helper functions. Also, the if-else flow of control was removed because it ensure that proofs can be done smoothly.
+    
+    -- Abishek (AR-MA210)
+
+ Code/Linear.idr | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
+
+commit 38ebca11b53fc2db493a99d45a858dd98098e9ff
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 2 22:42:08 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 22:42:08 2019 +0530
+
+    minor additions and shifting to ZZ
+    
+    The proof for the additive identity is nearly complete - all of the necessary helper proof functions are in place. It just needs to be shown that the sum of the numerator and denominator being zero implies that the rational is zero.
+    
+    Also, the shift from Integer to ZZ has been implemented in most parts of the code (this is useful as proofs can be done with ZZ in the ZZ library).
+    
+    -- Abishek (AR-MA210)
+
+ Code/Rationals.idr | 65 +++++++++++++++++++++++-------------------------------
+ 1 file changed, 28 insertions(+), 37 deletions(-)
+
+commit ac3ee364e84b3aa82fb602c401499e42bfc8cc0f
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 2 01:21:32 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 2 01:21:32 2019 +0530
+
+    partial proofs for additive identity
+    
+    I started the process of proving that the sum of a rational number and it's inverse is 0. For this, I needed the type ZZ (which is an implementation of that integers that allows proofs). I added a few functions for converting between pairs of ZZ and integers. I believe that using cong, the next step (showing that x = -y implies that x+y = 0) can be used to show that the first number in the pair of addition of a number and its inverse is always zero.
+    
+    A similar process can be used for multiplicative inverses, but will involve simplification of the rational generated and showing that it is equal to (1,1).
+    
+    Documentation for ZZ:
+    
+    https://github.com/idris-lang/Idris-dev/blob/master/libs/contrib/Data/ZZ.idr
+
+ Code/Rationals.idr | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+commit 429fd11b09106392452f09a37a97eb25e7ecf189
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Tue Jan 29 17:03:27 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Jan 29 17:03:27 2019 +0530
+
+    Some fixes to simplifyRational
+    
+    There was an issue in the simplifyRational function - it gave incorrect results due to an error in the gccd function (calculating the GCD when one number is negative leads to issues with examples such as (3,-6), which is erroneously simplified to (0,1)). I made a minor fix here by forcing the GCD to be a positive number.
+    
+    An issue related to this project: there were two files which were the predecessor of this one. Somehow they were merged, but some of the history seems to be lost in the history of this file. For reference, here are the previous edits:
+    
+    https://github.com/SS-C4/LTS2019/commits/c92a54c3a915e40b049eabfa008c3bb482ca878a/Code/Rationals.idr
+    
+    https://github.com/siddhartha-gadgil/LTS2019/commits/a2b3964a651f0d6dcd75f3985e736392602a7acd/Rationals.idr
+
+ Code/Rationals.idr | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
+
+commit 080fd5d0065efffb0afb79720220d35fd9b757c7
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Jan 26 23:56:21 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Jan 26 23:56:21 2019 +0530
+
+    A few updates to the non-unique Q
+    
+    I added in proofs for validity of addition and multiplication (with inverses) and extended them to subtraction/division. Simplified form of rationals can be implemented with the necessary proof type for the GCD function (integer division is a bit cumbersome in this). Along with this, defining fields (and showing that this implementation is one) could be the next step.
+
+ Rationals.idr | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
+
+commit 4c261057f0b6b9edf38883015d19137bb9855465
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Fri Jan 25 15:49:21 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Jan 25 15:49:21 2019 +0530
+
+    Basic Implementation of Q (non-unique version)
+    
+    This creates the framework for the implementation of Q as p/q. Arithmetic is partially defined (inverses need to be given and non-zero proofs will be inserted where appropriate).
+
+ Code/Rationals.idr | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+commit e23e7f5b2d4df83ab81539da2efc5648da11c130
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Wed Jan 23 18:30:00 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Jan 23 18:30:00 2019 +0530
+
+    Add files via upload
+    
+    This code performs insertion sort on an array. The sortedness and permutedness will be implemented.
+
+ Code/InsertionSort.idr | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+</code></pre>
+
+</div>
+<div class="container-fluid">
+  <br><br><br>
+  <div class="footer navbar-fixed-bottom bg-primary">
+    <h4>
+    &nbsp;<a href="http://math.iisc.ac.in" target="_blank">&nbsp; Department of Mathematics,</a>
+
+    &nbsp;<a href="http://iisc.ac.in" target="_blank">Indian Institute of Science.</a>
+  </h4>
+
+  </div>
+
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src='/js/bootstrap.min.js'></script>
+
+</body>
+</html>
+

@@ -92,6 +92,20 @@ messageStyle: "none",
 
           </ul>
         </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Reports<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li class="dropdown-header"><strong>Reports</strong></li>
+              {% for rep in site.reports  %}
+              <li>
+                <a href="{{ site.baseurl }}{{ rep.url }}.html"> {{ rep.author }}</a>
+              </li>
+              {% endfor %}
+              <!-- <li><a href="#">Something else here</a></li> -->
+
+        </ul>
+      </li>
         <!-- <li><a href="{{ site.baseurl }}/notes-all.html">Notes</a></li> -->
       </ul>
           <ul class="nav navbar-nav navbar-right">

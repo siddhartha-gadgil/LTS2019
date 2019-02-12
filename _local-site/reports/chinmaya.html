@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>MA 210: Logic, Types and Spaces</title>
+    <link rel="icon" href="/IIScLogo.jpg">
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/extras.css" rel="stylesheet">
+
+      <link rel="stylesheet" href="/css/zenburn.css" rel="stylesheet">
+        <script src="/js/highlight.js" rel="stylesheet"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+jax: ["input/TeX", "output/HTML-CSS"],
+tex2jax: {
+  inlineMath: [ ['$', '$'] ],
+  displayMath: [ ['$$', '$$']],
+  processEscapes: true,
+  skipTags: ['script', 'noscript', 'style', 'textarea']
+},
+messageStyle: "none",
+"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+});
+</script>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">Instructor: <a href="http://math.iisc.ac.in/~gadgil" target="_blank">Siddhartha Gadgil</a></span>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="/index.html#">Home</a></li>
+            <!-- <li><a href="/index.html#refs">References</a></li>
+            <li><a href="/index.html#details">Details</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Assignments<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li class="dropdown-header">Assignments</li> -->
+                <li class="dropdown-header"><strong>Assignments</strong></li>
+                
+                
+                <li>
+                  <a href="/assignments/odds.html"> Odds and Evens</a>
+                </li>
+                
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Announcements<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header"><strong>Announcements</strong></li>
+                
+                
+                <!-- <li><a href="#">Something else here</a></li> -->
+
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Reports<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li class="dropdown-header"><strong>Reports</strong></li>
+              
+              <li>
+                <a href="/reports/adithya.html"> Adithya Upadhyay</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ar.html"> Abhishek Rajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/arka.html"> Arka Ghosh</a>
+              </li>
+              
+              <li>
+                <a href="/reports/chinmaya.html"> Chinmaya Kausik</a>
+              </li>
+              
+              <li>
+                <a href="/reports/nabarun.html"> Nabarun Deka</a>
+              </li>
+              
+              <li>
+                <a href="/reports/rohit.html"> Rohit Kumar</a>
+              </li>
+              
+              <li>
+                <a href="/reports/shafil.html"> Shafil Maheenn</a>
+              </li>
+              
+              <li>
+                <a href="/reports/sideart.html"> Sidharth Soundarrajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ss.html"> S Shriram</a>
+              </li>
+              
+              <!-- <li><a href="#">Something else here</a></li> -->
+
+        </ul>
+      </li>
+        <!-- <li><a href="/notes-all.html">Notes</a></li> -->
+      </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li> <a href="https://www.idris-lang.org/" target="_blank">Idris-lang</a> </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Links <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li class="dropdown-header">Assignments</li> -->
+                <!-- <li class="dropdown-header"><strong>Links</strong></li> -->
+
+                <li>
+                  <a href="https://www.ias.edu/ideas/2014/voevodsky-origins" target="_blank"> Voevodsky: The Origins and Motivations of Univalent Foundations</a>
+                  <a href="https://mail.haskell.org/pipermail/haskell-cafe/2003-May/004343.html" target="_blank">Conor McBride on no total self-interpreters (following Turing)</a>
+                </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Notes <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <!-- <li class="dropdown-header">Assignments</li> -->
+              <!-- <li class="dropdown-header"><strong>Notes</strong></li> -->
+              
+              
+              <li>
+                <a href="/notes/meta.html"> About Notes</a>
+              </li>
+              
+              <li>
+                <a href="/notes/foundations.html"> Foundations of Mathematics and Computation</a>
+              </li>
+              
+              <li>
+                <a href="/notes/types-topics.html"> Type Theory topics</a>
+              </li>
+              
+          </ul>
+          </li>
+
+          <li> <a href="https://github.com/siddhartha-gadgil/LTS2019" target="_blank">
+          <img src="/GitHub-Mark-Light-32px.png" alt="Github"></img> </a> </li>
+          <li> <a href="https://gitter.im/siddhartha-gadgil/LTS2019" target="_blank"> <img src="https://badges.gitter.im/siddhartha-gadgil/LTS2019.svg" alt="gitter"></a>  </img></li>
+            <!-- <li><a href="/notes-all.html">Notes</a></li> -->
+
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container">
+
+
+<h2 class="text-center"> Project Report for Logic, Types, Spaces 2019 </h2>
+<h3 class="text-center"> Chinmaya Kausik </h3>
+
+<h3 >Outline of the work done</h3>
+
+    <p>Please fill in this with references to code.</p>
+
+
+<h3> Log of git commits by author </h3>
+
+
+<pre><code class="plaintext">
+commit 0d831df109f93f942f3cd573f114b9b034fec627
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Wed Jan 30 04:29:28 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Jan 30 04:29:28 2019 +0530
+
+    Proofs about the reverse function
+    
+    Proofs that the reverse function:
+    
+    1) Is in some sense, "pseudo-contravariant" with concatentation
+    2) Is self inverse (this will be important in proving the agreement of arithmetic in base n with Nat)
+    
+    Along with 2 auxiliary lemmas
+
+ Code/BaseN.idr | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+commit 99cda667088e58d66c547369d444a9da4bd0e0c3
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sun Jan 27 04:29:44 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Jan 27 04:29:44 2019 +0530
+
+    Optional implementation of cosets as image types
+    
+    The issue is that it generates a "coset" for each element, whose embeddings are the same for elements with the same coset, but are otherwise different types
+    This may or may not be advisable to use
+
+ Code/Group.idr | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+commit bde218ab55db4c7adb09bf4fd83ec12b09fabd80
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Jan 26 20:21:35 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Jan 26 20:21:35 2019 +0530
+
+    Added more definitions and infix operations for ease of use
+    
+    Definitions for abelian groups, subgroups, structure homomorphisms and self-conjugate subgroups
+    Infix functions for group operations
+
+ Code/Group.idr | 55 ++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 42 insertions(+), 13 deletions(-)
+
+commit b99366a553e243e6eccace76db1b7d9056748689
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Jan 25 00:44:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Jan 25 00:44:45 2019 +0530
+
+    Adding multiplication functions plus corrections in some auxiliary functions
+    
+    The arithmetic in base n is now set, if we are not considering subtraction
+
+ Code/Basen.idr | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
+
+commit dc2aa22fe52f716f85439d886d747b60b6b4d90c
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Jan 25 00:43:05 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Jan 25 00:43:05 2019 +0530
+
+    Spacing and correcting my name's spelling (Pull when convenient)
+    
+    I apologize for the inconvenience caused.
+
+ Code/Bezout.idr | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+commit a8a07b303eb11465720510985af0d844b95aa386
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Jan 24 04:39:11 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Jan 24 04:39:11 2019 +0530
+
+    Update Basen.idr
+
+ Code/Basen.idr | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 36a46e23126bfa1fcf1651cde43ad39a72ece450
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Jan 24 04:34:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Jan 24 04:34:55 2019 +0530
+
+    Adding lists
+
+ Code/Basen.idr | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
+
+commit 45de83dc108870c9805d204fa54cf5cfe3996ab2
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Jan 24 04:00:30 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Jan 24 04:00:30 2019 +0530
+
+    Basen with conversions and adding two Fin Types
+
+ Code/Basen.idr | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+
+</code></pre>
+
+</div>
+<div class="container-fluid">
+  <br><br><br>
+  <div class="footer navbar-fixed-bottom bg-primary">
+    <h4>
+    &nbsp;<a href="http://math.iisc.ac.in" target="_blank">&nbsp; Department of Mathematics,</a>
+
+    &nbsp;<a href="http://iisc.ac.in" target="_blank">Indian Institute of Science.</a>
+  </h4>
+
+  </div>
+
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src='/js/bootstrap.min.js'></script>
+
+</body>
+</html>
+

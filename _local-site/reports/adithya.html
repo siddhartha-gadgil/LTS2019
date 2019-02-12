@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>MA 210: Logic, Types and Spaces</title>
+    <link rel="icon" href="/IIScLogo.jpg">
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/extras.css" rel="stylesheet">
+
+      <link rel="stylesheet" href="/css/zenburn.css" rel="stylesheet">
+        <script src="/js/highlight.js" rel="stylesheet"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+jax: ["input/TeX", "output/HTML-CSS"],
+tex2jax: {
+  inlineMath: [ ['$', '$'] ],
+  displayMath: [ ['$$', '$$']],
+  processEscapes: true,
+  skipTags: ['script', 'noscript', 'style', 'textarea']
+},
+messageStyle: "none",
+"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+});
+</script>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">Instructor: <a href="http://math.iisc.ac.in/~gadgil" target="_blank">Siddhartha Gadgil</a></span>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="/index.html#">Home</a></li>
+            <!-- <li><a href="/index.html#refs">References</a></li>
+            <li><a href="/index.html#details">Details</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Assignments<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li class="dropdown-header">Assignments</li> -->
+                <li class="dropdown-header"><strong>Assignments</strong></li>
+                
+                
+                <li>
+                  <a href="/assignments/odds.html"> Odds and Evens</a>
+                </li>
+                
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Announcements<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header"><strong>Announcements</strong></li>
+                
+                
+                <!-- <li><a href="#">Something else here</a></li> -->
+
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Reports<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li class="dropdown-header"><strong>Reports</strong></li>
+              
+              <li>
+                <a href="/reports/adithya.html"> Adithya Upadhyay</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ar.html"> Abhishek Rajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/arka.html"> Arka Ghosh</a>
+              </li>
+              
+              <li>
+                <a href="/reports/chinmaya.html"> Chinmaya Kausik</a>
+              </li>
+              
+              <li>
+                <a href="/reports/nabarun.html"> Nabarun Deka</a>
+              </li>
+              
+              <li>
+                <a href="/reports/rohit.html"> Rohit Kumar</a>
+              </li>
+              
+              <li>
+                <a href="/reports/shafil.html"> Shafil Maheenn</a>
+              </li>
+              
+              <li>
+                <a href="/reports/sideart.html"> Sidharth Soundarrajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ss.html"> S Shriram</a>
+              </li>
+              
+              <!-- <li><a href="#">Something else here</a></li> -->
+
+        </ul>
+      </li>
+        <!-- <li><a href="/notes-all.html">Notes</a></li> -->
+      </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li> <a href="https://www.idris-lang.org/" target="_blank">Idris-lang</a> </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Links <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li class="dropdown-header">Assignments</li> -->
+                <!-- <li class="dropdown-header"><strong>Links</strong></li> -->
+
+                <li>
+                  <a href="https://www.ias.edu/ideas/2014/voevodsky-origins" target="_blank"> Voevodsky: The Origins and Motivations of Univalent Foundations</a>
+                  <a href="https://mail.haskell.org/pipermail/haskell-cafe/2003-May/004343.html" target="_blank">Conor McBride on no total self-interpreters (following Turing)</a>
+                </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Notes <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <!-- <li class="dropdown-header">Assignments</li> -->
+              <!-- <li class="dropdown-header"><strong>Notes</strong></li> -->
+              
+              
+              <li>
+                <a href="/notes/meta.html"> About Notes</a>
+              </li>
+              
+              <li>
+                <a href="/notes/foundations.html"> Foundations of Mathematics and Computation</a>
+              </li>
+              
+              <li>
+                <a href="/notes/types-topics.html"> Type Theory topics</a>
+              </li>
+              
+          </ul>
+          </li>
+
+          <li> <a href="https://github.com/siddhartha-gadgil/LTS2019" target="_blank">
+          <img src="/GitHub-Mark-Light-32px.png" alt="Github"></img> </a> </li>
+          <li> <a href="https://gitter.im/siddhartha-gadgil/LTS2019" target="_blank"> <img src="https://badges.gitter.im/siddhartha-gadgil/LTS2019.svg" alt="gitter"></a>  </img></li>
+            <!-- <li><a href="/notes-all.html">Notes</a></li> -->
+
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container">
+
+
+<h2 class="text-center"> Project Report for Logic, Types, Spaces 2019 </h2>
+<h3 class="text-center"> Adithya Upadhyay </h3>
+
+<h3 >Outline of the work done</h3>
+
+    <p>Please fill in this with references to code.</p>
+
+
+<h3> Log of git commits by author </h3>
+
+
+<pre><code class="plaintext">
+commit c92719e20beb2ae30fac89775b1182aae9955104
+Merge: 5685ce5 0ef8186
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Mon Feb 11 10:37:36 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Mon Feb 11 10:37:36 2019 +0530
+
+    Merge remote-tracking branch 'upstream/master'
+
+commit 5685ce5964efeab8f358c470669c204c7c5a82d5
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Mon Feb 11 10:26:58 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Mon Feb 11 10:26:58 2019 +0530
+
+    Renamed Tools.idr to NatUtils.idr
+
+ Code/NatUtils.idr | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+commit d270141e2f7530ccbed618fac255d0c9ba7dd474
+Merge: de7bcec e481b3b
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sun Feb 10 22:13:24 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sun Feb 10 22:13:24 2019 +0530
+
+    Merge remote-tracking branch 'upstream/master'
+
+commit de7bcecfff1137ef62b3361f4e90350d9698b209
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sun Feb 10 22:08:11 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sun Feb 10 22:08:11 2019 +0530
+
+    Added Tools file
+
+ Code/Tools.idr | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+</code></pre>
+
+</div>
+<div class="container-fluid">
+  <br><br><br>
+  <div class="footer navbar-fixed-bottom bg-primary">
+    <h4>
+    &nbsp;<a href="http://math.iisc.ac.in" target="_blank">&nbsp; Department of Mathematics,</a>
+
+    &nbsp;<a href="http://iisc.ac.in" target="_blank">Indian Institute of Science.</a>
+  </h4>
+
+  </div>
+
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src='/js/bootstrap.min.js'></script>
+
+</body>
+</html>
+
