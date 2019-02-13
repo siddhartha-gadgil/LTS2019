@@ -103,3 +103,28 @@ corepfinv h (+) pf1 g (*) pf2 sbgrp trav pftrav y = (sym ((fst (snd pftrav)) y t
   f = (fst pftrav)
   p: h
   p = (fst ((snd (snd pftrav)) (f y)))
+  
+  
+--Proof that the definitional equality for traversal multiplication holds
+MulTravDefPf: (h: Type) -> ((+) : h -> h -> h) -> (pf1: IsGroup h (+)) -> (g: Type) -> ((*) : g -> g -> g) -> (pf2: IsGroup g (*)) -> (sbgrp: Subgroup h (+) pf1 g (*) pf2) -> (trav: Type) -> (pftrav: IsTraversal h (+) pf1 g (*) pf2 sbgrp trav) -> (y: trav) -> (z: trav) -> (MulTrav h (+) pf1 g (*) pf2 sbgrp trav pftrav y z) = ((fst (snd ((snd (snd pftrav)) (((fst pftrav) y)*((fst pftrav) z))) )))
+MulTravDefPf h (-) pf1 g (*) pf2 sbgrp trav pftrav y z = Refl
+
+--Proof that the function from g to trav recovered from CosetAll is in some sense a magma homorphism
+MulTravHomPf: (h: Type) -> ((+) : h -> h -> h) -> (pf1: IsGroup h (+)) -> (g: Type) -> ((*) : g -> g -> g) -> (pf2: IsGroup g (*)) -> (sbgrp: Subgroup h (+) pf1 g (*) pf2) -> (trav: Type) -> (pftrav: IsTraversal h (+) pf1 g (*) pf2 sbgrp trav) -> (y: trav) -> (z: trav) -> ((fst (snd ((snd (snd pftrav)) (((fst pftrav) y)*((fst pftrav) z))) ))) = (MulTrav h (+) pf1 g (*) pf2 sbgrp trav pftrav ((fst (snd ((snd (snd pftrav)) ((fst pftrav) y)) ))) ((fst (snd ((snd (snd pftrav)) ((fst pftrav) z)) ))))
+MulTravHomPf h (-) pf1 g (*) pf2 sbgrp trav pftrav y z = trans (sym (MulTravDefProof)) (trans (cong {f = f1} (sym CorepFInverseY)) (cong {f = f2} (sym CorepFInverseZ))) where
+
+  MulTravDefProof: (MulTrav h (-) pf1 g (*) pf2 sbgrp trav pftrav y z) = ((fst (snd ((snd (snd pftrav)) (((fst pftrav) y)*((fst pftrav) z))) )))
+  MulTravDefProof = (MulTravDefPf h (-) pf1 g (*) pf2 sbgrp trav pftrav y z )
+
+  f1: trav -> trav
+  f1 x = MulTrav h (-) pf1 g (*) pf2 sbgrp trav pftrav x z
+
+  f2: trav -> trav
+  f2 x = MulTrav h (-) pf1 g (*) pf2 sbgrp trav pftrav ((fst (snd ((snd (snd pftrav)) ((fst pftrav) y) ) )) ) x
+
+  CorepFInverseY: (((fst (snd ((snd (snd pftrav)) ((fst pftrav) y) ) )) ) = y)
+  CorepFInverseY = CorepFInv h (-) pf1 g (*) pf2 sbgrp trav pftrav y
+
+  CorepFInverseZ: (((fst (snd ((snd (snd pftrav)) ((fst pftrav) z) ) )) ) = z)
+  CorepFInverseZ = CorepFInv h (-) pf1 g (*) pf2 sbgrp trav pftrav z
+
