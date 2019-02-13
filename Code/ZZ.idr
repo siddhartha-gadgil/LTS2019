@@ -389,3 +389,6 @@ multNegateRightZ k j = (rewrite (multCommutativeZ k (-j)) in(rewrite ((multCommu
 
 multNegateRightIsNegateZ:(a:ZZ)->(b:ZZ)->(c:ZZ)->(a=(b*c))->((-a)=(b*(-c)))
 multNegateRightIsNegateZ a b c prf = (rewrite (multNegateRightZ b c) in ( numbersSameNegativesSame prf))
+
+addAndSubNeutralZ: (a:ZZ)->(b:ZZ)->(((a+b)+(-b))=a)
+addAndSubNeutralZ a b = rewrite (sym (plusAssociativeZ a b (-b))) in (rewrite (plusNegateInverseLZ b) in (rewrite (plusZeroRightNeutralZ a) in Refl))
