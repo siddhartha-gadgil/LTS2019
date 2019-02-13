@@ -2,6 +2,7 @@ module Divisors
 
 import ZZ
 %access public export
+%default total
 |||isDivisible a b can be constucted if b divides a
 isDivisible : ZZ -> ZZ -> Type
 isDivisible a b = (n : ZZ ** a = b * n)
@@ -56,15 +57,16 @@ GCDCondition  a {c} (cDiva,cDiv0) = cDiva
 |||Proves that the GCD of a and 0 is a
 gcdOfZeroAndInteger:(a:ZZ)->IsPositive a ->GCDZ a 0 a
 gcdOfZeroAndInteger a pf = (pf,((SelfDivide a),(ZZDividesZero a)),((GCDCondition a)))
-
+|||The theorem, d|a =>d|(-a)
 dDividesNegative:(isDivisible a d)->(isDivisible  (-a) d)
 dDividesNegative{a}{d} (x ** pf) = ((-x)**(multNegateRightIsNegateZ a d x pf))
+|||The theorem c|b and c|(a+bp) then c|a
+cDiva :{p:ZZ} ->(cDIvb :(isDivisible b c))->(cDIvExp:isDivisible (a+(b*p)) c)->(isDivisible a c)
+cDiva {p}{b}{a}{c} cDivb cDivExp = rewrite (sym (addAndSubNeutralZ a (b*p))) in (PlusDiv cDivExp (dDividesNegative(MultDiv cDivb (p))))
+|||A helper function for euclidConservesGcd function
+genFunctionForGcd :(f:({c:ZZ}->(isCommonFactorZ a b c)->(isDivisible d c)))->(({c:ZZ}->(isCommonFactorZ b (a+(b*(-m)))  c)->(isDivisible d c)))
+genFunctionForGcd f (cDivb,cDivExp) = f((cDiva cDivb cDivExp,cDivb))
 
-cDivb :{p:ZZ} ->(cDIva :(isDivisible b c))->(cDIvExp:isDivisible (a+(b*p)) c)->(isDivisible a c)
-cDivb cDIva cDIvExp = ?PlusDiv
-
-helper :(f:({c:ZZ}->(isCommonFactorZ a b c)->(isDivisible d c)))->(({c:ZZ}->(isCommonFactorZ b (a+(b*(-m)))  c)->(isDivisible d c)))
-helper f (cDivb,cDivExp) = f((?cDiva,cDivb))
-
-gcdOfLinearCombination :(m:ZZ)->(GCDZ a b d)->(GCDZ b  (a+(b*(-m))) d)
-gcdOfLinearCombination m  (posProof, (dDiva,dDivb), f) = (posProof,(dDivb,(EuclidConservesDivisor m  dDiva dDivb)),helper f)
+|||The theorem, gcd(a,b)=d => gcd (b, a+ b(-m))=d
+euclidConservesGcd :(m:ZZ)->(GCDZ a b d)->(GCDZ b  (a+(b*(-m))) d)
+euclidConservesGcd m  (posProof, (dDiva,dDivb), f) = (posProof,(dDivb,(EuclidConservesDivisor m  dDiva dDivb)),genFunctionForGcd f)
