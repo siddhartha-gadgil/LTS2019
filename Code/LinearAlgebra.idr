@@ -109,9 +109,17 @@ MakeColumnZero n x col (S k) = case (isLTE (S k) col) of
 
 UpperTriangularize: (x: Matrix n n ZZPair) -> (iter: Nat) -> Matrix n n ZZPair
 UpperTriangularize {n} x Z = (MakeColumnZero n x Z (Pred n)) -- Column Zero is the base case
-UpperTriangularize {n} x (S k) = (MakeColumnZero n (MakeColumnZero n x k (Pred n)) (S k) (Pred n))
+UpperTriangularize {n} x (S k) = (MakeColumnZero n (UpperTriangularize x k) (S k) (Pred n))
 
 -- Enter a matrix, get the upper triangular form.
 
 UpperTriangularForm: (x: Matrix n n ZZPair) -> Matrix n n ZZPair
 UpperTriangularForm {n} x = UpperTriangularize x (Pred (Pred n))
+
+-- The function below converts a matrix into a Diagonal Form (note that this is NOT diagonalization!) by converting to upper-triangular
+-- form, transposing that (to get a lower triangular matrix) and finding the upper-triangular form of the tranpose. This is going to be useful
+-- as it is the next step of the Gauss-Jordan algorithm (what's next: divide out the rows to get an identity matrix; an inverse can be
+-- found this way by applying all the above row operations to an identity matrix.
+
+DiagonalForm: (x: Matrix n n ZZPair) -> Matrix n n ZZPair
+DiagonalForm {n} x = UpperTriangularForm (transpose (UpperTriangularForm x))
