@@ -62,7 +62,6 @@ gcdab : Nat -> Nat -> Nat
 gcdab b Z = b
 gcdab a b = gcdab b (snd (Eucl a b))
 
-All these proofs (except maybe aux2f3) were necessary to avoid various type mismatch errors.
 {-}
 
 
