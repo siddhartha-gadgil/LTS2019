@@ -1,3 +1,27 @@
+commit 8b176c51867e7e133bbb2c387fd2ca80d8ed78ae
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Wed Feb 13 10:33:41 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Wed Feb 13 10:33:41 2019 +0530
+
+    small change
+
+ Code/Bezout.idr | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 6d43420e23df349993f7895d14b9790518bf98bd
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Wed Feb 13 10:30:02 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Wed Feb 13 10:30:02 2019 +0530
+
+    Wrote in division algorithm with proof
+
+ Code/Bezout.idr   | 61 -------------------------------------------------------
+ Code/NatUtils.idr |  8 ++++++++
+ Code/gcd.idr      | 14 ++++++++++++-
+ 3 files changed, 21 insertions(+), 62 deletions(-)
+
 commit c92719e20beb2ae30fac89775b1182aae9955104
 Merge: 5685ce5 0ef8186
 Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
