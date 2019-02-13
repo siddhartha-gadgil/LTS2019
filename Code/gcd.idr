@@ -26,7 +26,7 @@ DistributeProof: (a:Nat)->(b:Nat)->(d:Nat)->(n:Nat)->(m:Nat)->(a=d*n)->(b=d*m)->
 DistributeProof a b d n m pf1 pf2 = rewrite  (multDistributesOverPlusRight d n m) in(trans (the (a+b=(d*n)+b) (v1)) v2) where
   v1 =plusConstantRight a (d*n) b pf1
   v2 =plusConstantLeft b (d*m) (d*n) pf2
-  
+
 |||The theorem d|a =>d|ac
 MultDiv:(isDivisible a d) ->(c:Nat)->(isDivisible (a*c) d)
 MultDiv {d} (n**Refl) c =((n*c)** (rewrite sym (multAssociative d n c) in (Refl)))
@@ -52,6 +52,18 @@ gcdproof : (a : Nat) -> (b : Nat) -> NotBothZero a b ->
   (d : Nat ** ((k : Nat ** a = d*k),(l : Nat ** b = d*l)))
 gcdproof a b prf =
   (gcd a b {ok=prf} ** (?parta, ?partb))
+
+--Proof to finish euclidDivide, couldn't add it as a where clause within euclidDivide. If someone knows how to do that, please do so.
+extendedEqualityProof : (a : Nat) -> (b : Nat) -> (q : Nat) -> (r : Nat)-> (S r = b) -> (a = r + (q * b)) -> (S a = (S q) * b)
+extendedEqualityProof (r + (q * (S r))) (S r) q r Refl Refl = Refl
+
+--Given a, b, and a proof that b != 0, returns (q, r) and proofs that a = bq + r, r < b  {removed possible problems with Rohit's}
+euclidDivide : (a : Nat) -> (b : Nat) -> (b = Z -> Void) -> (q : Nat ** (r : Nat ** ((a = r + (q * b)), LT r b)))
+euclidDivide Z (S k) SIsNotZ = (Z ** (Z ** (Refl, LTESucc LTEZero)))
+euclidDivide (S n) (S k) SIsNotZ = case (euclidDivide n (S k) SIsNotZ) of
+								(q ** (r ** (equalityProof, ltproof))) => case (proofLTimplieseqorLT r (S k) ltproof) of
+																	(Right proofSrLTSk) => (q ** ((S r) ** ((functionExtendEquality S n (r + (q * (S k))) equalityProof), proofSrLTSk)))
+																	(Left proofSreqSk) => ((S q) ** (Z ** ((extendedEqualityProof n (S k) q r proofSreqSk equalityProof), LTESucc LTEZero)))
 
 --Bezout
 {-
