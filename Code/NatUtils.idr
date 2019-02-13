@@ -26,3 +26,25 @@ proofLTimplieseqorLT Z (S (S n)) (LTESucc LTEZero) = Right (LTESucc (LTESucc LTE
 proofLTimplieseqorLT (S m) (S n) proofSmLTSn = case (proofLTimplieseqorLT m n (fromLteSucc proofSmLTSn)) of
 										(Left proofSmeqn) => Left (functionExtendEquality S (S m) n proofSmeqn)
 										(Right proofSmLTn) => Right (LTESucc proofSmLTn)
+
+
+|||The theorem that (m<=n) and (n<=m) implies n=m
+lteAndGteImpliesEqual:{m:Nat}-> {n:Nat}->(LTE m n)-> (LTE n m)->(n=m)
+lteAndGteImpliesEqual LTEZero LTEZero = Refl
+lteAndGteImpliesEqual (LTESucc x) (LTESucc y) = cong (lteAndGteImpliesEqual x y)
+|||The theorem (m<=n) implies (m<=(c+n))
+plusConstantLeftSide:{m:Nat}->{n:Nat}->(c:Nat)->LTE m n ->LTE m (c+n)
+plusConstantLeftSide Z x = x
+plusConstantLeftSide (S k) x = lteSuccRight (plusConstantLeftSide k x)
+
+plusConstantLeftPreservesLte:{m:Nat}-> {n:Nat}->(c:Nat)->(LTE m n)->(LTE (c+m) (c+n))
+plusConstantLeftPreservesLte Z x = x
+plusConstantLeftPreservesLte (S k) x = LTESucc (plusConstantLeftPreservesLte k x)
+
+plusConstantRightPreservesLte:{m:Nat}-> {n:Nat}->(c:Nat)->(LTE m n)->(LTE (m+c) (n+c))
+plusConstantRightPreservesLte {m}{n}c x = rewrite (plusCommutative m c)  in (rewrite (plusCommutative n c) in (plusConstantLeftPreservesLte c x))
+
+|||The theorem that for any natural numbers k and m (m<= (S k)*m)
+natLteMultNatNat: (k:Nat)->(m:Nat)->(LTE m ((S k)*m))
+natLteMultNatNat Z m = rewrite (multOneLeftNeutral m) in (lteRefl)
+natLteMultNatNat (S k) m =     plusConstantLeftSide m (natLteMultNatNat  k m)
