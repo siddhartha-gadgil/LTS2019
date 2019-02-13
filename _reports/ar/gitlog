@@ -1,3 +1,33 @@
+commit a2a2b35f5907291b1aeecccc7f752f20cf9c84fe
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Tue Feb 12 22:16:50 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 22:16:50 2019 +0530
+
+    Gauss-Jordan implemented
+    
+    Using the MakeColumnZero function recursively, I implemented Gauss-Jordan elimination as far as to make a matrix upper triangular.
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+commit 1adc1e651b7b7f3d0f58505793e06ec13e93ae50
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Tue Feb 12 15:24:33 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 15:24:33 2019 +0530
+
+    Using Row Operations
+    
+    The row operations that I implemented earlier can now be put to use - namely for making a particular element in a matrix zero 'MakeElementZero' takes a matrix M, a row A, a row B, a position P in the row, and does a row operation to make M[A][P] equal to zero. 'MakeColumnZero' takes a matrix M, a specified column, and calls MakeElementZero to insert zeros appropriately (into upper triangular form). The next step here is to recursively use MakeColumnZero to make a matrix upper triangular (good for finding the determinant and solving linear equations/inverting).
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 63 +++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 55 insertions(+), 8 deletions(-)
+
 commit 7a12fcc8932277255b89ad5143c43e0d5c01b7cc
 Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
 AuthorDate: Sun Feb 10 20:36:52 2019 +0530
