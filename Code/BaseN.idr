@@ -1,6 +1,7 @@
 module Basen
 
 import Data.Fin
+%access public export
 
 --Defines a data type Base that behaves like a list
 data Base: (n: Nat) -> Type where
@@ -132,4 +133,17 @@ addfinl n (Next x z) (Next y w) = Next (snd (addfin n x y)) (addfinl n (Ones (fs
 --adding two lists
 addfinlist: (n: Nat) -> Base (S n) -> Base (S n) -> Base (S n)
 addfinlist n xs ys = (Rev n (addfinl n (Rev n xs) (Rev n ys)))
+
+--multiply two reversed lists in Fin S n
+mulfinl: (n: Nat) -> Base (S n) -> Base (S n) -> Base (S n)
+mulfinl n (Ones FZ) y = Ones FZ
+mulfinl n (Ones (FS x)) y = addfinl n y (mulfinl n (Ones (embn n x)) y)
+mulfinl n (Next FZ z) y = Next FZ (mulfinl n z y)
+mulfinl n (Next (FS x) z) y = addfinl n y (mulfinl n (Next (embn n x) z) y)
+
+
+--multiply two lists
+mulfinList: (n: Nat) -> (Base (S n)) -> (Base (S n)) -> (Base (S n))
+mulfinList n xs ys = Rev n (mulfinl n (Rev n xs) (Rev n ys))
+
 
