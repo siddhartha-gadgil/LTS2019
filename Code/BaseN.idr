@@ -41,6 +41,22 @@ tofin Z (S j) = [FZ]
 tofin (S k) (S j) = strp(reverse(rem :: reverse(tofin q (S j)))) where
                     rem = tofinNat (snd(Eucl (S k) (S j))) (S j)
                     q = fst(Eucl (S k) (S j))
+                    
+--embedding Fin n in Fin S n vertically
+embn: (n: Nat) -> Fin n -> Fin (S n)
+embn (S k) FZ = FZ
+embn (S k) (FS x) = FS (embn k x)
+
+--Generates n in (Fin (S n))
+Genn: (n: Nat) -> (Fin (S n))
+Genn Z = FZ
+Genn (S k) = FS (Genn k)
+
+--Checks if a given element of Fin (S n) is in fact n
+Isn: (n: Nat) -> (Fin (S n)) -> Bool
+Isn Z x = True
+Isn (S k) FZ = False
+Isn (S k) (FS x) = Isn k x
 
 --adding two Fin n's
 addfin: (n: Nat) -> Fin (S n) -> Fin (S n) -> Fin (S n) -> (Fin (S n), Fin (S n))
@@ -58,10 +74,6 @@ addfinl n (x :: xs) (y :: ys) = (snd(addfin n FZ x y)::(addfinl n (addfinl n [fs
 addfinlist: (n: Nat) -> List (Fin (S n)) -> List (Fin (S n)) -> List (Fin (S n))
 addfinlist n xs ys = reverse(addfinl n (reverse xs) (reverse ys))
 
---embedding Fin n in Fin S n vertically
-embn: (n: Nat) -> Fin n -> Fin (S n)
-embn (S k) FZ = FZ
-embn (S k) (FS x) = FS (embn k x)
 
 --Unused mulfinNat - multiplies two Fin n's
 mulfinNat: (n: Nat) -> Fin (n) -> Fin (n) -> (Fin (n), Fin (n))
