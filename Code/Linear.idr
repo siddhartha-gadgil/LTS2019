@@ -25,7 +25,7 @@ ApZZ f Refl = Refl
 -- Helper functions for the case ax = 0 --
 
 ZeroSum: (a: ZZ) -> (b: ZZ) -> (a = 0) -> (b = 0) -> (a + b = 0) --sum of two zeroes is zero
-ZeroSum (fromInt(0)) (fromInt(0)) Refl Refl = Refl
+ZeroSum (Pos Z) (Pos Z) Refl Refl = Refl
 
 triviality1: (a: ZZ) -> (b: ZZ) -> (b = 0) -> (a*b=0) -- premultiplying 0 by anything returns 0
 triviality1 a b prf = trans (apZZ (\x => a*x) b 0 prf) (multZeroRightZeroZ(a))
@@ -89,8 +89,9 @@ GeneralProof a b c = trans (helper2 a b c) (helper4 a b c)
 
 -- Solving the linear equation ax + b = c (2x +3 = 7, for example) over the rationals
 
-GeneralEqSolver: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: ZZNotZero a) -> (b0: ZZNotZero b) -> (c0: ZZNotZero c) ->
-(x : ZZPair ** (SolExists, a*(fst x) + b*(snd x) = (snd x)*c))
+GeneralEqSolver: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: ZZNotZero a) ->
+  (b0: ZZNotZero b) -> (c0: ZZNotZero c) ->
+  (x : ZZPair ** (SolExists, a*(fst x) + b*(snd x) = (snd x)*c))
 GeneralEqSolver a b c a0 b0 c0 = ( ( (c-b) , a ) ** (YesExists, (GeneralProof a b c) )) -- Solves the equation with proof
 
 -- Now, we can use the rational solution of the linear equation ax + b = c to check whether this equation has an integer

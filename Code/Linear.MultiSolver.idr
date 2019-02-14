@@ -82,7 +82,7 @@ minor {n} x y mat = case n of
 --Cofactor terms for a matrix (defined using the minor)
 cofactor : Fin (S n) -> Fin (S n) ->
   Matrix (S n) (S n) ZZPair -> ZZPair
-cofactor x y mat = case (modNat (finToNat x + finToNat y) 2) of
+cofactor x y mat = case (modNatNZ (finToNat x + finToNat y) (S (S Z)) SIsNotZ) of
                         Z => minor x y mat
                         (S k) => (NegS 0, Pos 1) * (minor x y mat)
 

@@ -67,6 +67,7 @@ extendedEqualityProof (r + (q * (S r))) (S r) q r Refl Refl = Refl
 --Given a, b, and a proof that b != 0, returns (q, r) and proofs that a = bq + r, r < b  {removed possible problems with Rohit's}
 euclidDivide : (a : Nat) -> (b : Nat) ->
   (b = Z -> Void) -> (q : Nat ** (r : Nat ** ((a = r + (q * b)), LT r b)))
+euclidDivide a Z pf = void(pf Refl)
 euclidDivide Z (S k) SIsNotZ = (Z ** (Z ** (Refl, LTESucc LTEZero)))
 euclidDivide (S n) (S k) SIsNotZ =
   case (euclidDivide n (S k) SIsNotZ) of
