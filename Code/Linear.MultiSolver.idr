@@ -34,6 +34,10 @@ multZZ : ZZPair -> ZZPair -> ZZPair
 multZZ x y = ((fst x)*(fst y), (snd x)*(snd y))
 
 total
+divZZ : ZZPair -> ZZPair -> ZZPair
+divZZ x y = ((fst x)*(snd y), (snd x)*(fst y))
+
+total
 fromIntQ : Integer -> ZZPair
 fromIntQ n = if n < 0
   then (NegS $ fromInteger ((-n) - 1), Pos 1)
