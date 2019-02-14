@@ -98,3 +98,39 @@ reviscontra x (y :: xs) z = trans (trans (trans (revontoeq x [y] (xs++z)) (addl 
 reveq: (x: Type) -> (l: List x) -> (l = reverse(reverse l))
 reveq x [] = Refl
 reveq x (y :: xs) = sym (trans (trans (cong(reviscontra x [y] xs)) (reviscontra x (reverse xs) (reverse [y]))) (cong(sym (reveq x xs))))
+
+--Proof that any number of leading zeroes leave the natural number unchanged
+pffinstrp: (n: Nat) -> (l: List(Fin (S n))) -> ((tonat (S n) (strp l)) = (tonat (S n) l))
+pffinstrp n [] = Refl
+pffinstrp n (x :: xs) = case x of
+                              FZ => pffinstrp n xs
+                              FS x => Refl
+
+--Proof that the revrse of the empty list is itself
+revnull: (reverse [] = [])
+revnull = Refl
+
+--Custom "functions are functors" function
+ap: (x: Type) -> (y: Type) -> (f: x->y) -> (n = m) -> (f n = f m)
+ap x y f Refl = Refl
+
+{-
+Proofs that don't work
+
+
+addfinlZ: addfinl Z [] [] = []
+addfinlZ = Refl
+
+
+addfinlnullnull: (n: Nat) -> (y: List (Fin (S n))) -> addfinl n [] y = y
+addfinlnullnull n y = Refl
+
+addfinlnull: (n: Nat) -> (x: List (Fin (S n))) -> ((addfinl n (reverse x) (reverse [])) = reverse x)
+addfinlnull n [] = ?l1 -- (ap (List (Fin (S n))) (List (Fin (S n))) (\y => addfinl n y y) revnull)
+addfinlnull n (x :: xs) = ?l_2
+
+fintonatadd: (n: Nat) -> (m: List (Fin (S n))) -> (l: List (Fin (S n))) -> ((tonat (S n) (addfinlist n m l)) = (tonat (S n) m) + (tonat (S n) l))
+fintonatadd n m [] = ?lp --trans (sym (trans (trans (sym (pffinstrp n m)) (cong (reveq (Fin (S n)) m))) (cong {f = (\x => ( tonat (S n)(strp (reverse x))))} Refl))) (sym (plusZeroRightNeutral (tonat (S n) m)))
+fintonatadd n m (x :: xs) = ?l
+-}
+
