@@ -70,3 +70,13 @@ genFunctionForGcd f (cDivb,cDivExp) = f((cDiva cDivb cDivExp,cDivb))
 |||The theorem, gcd(a,b)=d => gcd (b, a+ b(-m))=d
 euclidConservesGcd :(m:ZZ)->(GCDZ a b d)->(GCDZ b  (a+(b*(-m))) d)
 euclidConservesGcd m  (posProof, (dDiva,dDivb), f) = (posProof,(dDivb,(EuclidConservesDivisor m  dDiva dDivb)),genFunctionForGcd f)
+|||The theorem that if c and d are positive d|c => (d is less than or equal to c)
+posDivPosImpliesLte:(isDivisible c d)->(IsPositive c)->(IsPositive d)->LTEZ d c
+posDivPosImpliesLte {d}{c}(x ** pf) cPos dPos = posLteMultPosPosEqZ {q=x} d c dPos cPos pf
+
+
+|||The Theorem that if c and d are positive, d|c and c|d =>(c=d)
+PosDivAndDivByImpliesEqual: (isDivisible c d)->(isDivisible d c)->(IsPositive c)->(IsPositive d) -> (c=d)
+PosDivAndDivByImpliesEqual x y z x1 =lteAndGteImpliesEqualZ dLtec cLted where
+  dLtec =posDivPosImpliesLte x z x1
+  cLted =posDivPosImpliesLte y x1 z
