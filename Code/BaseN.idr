@@ -74,7 +74,7 @@ Predec Z _ Refl impossible
 Predec (S k) FZ Refl = FZ
 Predec (S k) (FS x) prf = FS (Predec k x (IsNotnPf (S k) (FS x) prf))
 
---In spirit the decidable type for Isn
+--A type in some sense resembling the decidable type for truth of Isn (with contra replaced by equality to False)
 DecIsn: (n: Nat) -> (p: (Fin (S n))) -> Either (Isn n p = True) (Isn n p = False)
 DecIsn Z p = Left Refl
 DecIsn (S k) FZ = Right Refl
