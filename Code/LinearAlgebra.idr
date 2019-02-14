@@ -63,6 +63,11 @@ First_k_rows_from_RowP n x p (S k) = SimpleCast ((First_k_rows_from_RowP n x p k
 
 -- A section on elementary operations (to eventually implement the Gauss-Jordan process)
 
+-- Scales a row by dividing it by a rational number.
+
+ScaleRow: (n: Nat) -> Matrix n n ZZPair -> (row_a: Nat) -> (c: ZZPair) -> Matrix n n ZZPair
+ScaleRow n x row_a c = replaceAt (tofinNat row_a n) (ScaleVect n (RowN x row_a) c) (x)
+
 -- Swaps two rows in a matrix (indexing from 0)
 
 SwapRows: (n: Nat) -> Matrix n n ZZPair -> (a: Nat) -> (b: Nat) -> Matrix n n ZZPair
@@ -127,3 +132,39 @@ UpperTriangularForm {n} x = UpperTriangularize x (Pred (Pred n))
 
 DiagonalForm: (x: Matrix n n ZZPair) -> Matrix n n ZZPair
 DiagonalForm {n} x = UpperTriangularForm (transpose (UpperTriangularForm x))
+
+-- once a matrix is in diagonal form, we can convert it to the identity by dividing each row by its only nonzero element
+
+ReduceRow: (x: Matrix n n ZZPair) -> (iter: Nat) -> Matrix n n ZZPair
+ReduceRow {n = n} x Z = ScaleRow n x Z (divZZ (1,1) (ij x 0 0))
+ReduceRow {n = n} x (S k) = ScaleRow n (ReduceRow x k) (S k) (divZZ (1,1) (ij x (S k) (S k)))
+
+-- This function converts any matrix into the identity. Applying the row operations which do this to an identity matrix would convert it
+-- to an inverse. If we want to solve linear equations, this would be enough (for proof, we would need to prove that AA^-1 = I). 
+-- Another possibility would be to use back-substitution from the upper-triangular form. This would be simpler because the function
+-- GeneralEqSolver from Linear.idr could be modified a bit to solve n successive 1 - variable equations, and generating a proof would
+-- be easier.
+
+MakeIdentity: (x: Matrix n n ZZPair) -> (Matrix n n ZZPair)
+MakeIdentity {n} x = ReduceRow (DiagonalForm x) (Pred n)
+
+-- Once we have a matrix in diagonal (or even upper triangular) form, we can calculate the magnitude of its determinant by multiplying
+-- the diagonal elements.
+
+DiagonalProductHelper: (x: Matrix n n ZZPair) -> (iter: Nat) -> ZZPair
+DiagonalProductHelper x Z = (ij x 0 0)
+DiagonalProductHelper x (S k) = (ij x (S k) (S k)) * (DiagonalProductHelper x k)
+
+-- Calculates the determinant up to the sign ( (-1)^n to be implemented later ). Effectively, this calculates the "volume" of n-vectors in
+-- n-dimensional Euclidean space. 
+
+DetUpToSign: (x: Matrix n n ZZPair) -> ZZPair
+DetUpToSign {n} x = simplifyRational (DiagonalProductHelper (DiagonalForm x) (Pred n))
+
+-- I propose a simple way to calculate the sign factor: in the conversion to upper-triangular form, the last column is untouched
+-- except for by Row Swapping. The last column in upper - triangular form is thus a permutation of the last column of the original 
+-- matrix. We just need to check if this is an odd or even permutation (simplification of all elements of the matrices will be 
+-- necessary to ensure that this can be carried out) and multiply appropriately.
+
+
+
