@@ -1,11 +1,10 @@
 module LinearAlgebra
 
 import BaseN
-import Linear.MultiSolver
+import MultiSolver
 import Data.Matrix.Numeric
 import Data.Vect
 import Data.Fin
-import Merge
 import Data.Matrix
 import ZZ
 import Rationals
@@ -13,6 +12,11 @@ import Rationals
 %access public export
 
 -- Some auxillary functions for elementary operations
+
+--Takes the first m elements from a vector
+Vecttake : (m:Nat)->Vect n elem->Vect m  elem
+Vecttake Z xs = []
+Vecttake (S k) (x::xs) = x::(Vecttake k xs)
 
 FST: ZZPair -> ZZ --some issue with fst
 FST (a, b) = a

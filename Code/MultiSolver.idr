@@ -1,4 +1,4 @@
-module Linear.MultiSolver
+module MultiSolver
 
 --To make sure that all imports work, load in idris as
 --   idris Linear.MultiSolver.idr -p contrib
@@ -32,6 +32,10 @@ plusZZ x y = ((fst x)*(snd y) + (snd x)*(fst y), (snd x)*(snd y))
 total
 multZZ : ZZPair -> ZZPair -> ZZPair
 multZZ x y = ((fst x)*(fst y), (snd x)*(snd y))
+
+total
+divZZ : ZZPair -> ZZPair -> ZZPair
+divZZ x y = ((fst x)*(snd y), (snd x)*(fst y))
 
 total
 fromIntQ : Integer -> ZZPair
