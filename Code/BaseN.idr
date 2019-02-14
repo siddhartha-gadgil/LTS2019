@@ -58,11 +58,44 @@ Isn Z x = True
 Isn (S k) FZ = False
 Isn (S k) (FS x) = Isn k x
 
+--Proves that the definitional equality for Isn holds
+IsnisIsn: (n: Nat) -> (p: Fin (S n)) -> (Isn (S n) (FS p)) = (Isn n p)
+IsnisIsn n p = Refl
+
+--Proves that if a given (FS x) is not n in (Fin (S n)), then x is not n-1 in (Fin n)
+IsNotnPf:  (n: Nat) -> (p: Fin (S n)) ->  ((Isn (S n) (FS p)) = False) -> ((Isn n p) = False)
+IsNotnPf Z _ Refl impossible
+IsNotnPf (S k) FZ prf = Refl
+IsNotnPf (S k) (FS x) prf = trans (sym (IsnisIsn (S k) (FS x))) prf
+
+--Gives a back embedding whenever the value is not Genn
+Predec: (n: Nat) -> (p: Fin (S n)) -> ((Isn n p) = False) -> (Fin n)
+Predec Z _ Refl impossible
+Predec (S k) FZ Refl = FZ
+Predec (S k) (FS x) prf = FS (Predec k x (IsNotnPf (S k) (FS x) prf))
+
+--In spirit the decidable type for Isn
+DecIsn: (n: Nat) -> (p: (Fin (S n))) -> Either (Isn n p = True) (Isn n p = False)
+DecIsn Z p = Left Refl
+DecIsn (S k) FZ = Right Refl
+DecIsn (S k) (FS x) = case (DecIsn k x) of
+                        Left l => Left (trans (IsnisIsn k x) l)
+                        Right r => Right (trans (IsnisIsn k x) r)
+
 --adding two Fin n's
-addfin: (n: Nat) -> Fin (S n) -> Fin (S n) -> Fin (S n) -> (Fin (S n), Fin (S n))
-addfin n x y z = case (tofin ((tonatFin (S n) x)+ (tonatFin (S n) y) + (tonatFin (S n) z)) (S n)) of
-                    [l] => (FZ, l)
-                    [k, l] => (k,l)
+addfin: (n: Nat) -> Fin (S n) -> Fin (S n) -> (Fin (S n), Fin (S n))
+addfin Z x y = (FZ,  FZ)
+addfin (S k) FZ y = (FZ, y)
+addfin (S k) (FS x) y = let
+                    a = Genn (S k)
+                    b = the (Fin (S (S k))) FZ
+                    c = the (Fin (S k)) FZ
+                    w = fst(addfin (S k) (embn (S k) x) y)
+                    z = snd(addfin (S k) (embn (S k) x) y)
+                    in
+                    case (DecIsn (S k) z) of
+                             Left l => (FS c, b)
+                             Right r => (w, FS(Predec (S k) z r))
 
 --adding two reversed lists as specified
 addfinl: (n: Nat) -> List (Fin (S n)) -> List (Fin (S n)) -> List (Fin (S n))
