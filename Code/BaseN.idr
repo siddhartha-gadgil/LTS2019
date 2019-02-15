@@ -1,22 +1,44 @@
 module Basen
 
 import Data.Fin
-
 %access public export
+
+--Defines a data type Base that behaves like a list
+data Base: (n: Nat) -> Type where
+  Ones: (Fin n) -> Base n
+  Next: (Fin n) -> (Base n) -> (Base n)
+
+--Auxiliary function that reverses a Base (S n) onto anpther given Base (S n)
+Revonto: (n: Nat) -> (Base (S n)) -> (Base (S n)) -> (Base (S n))
+Revonto n accum (Ones x) = Next x accum
+Revonto n accum (Next x y) = Revonto n (Next x accum) y
+
+--Reverses a Base (S n)
+Rev: (n: Nat) -> (Base (S n)) -> (Base (S n))
+Rev n (Ones x) = Ones x
+Rev n (Next x y) = Revonto n (Ones x) y
+
+concat: (n: Nat) -> (Base (S n)) -> (Base (S n)) -> (Base (S n))
+concat n (Ones x) y = Next x y
+concat n (Next x z) y = Next x (concat n z y)
+
 --Fin to Nat
 tonatFin: (n: Nat) -> Fin(n) -> Nat
 tonatFin (S k) FZ = Z
 tonatFin (S k) (FS x) = S (tonatFin k x)
 
 --List Fin to Nat
-tonat: (n: Nat) -> List (Fin(n)) -> Nat
-tonat n [] = Z
-tonat n (x :: xs) = (tonatFin n x)*(power n (length xs)) + (tonat n xs)
+tonat: (n: Nat) -> Base (S n) -> Nat
+tonat n (Ones FZ) = Z
+tonat Z (Ones (FS x)) impossible
+tonat (S k) (Ones (FS x)) = S(tonat k (Ones x))
+tonat n (Next x y) = (tonat n (Ones x)) + (tonat n y)
 
 
 --Euclid's div
 Eucl: (a: Nat) -> (b: Nat) -> (Nat, Nat)
 Eucl Z b = (0,0)
+Eucl a Z = (0, a)
 Eucl (S k) b = case (lte (S (S k)) b) of
                     False => (S(fst(Eucl (minus (S k) b) b)), snd(Eucl (minus (S k) b) b))
                     True => (0, S k)
@@ -28,20 +50,21 @@ tofinNat (S k) (S j) = case lte (S k) (S j) of
                 True => FS (tofinNat k j)
                 False =>  (tofinNat (snd(Eucl (S k) (S j))) (S j))
 
---left strips FZ from lists
-strp: List (Fin n) -> List (Fin n)
-strp [] = []
-strp (x :: xs) = case x of
-                      FZ => strp(xs)
-                      (FS y) => x::xs
+strp: (Base (S n)) -> (Base (S n))
+strp (Ones x) = (Ones x)
+strp (Next x y) = case x of
+                  FZ => strp(y)
+                  FS z => Next x y
 
 -- Nat to List Fin n (base n representation)
-tofin: Nat -> (n: Nat) -> List (Fin n)
-tofin Z (S j) = [FZ]
-tofin (S k) (S j) = strp(reverse(rem :: reverse(tofin q (S j)))) where
-                    rem = tofinNat (snd(Eucl (S k) (S j))) (S j)
-                    q = fst(Eucl (S k) (S j))
-                    
+tofin: Nat -> (n: Nat) -> Base (S n)
+tofin Z n = Ones FZ
+tofin (S k) n = strp(concat n (tofin q n) (Ones rem)) where
+                    rem: Fin (S n)
+                    rem = tofinNat (snd(Eucl (S k) (S n))) (S n)
+                    q: Nat
+                    q = fst(Eucl (S k) (S n))
+
 --embedding Fin n in Fin S n vertically
 embn: (n: Nat) -> Fin n -> Fin (S n)
 embn (S k) FZ = FZ
@@ -53,7 +76,7 @@ Genn Z = FZ
 Genn (S k) = FS (Genn k)
 
 --Checks if a given element of Fin (S n) is in fact n
-Isn: (n: Nat) -> (Fin (S n)) -> Bool
+Isn: (n: Nat) -> (p: Fin (S n)) -> Bool
 Isn Z x = True
 Isn (S k) FZ = False
 Isn (S k) (FS x) = Isn k x
@@ -98,84 +121,26 @@ addfin (S k) (FS x) y = let
                              Right r => (w, FS(Predec (S k) z r))
 
 --adding two reversed lists as specified
-addfinl: (n: Nat) -> List (Fin (S n)) -> List (Fin (S n)) -> List (Fin (S n))
-addfinl n [] ys = strp(ys)
-addfinl n (x :: xs) [] = strp(x::xs)
-addfinl n (x :: xs) (y :: ys) = (snd(addfin n FZ x y)::(addfinl n (addfinl n [fst(addfin n FZ x y)] xs) ys))
+addfinl: (n: Nat) -> Base (S n) -> Base (S n) -> Base (S n)
+addfinl n (Ones x) (Ones y) = case (addfin n x y) of
+                              (FZ, a) => Ones a
+                              (FS c, a) => Next a (Ones (FS c))
+addfinl n (Ones x) (Next y z) = Next (snd (addfin n x y)) (addfinl n (Ones (fst (addfin n x y))) z)
+addfinl n (Next x z) (Ones y) = Next (snd (addfin n x y)) (addfinl n (Ones (fst (addfin n x y))) z)
+addfinl n (Next x z) (Next y w) = Next (snd (addfin n x y)) (addfinl n (Ones (fst (addfin n x y))) (addfinl n z w))
 
 --adding two lists
-addfinlist: (n: Nat) -> List (Fin (S n)) -> List (Fin (S n)) -> List (Fin (S n))
-addfinlist n xs ys = reverse(addfinl n (reverse xs) (reverse ys))
-
-
---Unused mulfinNat - multiplies two Fin n's
-mulfinNat: (n: Nat) -> Fin (n) -> Fin (n) -> (Fin (n), Fin (n))
-mulfinNat (S n) x y =  case tofin ((tonatFin (S n) x)*(tonatFin (S n) y)) (S n) of
-                    [l] => (FZ, l)
-                    [k,l] => (k,l)
+addfinlist: (n: Nat) -> Base (S n) -> Base (S n) -> Base (S n)
+addfinlist n xs ys = (Rev n (addfinl n (Rev n xs) (Rev n ys)))
 
 --multiply two reversed lists in Fin S n
-mulfinl: (n: Nat) -> List (Fin (S n)) -> List (Fin (S n)) -> List (Fin (S n))
-mulfinl n xs [] = []
-mulfinl n xs (FZ :: ys) = FZ :: (mulfinl n xs ys)
-mulfinl n xs ((FS x) :: ys) = addfinl n (mulfinl n xs ((embn n x)::ys)) xs
-
---multpily two lists
-mulfinList: (n: Nat) -> List (Fin (S n)) -> List (Fin (S n)) -> List (Fin (S n))
-mulfinList n xs ys = reverse(mulfinl n (reverse xs) (reverse ys))
-
---proof that right addition preserves equality (somehow cong was messing up)
-addl: (x: Type) -> (z: List x) -> (l = y) -> (l ++ z = y ++ z)
-addl x z Refl = Refl
-
--- Proof that the auxiliary reverseOnto used to define rev behaves the way it should (semi-pseudo-contravariantly as I choose to call it)
-revontoeq: (x: Type) -> (y: List x) -> (l: List x) -> ((reverseOnto y l)  = ((reverseOnto [] l) ++ y))
-revontoeq x y [] = Refl
-revontoeq x [] (z :: xs) = sym (appendNilRightNeutral (reverseOnto [] (z::xs)))
-revontoeq x (y :: ys) (z :: xs) = trans (trans (revontoeq x (z::y::ys) xs) ((appendAssociative (reverseOnto [] xs) [z] (y::ys)))) (sym (addl x (y::ys) (revontoeq x [z] xs)))
-
---Proof that reverse is pseudo-contravariant on concatenation
-reviscontra: (x: Type) -> (y: List x) -> (l: List x) -> (reverse(y++l) =  reverse(l)++reverse(y))
-reviscontra x [] z = sym (appendNilRightNeutral (reverseOnto [] z))
-reviscontra x (y :: xs) z = trans (trans (trans (revontoeq x [y] (xs++z)) (addl x [y] (reviscontra x xs z))) (sym (appendAssociative (reverse z) (reverse xs) [y]))) (cong(sym (revontoeq x [y] xs)))
-
--- Proof that the reverse function is self-inverse
-reveq: (x: Type) -> (l: List x) -> (l = reverse(reverse l))
-reveq x [] = Refl
-reveq x (y :: xs) = sym (trans (trans (cong(reviscontra x [y] xs)) (reviscontra x (reverse xs) (reverse [y]))) (cong(sym (reveq x xs))))
-
---Proof that any number of leading zeroes leave the natural number unchanged
-pffinstrp: (n: Nat) -> (l: List(Fin (S n))) -> ((tonat (S n) (strp l)) = (tonat (S n) l))
-pffinstrp n [] = Refl
-pffinstrp n (x :: xs) = case x of
-                              FZ => pffinstrp n xs
-                              FS x => Refl
-
---Proof that the revrse of the empty list is itself
-revnull: (reverse [] = [])
-revnull = Refl
-
---Custom "functions are functors" function
-ap: (x: Type) -> (y: Type) -> (f: x->y) -> (n = m) -> (f n = f m)
-ap x y f Refl = Refl
-
-{-
-Proofs that don't work
+mulfinl: (n: Nat) -> Base (S n) -> Base (S n) -> Base (S n)
+mulfinl n (Ones FZ) y = Ones FZ
+mulfinl n (Ones (FS x)) y = addfinl n y (mulfinl n (Ones (embn n x)) y)
+mulfinl n (Next FZ z) y = Next FZ (mulfinl n z y)
+mulfinl n (Next (FS x) z) y = addfinl n y (mulfinl n (Next (embn n x) z) y)
 
 
-addfinlZ: addfinl Z [] [] = []
-addfinlZ = Refl
-
-
-addfinlnullnull: (n: Nat) -> (y: List (Fin (S n))) -> addfinl n [] y = y
-addfinlnullnull n y = Refl
-
-addfinlnull: (n: Nat) -> (x: List (Fin (S n))) -> ((addfinl n (reverse x) (reverse [])) = reverse x)
-addfinlnull n [] = ?l1 -- (ap (List (Fin (S n))) (List (Fin (S n))) (\y => addfinl n y y) revnull)
-addfinlnull n (x :: xs) = ?l_2
-
-fintonatadd: (n: Nat) -> (m: List (Fin (S n))) -> (l: List (Fin (S n))) -> ((tonat (S n) (addfinlist n m l)) = (tonat (S n) m) + (tonat (S n) l))
-fintonatadd n m [] = ?lp --trans (sym (trans (trans (sym (pffinstrp n m)) (cong (reveq (Fin (S n)) m))) (cong {f = (\x => ( tonat (S n)(strp (reverse x))))} Refl))) (sym (plusZeroRightNeutral (tonat (S n) m)))
-fintonatadd n m (x :: xs) = ?l
--}
-
+--multiply two lists
+mulfinList: (n: Nat) -> (Base (S n)) -> (Base (S n)) -> (Base (S n))
+mulfinList n xs ys = Rev n (mulfinl n (Rev n xs) (Rev n ys))
