@@ -1,4 +1,4 @@
-module Linear.MultiSolver
+module MultiSolver
 
 --To make sure that all imports work, load in idris as
 --   idris Linear.MultiSolver.idr -p contrib
@@ -32,6 +32,10 @@ plusZZ x y = ((fst x)*(snd y) + (snd x)*(fst y), (snd x)*(snd y))
 total
 multZZ : ZZPair -> ZZPair -> ZZPair
 multZZ x y = ((fst x)*(fst y), (snd x)*(snd y))
+
+total
+divZZ : ZZPair -> ZZPair -> ZZPair
+divZZ x y = ((fst x)*(snd y), (snd x)*(fst y))
 
 total
 fromIntQ : Integer -> ZZPair
@@ -82,7 +86,7 @@ minor {n} x y mat = case n of
 --Cofactor terms for a matrix (defined using the minor)
 cofactor : Fin (S n) -> Fin (S n) ->
   Matrix (S n) (S n) ZZPair -> ZZPair
-cofactor x y mat = case (modNat (finToNat x + finToNat y) 2) of
+cofactor x y mat = case (modNatNZ (finToNat x + finToNat y) (S (S Z)) SIsNotZ) of
                         Z => minor x y mat
                         (S k) => (NegS 0, Pos 1) * (minor x y mat)
 

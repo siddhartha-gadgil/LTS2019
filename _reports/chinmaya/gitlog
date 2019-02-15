@@ -1,3 +1,46 @@
+commit 518c550a061971b0b4ad2a0d069394f10352cdc0
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Wed Feb 13 23:04:29 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 23:04:29 2019 +0530
+
+    Added proofs about the coset rep maps
+    
+    Proofs that the coset representative map arising from CosetAll, is in some specific useful case, a magma homomorphism
+
+ Code/Group.idr | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+commit c72431ce5cafc0807f854f8ee39ae23157342e0e
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Wed Feb 13 16:50:29 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 16:50:29 2019 +0530
+
+    Added a proof of uniqueness of coset reps
+    
+    A proof that the operation that generates coset representative in trav for an element of g (from CosetAll) inverts the function generating a coset representative by going from trav to g (the first coordinate of IsTraversal)
+    
+    Also added a comment above the mult operation in trav
+
+ Code/Group.idr | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+commit 6cd1a64540990951ca87b7719ad3962c2a8e0d6b
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Wed Feb 13 16:24:41 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 16:24:41 2019 +0530
+
+    Added coset traversals and induced multiplication
+    
+    The group multiplication for traversals is defined.
+    
+    Proofs that this does indeed form a group is under way.
+
+ Code/Group.idr | 42 +++++++++++++++++++-----------------------
+ 1 file changed, 19 insertions(+), 23 deletions(-)
+
 commit 0d831df109f93f942f3cd573f114b9b034fec627
 Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
 AuthorDate: Wed Jan 30 04:29:28 2019 +0530

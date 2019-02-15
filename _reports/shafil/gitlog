@@ -1,3 +1,92 @@
+commit 80d17770a56c23186b11091d396908b22e37fb21
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 22:30:40 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 22:30:40 2019 +0530
+
+    Copied some code from ZZ.idr which might be useful
+    
+    Added some functions that deal with LTE and in particular, the theorem that (m<=n) and (n<=m) implies n=m
+
+ Code/NatUtils.idr | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+commit cea3972ad09579f374603e6c8c8379ba17e5fda0
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 22:26:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 22:26:55 2019 +0530
+
+    The Theorem that if c and d are positive, d|c and c|d =>(c=d)
+    
+    PosDivAndDivByImpliesEqual is the theorem that if c and d are positive, d|c and c|d =>(c=d)
+    Implemented using many auxiliary functions from ZZ.idr
+
+ Code/Divisors.idr | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+commit a9260c3fc1d4dfcbe515705cc7d670d50b260d8d
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 22:23:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 22:23:45 2019 +0530
+
+    Implemented LTE type for ZZ
+    
+    Implemented LTE type for ZZ
+    Also wrote some other useful theorems and functions
+
+ Code/ZZ.idr | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 89 insertions(+), 4 deletions(-)
+
+commit 0f10fdd75657f9a6a0445971741d474c1c89dc6f
+Merge: 41e311a 1171493
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 22:21:23 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 22:21:23 2019 +0530
+
+    Merge pull request #11 from siddhartha-gadgil/master
+    
+    asd
+
+commit 41e311a76ed8086f09976080c00dde49446fe948
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 15:53:12 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 15:53:12 2019 +0530
+
+    Added the theorem gcd(a,b)=d => gcd (b, a+ b(-m))=d
+    
+    This theorem can be used to show that that the Gcd is conserved in each step of the Euclid's algorithm
+
+ Code/Divisors.idr | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
+
+commit 7c9388fb666202f5c0ee843e7bedc5c097b231af
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 15:50:22 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 15:50:22 2019 +0530
+
+    Added a few functions that can be used for rewriting
+    
+    addAndSubNeutralZ function gives a proof that  (((a+b)+(-b))=a)
+
+ Code/ZZ.idr | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit d8e16707f0ed96855a67c362c4ae1417173e194a
+Merge: 3710818 03f3572
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 15:48:34 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 15:48:34 2019 +0530
+
+    Merge pull request #10 from siddhartha-gadgil/master
+    
+    dfsd
+
 commit 37108182ab621afd71e949eab8bc410ace5c3583
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Tue Feb 12 23:58:18 2019 +0530

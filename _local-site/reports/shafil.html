@@ -127,7 +127,7 @@ messageStyle: "none",
               </li>
               
               <li>
-                <a href="/reports/ss.html"> S Shriram</a>
+                <a href="/reports/ss.html"> S Sriram</a>
               </li>
               
               <!-- <li><a href="#">Something else here</a></li> -->
@@ -199,6 +199,286 @@ messageStyle: "none",
 
 
 <pre><code class="plaintext">
+commit 80d17770a56c23186b11091d396908b22e37fb21
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 22:30:40 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 22:30:40 2019 +0530
+
+    Copied some code from ZZ.idr which might be useful
+    
+    Added some functions that deal with LTE and in particular, the theorem that (m<=n) and (n<=m) implies n=m
+
+ Code/NatUtils.idr | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+commit cea3972ad09579f374603e6c8c8379ba17e5fda0
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 22:26:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 22:26:55 2019 +0530
+
+    The Theorem that if c and d are positive, d|c and c|d =>(c=d)
+    
+    PosDivAndDivByImpliesEqual is the theorem that if c and d are positive, d|c and c|d =>(c=d)
+    Implemented using many auxiliary functions from ZZ.idr
+
+ Code/Divisors.idr | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+commit a9260c3fc1d4dfcbe515705cc7d670d50b260d8d
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 22:23:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 22:23:45 2019 +0530
+
+    Implemented LTE type for ZZ
+    
+    Implemented LTE type for ZZ
+    Also wrote some other useful theorems and functions
+
+ Code/ZZ.idr | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 89 insertions(+), 4 deletions(-)
+
+commit 0f10fdd75657f9a6a0445971741d474c1c89dc6f
+Merge: 41e311a 1171493
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 22:21:23 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 22:21:23 2019 +0530
+
+    Merge pull request #11 from siddhartha-gadgil/master
+    
+    asd
+
+commit 41e311a76ed8086f09976080c00dde49446fe948
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 15:53:12 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 15:53:12 2019 +0530
+
+    Added the theorem gcd(a,b)=d => gcd (b, a+ b(-m))=d
+    
+    This theorem can be used to show that that the Gcd is conserved in each step of the Euclid's algorithm
+
+ Code/Divisors.idr | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
+
+commit 7c9388fb666202f5c0ee843e7bedc5c097b231af
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 15:50:22 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 15:50:22 2019 +0530
+
+    Added a few functions that can be used for rewriting
+    
+    addAndSubNeutralZ function gives a proof that  (((a+b)+(-b))=a)
+
+ Code/ZZ.idr | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit d8e16707f0ed96855a67c362c4ae1417173e194a
+Merge: 3710818 03f3572
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 13 15:48:34 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 15:48:34 2019 +0530
+
+    Merge pull request #10 from siddhartha-gadgil/master
+    
+    dfsd
+
+commit 37108182ab621afd71e949eab8bc410ace5c3583
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 23:58:18 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 23:58:18 2019 +0530
+
+    Added some useful theorems about gcd
+    
+    proved that gcd(a,0)=a
+    proved that a|a
+    A sketch of a proof that Euclid's algorithm preserves gcd in each step.
+
+ Code/Divisors.idr | 33 +++++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
+
+commit 35e6d26e5ae359b3922ef63bd26966777ec50584
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 23:54:44 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 23:54:44 2019 +0530
+
+    Added some useful functions
+    
+    multNegateRightZ gives a proof that k*(-j)=-(k*j)
+    multNegateRightIsNegateZ takes a proof of a=bc and creates a proof of (-a)=b(-c)
+
+ Code/ZZ.idr | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+commit 6bd8d9b3db72d5e0dae70ff954fb82c1f6c9eaed
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 20:39:42 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 20:39:42 2019 +0530
+
+    Included a Gcd type that may be easier to use
+    
+    Expanded on Rohit's ideas for defining common factors and Gcd. The Gcd is defined in a slightly different way.
+
+ Code/Divisors.idr | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
+
+commit 7c510cd0790d8b175b267e57264cf0102d22dc8e
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 20:31:37 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 20:31:37 2019 +0530
+
+    Created an IsPositive Data type
+    
+    Created a function that returns a either a  proof that an integer is positive or a contradiction to the statement that the integer is positive
+
+ Code/ZZ.idr | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+commit 4c4d6c87f52949209b08ec7c14c6abb19d944d56
+Merge: 519e303 e6ebd31
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 20:28:15 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 20:28:15 2019 +0530
+
+    Merge pull request #9 from siddhartha-gadgil/master
+    
+    up
+
+commit 519e30325385a58254f35020cea7e08180bb4850
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 14:21:35 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 14:21:35 2019 +0530
+
+    Changed import Evens to import Lecture.Evens
+    
+    Changed import Evens to import Lecture.Evens
+
+ Code/Merge.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5e61f6060314f68d4c9851f14965ca307ae61357
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 14:19:39 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 14:19:39 2019 +0530
+
+    Added a TransDivide function
+    
+    Added a TransDivide function which states that b|a and c|b =>c|a
+
+ Code/Divisors.idr | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit f7f05adfce47e5ccb93b231ec000c576f3d217b1
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 14:16:18 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 14:16:18 2019 +0530
+
+    Copied Rohit's code into File Bezout.idr and added a EuclList function
+    
+    Copied Rohit's code into File Bezout.idr and added a EuclList function which returns a list of quotients and remainders on applying Euclid's Algorithm which may be useful in future proofs
+
+ Code/Bezout.idr | 132 ++++++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 120 insertions(+), 12 deletions(-)
+
+commit 6b1593d6d5df1118c71390a852b903f3632ae490
+Merge: 5172740 43845dc
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 14:11:24 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 14:11:24 2019 +0530
+
+    Merge pull request #8 from siddhartha-gadgil/master
+    
+    dsf
+
+commit 5172740e01ca549f7b7490084c0545c142677c17
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 10:46:59 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 10:46:59 2019 +0530
+
+    Changed all Nats to ZZ in gcd.idr
+    
+    This is just part of the file gcd.idr with all Nats changed to ZZ
+
+ Code/Divisors.idr | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+commit a275fc1c07c2dd6073d385351419d4abe1e3dd55
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 10:45:44 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 10:45:44 2019 +0530
+
+    Delete Divisors.idr
+
+ Divisors.idr | 27 ---------------------------
+ 1 file changed, 27 deletions(-)
+
+commit 727e4cc269adc852173a28c91fdad5a045cafffa
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 10:34:38 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 10:34:38 2019 +0530
+
+    Just changed all Nats to ZZ in gcd.idr
+    
+    This is just some of the functions from gcd.idr with Nats changed to ZZ. I didnt delete the original file.
+
+ Divisors.idr | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+commit 6395fa5de4c1b394275b1307a77f8a80ea6e7b60
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 10:31:47 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 10:31:47 2019 +0530
+
+    Two useful functions and import Sign.idr
+    
+    Added two functions that plusConstantRightZ and plusConstantLeftZ that give proofs that adding constants to equals  does not change equality
+    Modelled on the corresponding functions for Nat
+
+ Code/ZZ.idr | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+commit 3e5c7d75bf1c1cd8a6873f77eaa6c89f43f2982b
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 10:27:50 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 10:27:50 2019 +0530
+
+    Copied Sign.idr into the folder for easy access
+    
+    This is not my Code
+
+ Code/Sign.idr | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+
+commit 3907f2086d47515a169eca2fd94e0383d0a21fe0
+Merge: be28efe 5f78ca1
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 12 08:46:56 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 12 08:46:56 2019 +0530
+
+    Merge pull request #7 from siddhartha-gadgil/master
+    
+    xzx
+
 commit be28efe9bbe3c28da17edadb3d7770034a901178
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Sun Feb 10 15:31:31 2019 +0530

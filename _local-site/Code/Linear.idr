@@ -1,10 +1,10 @@
 module Linear
 
-%access public export
-
 import ZZ
 import Rationals
 import Data.Vect
+
+%access public export
 
 data SolExists : Type where
   YesExists : SolExists
@@ -76,14 +76,13 @@ helper1 a b c = multDistributesOverPlusRightZ (a) (c) (-b)
 helper2: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> ( a*(c-b) + b*a = a*c+ a*(-b)+ b*a )
 helper2 a b c = ApZZ (\x => x+ b*a) (helper1 (a) (b) (c))
 
-helper3: (a: ZZ) -> (b: ZZ) -> (a*(-b)+b*a=0)
+helper3: (a: ZZ) -> (b: ZZ) -> (a*(-b)+b*a= 0)
 helper3 a b = trans (trans (triviality5 a b) (triviality6 a b)) (triviality7 a b)
 
 helper4: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a*c + a*(-b) + b*a = a*c)
-helper4 a b c = ?hole -- There is some issue here with Idris ; no matter what, it doesn't seem to accept this equality,
-                      -- giving odd errors. This may be due to the fact that three numbers are being added, instead of two,
-                      -- as done previously.
-
+helper4 a b c = rewrite sym (plusAssociativeZ (a*c) (a*(-b)) (b*a)) in
+                rewrite helper3 a b in
+                rewrite plusZeroRightNeutralZ (multZ a c) in Refl
 
 GeneralProof: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> ( a*(c-b) + b*a = a*c )
 GeneralProof a b c = trans (helper2 a b c) (helper4 a b c)

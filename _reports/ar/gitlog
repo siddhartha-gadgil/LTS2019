@@ -1,3 +1,20 @@
+commit a302e8f2a1708d4dad8b5b515a9bb4435fdd86c1
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Wed Feb 13 18:59:17 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 13 18:59:17 2019 +0530
+
+    correction + Diagonal Form of a matrix
+    
+    I made a minor correction in a line. Upper - Triangular forms can be found for all matrices now (n x n), modulo computational blow ups. Also, Diagonal Forms can be found as described in the code.
+    
+    Note: finding the magnitude of the determinant is easy using this, but due to Row Swaps, the sign of the determinant must be found in some other way (maybe a clever linear algebra trick).
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
 commit a2a2b35f5907291b1aeecccc7f752f20cf9c84fe
 Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
 AuthorDate: Tue Feb 12 22:16:50 2019 +0530

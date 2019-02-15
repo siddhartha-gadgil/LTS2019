@@ -1,7 +1,7 @@
 module Data.ZZ
 
 import Decidable.Equality
-import Data.Sign
+import Sign
 
 %default total
 %access public export
@@ -353,3 +353,127 @@ multDistributesOverPlusLeftZ l c r = rewrite multCommutativeZ (l + c) r in
                                      rewrite multDistributesOverPlusRightZ r l c in
                                      rewrite multCommutativeZ r l in
                                      rewrite multCommutativeZ r c in Refl
+plusConstantRightZ : (left : ZZ) ->
+                    (right : ZZ) ->
+                    (c : ZZ) -> (left = right) -> left+c = right+c
+plusConstantRightZ right right c Refl = Refl
+
+plusConstantLeftZ :(left : ZZ) ->
+    (right : ZZ) -> (c : ZZ) -> (p : left = right) -> c + left = c + right
+plusConstantLeftZ right right c Refl = Refl
+
+|||A type that is occupied only when the integer is positive
+data IsPositive :ZZ->Type where
+  Positive : (IsPositive (Pos(S k)))
+data IsNotPositive :ZZ->Type where
+  Zero:(IsNotPositive (Pos 0))
+  Negative :(IsNotPositive (NegS k))
+|||Proof that 0 is not positive
+ZeroNOtPositive : IsPositive (Pos 0) -> Void
+ZeroNOtPositive Positive impossible
+|||Proof that negative numbers are not positive
+NegNotPositive : IsPositive (NegS k) -> Void
+NegNotPositive Positive impossible
+|||A function that returns either a proof that a function is positive or a contradiction
+DecidePositive:(a:ZZ)->Dec (IsPositive a)
+DecidePositive (Pos Z) = No ZeroNOtPositive
+DecidePositive (Pos (S k)) = Yes Positive
+DecidePositive (NegS k) = No (NegNotPositive)
+
+|||A proof that a=b => (-a)=(-b)
+numbersSameNegativesSame: {a:ZZ}->{b:ZZ}->((a)=(b))->((-a)=(-b))
+numbersSameNegativesSame Refl = Refl
+|||A proof that  (-a)=(-b) => a=b
+negativesSameNumbersSame :{a:ZZ}->{b:ZZ}->((-a)=(-b))->((a)=(b))
+negativesSameNumbersSame {a} {b} prf = rewrite sym (doubleNegElim a) in (rewrite sym (doubleNegElim b) in (numbersSameNegativesSame prf))
+|||The theorem k*(-j) = -(k*j)
+multNegateRightZ:(k, j : ZZ) -> k * (negate j) = negate (k * j)
+multNegateRightZ k j = (rewrite (multCommutativeZ k (-j)) in(rewrite ((multCommutativeZ k j)) in (multNegateLeftZ j k)))
+
+|||The theorem (a=(b*c)) => ((-a)=(b*(-c)))
+multNegateRightIsNegateZ:(a:ZZ)->(b:ZZ)->(c:ZZ)->(a=(b*c))->((-a)=(b*(-c)))
+multNegateRightIsNegateZ a b c prf = (rewrite (multNegateRightZ b c) in ( numbersSameNegativesSame prf))
+|||The theorem that ((a+b)+(-b))=a
+addAndSubNeutralZ: (a:ZZ)->(b:ZZ)->(((a+b)+(-b))=a)
+addAndSubNeutralZ a b = rewrite (sym (plusAssociativeZ a b (-b))) in (rewrite (plusNegateInverseLZ b) in (rewrite (plusZeroRightNeutralZ a) in Refl))
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--Some more functions of Natural numbers that might be useful
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|||The theorem that (m<=n) and (n<=m) implies n=m
+lteAndGteImpliesEqual:{m:Nat}-> {n:Nat}->(LTE m n)-> (LTE n m)->(n=m)
+lteAndGteImpliesEqual LTEZero LTEZero = Refl
+lteAndGteImpliesEqual (LTESucc x) (LTESucc y) = cong (lteAndGteImpliesEqual x y)
+|||The theorem (m<=n) implies (m<=(c+n))
+plusConstantLeftSide:{m:Nat}->{n:Nat}->(c:Nat)->LTE m n ->LTE m (c+n)
+plusConstantLeftSide Z x = x
+plusConstantLeftSide (S k) x = lteSuccRight (plusConstantLeftSide k x)
+
+plusConstantLeftPreservesLte:{m:Nat}-> {n:Nat}->(c:Nat)->(LTE m n)->(LTE (c+m) (c+n))
+plusConstantLeftPreservesLte Z x = x
+plusConstantLeftPreservesLte (S k) x = LTESucc (plusConstantLeftPreservesLte k x)
+
+plusConstantRightPreservesLte:{m:Nat}-> {n:Nat}->(c:Nat)->(LTE m n)->(LTE (m+c) (n+c))
+plusConstantRightPreservesLte {m}{n}c x = rewrite (plusCommutative m c)  in (rewrite (plusCommutative n c) in (plusConstantLeftPreservesLte c x))
+
+
+|||The theorem that for any natural numbers k and m (m<= (S k)*m)
+natLteMultNatNat: (k:Nat)->(m:Nat)->(LTE m ((S k)*m))
+natLteMultNatNat Z m = rewrite (multOneLeftNeutral m) in (lteRefl)
+natLteMultNatNat (S k) m =     plusConstantLeftSide m (natLteMultNatNat  k m)
+
+-----------------------------------------------------------------------------------------------------------------
+--Implementation of LTE for ZZ
+----------------------------------------------------------------------------------------------------------------
+|||The less than or equal to type for ZZ
+data LTEZ :ZZ->ZZ->Type where
+  PositiveLTE: (LTE m n)->LTEZ (Pos m) (Pos n)
+  NegLessPositive:LTEZ (NegS m) (Pos n)
+  NegativeLte:(LTE m n)->LTEZ (NegS n) (NegS m)
+
+
+
+|||The theorem that for positive integers n and m (n<=(m*n))
+posLteMultPosPosZ:  (n:ZZ)->(m:ZZ)->(IsPositive n)->(IsPositive m)->(LTEZ n  (m*n))
+posLteMultPosPosZ (Pos (S j)) (Pos (S k)) Positive Positive = PositiveLTE (natLteMultNatNat k (S j))
+
+|||The proof that if an integer is not not positive , it is positive (This  looks useless , but I couldnt find a better way to implement some other theorems)
+notNotPositiveimpliesPositive:{k:ZZ}->((IsNotPositive k)->Void)->(IsPositive k)
+notNotPositiveimpliesPositive {k = (Pos Z)} f = void (f Zero)
+notNotPositiveimpliesPositive {k = (Pos (S k))} f = Positive
+notNotPositiveimpliesPositive {k = (NegS k)} f = void (f Negative)
+
+|||Proof that Multiplying two Positive numbers doesnt give Zero
+zeroIsNotPosMultPos: ((Pos Z) = (Pos (S k))*(Pos(S j)))->Void
+zeroIsNotPosMultPos Refl impossible
+|||Proof that a positive number is not 0 times a positive number
+posIsNotZeroMultPos:((Pos (S j)) = (Pos (Z))*(Pos (S k) ))->Void
+posIsNotZeroMultPos Refl impossible
+|||Proof that a positive number is not a positive number times 0
+posIsNotPosMultZero:((Pos (S j)) = (Pos (S k))*(Pos (Z) ))->Void
+posIsNotPosMultZero {j} {k}prf =  posIsNotZeroMultPos {k} (rewrite (multCommutativeZ (Pos Z) (Pos (S k))) in prf)
+|||Proof that a positive number times a negative number is not Positive
+posIsNotPosMultNeg :((Pos (S j)) = (Pos (S k))*(NegS p ))->Void
+posIsNotPosMultNeg Refl impossible
+
+|||Just a helper function for posDivByPosIsPos
+PosEqualsPosNegIsContra:(c:ZZ)->(d:ZZ)->(q:ZZ)->(IsPositive c)->(IsPositive d)->(c=(d*q))->((IsNotPositive q)->Void)
+PosEqualsPosNegIsContra (Pos (S k)) (Pos (S j)) (Pos Z) Positive Positive prf Zero =posIsNotPosMultZero prf
+PosEqualsPosNegIsContra (Pos (S i)) (Pos (S j)) (NegS k) Positive Positive prf Negative = posIsNotPosMultNeg prf
+
+|||Proof that if (c = d*q) and c and d are positive , then q is positive
+posDivByPosIsPos:{c:ZZ}->{d:ZZ}->{q:ZZ}->(IsPositive c)->(IsPositive d)->(c=(d*q))->(IsPositive q)
+posDivByPosIsPos {c}{d}{q} cPos dPos eqProof = notNotPositiveimpliesPositive (PosEqualsPosNegIsContra c d q cPos dPos eqProof)
+
+|||The theorem (m<=n) and (n<=m) implies n=m for integers
+lteAndGteImpliesEqualZ:{m:ZZ}-> {n:ZZ}->(LTEZ m n)-> (LTEZ n m)->(n=m)
+lteAndGteImpliesEqualZ (PositiveLTE x) (PositiveLTE y) =  cong (lteAndGteImpliesEqual x y)
+lteAndGteImpliesEqualZ NegLessPositive (PositiveLTE _) impossible
+lteAndGteImpliesEqualZ NegLessPositive NegLessPositive impossible
+lteAndGteImpliesEqualZ NegLessPositive (NegativeLte _) impossible
+lteAndGteImpliesEqualZ (NegativeLte x) (NegativeLte y) = cong (lteAndGteImpliesEqual y x)
+
+|||A proof that if c and d are positive and d =c*q then (c<=d)
+posLteMultPosPosEqZ: {q:ZZ}->(c:ZZ)->(d:ZZ)->(IsPositive c)->(IsPositive d)->(d=c*q)->(LTEZ c d)
+posLteMultPosPosEqZ {q} c d cPos dPos prf = rewrite prf in (rewrite (multCommutativeZ c q) in (posLteMultPosPosZ c q cPos qPos)) where
+  qPos= posDivByPosIsPos dPos cPos prf
