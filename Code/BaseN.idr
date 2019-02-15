@@ -1,26 +1,25 @@
 module Basen
 
 import Data.Fin
-%access public export
 
 --Defines a data type Base that behaves like a list
 data Base: (n: Nat) -> Type where
-  Ones: (Fin n) -> Base n
-  Next: (Fin n) -> (Base n) -> (Base n)
+  Ones: (n: Nat) -> (Fin n) -> Base n
+  Next: (n: Nat) -> (Fin n) -> (Base n) -> (Base n)
 
 --Auxiliary function that reverses a Base (S n) onto anpther given Base (S n)
 Revonto: (n: Nat) -> (Base (S n)) -> (Base (S n)) -> (Base (S n))
-Revonto n accum (Ones x) = Next x accum
-Revonto n accum (Next x y) = Revonto n (Next x accum) y
+Revonto n accum (Ones (S n) x) = Next (S n) x accum
+Revonto n accum (Next (S n) x y) = Revonto n (Next (S n) x accum) y
 
 --Reverses a Base (S n)
 Rev: (n: Nat) -> (Base (S n)) -> (Base (S n))
-Rev n (Ones x) = Ones x
-Rev n (Next x y) = Revonto n (Ones x) y
+Rev n (Ones (S n) x) = Ones (S n) x
+Rev n (Next (S n) x y) = Revonto n (Ones (S n) x) y
 
 concat: (n: Nat) -> (Base (S n)) -> (Base (S n)) -> (Base (S n))
-concat n (Ones x) y = Next x y
-concat n (Next x z) y = Next x (concat n z y)
+concat n (Ones (S n) x) y = Next (S n) x y
+concat n (Next (S n) x z) y = Next (S n) x (concat n z y)
 
 --Fin to Nat
 tonatFin: (n: Nat) -> Fin(n) -> Nat
@@ -29,10 +28,10 @@ tonatFin (S k) (FS x) = S (tonatFin k x)
 
 --List Fin to Nat
 tonat: (n: Nat) -> Base (S n) -> Nat
-tonat n (Ones FZ) = Z
-tonat Z (Ones (FS x)) impossible
-tonat (S k) (Ones (FS x)) = S(tonat k (Ones x))
-tonat n (Next x y) = (tonat n (Ones x)) + (tonat n y)
+tonat n (Ones (S n) FZ) = Z
+tonat Z (Ones (S Z) (FS x)) impossible
+tonat (S k) (Ones (S (S k)) (FS x)) = S(tonat k (Ones (S k) x))
+tonat n (Next (S n) x y) = (tonat n (Ones (S n) x)) + (tonat n y)
 
 
 --Euclid's div
@@ -51,15 +50,15 @@ tofinNat (S k) (S j) = case lte (S k) (S j) of
                 False =>  (tofinNat (snd(Eucl (S k) (S j))) (S j))
 
 strp: (Base (S n)) -> (Base (S n))
-strp (Ones x) = (Ones x)
-strp (Next x y) = case x of
+strp (Ones (S n) x) = (Ones (S n) x)
+strp (Next (S n) x y) = case x of
                   FZ => strp(y)
-                  FS z => Next x y
+                  FS z => Next (S n) x y
 
 -- Nat to List Fin n (base n representation)
 tofin: Nat -> (n: Nat) -> Base (S n)
-tofin Z n = Ones FZ
-tofin (S k) n = strp(concat n (tofin q n) (Ones rem)) where
+tofin Z n = Ones (S n) FZ
+tofin (S k) n = strp(concat n (tofin q n) (Ones (S n) rem)) where
                     rem: Fin (S n)
                     rem = tofinNat (snd(Eucl (S k) (S n))) (S n)
                     q: Nat
@@ -97,7 +96,7 @@ Predec Z _ Refl impossible
 Predec (S k) FZ Refl = FZ
 Predec (S k) (FS x) prf = FS (Predec k x (IsNotnPf (S k) (FS x) prf))
 
---A type in some sense resembling the decidable type for truth of Isn (with contra replaced by equality to False)
+--Decidable type for Isn
 DecIsn: (n: Nat) -> (p: (Fin (S n))) -> Either (Isn n p = True) (Isn n p = False)
 DecIsn Z p = Left Refl
 DecIsn (S k) FZ = Right Refl
@@ -120,14 +119,15 @@ addfin (S k) (FS x) y = let
                              Left l => (FS c, b)
                              Right r => (w, FS(Predec (S k) z r))
 
+
 --adding two reversed lists as specified
 addfinl: (n: Nat) -> Base (S n) -> Base (S n) -> Base (S n)
-addfinl n (Ones x) (Ones y) = case (addfin n x y) of
-                              (FZ, a) => Ones a
-                              (FS c, a) => Next a (Ones (FS c))
-addfinl n (Ones x) (Next y z) = Next (snd (addfin n x y)) (addfinl n (Ones (fst (addfin n x y))) z)
-addfinl n (Next x z) (Ones y) = Next (snd (addfin n x y)) (addfinl n (Ones (fst (addfin n x y))) z)
-addfinl n (Next x z) (Next y w) = Next (snd (addfin n x y)) (addfinl n (Ones (fst (addfin n x y))) (addfinl n z w))
+addfinl n (Ones (S n) x) (Ones (S n) y) = case (addfin n x y) of
+                              (FZ, a) => Ones (S n) a
+                              (FS c, a) => Next (S n) a (Ones (S n) (FS c))
+addfinl n (Ones (S n) x) (Next (S n) y z) = Next (S n) (snd (addfin n x y)) (addfinl n (Ones (S n) (fst (addfin n x y))) z)
+addfinl n (Next (S n) x z) (Ones (S n) y) = Next (S n) (snd (addfin n x y)) (addfinl n (Ones (S n) (fst (addfin n x y))) z)
+addfinl n (Next (S n) x z) (Next (S n) y w) = Next (S n) (snd (addfin n x y)) (addfinl n (Ones (S n) (fst (addfin n x y))) (addfinl n z w))
 
 --adding two lists
 addfinlist: (n: Nat) -> Base (S n) -> Base (S n) -> Base (S n)
@@ -135,12 +135,17 @@ addfinlist n xs ys = (Rev n (addfinl n (Rev n xs) (Rev n ys)))
 
 --multiply two reversed lists in Fin S n
 mulfinl: (n: Nat) -> Base (S n) -> Base (S n) -> Base (S n)
-mulfinl n (Ones FZ) y = Ones FZ
-mulfinl n (Ones (FS x)) y = addfinl n y (mulfinl n (Ones (embn n x)) y)
-mulfinl n (Next FZ z) y = Next FZ (mulfinl n z y)
-mulfinl n (Next (FS x) z) y = addfinl n y (mulfinl n (Next (embn n x) z) y)
+mulfinl n (Ones (S n) FZ) y = Ones (S n) FZ
+mulfinl n (Ones (S n) (FS x)) y = addfinl n y (mulfinl n (Ones (S n) (embn n x)) y)
+mulfinl n (Next (S n) FZ z) y = Next (S n) FZ (mulfinl n z y)
+mulfinl n (Next (S n) (FS x) z) y = addfinl n y (mulfinl n (Next (S n) (embn n x) z) y)
 
 
 --multiply two lists
 mulfinList: (n: Nat) -> (Base (S n)) -> (Base (S n)) -> (Base (S n))
 mulfinList n xs ys = Rev n (mulfinl n (Rev n xs) (Rev n ys))
+
+--Custom "functions are functors" function
+ap: (x: Type) -> (y: Type) -> (f: x->y) -> (n = m) -> (f n = f m)
+ap x y f Refl = Refl
+
