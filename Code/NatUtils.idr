@@ -1,5 +1,5 @@
 module Tools.NatUtils
-
+import ZZ
 %access public export
 
 -- Proof of the type that an implication implies its contrapositive
