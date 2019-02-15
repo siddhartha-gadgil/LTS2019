@@ -26,6 +26,9 @@ isNotZero (S k) = True
 isFactorInt : Integer -> Integer -> Type  --Needed for defining Integer division
 isFactorInt m n = (k : Integer ** (m * k = n))
 
+isFactorZZ : ZZ -> ZZ -> Type  --Needed for defining Integer division,changed Integers to ZZ
+isFactorZZ m n = (k : ZZ ** (n=m*k))
+
 divides : (m: Integer) -> (n: Integer) -> (k: Integer ** (m * k = n)) -> Integer
 divides m n k = (fst k)
 

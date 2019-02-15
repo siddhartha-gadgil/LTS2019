@@ -3,21 +3,34 @@ import Divisors
 import ZZ
 import Data.Vect
 import Data.Fin
+import Rationals
+import Tools.NatUtil
 %access public export
 
-{-Copied from Chinmaya's code. Gives quotient and remainder on divison-}
+{-Improvement on the previous code. is total but without proof-}
 {-This just computes the qoutient and the remainder, but it doesn't prove that they indeed satisfy the conditions a = b*q + r and r < b -}
-Eucl: (a: Nat) -> (b: Nat) -> (Nat, Nat)
-Eucl Z b = (Z,Z)
-Eucl (S k) b = case (lte (S (S k)) b) of
-                    False => (S(fst(Eucl (minus (S k) b) b)), snd(Eucl (minus (S k) b) b))
-                    True => (Z, S k)
+QuotRem : (a: Nat) -> (b: Nat) ->(LTE b a)->(Nat, Nat)
+QuotRem a Z LTEZero =(Z,Z)
+QuotRem a (S k) x  =  case (isLTE (S k) (minus a (S k))) of
+                          Yes pf =>(S( Basics.fst(QuotRem (minus a (S k)) (S k) (pf))),
+                                       Basics.snd(QuotRem (minus a (S k)) (S k) (pf)))
+
+                          No contra =>((S Z),(minus a (S k)) )
 {-Just a slight modification of the Euclid's division function to give the remainder -}
+
 rem : (a : Nat) -> (b : Nat) -> Nat
 rem Z b = Z
 rem (S k) b = case (lte (S (S k)) b) of
                     False => (rem (minus (S k) b) b)
                     True => (S k)
+                    
+{- proof that if p|a and p|b p|a+b -}
+LinearisFactor: (p: ZZ) -> (a: ZZ)-> (isFactorInt p a) ->
+                          (b: ZZ)-> (isFactorInt p b) -> (isFactorInt p (a+b))
+LinearisFactor p a x b y = ((fst(x)+fst(y)) ** (equality2 p (fst x) a (snd x) (fst y) b (snd y)))
+
+
+
 {-Let rk be the remainder in the Euclidean algorithm at the k-2th step.
 Let rk = ak*r0 + bk*r1 where r0 and r1 are the original inputs.Correspondingly  rsk = ask*r0 + bsk*r1 where sk = k+1
 Then the I am going to the next step in the Euclid algorithm and changing the coefficients.
