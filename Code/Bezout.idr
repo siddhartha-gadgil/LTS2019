@@ -4,6 +4,7 @@ import ZZ
 import Data.Vect
 import Data.Fin
 import Rationals
+import Nat.Util
 %access public export
 
 {-Improvement on the previous code. is total but without proof-}
