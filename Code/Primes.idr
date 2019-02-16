@@ -1,7 +1,9 @@
 module Primes
+
 import NatUtils
 
 %access public export
+%default total
 
 --isDivisible a b can be constucted if b divides a
 isDivisible : Nat -> Nat -> Type
@@ -80,20 +82,27 @@ aEqProdImpAGtB (b * (S k)) b (S k) x Refl = case b of
                 rewrite sym (multDistributesOverPlusRight (S k) 1 m) in
                 multRightLTE 1 (S k) (S m) (LTESucc (LTEZero)) x
 
---If a < b, b cannot divide a
---greaterCantDiv : (a : Nat) -> (b : Nat) -> GT b a -> (isDivisible a b -> Void)
+--Not LTE implies GT
+--(this is from a pull request on Idris-lang which was not accepted)
+notLTEImpliesGT : Not (LTE i j) -> GT i j
+notLTEImpliesGT {i = Z}             notLt = absurd $ notLt LTEZero
+notLTEImpliesGT {i = S k} {j = Z}   _     = LTESucc LTEZero
+notLTEImpliesGT {i = S j} {j = S k} notLt = LTESucc (notLTEImpliesGT (notLt . LTESucc))
 
 --Decidability for divisibility
-{-
 decDiv : (p : Nat) -> LTE 2 p -> (x : Nat) -> Dec (isDivisible p x)
+decDiv Z LTEZero _ impossible
+decDiv Z (LTESucc _) _ impossible
+decDiv (S Z) (LTESucc LTEZero) _ impossible
+decDiv (S Z) (LTESucc (LTESucc _)) _ impossible
 decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x =
-  case totOrdNat (S (S k)) x of
-      (Left l) => Yes ((S Z) ** (rewrite l in
-                                 rewrite sym (multOneRightNeutral x) in
-                                 Refl))
-      (Right (Left l)) => ?dgv_3
-      (Right (Right r)) => No ?dgv_4
--}
+            case totOrdNat (S (S k)) x of
+                (Left l) => Yes (1 ** ((LTESucc LTEZero),
+                                       rewrite l in
+                                       rewrite sym (multOneRightNeutral x) in
+                                       Refl))
+                (Right (Left l)) => No ?e3
+                (Right (Right r)) => ?e4
 
 --Spare code
 {-
@@ -105,7 +114,6 @@ isPrime : Nat -> Type
 isPrime p = (LTE 2 p ,
             (x : Nat **
             (isDivisible p x , x = 1)))
-
 --Does the job, but is not very useful. Will be replaced later.
 checkPrime : (p : Nat) -> LTE 2 p -> {default (p-1) iter : Nat} ->
   Maybe (isPrime p)
