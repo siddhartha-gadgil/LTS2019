@@ -1,7 +1,7 @@
 module gcd
 
-import ZZ
--- import Bezout
+
+
 import NatUtils
 
 --isDivisible a b can be constucted if b divides a
