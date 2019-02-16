@@ -1,3 +1,24 @@
+commit 11c32ce9e08636f807a8a9cbc2ee82ffc3798040
+Merge: 044be52 4a99917
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Thu Feb 14 16:57:30 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Thu Feb 14 16:57:30 2019 +0530
+
+    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
+
+commit 044be5279e8bd8dfb4325f4e13d4d2e66136c7a2
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Thu Feb 14 16:55:52 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Thu Feb 14 16:55:52 2019 +0530
+
+    Created file for finitely generated abelian groups project
+
+ .DS_Store                     | Bin 0 -> 8196 bytes
+ Code/Group.FiniteGenerate.idr |  26 ++++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+)
+
 commit b9c13142932c1fbfb04b1e9e9e9e1173f5cd818f
 Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
 AuthorDate: Sun Feb 10 22:05:12 2019 +0530
