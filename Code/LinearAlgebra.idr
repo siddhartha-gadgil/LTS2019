@@ -136,8 +136,14 @@ DiagonalForm {n} x = UpperTriangularForm (transpose (UpperTriangularForm x))
 -- once a matrix is in diagonal form, we can convert it to the identity by dividing each row by its only nonzero element
 
 ReduceRow: (x: Matrix n n ZZPair) -> (iter: Nat) -> Matrix n n ZZPair
-ReduceRow {n = n} x Z = ScaleRow n x Z (divZZ (1,1) (ij x 0 0))
-ReduceRow {n = n} x (S k) = ScaleRow n (ReduceRow x k) (S k) (divZZ (1,1) (ij x (S k) (S k)))
+ReduceRow {n = n} x Z = case (FST(ij x Z Z)) of
+                             (Pos Z) => x
+                             (Pos (S k)) => ScaleRow n x Z (divZZ (1,1) (ij x 0 0))
+                             (NegS k) => ScaleRow n x Z (divZZ (1,1) (ij x 0 0))
+ReduceRow {n = n} x (S k) = case ((FST(ij x (S k) (S k)))) of
+                                 (Pos Z) => x
+                                 (Pos (S k)) => ScaleRow n (ReduceRow x k) (S k) (divZZ (1,1) (ij x (S k) (S k)))
+                                 (NegS k) => ScaleRow n (ReduceRow x k) (S k) (divZZ (1,1) (ij x (S k) (S k)))
 
 -- This function converts any matrix into the identity. Applying the row operations which do this to an identity matrix would convert it
 -- to an inverse. If we want to solve linear equations, this would be enough (for proof, we would need to prove that AA^-1 = I). 
@@ -145,8 +151,8 @@ ReduceRow {n = n} x (S k) = ScaleRow n (ReduceRow x k) (S k) (divZZ (1,1) (ij x 
 -- GeneralEqSolver from Linear.idr could be modified a bit to solve n successive 1 - variable equations, and generating a proof would
 -- be easier.
 
-MakeIdentity: (x: Matrix n n ZZPair) -> (Matrix n n ZZPair)
-MakeIdentity {n} x = ReduceRow (DiagonalForm x) (Pred n)
+TotalReduce: (x: Matrix n n ZZPair) -> (Matrix n n ZZPair)
+TotalReduce {n} x = ReduceRow (DiagonalForm x) (Pred n)
 
 -- Once we have a matrix in diagonal (or even upper triangular) form, we can calculate the magnitude of its determinant by multiplying
 -- the diagonal elements.
