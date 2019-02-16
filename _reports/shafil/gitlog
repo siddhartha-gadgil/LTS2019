@@ -1,3 +1,25 @@
+commit dab2e23b626b6d97f60cb10832e5f8dd1d47c074
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Feb 15 20:26:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 20:26:45 2019 +0530
+
+    Update Divisors.idr
+
+ Code/Divisors.idr | 52 ++++++++++++++++++++++++++++------------------------
+ 1 file changed, 28 insertions(+), 24 deletions(-)
+
+commit adb936334c5c96254536d46afd2f78f01185553b
+Merge: 80d1777 46bf738
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Feb 15 20:22:49 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 20:22:49 2019 +0530
+
+    Merge pull request #12 from siddhartha-gadgil/master
+    
+    u
+
 commit 80d17770a56c23186b11091d396908b22e37fb21
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Wed Feb 13 22:30:40 2019 +0530

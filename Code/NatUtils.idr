@@ -1,6 +1,25 @@
 module Tools.NatUtils
-
+import ZZ
 %access public export
+
+{-small auxillary proofs regarding the equality type-}
+
+apZZ : (f: ZZ -> ZZ) -> (n: ZZ) -> (m: ZZ) -> n = m -> f n = f m
+apZZ f m m Refl = Refl
+
+addsame : (t: ZZ)->(n:ZZ)->(m:ZZ)-> n = m -> (n+t)=(m+t)
+addsame t m m Refl=Refl
+
+addeqns : (a:ZZ)->(b:ZZ)-> a=b -> (p:ZZ)->(q:ZZ)-> p=q -> ((a+p)=(b+q))
+addeqns a a Refl p p Refl=Refl
+
+equality1 : (p:ZZ)->(k:ZZ)->(a:ZZ)-> (a=p*k)->(l:ZZ)->(b:ZZ)->(b=p*l)->(a+b)=(p*k + p*l)
+equality1 p k a x l b y = addeqns a (p*k) x b (p*l) y
+
+equality2 : (p:ZZ)->(k:ZZ)->(a:ZZ)-> (a=p*k)->(l:ZZ)->(b:ZZ)->(b=p*l)->(a+b)=p*(k+l)
+equality2 p k a x l b y = trans (equality1 p k a x l b y) (sym (multDistributesOverPlusRightZ p k l))
+
+{-end of auxillary proofs-}
 
 -- Proof of the type that an implication implies its contrapositive
 impliesContrapositive : (A : Type) -> (B : Type) -> (A -> B) -> (B -> Void) -> (A -> Void)
@@ -48,3 +67,13 @@ plusConstantRightPreservesLte {m}{n}c x = rewrite (plusCommutative m c)  in (rew
 natLteMultNatNat: (k:Nat)->(m:Nat)->(LTE m ((S k)*m))
 natLteMultNatNat Z m = rewrite (multOneLeftNeutral m) in (lteRefl)
 natLteMultNatNat (S k) m =     plusConstantLeftSide m (natLteMultNatNat  k m)
+
+|||If a <= b, and c <= d, then (a+c) <= (b+d)
+lteSumIsLte : (a,b,c,d : Nat) -> LTE a b -> LTE c d -> LTE (a+c) (b+d)
+lteSumIsLte a b Z d x LTEZero = rewrite plusZeroRightNeutral a in
+																rewrite plusCommutative b d in
+																plusConstantLeftSide d x
+lteSumIsLte a b (S left) (S right) x (LTESucc y) =
+					rewrite sym (plusSuccRightSucc b right) in
+					rewrite sym (plusSuccRightSucc a left) in
+					(LTESucc (lteSumIsLte a b left right x y))
