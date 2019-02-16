@@ -1,3 +1,157 @@
+commit b02f6d2014a10f9b59300951b52c1a66d88a4b68
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Feb 15 15:11:49 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 15:11:49 2019 +0530
+
+    Modified the data type Base
+    
+    Added an explicit argument for the base in each constructor and redid the file
+
+ Code/BaseN.idr | 63 +++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 34 insertions(+), 29 deletions(-)
+
+commit 7d8d6365b484d5899611edbeb86f97b1fecadc1e
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Feb 15 01:33:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 01:33:09 2019 +0530
+
+    Added multiplication
+    
+    The algorithms for Basen have been rewritten with the custom data type
+    
+    We can now start proving things again
+
+ Code/BaseN.idr | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+commit 605c36a899765974b13561188c6e907b713b725f
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Feb 15 01:18:58 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 01:18:58 2019 +0530
+
+    Redid addition in custom dat type
+    
+    Defined Base as a custom data type emulating lists, and:
+    
+    1) Defined a rev function, a left strip function, a concatenation function, etc.
+    2) Appropriately modified the definition of addition in Base (S n)
+    3) Modified conversion functions slightly
+
+ Code/BaseN.idr | 185 +++++++++++++++++++++++++++------------------------------
+ 1 file changed, 86 insertions(+), 99 deletions(-)
+
+commit 8c1e07f21c30ce1e98f14fde186478710614cbba
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 23:44:57 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 23:44:57 2019 +0530
+
+    Changed a comment
+
+ Code/BaseN.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 9a136469118fe812c03ce67c6ba6ca3426a9afe9
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 23:43:06 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 23:43:06 2019 +0530
+
+    Added Fin-based addition for Fin n
+    
+    Used auxiliary proofs for case-work on the sum exceeding n in (Fin (S n))
+    
+    1) Isn: Checks whether a given (Fin(S n)) is n itself
+    2) IsnisIsn: Proves the definitional equality for Isn
+    3) IsNotnPf: Pulls back falsity of Isn (S n) (FS x) to Isn n x
+    4) Predec: Predecessor function for values not equal to n
+    5) DecIsn: Somewhat like the decidable type for truth of Isn
+    6) addfin: the actual addition function
+
+ Code/BaseN.idr | 41 +++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 37 insertions(+), 4 deletions(-)
+
+commit f94349acf98a14849e19c5a25033c1494d98229c
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 20:21:38 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 20:21:38 2019 +0530
+
+    Added functions for Fin based addfin
+    
+    Added:
+    1) A generator for n in Fin (S n)
+    2) A function that checks whether a given element of (Fin (S n)) is n
+
+ Code/BaseN.idr | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
+commit 2a33ec0b88ec2e9cd1f51d85d63017ea0d5cf9c9
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 17:21:16 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 17:21:16 2019 +0530
+
+    Corrected some indentation etc
+
+ Code/Cosets.idr | 69 +++++++++++++--------------------------------------------
+ 1 file changed, 15 insertions(+), 54 deletions(-)
+
+commit 174815a027a7bc55143eb6843bf7915d4cd3846b
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 17:16:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 17:16:19 2019 +0530
+
+    Removed coset code from Group.idr
+    
+    Following the request from @SideArt
+
+ Code/Group.idr | 54 ------------------------------------------------------
+ 1 file changed, 54 deletions(-)
+
+commit e38c4b475f6f8dada6668b148a533b083fc0653a
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 17:15:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 17:15:07 2019 +0530
+
+    Moved coset code to a new file
+    
+    On a request from @SideArt
+
+ Code/Cosets.idr | 97 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 97 insertions(+)
+
+commit d1302b7a9413fc96e6fd8fa5051141032275f3fa
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 16:44:17 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 16:44:17 2019 +0530
+
+    Added proofs about lists and basen addition
+    
+    Including commented proofs that don't work
+
+ Code/BaseN.idr | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
+
+commit 2bbac7238ee8ab1efd44775d0695ea6b0e418b72
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 16:37:36 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 16:37:36 2019 +0530
+
+    Added the code removed by Arka's pull request
+    
+    He used an older fork
+
+ Code/Group.idr | 77 +++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 55 insertions(+), 22 deletions(-)
+
 commit 518c550a061971b0b4ad2a0d069394f10352cdc0
 Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
 AuthorDate: Wed Feb 13 23:04:29 2019 +0530
