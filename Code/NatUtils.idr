@@ -6,7 +6,7 @@ module Tools.NatUtils
 {-
 apZZ : (f: ZZ -> ZZ) -> (n: ZZ) -> (m: ZZ) -> n = m -> f n = f m
 apZZ f m m Refl = Refl
-
+-}
 %access public export
 
 
