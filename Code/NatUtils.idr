@@ -1,9 +1,9 @@
 module Tools.NatUtils
-import ZZ
+--import ZZ
 %access public export
 
 {-small auxillary proofs regarding the equality type-}
-
+{-
 apZZ : (f: ZZ -> ZZ) -> (n: ZZ) -> (m: ZZ) -> n = m -> f n = f m
 apZZ f m m Refl = Refl
 
@@ -18,7 +18,7 @@ equality1 p k a x l b y = addeqns a (p*k) x b (p*l) y
 
 equality2 : (p:ZZ)->(k:ZZ)->(a:ZZ)-> (a=p*k)->(l:ZZ)->(b:ZZ)->(b=p*l)->(a+b)=p*(k+l)
 equality2 p k a x l b y = trans (equality1 p k a x l b y) (sym (multDistributesOverPlusRightZ p k l))
-
+-}
 {-end of auxillary proofs-}
 
 -- Proof of the type that an implication implies its contrapositive
