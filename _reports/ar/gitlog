@@ -1,3 +1,48 @@
+commit a2d5af5a52ba61488a9c0e26fdb0d9ce2e03597d
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Feb 14 15:57:13 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 15:57:13 2019 +0530
+
+    Update ar.md
+
+ _reports/ar/ar.md | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
+
+commit 650094ed4a5784dc8220081b785741d35da06788
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Feb 14 15:50:56 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 15:50:56 2019 +0530
+
+    magnitude of the Determinant + more
+    
+    I found the magnitude of the determinant as a simple extension of the previous functions. The sign can be calculated by a trick I describe in the file. I also propose a variety of extensions of this code:
+    
+    - finding the inverse by row operations (might be easier for proofs)
+    - solving linear systems (with proof) using extensions to  Linear.idr
+    - finding the rank of a linear transformation by counting the number of nonzero diagonal elements in the Diagonal Form.
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+
+commit 93aa06d16a4a1a7fb3e1e006d6ae05559286a6fc
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Feb 14 15:44:18 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 15:44:18 2019 +0530
+
+    Added Report
+    
+    I filled in most of the report.
+    
+    -- Abishek (AR-MA210.
+
+ _reports/ar/ar.md | 66 +++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 64 insertions(+), 2 deletions(-)
+
 commit a302e8f2a1708d4dad8b5b515a9bb4435fdd86c1
 Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
 AuthorDate: Wed Feb 13 18:59:17 2019 +0530

@@ -1,3 +1,145 @@
+commit e1da1ae775eaaedb227c8e2a640659e19bf43f52
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Feb 14 10:52:52 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 10:52:52 2019 +0530
+
+    updated report file
+
+ _reports/arka/arka.md | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 61 insertions(+), 1 deletion(-)
+
+commit 0932f51f086b75d19e26eb296d6e50ff5101dc5e
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Feb 14 10:49:37 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 10:49:37 2019 +0530
+
+    Finished property 8. Started proving properties of Cosets
+
+ Code/Group.idr           | 95 ++++++++++++++++--------------------------------
+ Code/Group_property.idr  | 56 +---------------------------
+ Code/Group_property2.idr | 86 +++++++++++++++++++++++++++++++++++++++++++
+ Code/Quotient_Group.idr  | 35 +++++++++++++++++-
+ 4 files changed, 152 insertions(+), 120 deletions(-)
+
+commit ef9f6d860d4f73112ca89938bdcc683486fb5e20
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Feb 14 10:48:24 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 10:48:24 2019 +0530
+
+    Delete Ring.idr
+
+ Ring.idr | 48 ------------------------------------------------
+ 1 file changed, 48 deletions(-)
+
+commit a92809a0d69707ce8688656a8b9028267fa9c0a9
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Feb 14 10:48:13 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 10:48:13 2019 +0530
+
+    Delete Group_property2.idr
+
+ Group_property2.idr | 86 -----------------------------------------------------
+ 1 file changed, 86 deletions(-)
+
+commit 05011a0463d430396b26b6a6bb45eb1a8d83509b
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Feb 14 10:48:03 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 10:48:03 2019 +0530
+
+    Delete Group_property.idr
+
+ Group_property.idr | 129 -----------------------------------------------------
+ 1 file changed, 129 deletions(-)
+
+commit f0088e6e1ae14dee2ff62af84445bebeea37672c
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Feb 14 10:47:53 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 10:47:53 2019 +0530
+
+    Delete Quotient_Group.idr
+
+ Quotient_Group.idr | 72 ------------------------------------------------------
+ 1 file changed, 72 deletions(-)
+
+commit 0438d8f008737dee4db6a4cc26e32d0f21e0fdc9
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Feb 14 10:47:42 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 10:47:42 2019 +0530
+
+    Delete Monoid.idr
+
+ Monoid.idr | 36 ------------------------------------
+ 1 file changed, 36 deletions(-)
+
+commit 051be30b5b7dc64b8b2474d22fd587470c617383
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Feb 14 10:47:31 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 10:47:31 2019 +0530
+
+    Delete Group.idr
+
+ Group.idr | 97 ---------------------------------------------------------------
+ 1 file changed, 97 deletions(-)
+
+commit aec202e2dd3bb7a3344ccc1cd01325f6ff852f25
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Feb 14 10:47:20 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 10:47:20 2019 +0530
+
+    Delete Choice.idr
+
+ Choice.idr | 3 ---
+ 1 file changed, 3 deletions(-)
+
+commit 6c3ef31672a661f37c26dc36c909c58dbf4c9842
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Feb 14 10:47:11 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 10:47:11 2019 +0530
+
+    Delete congruence.idr
+
+ congruence.idr | 6 ------
+ 1 file changed, 6 deletions(-)
+
+commit 0f3477cd11de4966705a29ec14b922a60ed31568
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Feb 14 10:45:08 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 10:45:08 2019 +0530
+
+    Finished property_7. Started proving properties of Cosets
+
+ Choice.idr          |   3 ++
+ Group.idr           |  97 +++++++++++++++++++++++++++++++++++++++
+ Group_property.idr  | 129 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Group_property2.idr |  86 +++++++++++++++++++++++++++++++++++
+ Monoid.idr          |  36 +++++++++++++++
+ Quotient_Group.idr  |  72 +++++++++++++++++++++++++++++
+ Ring.idr            |  48 +++++++++++++++++++
+ congruence.idr      |   6 +++
+ 8 files changed, 477 insertions(+)
+
+commit 6dac09676253e46f84dc84a2606815b178bbd93d
+Merge: 2732896 ed8c538
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Feb 14 10:43:54 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 10:43:54 2019 +0530
+
+    Merge pull request #3 from siddhartha-gadgil/master
+    
+    Syncing files
+
 commit 27328963239decafa1f4b329e01f33f8a3f102c1
 Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
 AuthorDate: Sun Feb 10 23:03:09 2019 +0530

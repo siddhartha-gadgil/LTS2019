@@ -1,5 +1,5 @@
 module Data.ZZ
-
+import NatUtils
 import Decidable.Equality
 import Sign
 
@@ -397,30 +397,8 @@ multNegateRightIsNegateZ a b c prf = (rewrite (multNegateRightZ b c) in ( number
 addAndSubNeutralZ: (a:ZZ)->(b:ZZ)->(((a+b)+(-b))=a)
 addAndSubNeutralZ a b = rewrite (sym (plusAssociativeZ a b (-b))) in (rewrite (plusNegateInverseLZ b) in (rewrite (plusZeroRightNeutralZ a) in Refl))
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Some more functions of Natural numbers that might be useful
----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|||The theorem that (m<=n) and (n<=m) implies n=m
-lteAndGteImpliesEqual:{m:Nat}-> {n:Nat}->(LTE m n)-> (LTE n m)->(n=m)
-lteAndGteImpliesEqual LTEZero LTEZero = Refl
-lteAndGteImpliesEqual (LTESucc x) (LTESucc y) = cong (lteAndGteImpliesEqual x y)
-|||The theorem (m<=n) implies (m<=(c+n))
-plusConstantLeftSide:{m:Nat}->{n:Nat}->(c:Nat)->LTE m n ->LTE m (c+n)
-plusConstantLeftSide Z x = x
-plusConstantLeftSide (S k) x = lteSuccRight (plusConstantLeftSide k x)
-
-plusConstantLeftPreservesLte:{m:Nat}-> {n:Nat}->(c:Nat)->(LTE m n)->(LTE (c+m) (c+n))
-plusConstantLeftPreservesLte Z x = x
-plusConstantLeftPreservesLte (S k) x = LTESucc (plusConstantLeftPreservesLte k x)
-
-plusConstantRightPreservesLte:{m:Nat}-> {n:Nat}->(c:Nat)->(LTE m n)->(LTE (m+c) (n+c))
-plusConstantRightPreservesLte {m}{n}c x = rewrite (plusCommutative m c)  in (rewrite (plusCommutative n c) in (plusConstantLeftPreservesLte c x))
 
 
-|||The theorem that for any natural numbers k and m (m<= (S k)*m)
-natLteMultNatNat: (k:Nat)->(m:Nat)->(LTE m ((S k)*m))
-natLteMultNatNat Z m = rewrite (multOneLeftNeutral m) in (lteRefl)
-natLteMultNatNat (S k) m =     plusConstantLeftSide m (natLteMultNatNat  k m)
 
 -----------------------------------------------------------------------------------------------------------------
 --Implementation of LTE for ZZ
@@ -477,3 +455,18 @@ lteAndGteImpliesEqualZ (NegativeLte x) (NegativeLte y) = cong (lteAndGteImpliesE
 posLteMultPosPosEqZ: {q:ZZ}->(c:ZZ)->(d:ZZ)->(IsPositive c)->(IsPositive d)->(d=c*q)->(LTEZ c d)
 posLteMultPosPosEqZ {q} c d cPos dPos prf = rewrite prf in (rewrite (multCommutativeZ c q) in (posLteMultPosPosZ c q cPos qPos)) where
   qPos= posDivByPosIsPos dPos cPos prf
+
+{-small auxillary proofs regarding the equality type-}
+
+apZZ : (f: ZZ -> ZZ) -> (n: ZZ) -> (m: ZZ) -> n = m -> f n = f m
+apZZ f m m Refl = Refl
+addsame : (t: ZZ)->(n:ZZ)->(m:ZZ)-> n = m -> (n+t)=(m+t)
+addsame t m m Refl=Refl
+addeqns : (a:ZZ)->(b:ZZ)-> a=b -> (p:ZZ)->(q:ZZ)-> p=q -> ((a+p)=(b+q))
+addeqns a a Refl p p Refl=Refl
+equality1 : (p:ZZ)->(k:ZZ)->(a:ZZ)-> (a=p*k)->(l:ZZ)->(b:ZZ)->(b=p*l)->(a+b)=(p*k + p*l)
+equality1 p k a x l b y = addeqns a (p*k) x b (p*l) y
+equality2 : (p:ZZ)->(k:ZZ)->(a:ZZ)-> (a=p*k)->(l:ZZ)->(b:ZZ)->(b=p*l)->(a+b)=p*(k+l)
+equality2 p k a x l b y = trans (equality1 p k a x l b y) (sym (multDistributesOverPlusRightZ p k l))
+
+{-end of auxillary proofs-}

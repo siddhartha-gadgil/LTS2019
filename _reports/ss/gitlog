@@ -1,3 +1,66 @@
+commit 08869b00f722e0dffe01f86478762397bda444ac
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 15 18:55:37 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 15 18:55:37 2019 +0530
+
+    Updated the report with current progress
+
+ _reports/ss/ss.md | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
+
+commit f6b8654ee55cd3d58a7452dd68d206c7cd63605e
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 15 18:18:27 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 15 18:18:27 2019 +0530
+
+    Started work on primes. Defined a total order for Nats, and created a primitive primality checker
+
+ Code/Primes.idr | 57 ++++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 48 insertions(+), 9 deletions(-)
+
+commit f55e213b0029f6cb68488660de0a1001dfb64446
+Merge: 3bd46ab 4a3b167
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 15 18:17:09 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 15 18:17:09 2019 +0530
+
+    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
+
+commit 3bd46abaaf8c1c08000676972edd5eecbf9ce642
+Merge: 4ec18e3 489c9f6
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 15 14:55:09 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 15 14:55:09 2019 +0530
+
+    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
+
+commit 4ec18e3787fe0c4c6874f8ecedcc14931c70dca7
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Thu Feb 14 10:35:32 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Thu Feb 14 10:35:32 2019 +0530
+
+    Pushing.
+
+ Code/Primes.idr | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+commit 8d438c15a8a4837bd6dde5a066970f8d3eeda4a8
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Thu Feb 14 10:00:12 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Thu Feb 14 10:00:12 2019 +0530
+
+    Changed filename, and added the divZZ function in MultiSolver.idr (for Abishek's LinearAlgebra to compile)
+
+ Code/LinearAlgebra.idr                           | 8 ++++++--
+ Code/{Linear.MultiSolver.idr => MultiSolver.idr} | 8 ++++++--
+ 2 files changed, 12 insertions(+), 4 deletions(-)
+
 commit 4d81e7e8dfb585de2e09997a5537b62092fbe4b5
 Author:     SS-C4 <srirams@iisc.ac.in>
 AuthorDate: Tue Feb 12 11:14:40 2019 +0530
