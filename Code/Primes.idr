@@ -167,7 +167,6 @@ isPrime : Nat -> Type
 isPrime p = (LTE 2 p ,
             (x : Nat **
             (isDivisible p x , x = 1)))
-
 --Does the job, but is not very useful. Will be replaced later.
 checkPrime : (p : Nat) -> LTE 2 p -> {default (p-1) iter : Nat} ->
   Maybe (isPrime p)
