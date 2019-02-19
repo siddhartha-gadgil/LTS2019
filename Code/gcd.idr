@@ -60,21 +60,28 @@ gcdDivb a b prf = mulDiv (gcdByb a b prf)
 --   (gcd a b {ok=prf} ** (?parta, ?partb))
 
 --Proof to finish euclidDivide, couldn't add it as a where clause within euclidDivide. If someone knows how to do that, please do so.
-extendedEqualityProof : (a : Nat) -> (b : Nat) -> (q : Nat) -> (r : Nat)-> (S r = b)
-  -> (a = r + (q * b)) -> (S a = (S q) * b)
-extendedEqualityProof (r + (q * (S r))) (S r) q r Refl Refl = Refl
 
---Given a, b, and a proof that b != 0, returns (q, r) and proofs that a = bq + r, r < b  {removed possible problems with Rohit's}
+
+sly:{a:Nat}->{b:Nat}->{q:Nat} ->{r:Nat}->(a=r+(q*b))->((S a)= (S r) + q*b)
+sly  prf1 =  (cong prf1)
+
+sly2:{a:Nat}->{b:Nat}->{q:Nat} ->{r:Nat}->{j:Nat}->((S r) = b)->((S a)= (S r) + q*j)->((S a)= b + q*j)
+sly2 prf prf1 = rewrite (sym prf) in prf1
+
+sly3:{a:Nat}->{b:Nat}->{q:Nat} ->{r:Nat}-> ((S r) = b)->(a=r+(q*b))->((S a)= (S q)*b)
+sly3 prf prf1 = sly2 prf (sly prf1)
+
+
 euclidDivide : (a : Nat) -> (b : Nat) ->
   (b = Z -> Void) -> (q : Nat ** (r : Nat ** ((a = r + (q * b)), LT r b)))
 euclidDivide a Z pf = void(pf Refl)
 euclidDivide Z (S k) SIsNotZ = (Z ** (Z ** (Refl, LTESucc LTEZero)))
 euclidDivide (S n) (S k) SIsNotZ =
   case (euclidDivide n (S k) SIsNotZ) of
-								(q ** (r ** (equalityProof, ltproof))) => case (proofLTimplieseqorLT r (S k) ltproof) of
-																	(Right proofSrLTSk) => (q ** ((S r) ** ((functionExtendEquality S n (r + (q * (S k))) equalityProof), proofSrLTSk)))
-																	(Left proofSreqSk) => ((S q) ** (Z ** ((extendedEqualityProof n (S k) q r proofSreqSk equalityProof), LTESucc LTEZero)))
-
+		(q ** (r ** (equalityProof, ltproof))) =>
+        case (proofLTimplieseqorLT r (S k) ltproof) of
+						(Right proofSrLTSk) => (q ** ((S r) ** ((functionExtendEquality S n (r + (q * (S k))) equalityProof), proofSrLTSk)))
+						(Left proofSreqSk) => ((S q) ** (Z ** ((sly3 proofSreqSk equalityProof), LTESucc LTEZero)))
 --Bezout
 {-
 --if gcd a b = d, d = ax + by for some x,y Integers (Given by Bezout)

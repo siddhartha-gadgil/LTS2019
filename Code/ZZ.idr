@@ -470,3 +470,43 @@ equality2 : (p:ZZ)->(k:ZZ)->(a:ZZ)-> (a=p*k)->(l:ZZ)->(b:ZZ)->(b=p*l)->(a+b)=p*(
 equality2 p k a x l b y = trans (equality1 p k a x l b y) (sym (multDistributesOverPlusRightZ p k l))
 
 {-end of auxillary proofs-}
+
+
+LTEZSucc: {a:ZZ}->{b:ZZ}->(LTEZ a b)->LTEZ (1+a) (1+b)
+LTEZSucc (PositiveLTE x) = PositiveLTE (LTESucc x)
+LTEZSucc {a=NegS Z}{b=Pos j} NegLessPositive = PositiveLTE LTEZero
+LTEZSucc {a=NegS  (S k)}{b=Pos j} NegLessPositive = NegLessPositive
+LTEZSucc {a=NegS Z}{b=NegS Z}(NegativeLte LTEZero) = PositiveLTE LTEZero
+LTEZSucc {a=NegS (S right)}{b=NegS Z}(NegativeLte x) = NegLessPositive
+LTEZSucc {a=NegS (S right)}{b=NegS (S k)}(NegativeLte (LTESucc x)) =
+  NegativeLte x
+
+LTEZPred:{a:ZZ}->{b:ZZ}->(LTEZ a b)->LTEZ ((-1)+a) ((-1)+b)
+LTEZPred {a=Pos Z}{b=Pos Z}(PositiveLTE LTEZero) = NegativeLte LTEZero
+LTEZPred {a=Pos Z}{b=Pos (S k)}(PositiveLTE LTEZero) = NegLessPositive
+LTEZPred {a=Pos (S left)}{b=Pos (S right)}(PositiveLTE (LTESucc x)) =
+  PositiveLTE x
+LTEZPred {a=NegS k}{b=Pos Z} NegLessPositive = NegativeLte LTEZero
+LTEZPred {a=NegS k}{b=Pos  (S j)} NegLessPositive = NegLessPositive
+LTEZPred (NegativeLte x) = NegativeLte (LTESucc x)
+
+posNotLessThanNegative : LTEZ (Pos  k) (NegS j) -> Void
+posNotLessThanNegative (PositiveLTE _) impossible
+posNotLessThanNegative NegLessPositive impossible
+posNotLessThanNegative (NegativeLte _) impossible
+
+LTEZZtoNat: LTEZ (Pos k) (Pos j)->LTE k j
+LTEZZtoNat (PositiveLTE x) = x
+
+LTEZZtoNatNeg :LTEZ (NegS k) (NegS j)->LTE j k
+LTEZZtoNatNeg (NegativeLte x) = x
+
+isLTEZ:(a:ZZ)->(b:ZZ)->Dec (LTEZ a b)
+isLTEZ (Pos k) (Pos j) = case (isLTE k j) of
+                              (Yes prf) => Yes (PositiveLTE prf)
+                              (No contra) => No (contra . LTEZZtoNat)
+isLTEZ (Pos k) (NegS j) = No (posNotLessThanNegative)
+isLTEZ (NegS k) (Pos j) = Yes NegLessPositive
+isLTEZ (NegS k) (NegS j) = case isLTE j k of
+                                (Yes prf) => Yes (NegativeLte prf)
+                                (No contra) => No (contra . LTEZZtoNatNeg)
