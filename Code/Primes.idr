@@ -1,6 +1,7 @@
 module Primes
 
 import NatUtils
+import Data.Nat.DivMod
 
 %access public export
 %default total
@@ -82,14 +83,60 @@ aEqProdImpAGtB (b * (S k)) b (S k) x Refl = case b of
                 rewrite sym (multDistributesOverPlusRight (S k) 1 m) in
                 multRightLTE 1 (S k) (S m) (LTESucc (LTEZero)) x
 
---Not LTE implies GT
---(this is from a pull request on Idris-lang which was not accepted)
-notLTEImpliesGT : Not (LTE i j) -> GT i j
-notLTEImpliesGT {i = Z}             notLt = absurd $ notLt LTEZero
-notLTEImpliesGT {i = S k} {j = Z}   _     = LTESucc LTEZero
-notLTEImpliesGT {i = S j} {j = S k} notLt = LTESucc (notLTEImpliesGT (notLt . LTESucc))
+--If b | a => b <= a
+bDivAImpAGtB : (a,b,n : Nat) -> isDivisible a b -> LTE b a
+bDivAImpAGtB a b n (x ** pf) = case (fst pf) of
+              (LTESucc LTEZero{right=k}) => aEqProdImpAGtB a b (S k) (fst pf) (snd pf)
+
+--GT implies Not LTE
+gtImpliesNotLTE : GT a b -> Not (LTE a b)
+gtImpliesNotLTE {a=Z} {b=_} LTEZero impossible
+gtImpliesNotLTE {a=Z} {b=_} (LTESucc _) impossible
+gtImpliesNotLTE {a=(S k)} {b=Z} x = case isLTE (S k) Z of
+                                 (Yes prf) => absurd
+                                 (No contra) => contra
+gtImpliesNotLTE {a=(S k)} {b=(S j)} x = case isLTE (S k) (S j) of
+                                 (Yes prf) => void
+                                      (gtImpliesNotLTE (fromLteSucc x) (fromLteSucc prf))
+                                 (No contra) => contra
+
+--If b > a => b does not divide a
+bGtAImpNotbDivA : (a,b,n : Nat) -> GT b a -> (isDivisible a b -> Void)
+bGtAImpNotbDivA a b n x = impliesContrapositive
+                          (isDivisible a b)
+                          (LTE b a)
+                          (bDivAImpAGtB a b n)
+                          (gtImpliesNotLTE x)
+
+--(S (S k)) = 0 is not possible
+zNotEqSS : (k : Nat) -> ((S (S k)) = 0 -> Void)
+zNotEqSS Z = absurd
+zNotEqSS (S k) = absurd
+
+--isDivisible p 0 => (S (S k)) = 0
+help4 : (p : Nat) -> LTE 2 p -> isDivisible p 0 -> p = 0
+help4 Z LTEZero _ impossible
+help4 Z (LTESucc _) _ impossible
+help4 (S Z) (LTESucc LTEZero) _ impossible
+help4 (S Z) (LTESucc (LTESucc _)) _ impossible
+help4 (S (S k)) (LTESucc (LTESucc LTEZero)) x = snd (snd x)
+
+
+--If x = 0, and p >= 2, x cannot divide p
+zNotDivp : (p : Nat) -> LTE 2 p -> ((isDivisible p 0) -> Void)
+zNotDivp Z LTEZero impossible
+zNotDivp Z (LTESucc _) impossible
+zNotDivp (S Z) (LTESucc LTEZero) impossible
+zNotDivp (S Z) (LTESucc (LTESucc _)) impossible
+zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)) =
+                        impliesContrapositive
+                        (isDivisible (S (S k)) 0)
+                        ((S (S k)) = 0)
+                        (help4 (S (S k)) (LTESucc (LTESucc LTEZero)))
+                        (zNotEqSS k)
 
 --Decidability for divisibility
+
 decDiv : (p : Nat) -> LTE 2 p -> (x : Nat) -> Dec (isDivisible p x)
 decDiv Z LTEZero _ impossible
 decDiv Z (LTESucc _) _ impossible
@@ -101,8 +148,14 @@ decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x =
                                        rewrite l in
                                        rewrite sym (multOneRightNeutral x) in
                                        Refl))
-                (Right (Left l)) => No ?e3
-                (Right (Right r)) => ?e4
+                (Right (Left l)) => No (bGtAImpNotbDivA
+                                        (S (S k)) x
+                                        (divNatNZ x (S (S k)) SIsNotZ)
+                                        l)
+                (Right (Right r)) => case x of
+                        Z => No (zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)))
+                        (S m) => ?eerr
+
 
 --Spare code
 {-
