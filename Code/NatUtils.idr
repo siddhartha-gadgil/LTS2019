@@ -1,5 +1,12 @@
 module Tools.NatUtils
+--import ZZ
+%access public export
 
+{-small auxillary proofs regarding the equality type-}
+{-
+apZZ : (f: ZZ -> ZZ) -> (n: ZZ) -> (m: ZZ) -> n = m -> f n = f m
+apZZ f m m Refl = Refl
+-}
 %access public export
 
 
