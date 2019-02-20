@@ -1,3 +1,187 @@
+commit 8b72b8e7f55bd58a2cca4c3d15d6c2f3c168a761
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 20 13:59:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 20 13:59:19 2019 +0530
+
+    Made sure the import is working
+    
+    Changed the name of Lecture.Evens and imported it into Merge.idr
+
+ Code/Merge.idr | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
+commit b8820d084173839192dff38a044fab851a0dbeb6
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 20 13:57:53 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 20 13:57:53 2019 +0530
+
+    renaming so that it is importable
+
+ Code/{Lecture.Evens.idr => Lecture_Evens.idr} | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 5a74f42697c26f4d01bd371a1634fb8e261a979b
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 20 13:41:28 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 20 13:41:28 2019 +0530
+
+    Update shafil.md
+
+ _reports/shafil/shafil.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit f568ccbbed255260657d6671625dc63d93e0d941
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 20 13:41:00 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 20 13:41:00 2019 +0530
+
+    Update report
+    
+    The report
+
+ _reports/shafil/shafil.md | 37 ++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
+
+commit 75e203dbc58ebb9247441b4071e2f442139892c5
+Merge: 11b00d3 a5a75c5
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Feb 20 13:39:46 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 20 13:39:46 2019 +0530
+
+    Merge pull request #15 from siddhartha-gadgil/master
+    
+    a
+
+commit 11b00d349f82cee4c88aad11c258e9979bcb16f3
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 19 19:38:15 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 19 19:38:15 2019 +0530
+
+    made euclidDivide total
+    
+    euclidDivide function gives quotient and remainder on division with proof . It wasnt total before .
+
+ Code/gcd.idr | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
+
+commit ad081e2203ec13324df814328449a8b7b655043c
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 19 17:33:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 19 17:33:55 2019 +0530
+
+    Implemented isLTE function for ZZ
+    
+    Implemented isLTE function for ZZ and also LTEZSucc and LTEZPred which proves that the successors and predecessors of an integer have the same order as the original integers
+
+ Code/ZZ.idr | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+
+commit c9b1a6dacf4daf99be4d632d320ae6ce0f7283a7
+Merge: 2499963 4b9ee83
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Tue Feb 19 17:31:46 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 19 17:31:46 2019 +0530
+
+    Merge pull request #14 from siddhartha-gadgil/master
+    
+    ds
+
+commit 2499963e7bd8e8a576ce0d302760ac81537189b3
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 16 23:08:49 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 23:08:49 2019 +0530
+
+    Update gcd.idr
+
+ Code/gcd.idr | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit ff00d4e82d5a1c18cb1dc33f588cc47058931224
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 16 23:08:08 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 23:08:08 2019 +0530
+
+    Update Rationals.idr
+
+ Code/Rationals.idr | 7 -------
+ 1 file changed, 7 deletions(-)
+
+commit 5c6f8308ad7940bd56147edf505cb2431c916c3c
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 16 23:07:23 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 23:07:23 2019 +0530
+
+    Update Primes.idr
+
+ Code/Primes.idr | 30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
+
+commit faa807e50e658f1a54c8640b85ffce140715eaa2
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 16 23:06:14 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 23:06:14 2019 +0530
+
+    Update ZZ.idr
+
+ Code/ZZ.idr | 39 ++++++++++++++++-----------------------
+ 1 file changed, 16 insertions(+), 23 deletions(-)
+
+commit dfc6cf315d3380d50d2c06a43701886c0ac70fd8
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 16 23:05:29 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 23:05:29 2019 +0530
+
+    Update Divisors.idr
+
+ Code/Divisors.idr | 52 ++++++++++++++++++++++++++--------------------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
+
+commit 82ac9e75b3f0da5d6080ca4969c898a75b1f551a
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 16 23:04:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 23:04:45 2019 +0530
+
+    Update Bezout.idr
+
+ Code/Bezout.idr | 50 +++++++++++++-------------------------------------
+ 1 file changed, 13 insertions(+), 37 deletions(-)
+
+commit e2325bf88a48a7f39cd13d2f3183d5eecd7c119b
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 16 23:04:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 23:04:09 2019 +0530
+
+    Update NatUtils.idr
+
+ Code/NatUtils.idr | 19 +------------------
+ 1 file changed, 1 insertion(+), 18 deletions(-)
+
+commit e6cbfff9a7123d3dc5e426b3e22db85f1e27dbdf
+Merge: dab2e23 1cb960c
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 16 23:03:24 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 23:03:24 2019 +0530
+
+    Merge pull request #13 from siddhartha-gadgil/master
+    
+    a
+
 commit dab2e23b626b6d97f60cb10832e5f8dd1d47c074
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Fri Feb 15 20:26:45 2019 +0530
