@@ -22,3 +22,14 @@ layout : report
   - I used the inverse to solve a system of linear equations, again only when the system is consistent.
   - This was in the commit [Linear.MultiSolver.idr](https://github.com/siddhartha-gadgil/LTS2019/commit/228398917996fa51a64aa4eb5d312d59dc796a63)
 2. I defined the `Num` and `Neg` interfaces for `ZZPairs`, which are useful, as inbuilt functions require input of such an interface. This was mostly in commit [Linear.MultiSolver.idr](https://github.com/siddhartha-gadgil/LTS2019/commit/74a47fb42abdeb7281f7524a1460922cb7fb8bff)
+
+#### NatUtils
+1. I added one lemma which given `LTE a b` and `LTE c d`, returns the type `LTE (a+c) (b+d)`. This is useful in an independent context as well.
+
+#### Primes
+1. I created the `Primes` module and defined some useful lemmas and definitions.
+  - I created a divisibility type with slight modifications to ensure that it does not admit zero divisors (originally created in __gcd.idr__)
+  - I implemented a type `totOrdNat`, which, given `a`, `b` : `Nat` returns a type with a proof if either `a = b`, `a < b` or `a > b`
+  - I defined various other functions as auxxilary for the `decDiv` function, but are useful in their own right in providing contradictions and contrapositives.
+2. Using all the helper functions defined previously, I defined a `decDiv` function that given `a`, `b`, returns a `Dec (isDivisible a b)` type with proofs and contradictions depending on the values.
+  - Apart from the last case, all other cases are proved. The last case is left as a hole for now. (It requires the euclidean division with proof, which has been done recently, and will be included.)
