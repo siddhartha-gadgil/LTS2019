@@ -1,32 +1,8 @@
 module Primes
 
-<<<<<<< HEAD
---isDivisible a b can be constucted if b divides a
-isDivisible : Nat -> Nat -> Type
-isDivisible a b = (n : Nat ** a = b * n)
 
---1 divides everything
-oneDiv : (a : Nat) -> isDivisible a 1
-oneDiv a = (a ** rewrite plusZeroRightNeutral a in Refl)
-
---If 1|a => 1*c | a*c
-mulDiv : (a, c : Nat) -> isDivisible a 1 -> isDivisible (a * c) c
-mulDiv a c x = (a ** rewrite multCommutative a c in Refl)
-
--- proof that a given number is prime
-isPrime : Nat -> Type
-isPrime p = ?needstobefilled
-
---proof that n is composite
-Factorise : Nat -> Type
-Factorise n = ?dsf
-
--- Given a number, either it is prime or it is composite
-NPrimeOrComposite : Nat -> Either (isPrime n) (Factorise n)
-NPrimeOrComposite n = ?fill
-=======
 import NatUtils
-import Data.Nat.DivMod
+import Data.Vect
 
 %access public export
 %default total
@@ -181,9 +157,31 @@ decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x =
                         Z => No (zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)))
                         (S m) => ?eerr
 
+-- creates a list with all the factors of a number upto the second arguement
+genFact : Nat -> Nat -> List Nat
+genFact Z Z = []
+genFact Z (S k) = []
+genFact (S j) Z = []
+genFact (S Z) (S k) = [(S Z)]
+genFact (S (S j)) (S k) = case (decDiv (S (S j)) (LTESucc (LTESucc (LTEZero{right = j}))) (S k)) of
+                (Yes prf) => (genFact (S (S j)) k) ++ [(S k)]
+                (No contra) => (genFact (S (S j)) k)
 
---Spare code
+
+
+--if the List has only 2 elements, i.e 1 and p, then the number is prime
+isPrime : (p: Nat) -> {auto pf: LTE 2 p} -> Type
+isPrime p = (genFact p p, length (genFact p p) = 2)
+
+-- more than 2 factors implies number is composite
+isComposite : (n: Nat) -> {auto pf: LTE 2 n} -> Type
+isComposite n = (genFact p p, GT (length (genFact p p)) 2)
+
+
+
 {-
+--Spare code
+
 --Type for isPrime. A number p is prime if all numbers dividing
 --it are either p or 1. (In the primality checker, I am checking
 --for numbers until p, hence the p case is not included. Will
