@@ -2,7 +2,7 @@ module Mergesort
 
 import Data.Vect
 
-import Lecture.Evens
+import Lecture_Evens
 
 --Takes the first m elements from a vector
 Vecttake : (m:Nat)->Vect n elem->Vect m  elem
@@ -18,22 +18,22 @@ insertend : (x:elem)->Vect n elem->Vect (S n) elem
 insertend x [] = [x]
 insertend x (y :: xs) = y::(insertend x xs)
 
-half : (n: Nat) -> IsEven n -> Nat
-half Z ZEven = 0
-half (S (S k)) (SSEven k x) = S (half k x)
+-- half : (n: Nat) -> IsEven n -> Nat
+-- half Z ZEven = 0
+-- half (S (S k)) (SSEven k x) = S (half k x)
 
-nOrSnEven: (n: Nat) -> Either (IsEven n) (IsEven (S n))
-nOrSnEven Z = Left ZEven
-nOrSnEven (S k) = case (nOrSnEven k) of
-                       (Left l) => Right (SSEven k l)
-                       (Right r) => Left r
+-- nOrSnEven: (n: Nat) -> Either (IsEven n) (IsEven (S n))
+-- nOrSnEven Z = Left ZEven
+-- nOrSnEven (S k) = case (nOrSnEven k) of
+--                        (Left l) => Right (SSEven k l)
+--                        (Right r) => Left r
 
 --Defined in class. This is used to split the input vector into two parts.
 --The length of the first part is halfRoof n.
-halfRoof: Nat -> Nat
-halfRoof n = case (nOrSnEven n) of
-                  (Left nEven) => half n nEven
-                  (Right snEven) => half (S n) snEven
+-- halfRoof: Nat -> Nat
+-- halfRoof n = case (nOrSnEven n) of
+--                   (Left nEven) => half n nEven
+--                   (Right snEven) => half (S n) snEven
 
 --function that returns (n - halfRoof n) i.e. the length of the second part
 --after input vector is split.
