@@ -30,7 +30,7 @@ where d = GCD (a,b) in [Bezout.idr](https://github.com/siddhartha-gadgil/LTS2019
 
 ## gcd.idr
 1. Implemented `PlusDiv` and `MultDiv` for natural numbers which were later changed to integers in `Divisors.idr`.[Link here](https://github.com/siddhartha-gadgil/LTS2019/commit/be28efe9bbe3c28da17edadb3d7770034a901178)
-2.Made the `euclDivide` function total [Link here](https://github.com/siddhartha-gadgil/LTS2019/commit/11b00d349f82cee4c88aad11c258e9979bcb16f3)
+2. Made the `euclDivide` function total [Link here](https://github.com/siddhartha-gadgil/LTS2019/commit/11b00d349f82cee4c88aad11c258e9979bcb16f3)
 
 ## [Graph.idr ](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/Graph.idr)
 1. The `AdjacentsAreConnected` function returns a proof that 2 adjacent vertices are connected **by an edge** or nothing if they are not connected.
