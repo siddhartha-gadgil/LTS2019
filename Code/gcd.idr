@@ -71,7 +71,7 @@ sly2 prf prf1 = rewrite (sym prf) in prf1
 sly3:{a:Nat}->{b:Nat}->{q:Nat} ->{r:Nat}-> ((S r) = b)->(a=r+(q*b))->((S a)= (S q)*b)
 sly3 prf prf1 = sly2 prf (sly prf1)
 
-
+public export
 euclidDivide : (a : Nat) -> (b : Nat) ->
   (b = Z -> Void) -> (q : Nat ** (r : Nat ** ((a = r + (q * b)), LT r b)))
 euclidDivide a Z pf = void(pf Refl)

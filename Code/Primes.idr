@@ -1,7 +1,7 @@
 module Primes
 
 import NatUtils
-import Data.Nat.DivMod
+import gcd
 
 %access public export
 %default total
@@ -135,27 +135,88 @@ zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)) =
                         (help4 (S (S k)) (LTESucc (LTESucc LTEZero)))
                         (zNotEqSS k)
 
---Decidability for divisibility
+-- Helping out metaHelp
+metaMetaHelp : (j : Nat) -> (S (j+0)) = (S j)
+metaMetaHelp Z = Refl
+metaMetaHelp (S k) = rewrite plusZeroRightNeutral k in Refl
 
-decDiv : (p : Nat) -> LTE 2 p -> (x : Nat) -> Dec (isDivisible p x)
+--Helping out help5
+metaHelp : (S (S k)) = (S (j+0)) -> (S (S k)) = (S (j))
+metaHelp {j} prf = rewrite sym (metaMetaHelp j) in prf
+
+
+-- Helping out the absurd case
+help5: (S (S k)) = (S (j+0)) -> LT (S j) (S (S k)) ->  LTE (S Z) 0
+help5 {k} {j} prf x = sumGreaterImpliesGreater {n=(S j)}
+            (rewrite sym (metaMetaHelp j) in
+             rewrite sym prf in
+             rewrite eqSucc (S (S k)) (S j) (metaHelp prf) in
+             x)
+
+--If a divides b => b=a*n
+bDivAImpBEqAN : (a,b : Nat) -> isDivisible b a ->  (k : Nat ** b = a * k)
+bDivAImpBEqAN a b (p ** (proofGT, proofEq)) = (p ** proofEq)
+
+--a = b*q+r where r > 0 => a = b*q -> Void
+aEqBQplusRImpNotAEqBQ : S (S k) = (S a) + x*(S j) ->
+            ((S (S k)) = x*(S j) -> Void)
+aEqBQplusRImpNotAEqBQ prf1 prf2 = ?as2
+
+
+--The usual case for divisibility
+usual : (p : Nat) -> LTE 2 p -> (x : Nat) -> (LT 0 x) -> (LT x p) ->
+  (euc : (q : Nat ** (r : Nat ** ((p = r + (q * x)), LT r x)))) ->
+  Dec (isDivisible p x)
+usual Z LTEZero _ _ _ _ impossible
+usual Z (LTESucc _) _ _ _ _ impossible
+usual (S Z) (LTESucc LTEZero) _ _ _ _ impossible
+usual (S Z) (LTESucc (LTESucc _)) _ _ _ _ impossible
+usual (S (S _)) (LTESucc (LTESucc LTEZero)) Z LTEZero _ _ impossible
+usual (S (S _)) (LTESucc (LTESucc LTEZero)) Z (LTESucc _) _ _ impossible
+usual (S (S k)) (LTESucc (LTESucc LTEZero))
+      (S j) (LTESucc LTEZero)
+      xLtp euc with (euc)
+        usual (S (S k)) (LTESucc (LTESucc LTEZero))
+              (S j) (LTESucc LTEZero)
+              xLtp euc | (Z ** (Z ** (pf,_))) = absurd $ pf
+
+        usual (S (S k)) (LTESucc (LTESucc LTEZero))
+              (S j) (LTESucc LTEZero)
+              xLtp euc | ((S Z) ** (Z ** (pf,_))) = absurd $
+                      (help5 pf xLtp)
+
+        usual (S (S k)) (LTESucc (LTESucc LTEZero))
+              (S j) (LTESucc LTEZero)
+              xLtp euc | ((S (S b)) ** (Z ** (pf,_))) =
+                Yes ((S (S b)) ** ((LTESucc LTEZero),
+                                    (rewrite multCommutative (S j) (S (S b)) in pf)))
+
+        usual (S (S k)) (LTESucc (LTESucc LTEZero))
+              (S j) (LTESucc LTEZero)
+              xLtp euc | (_ ** ((S a) ** (pf,_))) = No ?e4
+
+--Decidability for divisibility
+decDiv : (p : Nat) -> LTE 2 p -> (x : Nat) ->
+  {euc : (q : Nat ** (r : Nat ** ((p = r + (q * x)), LT r x)))} ->
+  Dec (isDivisible p x)
 decDiv Z LTEZero _ impossible
 decDiv Z (LTESucc _) _ impossible
 decDiv (S Z) (LTESucc LTEZero) _ impossible
 decDiv (S Z) (LTESucc (LTESucc _)) _ impossible
-decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x =
-            case totOrdNat (S (S k)) x of
-                (Left l) => Yes (1 ** ((LTESucc LTEZero),
-                                       rewrite l in
-                                       rewrite sym (multOneRightNeutral x) in
-                                       Refl))
-                (Right (Left l)) => No (bGtAImpNotbDivA
-                                        (S (S k)) x
-                                        (divNatNZ x (S (S k)) SIsNotZ)
-                                        l)
-                (Right (Right r)) => case x of
-                        Z => No (zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)))
-                        (S m) => ?eerr
-
+decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x {euc=big} =
+    case totOrdNat (S (S k)) x of
+      (Left l) => Yes (1 ** ((LTESucc LTEZero),
+                             rewrite l in
+                             rewrite sym (multOneRightNeutral x) in
+                             Refl))
+      (Right (Left l)) => No (bGtAImpNotbDivA
+                              (S (S k)) x
+                              (divNatNZ x (S (S k)) SIsNotZ)
+                              l)
+      (Right (Right r)) => case x of
+          Z => No (zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)))
+          (S m) => usual (S (S k)) (LTESucc (LTESucc LTEZero)) (S m)
+                   (LTESucc LTEZero) r big
 
 --Spare code
 {-
