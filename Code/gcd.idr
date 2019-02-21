@@ -2,6 +2,13 @@ module gcd
 
 import NatUtils
 
+|||Auxilliary proof for euclidDivide
+--Proof to finish euclidDivide, couldn't add it as a where clause within euclidDivide. If someone knows how to do that, please do so.
+extendedEqualityProof : (a : Nat) -> (b : Nat) -> (q : Nat) -> (r : Nat)->
+					((S r) = b) -> (a = r + (q * b)) -> (S a = (S q) * b)
+extendedEqualityProof a b q r proofSmlEq proofBigEq =
+	trans (cong proofBigEq) (plusConstantRight (S r) b (q * b) proofSmlEq)
+
 ||| Given a, b, and a proof that b != 0, returns (q, r) and proofs that a = bq + r, r < b
 --removed possible problems with Rohit's
 euclidDivide : (a : Nat) -> (b : Nat) -> (b = Z -> Void) -> (r : Nat ** (q : Nat ** ((a = r + (q * b)), LT r b)))
@@ -10,8 +17,8 @@ euclidDivide Z (S k) SIsNotZ = (Z ** (Z ** (Refl, LTESucc LTEZero)))
 euclidDivide (S n) (S k) SIsNotZ =
 	case (euclidDivide n (S k) SIsNotZ) of
 		(r ** (q ** (equalityProof, ltproof))) =>
-			case (proofLTimplieseqorLT r (S k) ltproof) of
-				(Right proofSrLTSk) => ((S r) ** (q ** ((functionExtendsEquality Nat S n (r + (q * (S k))) equalityProof), proofSrLTSk)))
+			case (ltImpliesEqOrLT r (S k) ltproof) of
+				(Right proofSrLTSk) => ((S r) ** (q ** ((cong equalityProof), proofSrLTSk)))
 				(Left proofSreqSk) => (Z ** ((S q) ** ((extendedEqualityProof n (S k) q r proofSreqSk equalityProof), LTESucc LTEZero)))
 
 |||Type of proof that d divides a

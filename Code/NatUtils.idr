@@ -1,4 +1,4 @@
-module Tools.NatUtils
+module NatUtils
 --import ZZ
 %access public export
 
@@ -7,7 +7,6 @@ module Tools.NatUtils
 apZZ : (f: ZZ -> ZZ) -> (n: ZZ) -> (m: ZZ) -> n = m -> f n = f m
 apZZ f m m Refl = Refl
 -}
-%access public export
 
 |||difference of Nats, taken from Lecture.intro
 sub : (m : Nat) -> (n : Nat) -> (LTE n m) -> Nat
@@ -35,11 +34,11 @@ partsLTEsum {a = S n} {b} = (LTESucc (fst(partsLTEsum)), lteSuccRight(snd(partsL
 ||| Proof that a = c, b = d and a <= b implies c <= d
 lteSubstitutes : {a : Nat} -> {b : Nat} -> {c : Nat} -> {d : Nat} ->
 				(LTE a b) -> (a = c) -> (b = d) -> (LTE c d)
-lteSubstitutes {a} {b} proofLTE Refl Refl = proofLTE
+lteSubstitutes proofLTE Refl Refl = proofLTE
 
 |||Proof that S m = S n implies m = n
 predEqual : (m : Nat) -> (n : Nat) -> (S m = S n) -> (m = n)
-predEqual m n proofEq = functionExtendsEquality Nat Prelude.Nat.pred (S m) (S n) proofEq
+predEqual m n proofEq = cong {f = Prelude.Nat.pred} proofEq
 
 |||Proof that a < b implies a <= b
 ltImpliesLTE : {a : Nat} -> {b : Nat} -> (LT a b) -> (LTE a b)
@@ -63,14 +62,14 @@ ltImpliesEqOrLT Z (S Z) (LTESucc LTEZero) = Left Refl
 ltImpliesEqOrLT Z (S (S n)) (LTESucc LTEZero) = Right (LTESucc (LTESucc LTEZero))
 ltImpliesEqOrLT (S m) (S n) proofSmLTSn =
 	case (ltImpliesEqOrLT m n (fromLteSucc proofSmLTSn)) of
-		(Left proofSmEqn) => Left (functionExtendsEquality Nat S (S m) n proofSmEqn)
+		(Left proofSmEqn) => Left (cong proofSmEqn)
 		(Right proofSmLTn) => Right (LTESucc proofSmLTn)
 
 |||Proof that (c + a) <= (c + b) implies a <= b
 lteRemoveConstantLeft : {a : Nat} -> {b : Nat} -> {c : Nat} -> (LTE (c + a) (c + b)) -> (LTE a b)
-lteRemoveConstantLeft {a} {b} {c = Z} proofLTE = proofLTE
-lteRemoveConstantLeft {a} {b} {c = S k} (LTESucc proofLTE) =
-	lteRemoveConstantLeft {a} {b} {c = k} proofLTE
+lteRemoveConstantLeft {c = Z} proofLTE = proofLTE
+lteRemoveConstantLeft {c = S k} (LTESucc proofLTE) =
+	lteRemoveConstantLeft {c = k} proofLTE
 
 |||Proof that (a + c) <= (b + c) implies a <= b
 lteRemoveConstantRight : {a : Nat} -> {b : Nat} -> {c : Nat} -> (LTE (a + c) (b + c)) -> (LTE a b)
