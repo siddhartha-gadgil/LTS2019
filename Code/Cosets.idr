@@ -20,7 +20,7 @@ CosetAll: (h: Type) -> (pfh: Group h) -> (g: Type) -> (pfg: Group g) ->
           (trav: Type) -> (f: trav -> g) -> Type
 CosetAll h (MkGroup h (+) pfh) g (MkGroup g (*) pfg) sbgrp trav f =
   ((a: g) ->
-  (p: h ** (t: trav ** ((f t)*(incl p) = a)))) where
+  (p: h ** (t: trav ** ((incl p)*(f t) = a)))) where
   incl = (fst sbgrp)
 
 -- Transversal type - the type of proofs that a given type is a Transversal
