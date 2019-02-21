@@ -1,5 +1,9 @@
 module NatUtils
+
+import Order
 --import ZZ
+
+%default total
 %access public export
 
 {-small auxillary proofs regarding the equality type-}
@@ -65,17 +69,6 @@ ltImpliesEqOrLT (S a) (S b) proofSaLTSb =
 		(Left proofSaEqb) => Left (cong proofSaEqb)
 		(Right proofSaLTb) => Right (LTESucc proofSaLTb)
 
-|||Proof that (c + a) <= (c + b) implies a <= b
-lteMinusConstantLeft : {a : Nat} -> {b : Nat} -> {c : Nat} -> (LTE (c + a) (c + b)) -> (LTE a b)
-lteMinusConstantLeft {c = Z} proofLTE = proofLTE
-lteMinusConstantLeft {c = S k} (LTESucc proofLTE) =
-	lteMinusConstantLeft {c = k} proofLTE
-
-|||Proof that (a + c) <= (b + c) implies a <= b
-lteMinusConstantRight : {a : Nat} -> {b : Nat} -> {c : Nat} -> (LTE (a + c) (b + c)) -> (LTE a b)
-lteMinusConstantRight {a} {b} {c} proofLTE =
-	lteMinusConstantLeft (lteSubstitutes proofLTE (plusCommutative a c) (plusCommutative b c))
-
 |||Proof that a <= b implies a <= (c + b)
 ltePlusConstant : {a : Nat} -> {b : Nat} -> (c : Nat) -> (LTE a b) -> (LTE a (c + b))
 ltePlusConstant {a} {b} c proofLTE = lteSubstitutes (lteTransitive proofLTE (lteAddRight b)) Refl (plusCommutative b c)
@@ -91,6 +84,16 @@ ltePlusConstantRight {a} {b} c proofLTE = rewrite (plusCommutative a c) in
 									rewrite (plusCommutative b c) in
 									(ltePlusConstantLeft c proofLTE)
 
+|||Proof that (c + a) <= (c + b) implies a <= b
+lteMinusConstantLeft : {a : Nat} -> {b : Nat} -> {c : Nat} -> (LTE (c + a) (c + b)) -> (LTE a b)
+lteMinusConstantLeft {c = Z} proofLTE = proofLTE
+lteMinusConstantLeft {c = S k} (LTESucc proofLTE) = lteMinusConstantLeft {c = k} proofLTE
+
+|||Proof that (a + c) <= (b + c) implies a <= b
+lteMinusConstantRight : {a : Nat} -> {b : Nat} -> {c : Nat} -> (LTE (a + c) (b + c)) -> (LTE a b)
+lteMinusConstantRight {a} {b} {c} proofLTE =
+	lteMinusConstantLeft (lteSubstitutes proofLTE (plusCommutative a c) (plusCommutative b c))
+
 |||Proof that if a <= b, and c <= d, then (a + c) <= (b + d)
 ltePlusIsLTE : {a : Nat} -> {b : Nat} -> {c : Nat} -> {d : Nat} ->
 			(LTE a b) -> (LTE c d) -> (LTE (a + c) (b + d))
@@ -98,7 +101,7 @@ ltePlusIsLTE {a = a0} {b = b0} {c = c0} {d = d0} proofLeftLTE proofRightLTE =
 	lteTransitive (ltePlusConstantRight {a = a0} {b = b0} c0 proofLeftLTE) (ltePlusConstantLeft {a = c0} {b = d0} b0 proofRightLTE)
 
 |||Proof that m <= (S k) * m
-lteMultLeft: (k : Nat) -> (m : Nat) -> (LTE m ((S k) * m))
+lteMultLeft : (k : Nat) -> (m : Nat) -> (LTE m ((S k) * m))
 lteMultLeft Z m = rewrite (multOneLeftNeutral m) in (lteRefl)
 lteMultLeft (S k) m = ltePlusConstant m (lteMultLeft k m)
 

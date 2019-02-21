@@ -2,6 +2,9 @@ module gcd
 
 import NatUtils
 
+%default total
+%access public export
+
 |||Auxilliary proof for euclidDivide
 --Proof to finish euclidDivide, couldn't add it as a where clause within euclidDivide. If someone knows how to do that, please do so.
 extendedEqualityProof : (a : Nat) -> (b : Nat) -> (q : Nat) -> (r : Nat)->
