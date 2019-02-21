@@ -76,10 +76,9 @@ lteRemoveConstantRight : {a : Nat} -> {b : Nat} -> {c : Nat} -> (LTE (a + c) (b 
 lteRemoveConstantRight {a} {b} {c} proofLTE =
 	lteRemoveConstantLeft (lteSubstitutes proofLTE (plusCommutative a c) (plusCommutative b c))
 
-|||Proof that m <= n implies m <= (c + n)
-lteAddConstant : {m : Nat} -> {n : Nat} -> (c : Nat)-> (LTE m n) -> (LTE m (c + n))
-lteAddConstant Z proofLTE = proofLTE
-lteAddConstant (S k) proofLTE = lteSuccRight (lteAddConstant k proofLTE)
+|||Proof that a <= b implies a <= (c + b)
+lteAddConstant : {a : Nat} -> {b : Nat} -> (c : Nat) -> (LTE a b) -> (LTE a (c + b))
+lteAddConstant {a} {b} c proofLTE = lteSubstitutes (lteTransitive proofLTE (lteAddRight b)) Refl (plusCommutative b c)
 
 |||Proof that a <= b implies (c + a) <= (c + b)
 lteAddConstantLeft : {a : Nat} -> {b : Nat} -> (c : Nat) -> (LTE a b) -> (LTE (c + a) (c + b))
