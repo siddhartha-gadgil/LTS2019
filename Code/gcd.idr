@@ -77,3 +77,15 @@ distributeProof a b d m n proofDividesa proofDividesb =
 dividesSum :  {a : Nat} -> {b : Nat} -> {d : Nat} -> (isCommonDivisor a b d proofNotZ)-> (isDivisible (a + b) d proofNotZ)
 dividesSum {a} {b} {d} ((m ** proofDividesa), (n ** proofDividesb)) =
 	((m + n) ** (distributeProof a b d m n proofDividesa proofDividesb))
+
+|||Proof d divides a and a = b implies d divides b
+eqConservesDivisible : {a : Nat} -> {b : Nat} -> {d : Nat} -> {proofNotZ : Not (d = Z)} ->
+					(isDivisible a d proofNotZ) -> (a = b) -> (isDivisible b d proofNotZ)
+eqConservesDivisible {a} {d} (n ** proofDivides) Refl = (n ** proofDivides)
+
+|||Proof that d is a common divisor of a and b implies d divides a * x + b * y
+dividesLinearCombination :  {a : Nat} -> {b : Nat} -> {d : Nat} -> {proofNotZ : Not (d = Z)} ->
+						(isCommonDivisor a b d proofNotZ) -> (x : Nat) -> (y : Nat) ->
+						(isDivisible ((x * a) + (y * b)) d proofNotZ)
+dividesLinearCombination {proofNotZ = prf} commonDivisorProof x y =
+	dividesSum {proofNotZ = prf} ((dividesMultiple {proofNotZ = prf} (fst commonDivisorProof) x), (dividesMultiple {proofNotZ = prf} (snd commonDivisorProof) y))
