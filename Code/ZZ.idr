@@ -413,7 +413,7 @@ data LTEZ :ZZ->ZZ->Type where
 
 |||The theorem that for positive integers n and m (n<=(m*n))
 posLteMultPosPosZ:  (n:ZZ)->(m:ZZ)->(IsPositive n)->(IsPositive m)->(LTEZ n  (m*n))
-posLteMultPosPosZ (Pos (S j)) (Pos (S k)) Positive Positive = PositiveLTE (natLteMultNatNat k (S j))
+posLteMultPosPosZ (Pos (S j)) (Pos (S k)) Positive Positive = PositiveLTE (lteMultLeft k (S j))
 
 |||The proof that if an integer is not not positive , it is positive (This  looks useless , but I couldnt find a better way to implement some other theorems)
 notNotPositiveimpliesPositive:{k:ZZ}->((IsNotPositive k)->Void)->(IsPositive k)
@@ -445,11 +445,11 @@ posDivByPosIsPos {c}{d}{q} cPos dPos eqProof = notNotPositiveimpliesPositive (Po
 
 |||The theorem (m<=n) and (n<=m) implies n=m for integers
 lteAndGteImpliesEqualZ:{m:ZZ}-> {n:ZZ}->(LTEZ m n)-> (LTEZ n m)->(n=m)
-lteAndGteImpliesEqualZ (PositiveLTE x) (PositiveLTE y) =  cong (lteAndGteImpliesEqual x y)
+lteAndGteImpliesEqualZ (PositiveLTE x) (PositiveLTE y) = cong {f = Pos} (lteAndGTEImpliesEqual y x)
 lteAndGteImpliesEqualZ NegLessPositive (PositiveLTE _) impossible
 lteAndGteImpliesEqualZ NegLessPositive NegLessPositive impossible
 lteAndGteImpliesEqualZ NegLessPositive (NegativeLte _) impossible
-lteAndGteImpliesEqualZ (NegativeLte x) (NegativeLte y) = cong (lteAndGteImpliesEqual y x)
+lteAndGteImpliesEqualZ (NegativeLte x) (NegativeLte y) = cong {f = NegS} (lteAndGTEImpliesEqual x y)
 
 |||A proof that if c and d are positive and d =c*q then (c<=d)
 posLteMultPosPosEqZ: {q:ZZ}->(c:ZZ)->(d:ZZ)->(IsPositive c)->(IsPositive d)->(d=c*q)->(LTEZ c d)
