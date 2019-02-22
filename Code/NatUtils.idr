@@ -7,9 +7,6 @@ module Tools.NatUtils
 apZZ : (f: ZZ -> ZZ) -> (n: ZZ) -> (m: ZZ) -> n = m -> f n = f m
 apZZ f m m Refl = Refl
 -}
-%access public export
-
-
 
 -- Proof of the type that an implication implies its contrapositive
 impliesContrapositive : (A : Type) -> (B : Type) -> (A -> B) -> (B -> Void) -> (A -> Void)
@@ -60,10 +57,21 @@ natLteMultNatNat (S k) m =     plusConstantLeftSide m (natLteMultNatNat  k m)
 
 |||If a <= b, and c <= d, then (a+c) <= (b+d)
 lteSumIsLte : (a,b,c,d : Nat) -> LTE a b -> LTE c d -> LTE (a+c) (b+d)
-lteSumIsLte a b Z d x LTEZero = rewrite plusZeroRightNeutral a in
-																rewrite plusCommutative b d in
+lteSumIsLte a b Z d x LTEZero = rewrite plusCommutative b d in
+															  rewrite plusZeroRightNeutral a in
 																plusConstantLeftSide d x
 lteSumIsLte a b (S left) (S right) x (LTESucc y) =
 					rewrite sym (plusSuccRightSucc b right) in
 					rewrite sym (plusSuccRightSucc a left) in
 					(LTESucc (lteSumIsLte a b left right x y))
+
+|||If (a+n) <= (b+n), then a <= b
+sumGreaterImpliesGreater : {n : Nat} -> LTE (a+n) (b+n) -> LTE a b
+sumGreaterImpliesGreater {a} {b} {n = Z} x =
+							rewrite sym (plusZeroRightNeutral a) in
+ 						  rewrite sym (plusZeroRightNeutral b) in
+    					x
+sumGreaterImpliesGreater {a} {b} {n = (S k)} x =
+							sumGreaterImpliesGreater {n = k} (fromLteSucc
+								(rewrite plusSuccRightSucc b k in
+								 rewrite plusSuccRightSucc a k in x))
