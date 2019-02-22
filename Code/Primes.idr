@@ -243,16 +243,16 @@ isComposite n = Prelude.Nat.GT (Prelude.List.length (genFact n n)) 2
 
 
 --same as oneDiv, but fits the format for the following functions
-oneIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (head' (List Nat)) = (S Z))
-oneIsFactor Z LTEZero impossible
-oneIsFactor Z (LTESucc _) impossible
-oneIsFactor (S k) pf =
-
--- n is the last element of the list of its factors
-nIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (tail' (genFact n n)) = n)
-nIsFactor Z LTEZero impossible
-nIsFactor Z (LTESucc _) impossible
-nIsFactor (S k) pf = Refl
+-- oneIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (head' (List Nat)) = (S Z))
+-- oneIsFactor Z LTEZero impossible
+-- oneIsFactor Z (LTESucc _) impossible
+-- oneIsFactor (S k) pf =
+--
+-- -- n is the last element of the list of its factors
+-- nIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (tail' (genFact n n)) = n)
+-- nIsFactor Z LTEZero impossible
+-- nIsFactor Z (LTESucc _) impossible
+-- nIsFactor (S k) pf = Refl
 
 
 {-
