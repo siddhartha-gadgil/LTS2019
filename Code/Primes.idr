@@ -1,8 +1,7 @@
 module Primes
 
-
 import NatUtils
-import Data.Vect
+import gcd
 
 %access public export
 %default total
@@ -65,7 +64,7 @@ multRightLTE a b (S Z) (LTESucc LTEZero) lteab =
 multRightLTE a b (S (S k)) (LTESucc LTEZero{right=(S k)}) lteab =
           rewrite multRightSuccPlus a (S k) in
           rewrite multRightSuccPlus b (S k) in
-          lteSumIsLte a b (mult a (S k)) (mult b (S k)) lteab
+          ltePlusIsLTE lteab
           (multRightLTE a b (S k) (LTESucc LTEZero{right=k}) lteab)
 
 --If a = b*n, b <= a
@@ -137,32 +136,26 @@ zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)) =
                         (zNotEqSS k)
 
 -- Helping out metaHelp
-metaMetaHelp : (j : Nat) -> (S (j+0)) = (S j)
-metaMetaHelp Z = Refl
-metaMetaHelp (S k) = rewrite plusZeroRightNeutral k in Refl
+metaMetaHelp5 : (j : Nat) -> (S (j+0)) = (S j)
+metaMetaHelp5 Z = Refl
+metaMetaHelp5 (S k) = rewrite plusZeroRightNeutral k in Refl
 
 --Helping out help5
-metaHelp : (S (S k)) = (S (j+0)) -> (S (S k)) = (S (j))
-metaHelp {j} prf = rewrite sym (metaMetaHelp j) in prf
+metaHelp5 : (S (S k)) = (S (j+0)) -> (S (S k)) = (S (j))
+metaHelp5 {j} prf = rewrite sym (metaMetaHelp5 j) in prf
 
 
 -- Helping out the absurd case
 help5: (S (S k)) = (S (j+0)) -> LT (S j) (S (S k)) ->  LTE (S Z) 0
-help5 {k} {j} prf x = sumGreaterImpliesGreater {n=(S j)}
-            (rewrite sym (metaMetaHelp j) in
+help5 {k} {j} prf x = lteMinusConstantRight {c=(S j)}
+            (rewrite sym (metaMetaHelp5 j) in
              rewrite sym prf in
-             rewrite eqSucc (S (S k)) (S j) (metaHelp prf) in
+             rewrite eqSucc (S (S k)) (S j) (metaHelp5 prf) in
              x)
 
 --If a divides b => b=a*n
 bDivAImpBEqAN : (a,b : Nat) -> isDivisible b a ->  (k : Nat ** b = a * k)
 bDivAImpBEqAN a b (p ** (proofGT, proofEq)) = (p ** proofEq)
-
---a = b*q+r where r > 0 => a = b*q -> Void
-aEqBQplusRImpNotAEqBQ : S (S k) = (S a) + x*(S j) ->
-            ((S (S k)) = x*(S j) -> Void)
-aEqBQplusRImpNotAEqBQ prf1 prf2 = ?as2
-
 
 --The usual case for divisibility
 usual : (p : Nat) -> LTE 2 p -> (x : Nat) -> (LT 0 x) -> (LT x p) ->
@@ -219,45 +212,8 @@ decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x {euc=big} =
           (S m) => usual (S (S k)) (LTESucc (LTESucc LTEZero)) (S m)
                    (LTESucc LTEZero) r big
 
-
--- creates a list with all the factors of a number upto the second arguement
-genFact : Nat -> Nat -> List Nat
-genFact Z Z = []
-genFact Z (S k) = []
-genFact (S j) Z = []
-genFact (S Z) (S k) = [(S Z)]
-genFact (S (S j)) (S k) = case (decDiv (S (S j)) (LTESucc (LTESucc (LTEZero{right = j}))) (S k)) of
-                (Yes prf) => (genFact (S (S j)) k) ++ [(S k)]
-                (No contra) => (genFact (S (S j)) k)
-
-
-
---if the List has only 2 elements, i.e 1 and p, then the number is prime. the function outputs a list (secretly genFact)
--- along with the proof that the length of the list of factors is 2
-isPrime : (p: Nat) -> {auto pf: LTE 2 p} -> Type
-isPrime p = length (genFact p p) = 2
-
--- more than 2 factors implies number is composite
-isComposite : (n: Nat) -> {auto pf: LTE 2 n} -> Type
-isComposite n = Prelude.Nat.GT (Prelude.List.length (genFact n n)) 2
-
-
---same as oneDiv, but fits the format for the following functions
--- oneIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (head' (List Nat)) = (S Z))
--- oneIsFactor Z LTEZero impossible
--- oneIsFactor Z (LTESucc _) impossible
--- oneIsFactor (S k) pf =
---
--- -- n is the last element of the list of its factors
--- nIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (tail' (genFact n n)) = n)
--- nIsFactor Z LTEZero impossible
--- nIsFactor Z (LTESucc _) impossible
--- nIsFactor (S k) pf = Refl
-
-
-{-
 --Spare code
-
+{-
 --Type for isPrime. A number p is prime if all numbers dividing
 --it are either p or 1. (In the primality checker, I am checking
 --for numbers until p, hence the p case is not included. Will
