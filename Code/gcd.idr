@@ -14,15 +14,16 @@ extendedEqualityProof a b q r proofSmlEq proofBigEq =
 
 ||| Given a, b, and a proof that b != 0, returns (q, r) and proofs that a = bq + r, r < b
 --removed possible problems with Rohit's
-euclidDivide : (a : Nat) -> (b : Nat) -> (b = Z -> Void) -> (r : Nat ** (q : Nat ** ((a = r + (q * b)), LT r b)))
-euclidDivide _ Z proofeq = void(proofeq Refl)
+euclidDivide : (a : Nat) -> (b : Nat) ->
+  (b = Z -> Void) -> (q : Nat ** (r : Nat ** ((a = r + (q * b)), LT r b)))
+euclidDivide a Z pf = void(pf Refl)
 euclidDivide Z (S k) SIsNotZ = (Z ** (Z ** (Refl, LTESucc LTEZero)))
 euclidDivide (S n) (S k) SIsNotZ =
-	case (euclidDivide n (S k) SIsNotZ) of
-		(r ** (q ** (equalityProof, ltproof))) =>
-			case (ltImpliesEqOrLT r (S k) ltproof) of
-				(Right proofSrLTSk) => ((S r) ** (q ** ((cong equalityProof), proofSrLTSk)))
-				(Left proofSreqSk) => (Z ** ((S q) ** ((extendedEqualityProof n (S k) q r proofSreqSk equalityProof), LTESucc LTEZero)))
+  case (euclidDivide n (S k) SIsNotZ) of
+		(q ** (r ** (equalityProof, ltproof))) =>
+        case (ltImpliesEqOrLT r (S k) ltproof) of
+						(Right proofSrLTSk) => (q ** ((S r) ** ((cong equalityProof), proofSrLTSk)))
+						(Left proofSreqSk) => ((S q) ** (Z ** ((extendedEqualityProof n (S k) q r proofSreqSk equalityProof), LTESucc LTEZero)))
 
 |||Type of proof that d divides a
 isDivisible : (a : Nat) -> (d : Nat) -> (Not (d = Z)) -> Type
