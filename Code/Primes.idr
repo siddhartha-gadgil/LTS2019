@@ -1,8 +1,7 @@
 module Primes
 
-
 import NatUtils
-import Data.Vect
+import gcd
 
 %access public export
 %default total
@@ -65,7 +64,7 @@ multRightLTE a b (S Z) (LTESucc LTEZero) lteab =
 multRightLTE a b (S (S k)) (LTESucc LTEZero{right=(S k)}) lteab =
           rewrite multRightSuccPlus a (S k) in
           rewrite multRightSuccPlus b (S k) in
-          lteSumIsLte a b (mult a (S k)) (mult b (S k)) lteab
+          ltePlusIsLTE lteab
           (multRightLTE a b (S k) (LTESucc LTEZero{right=k}) lteab)
 
 --If a = b*n, b <= a
@@ -136,9 +135,64 @@ zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)) =
                         (help4 (S (S k)) (LTESucc (LTESucc LTEZero)))
                         (zNotEqSS k)
 
---Decidability for divisibility
+-- Helping out metaHelp
+metaMetaHelp5 : (j : Nat) -> (S (j+0)) = (S j)
+metaMetaHelp5 Z = Refl
+metaMetaHelp5 (S k) = rewrite plusZeroRightNeutral k in Refl
 
-decDiv : (p : Nat) -> LTE 2 p -> (x : Nat) -> Dec (isDivisible p x)
+--Helping out help5
+metaHelp5 : (S (S k)) = (S (j+0)) -> (S (S k)) = (S (j))
+metaHelp5 {j} prf = rewrite sym (metaMetaHelp5 j) in prf
+
+
+-- Helping out the absurd case
+help5: (S (S k)) = (S (j+0)) -> LT (S j) (S (S k)) ->  LTE (S Z) 0
+help5 {k} {j} prf x = lteMinusConstantRight {c=(S j)}
+            (rewrite sym (metaMetaHelp5 j) in
+             rewrite sym prf in
+             rewrite eqSucc (S (S k)) (S j) (metaHelp5 prf) in
+             x)
+
+--If a divides b => b=a*n
+bDivAImpBEqAN : (a,b : Nat) -> isDivisible b a ->  (k : Nat ** b = a * k)
+bDivAImpBEqAN a b (p ** (proofGT, proofEq)) = (p ** proofEq)
+
+--The usual case for divisibility
+usual : (p : Nat) -> LTE 2 p -> (x : Nat) -> (LT 0 x) -> (LT x p) ->
+  (euc : (q : Nat ** (r : Nat ** ((p = r + (q * x)), LT r x)))) ->
+  Dec (isDivisible p x)
+usual Z LTEZero _ _ _ _ impossible
+usual Z (LTESucc _) _ _ _ _ impossible
+usual (S Z) (LTESucc LTEZero) _ _ _ _ impossible
+usual (S Z) (LTESucc (LTESucc _)) _ _ _ _ impossible
+usual (S (S _)) (LTESucc (LTESucc LTEZero)) Z LTEZero _ _ impossible
+usual (S (S _)) (LTESucc (LTESucc LTEZero)) Z (LTESucc _) _ _ impossible
+usual (S (S k)) (LTESucc (LTESucc LTEZero))
+      (S j) (LTESucc LTEZero)
+      xLtp euc with (euc)
+        usual (S (S k)) (LTESucc (LTESucc LTEZero))
+              (S j) (LTESucc LTEZero)
+              xLtp euc | (Z ** (Z ** (pf,_))) = absurd $ pf
+
+        usual (S (S k)) (LTESucc (LTESucc LTEZero))
+              (S j) (LTESucc LTEZero)
+              xLtp euc | ((S Z) ** (Z ** (pf,_))) = absurd $
+                      (help5 pf xLtp)
+
+        usual (S (S k)) (LTESucc (LTESucc LTEZero))
+              (S j) (LTESucc LTEZero)
+              xLtp euc | ((S (S b)) ** (Z ** (pf,_))) =
+                Yes ((S (S b)) ** ((LTESucc LTEZero),
+                                    (rewrite multCommutative (S j) (S (S b)) in pf)))
+
+        usual (S (S k)) (LTESucc (LTESucc LTEZero))
+              (S j) (LTESucc LTEZero)
+              xLtp euc | (_ ** ((S a) ** (pf,_))) = No ?e4
+
+--Decidability for divisibility
+decDiv : (p : Nat) -> LTE 2 p -> (x : Nat) ->
+  {euc : (q : Nat ** (r : Nat ** ((p = r + (q * x)), LT r x)))} ->
+  Dec (isDivisible p x)
 decDiv Z LTEZero _ impossible
 decDiv Z (LTESucc _) _ impossible
 decDiv (S Z) (LTESucc LTEZero) _ impossible
@@ -160,6 +214,21 @@ decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x =
 -- modifies decDiv to account for zero and 1 case. Need to merge this with decDiv after it is completed
 decDivMod : (p : Nat) -> (x : Nat) -> Dec (isDivisible p x)
 
+=======
+decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x {euc=big} =
+    case totOrdNat (S (S k)) x of
+      (Left l) => Yes (1 ** ((LTESucc LTEZero),
+                             rewrite l in
+                             rewrite sym (multOneRightNeutral x) in
+                             Refl))
+      (Right (Left l)) => No (bGtAImpNotbDivA
+                              (S (S k)) x
+                              (divNatNZ x (S (S k)) SIsNotZ)
+                              l)
+      (Right (Right r)) => case x of
+          Z => No (zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)))
+          (S m) => usual (S (S k)) (LTESucc (LTESucc LTEZero)) (S m)
+                   (LTESucc LTEZero) r big
 
 -- creates a list with all the factors of a number upto the second arguement
 genFact : (n : Nat) -> Nat -> List (k : Nat ** isDivisible n k)
@@ -173,12 +242,14 @@ genFact (S (S j)) (S k) = case (decDiv (S (S j)) (LTESucc (LTESucc (LTEZero{righ
 
 
 
+
 --if the List has only 2 elements, i.e 1 and p, then the number is prime. the function outputs a list (secretly genFact)
 -- along with the proof that the length of the list of factors is 2
 isPrimeNoProof : (p: Nat) -> {auto pf: LTE 2 p} -> Type
 isPrimeNoProof p = (length (genFact p p) = 2)
 
 -- more than 2 factors implies number is composite
+
 isCompositeNoProof : (n: Nat) -> {auto pf: LTE 2 n} -> Type
 isCompositeNoProof n = Prelude.Nat.GT (Prelude.List.length (genFact n n)) 2
 
@@ -189,7 +260,7 @@ isPrime Z LTEZero impossible
 isPrime Z (LTESucc _) impossible
 isPrime (S Z) (LTESucc LTEZero) impossible
 isPrime (S Z) (LTESucc (LTESucc _)) impossible
-isPrime (S (S k)) pf = (k : Nat) -> 
+isPrime (S (S k)) pf = (k : Nat) ->
 
 -- Classify n  Prime or composite
 Classify : (n : Nat) -> (pf : LTE 2 n) -> (Either (isPrimeNoProof n) (isCompositeNoProof n))
@@ -201,10 +272,25 @@ Classify (S (S k)) pf = ?cs
 
 
 
+isComposite : (n: Nat) -> {auto pf: LTE 2 n} -> Type
+isComposite n = Prelude.Nat.GT (Prelude.List.length (genFact n n)) 2
 
-{-
+--same as oneDiv, but fits the format for the following functions
+-- oneIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (head' (List Nat)) = (S Z))
+-- oneIsFactor Z LTEZero impossible
+-- oneIsFactor Z (LTESucc _) impossible
+-- oneIsFactor (S k) pf =
+--
+-- -- n is the last element of the list of its factors
+-- nIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (tail' (genFact n n)) = n)
+-- nIsFactor Z LTEZero impossible
+-- nIsFactor Z (LTESucc _) impossible
+-- nIsFactor (S k) pf = Refl
+
+
+
 --Spare code
-
+{-
 --Type for isPrime. A number p is prime if all numbers dividing
 --it are either p or 1. (In the primality checker, I am checking
 --for numbers until p, hence the p case is not included. Will

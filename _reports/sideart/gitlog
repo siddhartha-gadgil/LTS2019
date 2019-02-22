@@ -1,3 +1,43 @@
+commit 677a7bddcc9cc810ea419fcae5b794cb39f14483
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Wed Feb 20 20:45:10 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Wed Feb 20 20:45:10 2019 +0530
+
+    Update Primes.idr
+
+ Code/Primes.idr | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
+
+commit 804e287d355333a5dcf32c942cefa3c16f7ac50d
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Wed Feb 20 16:19:38 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Wed Feb 20 16:19:38 2019 +0530
+
+    create list with factors of numbers and check if number is prime
+
+ Code/Primes.idr | 50 ++++++++++++++++++++++++--------------------------
+ 1 file changed, 24 insertions(+), 26 deletions(-)
+
+commit 85abbfaa7e4a6593da4db9beec34a619ce059d2a
+Merge: 1fafcf3 6fa582e
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Wed Feb 20 14:33:39 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Wed Feb 20 14:33:39 2019 +0530
+
+    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
+
+commit 1fafcf328677bf3d42d921c54e9fa1580ab6b0bd
+Merge: 3582d2a 4b9ee83
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Sun Feb 17 12:27:09 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Sun Feb 17 12:27:09 2019 +0530
+
+    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
+
 commit 11c32ce9e08636f807a8a9cbc2ee82ffc3798040
 Merge: 044be52 4a99917
 Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
