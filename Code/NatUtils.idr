@@ -41,8 +41,8 @@ lteSubstitutes : {a : Nat} -> {b : Nat} -> {c : Nat} -> {d : Nat} ->
 lteSubstitutes proofLTE Refl Refl = proofLTE
 
 |||Proof that S m = S n implies m = n
-predEqual : (a : Nat) -> (b : Nat) -> (S a = S b) -> (a = b)
-predEqual a b proofEq = cong {f = Prelude.Nat.pred} proofEq
+predEqual : {a : Nat} -> {b : Nat} -> (S a = S b) -> (a = b)
+predEqual {a} {b} proofEq = cong {f = Prelude.Nat.pred} proofEq
 
 |||Proof that a < b implies a <= b
 ltImpliesLTE : {a : Nat} -> {b : Nat} -> (LT a b) -> (LTE a b)
@@ -53,7 +53,7 @@ eqImpliesLTE : {a : Nat} -> {b : Nat} -> (a = b) -> (LTE a b)
 eqImpliesLTE {a = Z} {b = Z} Refl = LTEZero
 eqImpliesLTE {a = S k} {b = Z} proofEq = void(SIsNotZ proofEq)
 eqImpliesLTE {a = Z} {b = S l} proofEq = void(SIsNotZ (sym proofEq))
-eqImpliesLTE {a = S k} {b = S l} proofEq = LTESucc (eqImpliesLTE (predEqual k l proofEq))
+eqImpliesLTE {a = S k} {b = S l} proofEq = LTESucc (eqImpliesLTE (predEqual proofEq))
 
 |||The theorem that (a <= b) and (b <= a) implies a = b
 lteAndGTEImpliesEqual : {a : Nat} -> {b : Nat} -> (LTE a b) -> (LTE b a) -> (a = b)
@@ -126,17 +126,16 @@ lteMultIsLTE {a = a0} {b = b0} {c = c0} {d = d0} proofLeftLTE proofRightLTE =
 |||Proof that n is not lesser than n
 succNotLTEn : {n : Nat} -> (LT n n) -> Void
 succNotLTEn {n = Z} proofLTE = void (succNotLTEzero proofLTE)
-succNotLTEn {n = S k} (LTESucc proofLTE) =
-	impliesContrapositive (LT (S k) (S k)) (LT k k) (lteMinusConstantLeft {c = 1}) (succNotLTEn {n = k}) (LTESucc proofLTE)
+succNotLTEn {n = S k} (LTESucc proofLTE) = succNotLTEn {n = k} proofLTE
 
 |||Proof that a < b implies a != b and !(b < a)
 ltImpliesNotEqNotGT : {a : Nat} -> {b : Nat} -> (LT a b) -> (Not (a = b), Not (LT b a))
 ltImpliesNotEqNotGT {a} {b = Z} proofLT = void(succNotLTEzero proofLT)
 ltImpliesNotEqNotGT {a = Z} {b = S l} proofLT = (ZIsNotS, succNotLTEzero)
 ltImpliesNotEqNotGT {a = S k} {b = S l} (LTESucc proofLT) =
-	((impliesContrapositive (S k = S l) (k = l) (predEqual k l) inductionStep1), (impliesContrapositive (LT (S l) (S k)) (LT l k) (lteMinusConstantLeft {c = 1}) inductionStep2)) where
-		inductionStep1 = fst (ltImpliesNotEqNotGT proofLT)
-		inductionStep2 = snd (ltImpliesNotEqNotGT proofLT)
+	((\proofEq => inductionStep1 (predEqual proofEq)), (\proofLT => inductionStep2 (lteMinusConstantLeft {c = 1} proofLT))) where
+		inductionStep1 = fst (ltImpliesNotEqNotGT {a = k} {b = l} proofLT)
+		inductionStep2 = snd (ltImpliesNotEqNotGT {a = k} {b = l} proofLT)
 
 |||Proof that a = b implies !(a < b) and !(b < a)
 eqImpliesNotLTNotGT : {a : Nat} -> {b : Nat} -> (a = b) -> (Not (LT a b), Not (LT b a))
