@@ -212,6 +212,39 @@ decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x {euc=big} =
           (S m) => usual (S (S k)) (LTESucc (LTESucc LTEZero)) (S m)
                    (LTESucc LTEZero) r big
 
+-- creates a list with all the factors of a number upto the second arguement
+genFact : Nat -> Nat -> List Nat
+genFact Z Z = []
+genFact Z (S k) = []
+genFact (S j) Z = []
+genFact (S Z) (S k) = [(S Z)]
+genFact (S (S j)) (S k) = case (decDiv (S (S j)) (LTESucc (LTESucc (LTEZero{right = j}))) (S k)) of
+               (Yes prf) => (genFact (S (S j)) k) ++ [(S k)]
+               (No contra) => (genFact (S (S j)) k)
+
+
+
+--if the List has only 2 elements, i.e 1 and p, then the number is prime. the function outputs a list (secretly genFact)
+-- along with the proof that the length of the list of factors is 2
+isPrime : (p: Nat) -> {auto pf: LTE 2 p} -> Type
+isPrime p = length (genFact p p) = 2
+
+-- more than 2 factors implies number is composite
+isComposite : (n: Nat) -> {auto pf: LTE 2 n} -> Type
+isComposite n = Prelude.Nat.GT (Prelude.List.length (genFact n n)) 2
+
+
+--same as oneDiv, but fits the format for the following functions
+-- oneIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (head' (List Nat)) = (S Z))
+-- oneIsFactor Z LTEZero impossible
+-- oneIsFactor Z (LTESucc _) impossible
+-- oneIsFactor (S k) pf =
+--
+-- -- n is the last element of the list of its factors
+-- nIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (tail' (genFact n n)) = n)
+-- nIsFactor Z LTEZero impossible
+-- nIsFactor Z (LTESucc _) impossible
+-- nIsFactor (S k) pf = Refl
 --Spare code
 {-
 --Type for isPrime. A number p is prime if all numbers dividing
