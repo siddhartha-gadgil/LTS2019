@@ -11,6 +11,11 @@ File: InsertionSort.idr
 
 1. I defined the `Insert` function which takes a natural number, a sorted list, and adds it into its appropriate position in the list by comparison.
 2. Using this, I implemented the algorithm through the function `Sort`.
+3. In the function `CheckSortedVect`, I implemented a Boolean test to check if a Vector is Sorted. This will be upgraded to a proof.
+
+#### Remaining
+
+It remains to be proved that any Vector which is the output of `Sort` is a sorted vector. Also, it needs to be shown that `Sort` simply permutes the elements of a Vector.
 
 ## Linear Algebra
 
