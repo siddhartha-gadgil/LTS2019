@@ -1,6 +1,5 @@
 module LinearAlgebra
 
-import BaseN
 import MultiSolver
 import Data.Matrix.Numeric
 import Data.Vect
@@ -13,17 +12,31 @@ import Rationals
 
 -- Some auxillary functions for elementary operations
 
+--Euclid's div
+Eucl: (a: Nat) -> (b: Nat) -> (Nat, Nat)
+Eucl Z b = (0,0)
+Eucl (S k) b = case (lte (S (S k)) b) of
+                    False => (S(fst(Eucl (minus (S k) b) b)), snd(Eucl (minus (S k) b) b))
+                    True => (0, S k)
+
+--Nat to Fin (modular values)
+tofinNat: (a: Nat) -> (n: Nat) -> Fin n
+tofinNat Z (S j) = FZ
+tofinNat (S k) (S j) = case lte (S k) (S j) of
+                True => FS (tofinNat k j)
+                False =>  (tofinNat (snd(Eucl (S k) (S j))) (S j))
+
+FST: ZZPair -> ZZ
+FST (a, b) = a
+
+Pred: Nat -> Nat
+Pred Z = Z
+Pred (S k) = k
+
 --Takes the first m elements from a vector
 Vecttake : (m:Nat)->Vect n elem->Vect m  elem
 Vecttake Z xs = []
 Vecttake (S k) (x::xs) = x::(Vecttake k xs)
-
-FST: ZZPair -> ZZ --some issue with fst
-FST (a, b) = a
-
-Pred: Nat -> Nat -- needed to get (n-1) for number of operations
-Pred Z = Z
-Pred (S k) = k
 
 SimpleCast:  (v1:(Vect (k+ (S Z)) elem)) ->( Vect (S k) elem)  -- necessary for type matching, taken from Shafil's code
 SimpleCast {k} v1 = (Vecttake (S k) v1)
@@ -172,5 +185,29 @@ DetUpToSign {n} x = simplifyRational (DiagonalProductHelper (DiagonalForm x) (Pr
 -- matrix. We just need to check if this is an odd or even permutation (simplification of all elements of the matrices will be 
 -- necessary to ensure that this can be carried out) and multiply appropriately.
 
+-- A short section consisting of functions used to simplify a matrix of ZZPairs
+
+ChangeElementRow: (n: Nat) -> Vect n ZZPair -> (pos: Nat) -> (new: ZZPair) -> Vect n ZZPair
+ChangeElementRow n xs pos new = replaceAt (tofinNat pos n) (new) xs
+
+ChangeElementMatrix: (n: Nat) -> (x: Matrix n n ZZPair) -> (i: Nat) -> (j: Nat) -> (new: ZZPair) -> Matrix n n ZZPair
+ChangeElementMatrix n x i j new = replaceAt (tofinNat i n) (ChangeElementRow n (RowN x i) j new) (x)
+
+SimplifyElement: (n: Nat) -> (x: Matrix n n ZZPair) -> (i: Nat) -> (j: Nat) -> Matrix n n ZZPair
+SimplifyElement n x i j = ChangeElementMatrix n x i j (simplifyRational (ij x i j))
+
+simplifyRowHelper: (n: Nat) -> (x: Matrix n n ZZPair) -> (row: Nat) -> (iter: Nat) -> Matrix n n ZZPair
+simplifyRowHelper n x row Z = SimplifyElement n x row Z
+simplifyRowHelper n x row (S k) = SimplifyElement n (simplifyRowHelper n x row k) row (S k)
+
+simplifyRow: (n: Nat) -> (x: Matrix n n ZZPair) -> (row: Nat) -> (Matrix n n ZZPair)
+simplifyRow n x row = simplifyRowHelper n x row (Pred n)
+
+simplifyMatrixHelper: (n: Nat) -> (x: Matrix n n ZZPair) -> (iter: Nat) -> Matrix n n ZZPair
+simplifyMatrixHelper n x Z = simplifyRow n x Z
+simplifyMatrixHelper n x (S k) = simplifyMatrixHelper n (simplifyMatrixHelper n x k) (S k)
+
+simplifyMatrix: (x: Matrix n n ZZPair) -> (Matrix n n ZZPair) -- simplifies all the rationals in the matrix, takes a while to run
+simplifyMatrix {n} x = simplifyMatrixHelper n x (Pred n) 
 
 
