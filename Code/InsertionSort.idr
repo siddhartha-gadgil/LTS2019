@@ -1,4 +1,6 @@
-module Sort
+module InsertionSort
+
+import Data.Vect
 
 Smaller : Nat -> Nat -> Nat
 Smaller Z n = Z
@@ -12,13 +14,26 @@ Min (S a) (S b) = case (Min a b) of
                        (Left l) => Left (LTESucc l)
                        (Right r) => Right (LTESucc r)
 
-Insert: (n: Nat) -> List Nat -> List Nat
-Insert n [] = [n]
-Insert n (x :: xs) = case (Min n x) of
-                        (Left l) => ([n] ++ [x]) ++ xs
-                        (Right r) => [x] ++ (Insert n xs)
+Insert: (k: Nat) -> (Vect n Nat) -> (Vect (S n) Nat)
+Insert k [] = [k]
+Insert k (x :: xs) = case (Min k x) of
+                        (Left l) => ([k] ++ [x]) ++ xs
+                        (Right r) => [x] ++ (Insert k xs)
 
 
-Sort: List Nat -> List Nat
+Sort: (Vect n Nat) -> (Vect n Nat)
 Sort [] = []
 Sort (x :: xs) = Insert x (Sort xs)
+
+VectMin: (n: Nat) -> (Vect n Nat) -> Nat
+VectMin Z [] = Z
+VectMin (S Z) [k] = k
+VectMin (S (S len)) (x :: xs) = Smaller (VectMin (S len) xs) (x)
+
+
+CheckSortedVect : (n: Nat) -> (Vect n Nat) -> Bool
+CheckSortedVect Z [] = True
+CheckSortedVect (S Z) [k] = True
+CheckSortedVect (S (S n)) (x :: xs) = case (isLTE x (VectMin (S n) xs)) of
+                                         (Yes prf) => (CheckSortedVect (S n) xs)
+                                         (No contra) => False

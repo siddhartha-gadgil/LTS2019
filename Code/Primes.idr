@@ -1,7 +1,7 @@
 module Primes
 
 import NatUtils
-import Data.Nat.DivMod
+import gcd
 
 %access public export
 %default total
@@ -19,9 +19,6 @@ mulDiv : (a, c : Nat) -> {auto pf1 : GT a 0} -> {auto pf2 : GT c 0} ->
   isDivisible a 1 -> isDivisible (a * c) c
 mulDiv a c {pf1=p} x = (a ** (p ,rewrite multCommutative a c in Refl))
 
---Prime Type
-Prime : (p : Nat) -> {auto prf : LTE 2 p} -> Type
-Prime p = ((a : Nat , b : Nat) -> (p = a*b , Either (a=1) (b=1)))
 
 --Either(a=b)(_) <=> Either (S a = S b)(_)
 help1 : {a : Nat} -> {b : Nat} ->
@@ -64,7 +61,7 @@ multRightLTE a b (S Z) (LTESucc LTEZero) lteab =
 multRightLTE a b (S (S k)) (LTESucc LTEZero{right=(S k)}) lteab =
           rewrite multRightSuccPlus a (S k) in
           rewrite multRightSuccPlus b (S k) in
-          lteSumIsLte a b (mult a (S k)) (mult b (S k)) lteab
+          ltePlusIsLTE lteab
           (multRightLTE a b (S k) (LTESucc LTEZero{right=k}) lteab)
 
 --If a = b*n, b <= a
@@ -135,26 +132,133 @@ zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)) =
                         (help4 (S (S k)) (LTESucc (LTESucc LTEZero)))
                         (zNotEqSS k)
 
---Decidability for divisibility
+-- Helping out metaHelp
+metaMetaHelp5 : (j : Nat) -> (S (j+0)) = (S j)
+metaMetaHelp5 Z = Refl
+metaMetaHelp5 (S k) = rewrite plusZeroRightNeutral k in Refl
 
-decDiv : (p : Nat) -> LTE 2 p -> (x : Nat) -> Dec (isDivisible p x)
+--Helping out help5
+metaHelp5 : (S (S k)) = (S (j+0)) -> (S (S k)) = (S (j))
+metaHelp5 {j} prf = rewrite sym (metaMetaHelp5 j) in prf
+
+
+-- Helping out the absurd case
+help5: (S (S k)) = (S (j+0)) -> LT (S j) (S (S k)) ->  LTE (S Z) 0
+help5 {k} {j} prf x = lteMinusConstantRight {c=(S j)}
+            (rewrite sym (metaMetaHelp5 j) in
+             rewrite sym prf in
+             rewrite eqSucc (S (S k)) (S j) (metaHelp5 prf) in
+             x)
+
+--If a divides b => b=a*n
+bDivAImpBEqAN : (a,b : Nat) -> isDivisible b a ->  (k : Nat ** b = a * k)
+bDivAImpBEqAN a b (p ** (proofGT, proofEq)) = (p ** proofEq)
+
+--The usual case for divisibility
+usual : (p : Nat) -> LTE 2 p -> (x : Nat) -> (LT 0 x) -> (LT x p) ->
+  (euc : (q : Nat ** (r : Nat ** ((p = r + (q * x)), LT r x)))) ->
+  Dec (isDivisible p x)
+usual Z LTEZero _ _ _ _ impossible
+usual Z (LTESucc _) _ _ _ _ impossible
+usual (S Z) (LTESucc LTEZero) _ _ _ _ impossible
+usual (S Z) (LTESucc (LTESucc _)) _ _ _ _ impossible
+usual (S (S _)) (LTESucc (LTESucc LTEZero)) Z LTEZero _ _ impossible
+usual (S (S _)) (LTESucc (LTESucc LTEZero)) Z (LTESucc _) _ _ impossible
+usual (S (S k)) (LTESucc (LTESucc LTEZero))
+      (S j) (LTESucc LTEZero)
+      xLtp euc with (euc)
+        usual (S (S k)) (LTESucc (LTESucc LTEZero))
+              (S j) (LTESucc LTEZero)
+              xLtp euc | (Z ** (Z ** (pf,_))) = absurd $ pf
+
+        usual (S (S k)) (LTESucc (LTESucc LTEZero))
+              (S j) (LTESucc LTEZero)
+              xLtp euc | ((S Z) ** (Z ** (pf,_))) = absurd $
+                      (help5 pf xLtp)
+
+        usual (S (S k)) (LTESucc (LTESucc LTEZero))
+              (S j) (LTESucc LTEZero)
+              xLtp euc | ((S (S b)) ** (Z ** (pf,_))) =
+                Yes ((S (S b)) ** ((LTESucc LTEZero),
+                                    (rewrite multCommutative (S j) (S (S b)) in pf)))
+
+        usual (S (S k)) (LTESucc (LTESucc LTEZero))
+              (S j) (LTESucc LTEZero)
+              xLtp euc | (_ ** ((S a) ** (pf,_))) = No ?e4
+
+--Decidability for divisibility
+decDiv : (p : Nat) -> LTE 2 p -> (x : Nat) ->
+  --{euc : (q : Nat ** (r : Nat ** ((p = r + (q * x)), LT r x)))} ->
+  Dec (isDivisible p x)
 decDiv Z LTEZero _ impossible
 decDiv Z (LTESucc _) _ impossible
 decDiv (S Z) (LTESucc LTEZero) _ impossible
 decDiv (S Z) (LTESucc (LTESucc _)) _ impossible
 decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x =
-            case totOrdNat (S (S k)) x of
-                (Left l) => Yes (1 ** ((LTESucc LTEZero),
-                                       rewrite l in
-                                       rewrite sym (multOneRightNeutral x) in
-                                       Refl))
-                (Right (Left l)) => No (bGtAImpNotbDivA
-                                        (S (S k)) x
-                                        (divNatNZ x (S (S k)) SIsNotZ)
-                                        l)
-                (Right (Right r)) => case x of
-                        Z => No (zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)))
-                        (S m) => ?eerr
+    case totOrdNat (S (S k)) x of
+      (Left l) => Yes (1 ** ((LTESucc LTEZero),
+                             rewrite l in
+                             rewrite sym (multOneRightNeutral x) in
+                             Refl))
+      (Right (Left l)) => No (bGtAImpNotbDivA
+                              (S (S k)) x
+                              (divNatNZ x (S (S k)) SIsNotZ)
+                              l)
+      (Right (Right r)) => case x of
+          Z => No (zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)))
+          (S m) => ?ssd
+          --(S m) => usual (S (S k)) (LTESucc (LTESucc LTEZero)) (S m)
+                  -- (LTESucc LTEZero) r big
+
+
+-- creates a list with all the factors of a number upto the second arguement
+genFact : (n : Nat) -> Nat -> List (k : Nat ** isDivisible n k)
+genFact Z Z = []
+genFact Z (S k) = []
+genFact (S j) Z = []
+genFact (S Z) (S k) = [(S Z ** oneDiv (S Z))]
+genFact (S (S j)) (S k) = case (decDiv (S (S j)) (LTESucc (LTESucc (LTEZero{right = j}))) (S k)) of
+               (Yes prf) => (genFact (S (S j)) k) ++ [(S k ** prf)]
+               (No contra) => (genFact (S (S j)) k)
+
+
+
+--if the List has only 2 elements, i.e 1 and p, then the number is prime. the function outputs a list (secretly genFact)
+-- along with the proof that the length of the list of factors is 2
+isPrimeWithoutProof : (p: Nat) -> {auto pf: LTE 2 p} -> Type
+isPrimeWithoutProof p = length (genFact p p) = 2
+
+-- more than 2 factors implies number is composite
+isCompositeWithoutProof : (n: Nat) -> {auto pf: LTE 2 n} -> Type
+isCompositeWithoutProof n = Prelude.Nat.GT (Prelude.List.length (genFact n n)) 2
+
+--Prime Type
+Prime : (p : Nat) -> {auto prf : LTE 2 p} -> Type
+Prime p = (a : Nat) -> (b : Nat) -> (p = a*b) -> Either (a=1)(b=1)
+
+-- two is prime
+twoPrime : Prime 2
+twoPrime Z _ prf = void (SIsNotZ prf)
+twoPrime a Z prf = void (SIsNotZ (rewrite (multCommutative Z a) in prf))
+twoPrime (S Z) (S (S Z)) Refl = Left Refl
+twoPrime (S (S Z)) (S Z) Refl = Right Refl
+twoPrime (S (S k)) (S (S j)) prf = ?cas
+
+
+
+
+
+--same as oneDiv, but fits the format for the following functions
+-- oneIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (head' (List Nat)) = (S Z))
+-- oneIsFactor Z LTEZero impossible
+-- oneIsFactor Z (LTESucc _) impossible
+-- oneIsFactor (S k) pf =
+--
+-- -- n is the last element of the list of its factors
+-- nIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (tail' (genFact n n)) = n)
+-- nIsFactor Z LTEZero impossible
+-- nIsFactor Z (LTESucc _) impossible
+-- nIsFactor (S k) pf = Refl
 
 
 --Spare code

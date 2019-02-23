@@ -11,6 +11,11 @@ File: InsertionSort.idr
 
 1. I defined the `Insert` function which takes a natural number, a sorted list, and adds it into its appropriate position in the list by comparison.
 2. Using this, I implemented the algorithm through the function `Sort`.
+3. In the function `CheckSortedVect`, I implemented a Boolean test to check if a Vector is Sorted. This will be upgraded to a proof.
+
+#### Remaining
+
+It remains to be proved that any Vector which is the output of `Sort` is a sorted vector. Also, it needs to be shown that `Sort` simply permutes the elements of a Vector.
 
 ## Linear Algebra
 
@@ -46,10 +51,11 @@ I implemented the Gauss-Jordan process which due to its versatility has many app
 4. The function `UpperTriangularize` is a helper function for `UpperTriangularForm` which converts a matrix to Upper Triangular Form.
 5. I found a diagonal form of a matrix using `DiagonalForm` using the above and extended it to convert any matrix to an identity (if all the diagonal elements are non-zero) in `TotalReduce`. If not, the zero rows are left as they are while the others are reduced.
 6. I found the magnitude of the determinant using `DetUpToSign` on the diagonal form of a matrix.
+7. Also, as computation time signifcantly increases with larger numbers, I added in some functions, culminating in `simplifyMatrix`, which convert a matrix to simplified form.
 
 #### Remaining
 
-Implementation of simplification of matrix elements (like `simplifyRational`) should be done to make the program run more quickly. Apart from that, here are a few possible applications of this process: 
+Here are a few possible applications of this process.
 
 1. Solving linear systems (from upper triangular form, or from diagonal form) with proof.
 2. Calculating the inverse of a matrix (and proving basic facts about it).
