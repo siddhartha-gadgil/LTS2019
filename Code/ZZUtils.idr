@@ -28,3 +28,9 @@ LTZ a b = LTEZ (1+a) b
 ltNatToZZ:{a:Nat}->{b:Nat}->(LT a b)->(LTZ (Pos a) (Pos b))
 ltNatToZZ (LTESucc x) = PositiveLTE (LTESucc x)
 
+data NotBothZeroZ :ZZ->ZZ->Type where
+  LeftPositive :NotBothZeroZ (Pos (S k)) m
+  LeftNegative :NotBothZeroZ (NegS k) m
+  RightPositive :NotBothZeroZ m (Pos (S k))
+  RightNegative :NotBothZeroZ m (NegS k)
+
