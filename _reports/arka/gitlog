@@ -1,3 +1,47 @@
+commit 515d7e6f0128a7143e70e0e5d37c935b8a741584
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Feb 23 00:25:43 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 00:25:43 2019 +0530
+
+    Some basics methods on graphs
+
+ Code/Graph_alt.idr | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
+
+commit 08d30b2885f0abb37e1cd550b6f4c0b982041a7f
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Fri Feb 22 22:36:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 22 22:36:19 2019 +0530
+
+    Added a method to convert functions to vectors.
+
+ Code/fn_to_vect.idr | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 74 insertions(+)
+
+commit b62debd1b054cb8227abd7ce8c456a954d62c548
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Fri Feb 22 22:34:15 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 22 22:34:15 2019 +0530
+
+    Deleted misplaced file
+
+ fn_to_vect.idr | 74 ----------------------------------------------------------
+ 1 file changed, 74 deletions(-)
+
+commit adcce984d6a4061b5df35907066c019553e15194
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Fri Feb 22 22:33:47 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 22 22:33:47 2019 +0530
+
+    Uploaded a method to convert functions to vectors and back.
+
+ fn_to_vect.idr | 74 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 74 insertions(+)
+
 commit e1da1ae775eaaedb227c8e2a640659e19bf43f52
 Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
 AuthorDate: Thu Feb 14 10:52:52 2019 +0530

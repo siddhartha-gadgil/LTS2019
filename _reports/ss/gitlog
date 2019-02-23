@@ -1,3 +1,50 @@
+commit 1798fc49166d84bb76a1469bda812231b6c5dfac
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 22 08:38:45 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 22 08:38:45 2019 +0530
+
+    More fixes
+
+ Code/Primes.idr | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit c082b340180b0ef56116b2fc02ba35af0a2feee7
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 22 08:35:19 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 22 08:35:19 2019 +0530
+
+    Some more fixes
+
+ Code/Primes.idr | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+commit e1f48fc88b9722de00977c1ade68bfaec1792c0b
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 22 08:31:51 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 22 08:31:51 2019 +0530
+
+    Fixed code broken by subsequent commits.
+
+ Code/Primes.idr | 66 ++++++++++-----------------------------------------------
+ Code/gcd.idr    | 15 +++++++------
+ 2 files changed, 19 insertions(+), 62 deletions(-)
+
+commit 8fce576a81fbd3f6a1904ccdbe09694abd54a256
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Thu Feb 21 14:59:08 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Thu Feb 21 14:59:08 2019 +0530
+
+    Updated NatUtils with a few functions and almost completed the `decDiv` type
+
+ Code/NatUtils.idr | 18 ++++++++---
+ Code/Primes.idr   | 95 +++++++++++++++++++++++++++++++++++++++++++++----------
+ Code/gcd.idr      |  2 +-
+ 3 files changed, 92 insertions(+), 23 deletions(-)
+
 commit d2e8f0b3964fcabd5521f7e8a6ba19be539a7068
 Author:     SS-C4 <srirams@iisc.ac.in>
 AuthorDate: Wed Feb 20 18:23:55 2019 +0530

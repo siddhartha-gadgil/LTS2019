@@ -7,11 +7,11 @@ import Cosets
 --Generates (equivalent) representatives of the image in g of a
 --coset (element of the transversal type) in the transversal type
 repgen: (trav: Type) -> Transversal trav -> (y: trav) -> trav
-repgen trav (MkTransversal h (MkGroup h (+) pfh) g (MkGroup g (*) pfg) sbgrp trav pftrav) y = (fst (snd ((snd (snd pftrav)) (f y) ) )) where
+repgen trav (MkTransversal h (MkGroup h (+) pfh) g (MkGroup g (*) pfg) sbgrp trav pftrav) y = (DPair.fst (DPair.snd  ((Basics.snd (DPair.snd pftrav)) (f y)) )) where
     f: trav -> g
-    f = fst pftrav
+    f = DPair.fst pftrav
     incl: h->g
-    incl = fst sbgrp
+    incl = DPair.fst sbgrp
 
 --Proof of uniqueness of the coset representative in trav, in the following sense
 --Proof that the operation that generates coset representative in trav for an
@@ -22,9 +22,8 @@ CorepFinv  trav (MkTransversal h (MkGroup h (+) pfh) g (MkGroup g (*) pfg) sbgrp
   (Basics.fst (DPair.snd pftrav)) y rep (p ** (sym (DPair.snd (DPair.snd  ((Basics.snd (DPair.snd pftrav)) (f y)) ))))
   )) where
   rep: trav
-  rep = (fst (snd ((snd (snd pftrav)) ((fst pftrav) y) ) ))
+  rep = (DPair.fst (DPair.snd  ((Basics.snd (DPair.snd pftrav)) ((DPair.fst pftrav) y) ) ))
   f: trav -> g
-  f = (fst pftrav)
+  f = (DPair.fst pftrav)
   p: h
-  p = (fst ((snd (snd pftrav)) (f y)))
-  
+  p = (DPair.fst  ((Basics.snd (DPair.snd  pftrav)) (f y)))

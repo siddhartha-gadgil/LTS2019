@@ -1,3 +1,36 @@
+commit 45969ed12382c1e8baf002f9ce2a12a615d8fc72
+Merge: 4b9089b d2ddda7
+Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
+AuthorDate: Thu Feb 21 22:05:47 2019 +0530
+Commit:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
+CommitDate: Thu Feb 21 22:05:47 2019 +0530
+
+    Merge branch 'master' of https://github.com/NabarunDeka/LTS2019
+
+commit 4b9089bd6eb2b5b17778f70ba189d966ef19beba
+Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
+AuthorDate: Thu Feb 21 22:05:44 2019 +0530
+Commit:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
+CommitDate: Thu Feb 21 22:05:44 2019 +0530
+
+    Update Merge.idr
+
+ Code/Merge.idr | 168 +++++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 121 insertions(+), 47 deletions(-)
+
+commit d2ddda7c3ba5db45fe0cde6d37192c57160bf0a0
+Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
+AuthorDate: Thu Feb 21 21:57:02 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 21 21:57:02 2019 +0530
+
+    made mergesort almost total.
+    
+    the proof that (a = b) implies a is LTE b for all natural nos. a,b is not total.
+
+ Code/Merge.idr | 146 +++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 110 insertions(+), 36 deletions(-)
+
 commit a844527d9bec49923ec52c1d4e19e4b448bebf8c
 Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
 AuthorDate: Mon Feb 11 22:02:39 2019 +0530
