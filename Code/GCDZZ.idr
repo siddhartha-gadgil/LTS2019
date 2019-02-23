@@ -27,3 +27,23 @@ GCDCalc (Pos (S j)) (Pos  (S k)) Positive NonNegative =
     (quot ** (rem  ** (equality, remLessb,remNonNeg))) =>
        (case GCDCalc (Pos (S k)) rem Positive remNonNeg of
              (x ** pf) => (x**(euclidConservesGcdWithProof equality pf)))
+
+
+gcdZZ:(a:ZZ)->(b:ZZ)->(NotBothZeroZ a b)->(d**(GCDZ a b d))
+gcdZZ (Pos (S k)) (Pos j) LeftPositive =
+  GCDCalc (Pos (S k)) (Pos j) Positive NonNegative
+gcdZZ (Pos (S k)) (NegS j) LeftPositive =
+  case GCDCalc (Pos (S k)) (-(NegS j)) Positive NonNegative of
+                (x ** pf) => (x**(negatingPreservesGcdRight pf))
+gcdZZ (NegS k) (Pos j) LeftNegative =
+  case GCDCalc (-(NegS k)) (Pos j) Positive NonNegative of
+    (x**pf) =>(x**(negatingPreservesGcdLeft pf))
+gcdZZ (NegS k) (NegS j) LeftNegative =
+  case GCDCalc (-(NegS k)) (-(NegS j)) Positive NonNegative of
+        (x ** pf) => (x**((negatingPreservesGcdLeft (negatingPreservesGcdRight pf))))
+gcdZZ a (Pos (S k)) RightPositive =
+  case gcdZZ (Pos (S k)) a LeftPositive of
+    (x ** pf) => (x** (gcdSymZ pf))
+gcdZZ a (NegS k) RightNegative =
+  case gcdZZ (NegS k) a LeftNegative of
+      (x ** pf) => (x** (gcdSymZ pf))
