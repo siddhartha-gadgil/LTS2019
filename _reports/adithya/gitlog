@@ -1,3 +1,112 @@
+commit 49e9fb7a87f02dcc6d021e125d8a3293c4431a63
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Fri Feb 22 12:25:23 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Fri Feb 22 12:25:23 2019 +0530
+
+    Added new order to Nat
+
+ Code/NatOrder.idr | 139 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Code/NatUtils.idr |  15 +++---
+ 2 files changed, 146 insertions(+), 8 deletions(-)
+
+commit 2731d4c73ac7568b5348c3542e8220430bd8bf0c
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Thu Feb 21 21:09:04 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Thu Feb 21 21:09:04 2019 +0530
+
+    More minor changes
+
+ Code/gcd.idr | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+commit f74ce2c03c10ca107bbf3a7a740ff972ce3e8958
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Thu Feb 21 21:04:10 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Thu Feb 21 21:04:10 2019 +0530
+
+    Changes to fix broken dependencies that were my fault.
+
+ Code/NatUtils.idr | 27 +++++++++++++++------------
+ Code/ZZ.idr       |  6 +++---
+ Code/gcd.idr      |  3 +++
+ 3 files changed, 21 insertions(+), 15 deletions(-)
+
+commit 284bdfe3784c30a89243125b02bc738691c70cc3
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Thu Feb 21 19:25:55 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Thu Feb 21 19:25:55 2019 +0530
+
+    Added more functions to NatUtils.idr
+
+ Code/NatUtils.idr | 112 ++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 63 insertions(+), 49 deletions(-)
+
+commit edafff6583985e7571bcbe3cee1892aeba6d3673
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Thu Feb 21 18:38:17 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Thu Feb 21 18:38:17 2019 +0530
+
+    changed proof for lteAddConstant
+
+ Code/NatUtils.idr | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+commit 5f9bce2c2ca2a045a3391e3904c97638629a3ffe
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Thu Feb 21 17:02:59 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Thu Feb 21 17:02:59 2019 +0530
+
+    Corrected errors due to change in function names
+
+ Code/NatUtils.idr | 15 +++++++--------
+ Code/gcd.idr      | 11 +++++++++--
+ 2 files changed, 16 insertions(+), 10 deletions(-)
+
+commit aea6b6dbc47651939d42784a2d2f180d2153dc27
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Thu Feb 21 12:55:18 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Thu Feb 21 12:55:18 2019 +0530
+
+    Added types to model Orders.
+
+ Code/Order.idr | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+
+commit cb1cd18450e1ff7e8ff1c0ea2beeae6de676367b
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Thu Feb 21 12:50:29 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Thu Feb 21 12:50:29 2019 +0530
+
+    Added functions to Natutils and modified definitions of divisibility in gcd. Cleaned up both files.
+
+ Code/NatUtils.idr | 171 ++++++++++++++++++++++++++++++++++++------------------
+ Code/gcd.idr      | 149 ++++++++++++++++++++---------------------------
+ sandbox.idr       | 159 --------------------------------------------------
+ sandbox1.idr      |  34 -----------
+ sandbox2.idr      |  48 ---------------
+ 5 files changed, 178 insertions(+), 383 deletions(-)
+
+commit af2501a8aac1a17c32f1aba4e7fac21912c8441d
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Thu Feb 21 11:51:13 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Thu Feb 21 11:51:13 2019 +0530
+
+    Temporary additions
+
+ sandbox.idr  | 159 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ sandbox1.idr |  34 +++++++++++++
+ sandbox2.idr |  48 ++++++++++++++++++
+ 3 files changed, 241 insertions(+)
+
 commit 8b176c51867e7e133bbb2c387fd2ca80d8ed78ae
 Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
 AuthorDate: Wed Feb 13 10:33:41 2019 +0530
