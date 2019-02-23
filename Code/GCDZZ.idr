@@ -4,7 +4,7 @@ import ZZ
 import NatUtils
 import gcd
 import ZZUtils
-
+%access public export
 
 total
 ExpNatToZZ:{a:Nat}->{b:Nat}->(a=r+(q*b))->((Pos a)=Pos(r)+((Pos q)*(Pos b)))
