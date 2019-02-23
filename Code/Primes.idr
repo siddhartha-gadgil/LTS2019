@@ -245,7 +245,7 @@ twoPr {k=(S Z)} (x ** pf) = Left Refl
 twoPr {k=(S (S Z))} (x ** pf) = Right Refl
 twoPr {k=(S (S (S k)))} pf = void (bGtAImpNotbDivA 2 (S (S (S k))) k (LTESucc (LTESucc (LTESucc (LTEZero {right = k})))) (pf))
 
---Composite data type
+--Composite proof
 isComposite : (n : Nat) -> LTE 2 n -> Type
 isComposite n pflte = (a : Nat ** (b : Nat ** ((GT a 1, GT b 1), n = a*b)))
 
@@ -258,16 +258,28 @@ aNotEqToMultA _ _ (S Z) (LTESucc (LTESucc _)) _ impossible
 aNotEqToMultA Z LTEZero (S (S _)) _ _ impossible
 aNotEqToMultA Z (LTESucc _) (S (S _)) _ _ impossible
 aNotEqToMultA (S j) (LTESucc (LTEZero {right = j})) (S (S k)) (LTESucc (LTESucc (LTEZero {right = k}))) prf =
-                            rewrite
+                              SIsNotZ {x = j+(k*(S j))} (sym (pfeq)) where
+                                pfeq  = plusLeftCancel (S j) Z ((S k)*(S j)) pfeq1 where
+                                  pfeq1 = rewrite (multCommutative (S (S k)) (S j)) in
+                                          trans (plusZeroRightNeutral (S j)) prf
 
+--helper apNat function
+apNat : (f: Nat -> Nat) -> (n: Nat) -> (m: Nat) -> n = m -> f n = f m
+apNat f m m Refl = Refl
 
-
+--n is not both prime and composite
 notBothPrimeandComp : {n : Nat} -> (pf : LTE 2 n) -> Not (isPrime n pf, isComposite n pf)
 notBothPrimeandComp {n = Z} LTEZero _ impossible
 notBothPrimeandComp {n = Z} (LTESucc _) _ impossible
 notBothPrimeandComp {n = (S Z)} (LTESucc LTEZero) _ impossible
 notBothPrimeandComp {n = (S Z)} (LTESucc (LTESucc _)) _ impossible
-notBothPrimeandComp {n = (S (S k))} (LTESucc (LTESucc (LTEZero {right=k}))) (pfprime , (a ** (b ** ((pfgta, pfgtb), pfneqab)))) =?as
+notBothPrimeandComp {n = (S (S k))} pftwolten (pfprime , (a ** (b ** ((pfagtone, pfbgtone), pfneqab)))) =
+                            void (aNotEqToMultA (S (S k)) (lteTransitive (LTESucc (LTEZero {right = (S Z)})) pftwolten) b pfbgtone pfeq) where
+                              pfeq = (trans pfneqab funceq) where
+                                funceq = (apNat (\x=>(x*b)) a (S (S k)) pfaeqn) where
+                                  pfaeqn =  case (pfprime (b ** ((lteTransitive (LTESucc (LTEZero {right = (S Z)})) pfbgtone), pfneqab))) of
+                                          Left pf => ?check --void (Prelude.Basics.fst (ltImpliesNotEqNotGT {a=(S Z)} {b = a} pfagtone))
+                                          Right pf => pf
 
 
 
