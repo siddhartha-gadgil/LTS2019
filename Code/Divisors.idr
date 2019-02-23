@@ -131,8 +131,8 @@ genFunctionForGcdNeg:({c:ZZ}->(IsCommonFactorZ (-a) b c)->(IsDivisibleZ d c))->
 genFunctionForGcdNeg f (cDiva,cDivb) = f (cDivNega,cDivb) where
   cDivNega = (dDividesNegative cDiva)
 |||Proof that gcd (a,b)=gcd(b,a)
-gcdSym: (GCDZ a b d)->(GCDZ b a d)
-gcdSym (dPos,(dDiva,dDivb),fd) = (dPos, (dDivb, dDiva), (genFunctionForGcdSym fd))
+gcdSymZ: (GCDZ a b d)->(GCDZ b a d)
+gcdSymZ (dPos,(dDiva,dDivb),fd) = (dPos, (dDivb, dDiva), (genFunctionForGcdSym fd))
 
 |||Theorem that gcd(-a,b)=gcd(a,b)
 negatingPreservesGcdLeft: (GCDZ (-a) b d)->(GCDZ a b d)
@@ -142,7 +142,7 @@ negatingPreservesGcdLeft (dPos,(dDivNega,dDivb),fd) =
 |||Theorem that gcd (p, -q) = gcd (p,q)
 negatingPreservesGcdRight: (GCDZ p (-q) r)->(GCDZ p q r)
 negatingPreservesGcdRight {p}{q} x =
-  gcdSym{a=q}{b=p} (negatingPreservesGcdLeft (gcdSym {a=p}{b=(-q)} x))
+  gcdSymZ{a=q}{b=p} (negatingPreservesGcdLeft (gcdSymZ {a=p}{b=(-q)} x))
 
 |||Theorem that if d|rem , d|b and a = rem+(quot*b)
 euclidConservesDivisorWithProof :{a:ZZ}->{b:ZZ}->{quot:ZZ}->{rem:ZZ}->
