@@ -46,10 +46,11 @@ I implemented the Gauss-Jordan process which due to its versatility has many app
 4. The function `UpperTriangularize` is a helper function for `UpperTriangularForm` which converts a matrix to Upper Triangular Form.
 5. I found a diagonal form of a matrix using `DiagonalForm` using the above and extended it to convert any matrix to an identity (if all the diagonal elements are non-zero) in `TotalReduce`. If not, the zero rows are left as they are while the others are reduced.
 6. I found the magnitude of the determinant using `DetUpToSign` on the diagonal form of a matrix.
+7. Also, as computation time signifcantly increases with larger numbers, I added in some functions, culminating in `simplifyMatrix`, which convert a matrix to simplified form.
 
 #### Remaining
 
-Implementation of simplification of matrix elements (like `simplifyRational`) should be done to make the program run more quickly. Apart from that, here are a few possible applications of this process: 
+Here are a few possible applications of this process.
 
 1. Solving linear systems (from upper triangular form, or from diagonal form) with proof.
 2. Calculating the inverse of a matrix (and proving basic facts about it).
