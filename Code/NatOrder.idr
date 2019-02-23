@@ -182,11 +182,12 @@ leqMultIsLEQ {a = a0} {b = b0} {c = c0} {d = d0} proofLeftLEQ proofRightLEQ =
 |||Proof that (c * a) <= (c * b) and c != 0 implies a <= b
 leqDivConstantLeft : {a : Nat} -> {b : Nat} -> {c : Nat} -> (Not (c = Z)) ->
 					(LEQ (c * a) (c * b)) -> (LEQ a b)
-
+--To be proved
 
 |||Proof that (a * c) <= (b * c) and c != 0 implies a <= b
 leqDivConstantRight : {a : Nat} -> {b : Nat} -> {c : Nat} -> (Not (c = Z)) ->
 					(LEQ (a * c) (b * c)) -> (LEQ a b)
+--To be proved
 
 ------------------------------------------------------------------------------------------------------
 
