@@ -166,3 +166,12 @@ ltImpliesNotEqNotGT {a = S k} {b = S l} (LTESucc proofLT) =
 |||Proof that a = b implies !(a < b) and !(b < a)
 eqImpliesNotLTNotGT : {a : Nat} -> {b : Nat} -> (a = b) -> (Not (LT a b), Not (LT b a))
 eqImpliesNotLTNotGT {a = k} {b = k} Refl = (succNotLTEn, succNotLTEn)
+
+
+|||Proof that a*b = a*c implies b =c
+multLeftCancel : (left : Nat) -> (right : Nat) -> (right1 : Nat) -> Not(left = 0) -> (left*right = left*right1) -> (right = right1)
+multLeftCancel Z _ _ pfnotz _ = void (pfnotz Refl)
+multLeftCancel (S Z) right right1 SIsNotZ pfrefl =  rewrite (sym (multOneLeftNeutral right)) in
+																										rewrite (sym (multOneLeftNeutral right1)) in
+																										pfrefl
+multLeftCancel (S (S k)) right right1 pf pfeq = ?fill
