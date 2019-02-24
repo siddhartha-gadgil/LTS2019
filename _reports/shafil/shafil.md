@@ -28,9 +28,9 @@ where d = GCD (a,b) in [Bezout.idr](https://github.com/siddhartha-gadgil/LTS2019
 6. And a few other auxiliary functions.
 6. **I copied some of Vrunda Rathi's** code into `ZZ.idr` when I was fixing some errors [Link here](https://github.com/siddhartha-gadgil/LTS2019/commit/faa807e50e658f1a54c8640b85ffce140715eaa2)
 
-## gcd.idr
+## [gcd.idr](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/gcd.idr)
 1. Implemented `PlusDiv` and `MultDiv` for natural numbers which were later changed to integers in `Divisors.idr`.[Link here](https://github.com/siddhartha-gadgil/LTS2019/commit/be28efe9bbe3c28da17edadb3d7770034a901178)
-2. Made the `euclDivide` function total [Link here](https://github.com/siddhartha-gadgil/LTS2019/commit/11b00d349f82cee4c88aad11c258e9979bcb16f3)
+2.Made the `euclDivide` function total [Link here](https://github.com/siddhartha-gadgil/LTS2019/commit/11b00d349f82cee4c88aad11c258e9979bcb16f3)
 
 ## [Graph.idr ](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/Graph.idr)
 1. The `AdjacentsAreConnected` function returns a proof that 2 adjacent vertices are connected **by an edge** or nothing if they are not connected.
@@ -39,3 +39,5 @@ where d = GCD (a,b) in [Bezout.idr](https://github.com/siddhartha-gadgil/LTS2019
 4. `PathWithProof` function returns a **simple path** between  two vertices if there is a path with proof or Nothing if there is no path. Here a path is represented as a List of vertices that were traversed.
 5. Most of the functions used are not total, and they will work properly only as long as the **adjacency matrix of a simple graph** is given as input.
 6. The file [Graphexamples.idr](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/Graphexamples.idr) has a few examples of how to use these functions.
+## GCD of integers
+1.The file [GCDZZ.idr](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/GCDZZ.idr) has a function `gcdZZ` which returns the gcd of two integers with proof given that not both of them are zero
