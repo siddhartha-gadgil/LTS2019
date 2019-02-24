@@ -25,6 +25,9 @@ distributeProof a b d n m pf1 pf2 =
 multDiv:(IsDivisibleZ a d) ->(c:ZZ)->(IsDivisibleZ (a*c) d)
 multDiv {d} (n**Refl) c =
   ((n*c)** (rewrite sym (multAssociativeZ d n c) in (Refl)))
+|||The theorem d|a =>d|ca
+multDivLeft:(IsDivisibleZ a d) ->(c:ZZ)->(IsDivisibleZ (c*a) d)
+multDivLeft{a} x c = rewrite (multCommutativeZ c a) in (multDiv x c)
 
 |||The theorem d|a and d|b =>d|(a+b)
 plusDiv : (IsDivisibleZ a d)->(IsDivisibleZ b d)->(IsDivisibleZ (a+b) d)
@@ -33,15 +36,17 @@ plusDiv {d}{a}{b} (n**prf1) (m**prf2) =
 |||The theorem b|a and c|b =>c|a
 transDivide : (IsDivisibleZ a b)->(IsDivisibleZ b c)->(IsDivisibleZ a c)
 transDivide {c} (x ** pf1) (y ** pf2) =
-  (y*x ** (rewrite  multAssociativeZ c y x in  (rewrite pf1 in (rewrite pf2 in Refl))))
+  (y*x ** (rewrite  multAssociativeZ c y x in
+     (rewrite pf1 in (rewrite pf2 in Refl))))
 
 
 |||If d divides a and b it divides a linear combination of a and b
-linCombDiv:(m:ZZ)->(n:ZZ)->(IsDivisibleZ a d)->(IsDivisibleZ b d)->(IsDivisibleZ ((a*m)+(b*n)) d)
+linCombDiv:(m:ZZ)->(n:ZZ)->(IsDivisibleZ a d)->(IsDivisibleZ b d)->
+   (IsDivisibleZ ((a*m)+(b*n)) d)
 linCombDiv m n dDiva dDivb =
   plusDiv (multDiv  dDiva m) (multDiv  dDivb n)
 
-
+|||The theorem that d|a and d|b implies d |(a+b*(-m)
 euclidConservesDivisor:(m:ZZ)->(IsDivisibleZ a d)->(IsDivisibleZ b d)->
   (IsDivisibleZ (a+(b*(-m))) d)
 euclidConservesDivisor m dDiva dDivb = plusDiv dDiva (multDiv dDivb (-m) )
@@ -52,6 +57,12 @@ zzDividesZero a = (0**(sym (multZeroRightZeroZ a)))
 |||A type that is occupied iff c is a common factor of a and b
 IsCommonFactorZ : (a:ZZ) -> (b:ZZ) -> (c:ZZ) -> Type
 IsCommonFactorZ a b c = ((IsDivisibleZ a c),(IsDivisibleZ b c))
+|||The theorem that  d is a common factor of a and b implies
+|||d is a common factor of b and a
+commonfactSym: IsCommonFactorZ a b d ->IsCommonFactorZ b a d
+commonfactSym (dDiva, dDivb) = (dDivb,dDiva)
+
+
 |||The GCD type that is occupied iff d = gcd (a,b).
 ||| Here GCD is defined as that positive integer such that any common factor
 ||| of a and b divides it
@@ -73,6 +84,10 @@ gcdOfZeroAndInteger a pf =
 dDividesNegative:(IsDivisibleZ a d)->(IsDivisibleZ  (-a) d)
 dDividesNegative{a}{d} (x ** pf) =
   ((-x)**(multNegateRightIsNegateZ a d x pf))
+|||The theorem that d|(-a) implies d|a
+dDividesNegative2:  (IsDivisibleZ (-a) d)->(IsDivisibleZ  a d)
+dDividesNegative2 {a}x = rewrite (sym (doubleNegElim a)) in (dDividesNegative x)
+
 |||The theorem c|b and c|(a+bp) then c|a
 cDiva :{p:ZZ} ->(cDIvb :(IsDivisibleZ b c))->
   (cDIvExp:IsDivisibleZ (a+(b*p)) c)->(IsDivisibleZ a c)
@@ -95,7 +110,6 @@ posDivPosImpliesLte:(IsDivisibleZ c d)->(IsPositive c)->
 posDivPosImpliesLte {d}{c}(x ** pf) cPos dPos =
   posLteMultPosPosEqZ {q=x} d c dPos cPos pf
 
-
 |||The Theorem that if c and d are positive, d|c and c|d =>(c=d)
 posDivAndDivByImpliesEqual: (IsDivisibleZ c d)->(IsDivisibleZ d c)->(IsPositive c)
   ->(IsPositive d) -> (c=d)
@@ -106,3 +120,51 @@ posDivAndDivByImpliesEqual x y z x1 =lteAndGteImpliesEqualZ dLtec cLted where
 gcdIsUnique: (GCDZ a b d)-> (GCDZ a b c)->(c=d)
 gcdIsUnique {a}{b}{c}{d}(dPos, dCommonFactor,fd) (cPos, cCommonFactor,fc) =
   posDivAndDivByImpliesEqual (fc dCommonFactor) (fd cCommonFactor) cPos dPos
+|||A helper function for GcdSym
+genFunctionForGcdSym:({c:ZZ}->(IsCommonFactorZ a b c)->(IsDivisibleZ d c))->
+   ({c:ZZ}->(IsCommonFactorZ b a c)->(IsDivisibleZ d c))
+genFunctionForGcdSym f x = f (commonfactSym x)
+
+|||A helper function for negatingPreservesGcdLeft
+genFunctionForGcdNeg:({c:ZZ}->(IsCommonFactorZ (-a) b c)->(IsDivisibleZ d c))->
+   ({c:ZZ}->(IsCommonFactorZ a b c)->(IsDivisibleZ d c))
+genFunctionForGcdNeg f (cDiva,cDivb) = f (cDivNega,cDivb) where
+  cDivNega = (dDividesNegative cDiva)
+|||Proof that gcd (a,b)=gcd(b,a)
+gcdSymZ: (GCDZ a b d)->(GCDZ b a d)
+gcdSymZ (dPos,(dDiva,dDivb),fd) = (dPos, (dDivb, dDiva), (genFunctionForGcdSym fd))
+
+|||Theorem that gcd(-a,b)=gcd(a,b)
+negatingPreservesGcdLeft: (GCDZ (-a) b d)->(GCDZ a b d)
+negatingPreservesGcdLeft (dPos,(dDivNega,dDivb),fd) =
+    (dPos,(dDiva,dDivb),(genFunctionForGcdNeg fd)) where
+      dDiva = dDividesNegative2 dDivNega
+|||Theorem that gcd (p, -q) = gcd (p,q)
+negatingPreservesGcdRight: (GCDZ p (-q) r)->(GCDZ p q r)
+negatingPreservesGcdRight {p}{q} x =
+  gcdSymZ{a=q}{b=p} (negatingPreservesGcdLeft (gcdSymZ {a=p}{b=(-q)} x))
+
+|||Theorem that if d|rem , d|b and a = rem+(quot*b)
+euclidConservesDivisorWithProof :{a:ZZ}->{b:ZZ}->{quot:ZZ}->{rem:ZZ}->
+  (a=rem+(quot*b))->(IsDivisibleZ rem d)->(IsDivisibleZ b d)->(IsDivisibleZ a d)
+euclidConservesDivisorWithProof {a}{b}{quot}{rem}equality dDivrem dDivb =
+  rewrite equality in (plusDiv dDivrem (multDivLeft dDivb quot))
+
+|||Theorem that a = rem +quot*b implies rem = a + (-quot)*b
+auxEqProof:{a:ZZ}->{b:ZZ}->{quot:ZZ}->{rem:ZZ}->(a=rem+(quot *b))->
+   (rem = (a + (-quot)*b))
+auxEqProof {a}{b}{quot}{rem}prf =
+  (rewrite (multNegateLeftZ quot b) in (sym (subOnBothSides a rem (quot*b) prf)))
+
+|||A helper function for euclidConservesGcdWithProof
+genfunction:(a=rem+(quot*b))->  ({c:ZZ}->(IsCommonFactorZ b rem c)->(IsDivisibleZ d c))->
+     ({c:ZZ}->(IsCommonFactorZ a b c)->(IsDivisibleZ d c))
+genfunction prf f (dDiva,dDivb) = f(dDivb,dDivrem) where
+  dDivrem = euclidConservesDivisorWithProof (auxEqProof prf) dDiva dDivb
+
+|||Proof that if a=rem +quot*b and gcd (b,rem)=d, then gcd(a,b)=d
+euclidConservesGcdWithProof: {a:ZZ}->{b:ZZ}->{quot:ZZ}->{rem:ZZ}->
+  (a=rem+(quot*b))->(GCDZ b rem d)->(GCDZ a b d)
+euclidConservesGcdWithProof {a}{b}{quot}{rem}equality (dPos,(dDivb,dDivrem),fd) =
+  (dPos,(dDiva,dDivb),(genfunction equality fd)) where
+     dDiva = euclidConservesDivisorWithProof equality dDivrem dDivb

@@ -232,17 +232,78 @@ isPrimeWithoutProof p = length (genFact p p) = 2
 isCompositeWithoutProof : (n: Nat) -> {auto pf: LTE 2 n} -> Type
 isCompositeWithoutProof n = Prelude.Nat.GT (Prelude.List.length (genFact n n)) 2
 
---Prime Type
-Prime : (p : Nat) -> {auto prf : LTE 2 p} -> Type
-Prime p = (a : Nat) -> (b : Nat) -> (p = a*b) -> Either (a=1)(b=1)
 
--- two is prime
-twoPrime : Prime 2
-twoPrime Z _ prf = void (SIsNotZ prf)
-twoPrime a Z prf = void (SIsNotZ (rewrite (multCommutative Z a) in prf))
-twoPrime (S Z) (S (S Z)) Refl = Left Refl
-twoPrime (S (S Z)) (S Z) Refl = Right Refl
-twoPrime (S (S k)) (S (S j)) prf = ?cas
+--prime proof
+isPrime : (p : Nat) -> LTE 2 p -> Type
+isPrime p proofLTE = {k : Nat} -> isDivisible p k -> Either (k=1)(k=p)
+
+
+-- Two is a prime
+twoPr : (isPrime 2 (LTESucc (LTESucc (LTEZero {right =0}))))
+twoPr {k=Z} (x ** pf) = void (SIsNotZ (snd pf))
+twoPr {k=(S Z)} (x ** pf) = Left Refl
+twoPr {k=(S (S Z))} (x ** pf) = Right Refl
+twoPr {k=(S (S (S k)))} pf = void (bGtAImpNotbDivA 2 (S (S (S k))) k (LTESucc (LTESucc (LTESucc (LTEZero {right = k})))) (pf))
+
+--Composite proof
+isComposite : (n : Nat) -> LTE 2 n -> Type
+isComposite n pflte = (a : Nat ** (b : Nat ** ((GT a 1, GT b 1), n = a*b)))
+
+--if 1<n, a not equal to a*n
+aNotEqToMultA : (a : Nat) -> LTE 1 a -> (n : Nat) -> LTE 2 n -> (a = a*n) -> Void
+aNotEqToMultA _ _ Z LTEZero _ impossible
+aNotEqToMultA _ _ Z (LTESucc _) _ impossible
+aNotEqToMultA _ _ (S Z) (LTESucc LTEZero) _ impossible
+aNotEqToMultA _ _ (S Z) (LTESucc (LTESucc _)) _ impossible
+aNotEqToMultA Z LTEZero (S (S _)) _ _ impossible
+aNotEqToMultA Z (LTESucc _) (S (S _)) _ _ impossible
+aNotEqToMultA (S j) (LTESucc (LTEZero {right = j})) (S (S k)) (LTESucc (LTESucc (LTEZero {right = k}))) prf =
+                              SIsNotZ {x = j+(k*(S j))} (sym (pfeq)) where
+                                pfeq  = plusLeftCancel (S j) Z ((S k)*(S j)) pfeq1 where
+                                  pfeq1 = rewrite (multCommutative (S (S k)) (S j)) in
+                                          trans (plusZeroRightNeutral (S j)) prf
+
+--helper apNat function
+apNat : (f: Nat -> Nat) -> (n: Nat) -> (m: Nat) -> n = m -> f n = f m
+apNat f m m Refl = Refl
+
+--n is not both prime and composite
+notBothPrimeandComp : {n : Nat} -> (pf : LTE 2 n) -> Not (isPrime n pf, isComposite n pf)
+notBothPrimeandComp {n = Z} LTEZero _ impossible
+notBothPrimeandComp {n = Z} (LTESucc _) _ impossible
+notBothPrimeandComp {n = (S Z)} (LTESucc LTEZero) _ impossible
+notBothPrimeandComp {n = (S Z)} (LTESucc (LTESucc _)) _ impossible
+notBothPrimeandComp {n = (S (S k))} pftwolten (pfprime , (a ** (b ** ((pfagtone, pfbgtone), pfneqab)))) =
+                            void (aNotEqToMultA (S (S k)) (lteTransitive (LTESucc (LTEZero {right = (S Z)})) pftwolten) b pfbgtone pfeq) where
+                              pfeq = (trans pfneqab funceq) where
+                                funceq = (apNat (\x=>(x*b)) a (S (S k)) pfaeqn) where
+                                  pfaeqn =  case (pfprime (b ** ((lteTransitive (LTESucc (LTEZero {right = (S Z)})) pfbgtone), pfneqab))) of
+                                          Left pf => ?check --void (Prelude.Basics.fst (ltImpliesNotEqNotGT {a=(S Z)} {b = a} pfagtone))
+                                          Right pf => pf
+
+
+
+
+  -- data Prime : (p : Nat) -> Type where
+  --  IsPrime : LTE 2 p -> ((k : Nat) -> isDivisible p k -> Either (k=1)(k=p)) -> Prime p
+
+  -- function to check that 2 is prime
+  -- twoPr : (k : Nat) -> (isDivisible 2 k) -> Either (k = 1)(k = 2)
+  -- twoPr Z (x ** pf) = void (SIsNotZ (snd pf))
+  -- twoPr (S Z) (x ** pf) = Left Refl
+  -- twoPr (S (S Z)) (x ** pf) = Right Refl
+  -- twoPr (S (S (S k))) pf = void (bGtAImpNotbDivA 2 (S (S (S k))) k (LTESucc (LTESucc (LTESucc (LTEZero {right = k})))) (pf))
+  --
+  -- --two is Prime
+  -- twoIsPrime : Prime 2
+  -- twoIsPrime = IsPrime (LTESucc (LTESucc (LTEZero {right =0}))) twoPr
+
+
+-- notBothPrimeandComp Z LTEZero _ _ impossible
+-- notBothPrimeandComp Z (LTESucc _) _ _ impossible
+-- notBothPrimeandComp (S Z) (LTESucc LTEZero) _ _ impossible
+-- notBothPrimeandComp (S Z) (LTESucc (LTESucc _)) _ _ impossible
+-- notBothPrimeandComp (S (S k)) pfgt pfprime pfcomp = ?jk
 
 
 
