@@ -140,18 +140,3 @@ ltImpliesNotEqNotGT {a = S k} {b = S l} (LTESucc proofLT) =
 |||Proof that a = b implies !(a < b) and !(b < a)
 eqImpliesNotLTNotGT : {a : Nat} -> {b : Nat} -> (a = b) -> (Not (LT a b), Not (LT b a))
 eqImpliesNotLTNotGT {a = k} {b = k} Refl = (succNotLTEn, succNotLTEn)
-
-|||Proof that a not LTE b implies b LTE a
--- taken from Lecture.GCD
-switchLTE : (n: Nat) -> (m: Nat) -> (contra : (LTE n m) -> Void) -> LTE m n
-switchLTE Z m contra = void (contra (LTEZero))
-switchLTE (S k) Z contra = LTEZero
-switchLTE (S k) (S j) contra =
-  LTESucc (switchLTE k j previousContra) where
-    previousContra = \evidence : (LTE k j) => contra (LTESucc evidence)
-
-|||Returns Max of two numbers with proof that it is maximum
-max : (a : Nat) -> (b : Nat) -> (n : Nat ** ((LTE a n, LTE b n), Either (a=n) (b=n)))
-max a b = case isLTE a b of
-	(Yes prf) => (b ** ((prf, lteRefl), (Right Refl)))
-	(No contra) => (a ** ((lteRefl, (switchLTE a b contra)), (Left Refl)))
