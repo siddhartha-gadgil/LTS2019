@@ -281,6 +281,24 @@ notBothPrimeandComp {n = (S (S k))} pftwolten (pfprime , (a ** (b ** ((pfagtone,
                                           Left pf => ?check --void (Prelude.Basics.fst (ltImpliesNotEqNotGT {a=(S Z)} {b = a} pfagtone))
                                           Right pf => pf
 
+-- Sidharth's decComp function
+decComp : (n : Nat) -> (pf : LTE 2 n) -> Dec(isComposite n pf)
+
+-- Function to prove that notComposite implies Prime. I have not been able to complete it. I'd appreciate if anyone can pitch in here.
+notCompIsPrime : (n : Nat) -> (pf : LTE 2 n) -> ((isComposite n pf) -> Void) -> (isPrime n pf)
+notCompIsPrime n pf f = ?notCompIsPrime_rhs
+
+--n greater than or equal to 2 is either prime or composite
+--This function works once decComp and notCompisPrime are completed
+isEitherPrimeorComp : {n : Nat} -> (pf : LTE 2 n) -> Either (isPrime n pf) (isComposite n pf)
+isEitherPrimeorComp {n = Z} LTEZero impossible
+isEitherPrimeorComp {n = Z} (LTESucc _) impossible
+isEitherPrimeorComp {n = (S Z)} (LTESucc LTEZero) impossible
+isEitherPrimeorComp {n = (S Z)} (LTESucc (LTESucc _)) impossible
+isEitherPrimeorComp {n = (S (S k))} pftwolten = case (decComp (S (S k)) pftwolten) of
+  (Yes prf) => (Right prf)
+  (No contra) => (Left (notCompIsPrime (S (S k)) pftwolten contra))
+
 
 
 
