@@ -154,7 +154,9 @@ succNotLTEn : {n : Nat} -> (LT n n) -> Void
 succNotLTEn {n = Z} proofLTE = void (succNotLTEzero proofLTE)
 succNotLTEn {n = S k} (LTESucc proofLTE) = succNotLTEn {n = k} proofLTE
 
+
 |||Proof that a < b implies a != b and !(b < a)
+public export
 ltImpliesNotEqNotGT : {a : Nat} -> {b : Nat} -> (LT a b) -> (Not (a = b), Not (LT b a))
 ltImpliesNotEqNotGT {a} {b = Z} proofLT = void(succNotLTEzero proofLT)
 ltImpliesNotEqNotGT {a = Z} {b = S l} proofLT = (ZIsNotS, succNotLTEzero)
