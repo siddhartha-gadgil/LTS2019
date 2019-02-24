@@ -46,7 +46,7 @@ gcd.idr
 2. I added an algorithm `euclidDivide` that given two natural numbers, returns the quotient and reminder under division with proof that they are the quotient and reminder. Rohit had added one previously, and I removed possible problems with it, with modifications to the algorithm.
 
 #### Possible Issues
-I am not entirely sure if defining divisibility only for non-zero divisors is necessary. The possible problem with this is that only 0 is divisible by 0, but cancellation will not yield equality. If it turns out that it will not be necessary for later use, it can be removed without too much hassle, hopefully.)
+I am not entirely sure if defining divisibility only for non-zero divisors is necessary. The possible problem with this is that only 0 is divisible by 0, but cancellation will not yield equality. If it turns out that it will not be necessary for later use, it can be removed without too much hassle, hopefully.
 
 #### To be done
 An algorithm that returns the GCD of two natural numbers with proof that it is the GCD.
