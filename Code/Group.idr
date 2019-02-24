@@ -71,4 +71,3 @@ NSub: (h: Type) -> (pfh: Group h) -> (g: Type) -> (pfg: Group g) ->
       (Subgroup h pfh g pfg) -> Type
 NSub  h (MkGroup h (+) pfh) g (MkGroup g (*) pfg) (f ** pff) = (a : h) -> (b : g) -> (x : h ** (b*(f a)*(inv b) = (f x))) where
      inv = Inv g (*) pfg
-
