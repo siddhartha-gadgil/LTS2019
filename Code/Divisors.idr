@@ -144,7 +144,7 @@ negatingPreservesGcdRight: (GCDZ p (-q) r)->(GCDZ p q r)
 negatingPreservesGcdRight {p}{q} x =
   gcdSymZ{a=q}{b=p} (negatingPreservesGcdLeft (gcdSymZ {a=p}{b=(-q)} x))
 
-|||Theorem that if d|rem , d|b and a = rem+(quot*b)
+|||Theorem that if d|rem , d|b and a = rem+(quot*b) then d|a
 euclidConservesDivisorWithProof :{a:ZZ}->{b:ZZ}->{quot:ZZ}->{rem:ZZ}->
   (a=rem+(quot*b))->(IsDivisibleZ rem d)->(IsDivisibleZ b d)->(IsDivisibleZ a d)
 euclidConservesDivisorWithProof {a}{b}{quot}{rem}equality dDivrem dDivb =
