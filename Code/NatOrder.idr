@@ -145,6 +145,9 @@ leqTotal {a} {b} = case (isLEQ a b) of
 							(Yes bLEQa) => (RightInc aNotLEQb bLEQa)
 							(No bNotLEQa) => void (notBothLEQ aNotLEQb bNotLEQa)
 
+leqTotalOrder : isTotalOrder LEQ
+leqTotalOrder = ((leqRefl, leqAntiSymmetric, leqTransitive), leqTotal)
+
 |||Proof that a <= b implies a <= b + c
 leqPlusRight : {a : Nat} -> {b : Nat} -> (c : Nat) -> (LEQ a b) -> (LEQ a (b + c))
 leqPlusRight {a} {b} c (k ** proofEq) = ((k + c) ** rewrite (plusAssociative a k c) in (cong {f = (\n => (n + c))} proofEq))
