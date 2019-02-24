@@ -238,6 +238,7 @@ isPrime : (p : Nat) -> LTE 2 p -> Type
 isPrime p proofLTE = {k : Nat} -> isDivisible p k -> Either (k=1)(k=p)
 
 
+
 -- Two is a prime
 twoPr : (isPrime 2 (LTESucc (LTESucc (LTEZero {right =0}))))
 twoPr {k=Z} (x ** pf) = void (SIsNotZ (snd pf))
@@ -248,6 +249,18 @@ twoPr {k=(S (S (S k)))} pf = void (bGtAImpNotbDivA 2 (S (S (S k))) k (LTESucc (L
 --Composite proof
 isComposite : (n : Nat) -> LTE 2 n -> Type
 isComposite n pflte = (a : Nat ** (b : Nat ** ((GT a 1, GT b 1), n = a*b)))
+
+
+--deciability for Composite numbers
+decComposite : (n: Nat) -> (pf : LTE 2 n) -> Dec (isComposite n pf)
+decComposite Z LTEZero impossible
+decComposite Z (LTESucc _) impossible
+decComposite (S Z) (LTESucc LTEZero) impossible
+decComposite (S Z) (LTESucc (LTESucc _)) impossible
+decComposite (S (S k)) pf = ?decCompositerhs_1
+
+
+
 
 --if 1<n, a not equal to a*n
 aNotEqToMultA : (a : Nat) -> LTE 1 a -> (n : Nat) -> LTE 2 n -> (a = a*n) -> Void
@@ -278,11 +291,16 @@ notBothPrimeandComp {n = (S (S k))} pftwolten (pfprime , (a ** (b ** ((pfagtone,
                               pfeq = (trans pfneqab funceq) where
                                 funceq = (apNat (\x=>(x*b)) a (S (S k)) pfaeqn) where
                                   pfaeqn =  case (pfprime (b ** ((lteTransitive (LTESucc (LTEZero {right = (S Z)})) pfbgtone), pfneqab))) of
-                                          Left pf => ?check --void (Prelude.Basics.fst (ltImpliesNotEqNotGT {a=(S Z)} {b = a} pfagtone))
+                                          Left pf => void ((Prelude.Basics.fst (ltImpliesNotEqNotGT {a=(S Z)} {b = a} pfagtone)) (sym pf))
                                           Right pf => pf
 
-
-
+-- given n >= 2, it is either prime or Composite
+eitherPrimeOrComp : {n : Nat} -> (pf : LTE 2 n) -> Either (isPrime n pf)(isComposite n pf)
+eitherPrimeOrComp {n = Z} LTEZero impossible
+eitherPrimeOrComp {n = Z} (LTESucc _) impossible
+eitherPrimeOrComp {n = (S Z)} (LTESucc LTEZero) impossible
+eitherPrimeOrComp {n = (S Z)} (LTESucc (LTESucc _)) impossible
+eitherPrimeOrComp {n = (S (S k))} pflte = ?rhs_1
 
   -- data Prime : (p : Nat) -> Type where
   --  IsPrime : LTE 2 p -> ((k : Nat) -> isDivisible p k -> Either (k=1)(k=p)) -> Prime p
