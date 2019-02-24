@@ -1,48 +1,74 @@
 module NatUtils
 
 import Order
---import ZZ
 
 %default total
 %access public export
 
-{-small auxillary proofs regarding the equality type-}
-{-
-apZZ : (f: ZZ -> ZZ) -> (n: ZZ) -> (m: ZZ) -> n = m -> f n = f m
-apZZ f m m Refl = Refl
--}
+|||Proof of the type that an implication implies its contrapositive
+impliesContrapositive : (a : Type) -> (b : Type) -> (a -> b) -> (Not b) -> (Not a)
+impliesContrapositive a b aImpliesb bFalse x = bFalse (aImpliesb x)
+
+|||Proof that m = n implies f m = f n
+--Taken from Lecture.intro with modifications
+--Prelude.Basics.cong serves the same function, use cong instead
+functionExtendsEquality : (typ : Type) -> (f : typ -> typ) -> (n : typ) -> (m : typ) -> (n = m) -> (f n = f m)
+functionExtendsEquality type f m m Refl = Refl
+
+|||An injective predecessor "function"
+predInjective : (n : Nat) -> (Not (n = Z)) -> (k ** (S k) = n)
+predInjective Z proofNotZ = void (proofNotZ Refl)
+predInjective (S k) _ = (k ** Refl)
+
+|||Proof that Z is not equal to successor of any natural number
+ZIsNotS : {n : Nat} -> (Not (Z = S n))
+ZIsNotS {n} proofEq = SIsNotZ (sym proofEq)
 
 |||difference of Nats, taken from Lecture.intro
 sub : (a : Nat) -> (b : Nat) -> (LTE b a) -> Nat
 sub a Z LTEZero = a
 sub (S a) (S b) (LTESucc proofLTE) = sub a b proofLTE
 
-|||Proof of the type that an implication implies its contrapositive
-impliesContrapositive : (a : Type) -> (b : Type) -> (a -> b) -> (b -> Void) -> (a -> Void)
-impliesContrapositive a b aImpliesb bFalse x = bFalse (aImpliesb x)
-
-|||Proof that m = n implies f m = f n
---Taken from Lecture.intro with modifications
-functionExtendsEquality : (typ : Type) -> (f : typ -> typ) -> (n : typ) -> (m : typ) -> (n = m) -> (f n = f m)
-functionExtendsEquality type f m m Refl = Refl
-
-|||Proof that Z is not equal to successor of any natural number
-ZIsNotS : {n : Nat} -> (Z = S n) -> Void
-ZIsNotS Refl impossible
-
 |||Proof that the sum is greater than its parts
 partsLTEsum : (LTE a (a + b), LTE b (a + b))
 partsLTEsum {a = Z} {b} = (LTEZero, lteRefl)
 partsLTEsum {a = S n} {b} = (LTESucc (fst(partsLTEsum)), lteSuccRight(snd(partsLTEsum)))
 
+|||Proof that S a = S b implies a = b
+--Same as succInjective, but implicit
+predEqual : {a : Nat} -> {b : Nat} -> (S a = S b) -> (a = b)
+predEqual Refl = Refl
+
+|||Proof that a != b implies (S a) != (S b)
+notEqualSucc : {a : Nat} -> {b : Nat} -> (Not (a = b)) -> (Not ((S a) = (S b)))
+notEqualSucc {a} {b} proofNotEq proofEq = proofNotEq (predEqual proofEq)
+
+|||Proof that (S a) != (S b) implies a != b
+notEqualPred : {a : Nat} -> {b : Nat} -> (Not ((S a) = (S b))) -> (Not (a = b))
+notEqualPred {a} {b} proofNotEq proofEq = proofNotEq (cong proofEq)
+
+|||Proof that (a + b) = 0 implies a = 0 and b = 0
+sumZeroImpliesZero : {a : Nat} -> {b : Nat} -> (a + b = Z) -> (a = Z, b = Z)
+sumZeroImpliesZero {a = Z} {b = Z} Refl = (Refl, Refl)
+sumZeroImpliesZero {a = Z} {b = S k} proofEq = void (SIsNotZ proofEq)
+sumZeroImpliesZero {a = S k} {b} proofEq = void (SIsNotZ proofEq)
+
+|||Proof that a + k = b and k != 0 implies a != b
+nonZeroSumNotEqual : {a : Nat} -> {b : Nat} -> {k : Nat} -> (a + k = b) -> (Not (k = Z)) -> (Not (a = b))
+nonZeroSumNotEqual {a} {b} {k} proofEq proofNotZ proofaEqb = proofNotZ kEqZ where
+	kEqZ = (plusLeftCancel a k Z aPluskEqaPlusZ) where
+		aPluskEqaPlusZ = (trans aPluskPlEqbPlusZ (sym ((cong {f = (\n => (n + Z))}) proofaEqb))) where
+			aPluskPlEqbPlusZ = rewrite (plusZeroRightNeutral b) in proofEq
+
+|||Proof that (S a) + b = a + (S b)
+plusSymmetricInS : {a : Nat} -> {b : Nat} -> ((S a) + b = a + (S b))
+plusSymmetricInS {a = Z} {b} = Refl
+plusSymmetricInS {a = S k} {b} = cong (plusSymmetricInS {a = k} {b})
+
 ||| Proof that a = c, b = d and a <= b implies c <= d
 lteSubstitutes : {a : Nat} -> {b : Nat} -> {c : Nat} -> {d : Nat} ->
 				(LTE a b) -> (a = c) -> (b = d) -> (LTE c d)
 lteSubstitutes proofLTE Refl Refl = proofLTE
-
-|||Proof that S m = S n implies m = n
-predEqual : {a : Nat} -> {b : Nat} -> (S a = S b) -> (a = b)
-predEqual {a} {b} proofEq = cong {f = Prelude.Nat.pred} proofEq
 
 |||Proof that a < b implies a <= b
 ltImpliesLTE : {a : Nat} -> {b : Nat} -> (LT a b) -> (LTE a b)

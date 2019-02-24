@@ -396,7 +396,10 @@ multNegateRightIsNegateZ a b c prf = (rewrite (multNegateRightZ b c) in ( number
 |||The theorem that ((a+b)+(-b))=a
 addAndSubNeutralZ: (a:ZZ)->(b:ZZ)->(((a+b)+(-b))=a)
 addAndSubNeutralZ a b = rewrite (sym (plusAssociativeZ a b (-b))) in (rewrite (plusNegateInverseLZ b) in (rewrite (plusZeroRightNeutralZ a) in Refl))
-
+|||The theorem that a = b+c, then a+(-c) = b
+subOnBothSides: (a:ZZ)->(b:ZZ)->(c:ZZ)->(a=b+c)->(a+(-c)=b)
+subOnBothSides a b c prf =  rewrite (sym (addAndSubNeutralZ b c))in 
+       (plusConstantRightZ a (b+c) (-c) prf)
 
 
 
