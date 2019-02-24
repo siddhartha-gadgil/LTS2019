@@ -25,6 +25,17 @@ RingAdditive_id : (ring : Type) -> ((+) : ring -> ring -> ring) -> ((*) : ring -
                   (IsRing ring (+) (*)) -> (IdentityExists ring (+))
 RingAdditive_id ring (+) (*) ((pfGrp,pfAb), pfElse) = Group_id ring (+) pfGrp
 
+||| Rings with zero divisors
+Ring_with_zero_divisor : (ring : Type) -> ((+) : ring -> ring -> ring) -> ((*) : ring -> ring -> ring) -> (IsRing ring (+) (*)) -> Type
+Ring_with_zero_divisor ring (+) (*) pfRing = (a : ring ** (b : ring ** Either (a*b = e) (b*a = e))) where
+                                                                                                         e = fst (RingAdditive_id ring (+) (*) pfRing)
+
+||| Integral Domain
+IsIntegralDomain : (ring : Type) -> ((+) : ring -> ring -> ring) -> ((*) : ring -> ring -> ring) -> (IsRing ring (+) (*)) -> Type
+IsIntegralDomain ring (+) (*) pfRing = (a : ring) -> (b : ring) -> (a*b = e) -> (Either (a = e) (b = e)) where
+                                                                                                              e = fst (RingAdditive_id ring (+) (*) pfRing)
+
+
 
 ||| Non Zero elements in a ring
 Ring_NonZero_Elements : (ring : Type) -> ((+) : ring -> ring -> ring) -> ((*) : ring -> ring -> ring) -> 
