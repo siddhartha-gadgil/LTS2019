@@ -9,7 +9,7 @@ import Group
 total
 IsDistributive : (typ : Type) -> ((+) : typ -> typ -> typ)
                   -> ((*) : typ -> typ -> typ) -> Type
-IsDistributive typ (+) (*) = (a,b,c : typ) -> ( (a*(b + c) = (a*b) + (a*c)), ((b + c)*a = (b*a) + (b*c)) )
+IsDistributive typ (+) (*) = (a,b,c : typ) -> ( (a*(b + c) = (a*b) + (a*c)), ((b + c)*a = (b*a) + (c*a)) )
 
 ||| The type of proofs that a given type is a ring
 total
