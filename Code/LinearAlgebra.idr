@@ -205,9 +205,21 @@ simplifyRow n x row = simplifyRowHelper n x row (Pred n)
 
 simplifyMatrixHelper: (n: Nat) -> (x: Matrix n n ZZPair) -> (iter: Nat) -> Matrix n n ZZPair
 simplifyMatrixHelper n x Z = simplifyRow n x Z
-simplifyMatrixHelper n x (S k) = simplifyMatrixHelper n (simplifyMatrixHelper n x k) (S k)
+simplifyMatrixHelper n x (S k) = simplifyRow n (simplifyMatrixHelper n x k) (S k)
 
 simplifyMatrix: (x: Matrix n n ZZPair) -> (Matrix n n ZZPair) -- simplifies all the rationals in the matrix, takes a while to run
 simplifyMatrix {n} x = simplifyMatrixHelper n x (Pred n) 
+
+-- some functions which will be used to find the rank of a matrix
+
+DiagElement: (x: Matrix n n ZZPair) -> (pos: Nat) -> ZZPair
+DiagElement x pos = (ij x pos pos)
+
+DiagElements: (n: Nat) -> (x: Matrix n n ZZPair) -> (iter: Nat) -> Vect n ZZPair
+DiagElements n x Z = ChangeElementRow n (empRow n) Z (DiagElement x Z)
+DiagElements n x (S k) = ChangeElementRow n (DiagElements n x k) (S k) (DiagElement x (S k))
+
+DiagElementVect: Matrix n n ZZPair -> Vect n ZZPair
+DiagElementVect {n} x = DiagElements n x (Pred n)
 
 
