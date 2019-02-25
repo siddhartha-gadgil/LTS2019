@@ -124,7 +124,7 @@ RHom r1 (MkRing r1 ((+)) ((*)) pf1) r2 (MkRing r2 ((p)) ((m)) pf2) f = (x: r1) -
 
 |||The type of ideals
 IsIdeal: (i: Type) -> Ring i -> (r: Type) -> Ring r -> Type
-IsIdeal i pfi r pfr = (DPair (i -> r) (\f => (Inj i r f, RHom i pfi r pfr f, (p: r) -> (t: i) -> (q: i ** (i = (Ring_Mult r pfr p (f t)))) )))
+IsIdeal i pfi r pfr = (DPair (i -> r) (\f => (Inj i r f, RHom i pfi r pfr f, (p: r) -> (t: i) -> (q: i ** ((f q) = (Ring_Mult r pfr p (f t)))) )))
 
 |||The type of principal ideals
 IsPrincipalIdeal: (i: Type) -> Ring i -> (r: Type) -> Ring r -> IsIdeal i pfi r pfr -> Type
