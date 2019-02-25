@@ -2,7 +2,7 @@ module Mergesort
 
 import Data.Vect
 
-import Lecture.Evens
+import LectureEvens
 
 -- import SortingWithProof
 
@@ -34,13 +34,13 @@ insertend x [] = [x]
 insertend x (y :: xs) = y::(insertend x xs)
 
 --apNat as defined in class. Lemma that proves that if n = m, then f(n) = f(m)
-apNat : (f: Nat -> Nat) -> (n: Nat) -> (m: Nat) -> n = m -> f n = f m
-apNat f m m Refl = Refl
+-- apNat : (f: Nat -> Nat) -> (n: Nat) -> (m: Nat) -> n = m -> f n = f m
+-- apNat f m m Refl = Refl
 
 --defined in class. Returns n/2 if n is even
-half : (n: Nat) -> IsEven n -> Nat
-half Z ZEven = 0
-half (S (S k)) (SSEven k x) = S (half k x)
+-- half : (n: Nat) -> IsEven n -> Nat
+-- half Z ZEven = 0
+-- half (S (S k)) (SSEven k x) = S (half k x)
 
 --returns (n - 1)/2 if (n + 1) is odd
 halfnMinusone : (n : Nat) -> (IsEven (S n)) -> Nat
@@ -92,11 +92,11 @@ nLTEhalfOddn : (n : Nat) -> (pf : IsEven (S n)) -> LTE n ((half (S n) pf) + (hal
 nLTEhalfOddn n pf = equalImpliesLTE n ((half (S n) pf) + (halfnMinusone n pf)) (sym (nEqualhalfOddn n pf))
 
 -- proof the n is either odd or even (done in class)
-nOrSnEven: (n: Nat) -> Either (IsEven n) (IsEven (S n))
-nOrSnEven Z = Left ZEven
-nOrSnEven (S k) = case (nOrSnEven k) of
-                       (Left l) => Right (SSEven k l)
-                       (Right r) => Left r
+-- nOrSnEven: (n: Nat) -> Either (IsEven n) (IsEven (S n))
+-- nOrSnEven Z = Left ZEven
+-- nOrSnEven (S k) = case (nOrSnEven k) of
+--                        (Left l) => Right (SSEven k l)
+--                        (Right r) => Left r
 
 -- function that takes a vector of even length, and divides it into two equal halves
 halfVectEven : Vect n elem -> (pf : IsEven n) -> ((Vect (half n pf) elem), (Vect (half n pf) elem))
