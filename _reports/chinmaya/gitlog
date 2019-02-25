@@ -1,3 +1,79 @@
+commit 9c8b18265a6ec0cb2405aab9c8f2164b796d1c12
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 10:51:54 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 10:51:54 2019 +0530
+
+    Fixed some broken function types
+    
+    Updated Subgroup call and a dependent type expression
+
+ Code/Quotient_Group.idr | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 042aa31ea748cd2b8e9c165c86ff45e86538a96f
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:38:47 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:38:47 2019 +0530
+
+    Removed functions already defined
+    
+    Functions defined in FinUtils with the same name
+
+ Code/LinearAlgebra.idr | 14 --------------
+ 1 file changed, 14 deletions(-)
+
+commit 6d5b16cd3bfb0453e2f1b3ecc4b12176327e50e3
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:30:36 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:30:36 2019 +0530
+
+    Corrected broken code
+
+ Code/Group_property2.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 25b108c811936ce2dea7af50ca33fec272beda95
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:22:39 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:22:39 2019 +0530
+
+    Changed module name for Cosets
+    
+    Fixing import issue
+
+ Code/Group.Cosets.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 81e0ad3424d5e1dc13171fe2a21c2cd459a3b4a5
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:18:41 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:18:41 2019 +0530
+
+    Create FinUtils.idr
+    
+    To fix Sriram's broken code
+
+ FinUtils.idr | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+
+commit 87ece1108102503ee67e493d2114d9a3ed78cf6e
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:18:20 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:18:20 2019 +0530
+
+    Update MultiSolver.idr
+    
+    Changed import from BaseN to FinUtils
+
+ Code/MultiSolver.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 commit 8d909f97ef2104bca45ddf4284fdc200a537aee5
 Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
 AuthorDate: Mon Feb 25 08:16:55 2019 +0530

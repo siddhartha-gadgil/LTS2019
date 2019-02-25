@@ -1,3 +1,47 @@
+commit 27d5f934c841f9f0dbe0c10b9a5417a98a6419b1
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:20:21 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:20:21 2019 +0530
+
+    fixed import
+
+ Code/Graphexamples.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 05a234c4b2a40917df642cf39ef93465c30741a6
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:19:47 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:19:47 2019 +0530
+
+    fixed import
+
+ Code/Merge.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit e9e111d19435554f0151ef2f3735912ca51f19c7
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:19:02 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:19:02 2019 +0530
+
+    fixed import
+
+ Code/SortingWithProof.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 024a827f928372325f9485ba1618e07747a3d309
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:18:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:18:19 2019 +0530
+
+    fixed import
+
+ Code/Ring.Properties.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 commit 29e14f6be8cb6e36e41e61cceecc95cdec5ee5b2
 Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
 AuthorDate: Mon Feb 25 00:25:31 2019 +0530

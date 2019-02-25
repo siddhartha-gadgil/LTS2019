@@ -1,3 +1,14 @@
+commit 2846bef2c91decaeea6e1a101a384495ab04675e
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Mon Feb 25 18:32:10 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Mon Feb 25 18:32:10 2019 +0530
+
+    Update sideart.md
+
+ _reports/sideart/sideart.md | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
+
 commit dbd83a440bcfce34a3ab346802aef2ffc65e4572
 Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
 AuthorDate: Sun Feb 24 20:54:48 2019 +0530
