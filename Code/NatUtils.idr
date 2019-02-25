@@ -65,6 +65,27 @@ plusSymmetricInS : {a : Nat} -> {b : Nat} -> ((S a) + b = a + (S b))
 plusSymmetricInS {a = Z} {b} = Refl
 plusSymmetricInS {a = S k} {b} = cong (plusSymmetricInS {a = k} {b})
 
+|||Proof that a = b implies c * a = c * b
+multConstantLeft : {a : Nat} -> {b : Nat} -> (c : Nat) -> (a = b) -> ((c * a) = (c * b))
+multConstantLeft {a} {b} Z _ = Refl
+multConstantLeft {a} {b} (S k) proofEq =
+	trans (cong {f = (\n => n + (k * a))} proofEq) (cong {f = (\n => b + n)} inductiveProofEq) where
+		inductiveProofEq = multConstantLeft {a} {b} k proofEq
+
+|||Proof that a = b implies a * c = b * c
+multConstantRight : {a : Nat} -> {b : Nat} -> (c : Nat) -> (a = b) -> ((a * c) = (b * c))
+multConstantRight {a} {b} c proofEq = rewrite (multCommutative a c) in
+								rewrite (multCommutative b c) in
+								multConstantLeft c proofEq
+
+|||Proof that c * a != c * b implies a != b
+multConstantLeftNot : {a : Nat} -> {b : Nat} -> {c : Nat} -> (Not ((c * a) = (c * b))) -> (Not (a = b))
+multConstantLeftNot {a} {b} {c} proofNotEq proofEq = void (proofNotEq (cong {f = (\n => c * n)} proofEq))
+
+|||Proof that a *c != b * c implies a != b
+multConstantRightNot : {a : Nat} -> {b : Nat} -> {c : Nat} -> (Not ((a * c) = (b * c))) -> (Not (a = b))
+multConstantRightNot {a} {b} {c} proofNotEq proofEq = void (proofNotEq (cong {f = (\n => n * c)} proofEq))
+
 ||| Proof that a = c, b = d and a <= b implies c <= d
 lteSubstitutes : {a : Nat} -> {b : Nat} -> {c : Nat} -> {d : Nat} ->
 				(LTE a b) -> (a = c) -> (b = d) -> (LTE c d)
@@ -156,7 +177,6 @@ succNotLTEn {n = S k} (LTESucc proofLTE) = succNotLTEn {n = k} proofLTE
 
 
 |||Proof that a < b implies a != b and !(b < a)
-public export
 ltImpliesNotEqNotGT : {a : Nat} -> {b : Nat} -> (LT a b) -> (Not (a = b), Not (LT b a))
 ltImpliesNotEqNotGT {a} {b = Z} proofLT = void(succNotLTEzero proofLT)
 ltImpliesNotEqNotGT {a = Z} {b = S l} proofLT = (ZIsNotS, succNotLTEzero)
@@ -169,8 +189,7 @@ ltImpliesNotEqNotGT {a = S k} {b = S l} (LTESucc proofLT) =
 eqImpliesNotLTNotGT : {a : Nat} -> {b : Nat} -> (a = b) -> (Not (LT a b), Not (LT b a))
 eqImpliesNotLTNotGT {a = k} {b = k} Refl = (succNotLTEn, succNotLTEn)
 
-
-|||Proof that a*b = a*c implies b =c
+|||Proof that a*b = a*c implies b = c
 multLeftCancel : (left : Nat) -> (right : Nat) -> (right1 : Nat) -> Not(left = 0) -> (left*right = left*right1) -> (right = right1)
 multLeftCancel Z _ _ pfnotz _ = void (pfnotz Refl)
 multLeftCancel (S Z) right right1 SIsNotZ pfrefl =  rewrite (sym (multOneLeftNeutral right)) in
