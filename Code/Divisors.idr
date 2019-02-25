@@ -1,6 +1,7 @@
 module Divisors
 
 import ZZ
+import ZZUtils
 %access public export
 %default total
 |||IsDivisibleZ a b can be constucted if b divides a
@@ -28,6 +29,11 @@ multDiv {d} (n**Refl) c =
 |||The theorem d|a =>d|ca
 multDivLeft:(IsDivisibleZ a d) ->(c:ZZ)->(IsDivisibleZ (c*a) d)
 multDivLeft{a} x c = rewrite (multCommutativeZ c a) in (multDiv x c)
+
+|||The theorem that if d|a then md|ma
+multBothSidesOfDiv:(m:ZZ)->(IsDivisibleZ a d)->(IsDivisibleZ (m*a) (m*d))
+multBothSidesOfDiv{d} m (x ** pf) =
+  (x** (rewrite (sym (multAssociativeZ m d x)) in (cong pf)))
 
 |||The theorem d|a and d|b =>d|(a+b)
 plusDiv : (IsDivisibleZ a d)->(IsDivisibleZ b d)->(IsDivisibleZ (a+b) d)
@@ -87,6 +93,23 @@ dDividesNegative{a}{d} (x ** pf) =
 |||The theorem that d|(-a) implies d|a
 dDividesNegative2:  (IsDivisibleZ (-a) d)->(IsDivisibleZ  a d)
 dDividesNegative2 {a}x = rewrite (sym (doubleNegElim a)) in (dDividesNegative x)
+|||The theorem that d|a implies (-d)|a
+negativeDivides:(IsDivisibleZ a d)->(IsDivisibleZ a (-d))
+negativeDivides {a}{d}(x ** pf) =
+  ((-x)**(rewrite pf in (sym negateMultNegateNeutralZ)))
+|||The theorem that (-d)|a implies d|a
+negativeDivides2:(IsDivisibleZ a (-d))->(IsDivisibleZ a d)
+negativeDivides2 {a}{d}x = rewrite (sym (doubleNegElim d)) in (negativeDivides x)
+|||The theorem that -1|a for all integers
+minusOneDivides:(a:ZZ)->(IsDivisibleZ a (-1))
+minusOneDivides a = negativeDivides (oneDiv _)
+|||The theorem that 0 doesnt divide a non zero quantity
+zeroDoesntDivideNonZero:{d:ZZ}->(NotZero d)->(IsDivisibleZ d 0)->Void
+zeroDoesntDivideNonZero{d = (Pos (S k))} PositiveZ (x** pf)=
+  (posIsNotZeroTimesInteger pf)
+zeroDoesntDivideNonZero{d = (NegS k)} NegativeZ (x ** pf) =
+  (negSIsNotZeroTimesInteger pf)
+
 
 |||The theorem c|b and c|(a+bp) then c|a
 cDiva :{p:ZZ} ->(cDIvb :(IsDivisibleZ b c))->
