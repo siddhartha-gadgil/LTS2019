@@ -134,6 +134,10 @@ IsPrincipalIdeal i pfi r pfr (f ** pf) = (p:i ** ((t: i) -> (x: r ** (f t) = (Ri
 IsPID: (ring : Type) -> ((+) : ring -> ring -> ring) -> ((*) : ring -> ring -> ring) -> Type
 IsPID ring (+) (*) = (pfURing : IsUsefulRing ring (+) (*) ** ((i: Type) -> (pfi: Ring i) -> (pfIdeal: IsIdeal i pfi ring (CRingisRing ring (URingisCRing ring (MkURing ring (+) (*) pfURing))) ) -> IsPrincipalIdeal i pfi ring (CRingisRing ring (URingisCRing ring (MkURing ring (+) (*) pfURing))) pfIdeal) )
 
+||| Data type for PIDs
+data PID: (ring: Type) -> Type where
+  MkPID: (ring : Type) -> ((+) : ring -> ring -> ring) -> ((*) : ring -> ring -> ring) -> IsPID ring (+) (*) -> PID ring
+
 ||| Euclidean Norm
 total
 IsEuclideanNorm : (ring : Type) -> ((+) : ring -> ring -> ring) -> ((*) : ring -> ring -> ring) -> (IsIntegralDomain ring (+) (*)) -> (norm : (ring -> Nat)) -> Type
@@ -143,3 +147,7 @@ IsEuclideanNorm ring (+) (*) pfIntDomain norm = ( ( (a : ring) -> (b : ring) -> 
 total
 IsEuclideanDomain : (ring : Type) -> ((+) : ring -> ring -> ring) -> ((*) : ring -> ring -> ring) -> Type
 IsEuclideanDomain ring (+) (*) = (pfIntDomain : IsIntegralDomain ring (+) (*) ** (EuclNorm : (ring -> Nat) ** (IsEuclideanNorm ring (+) (*) pfIntDomain EuclNorm) ) )
+
+||| Data type for PIDs
+data EuclideanDomain: (ring: Type) -> Type where
+  MkEuclideanDomain: (ring : Type) -> ((+) : ring -> ring -> ring) -> ((*) : ring -> ring -> ring) -> IsEuclideanDomain ring (+) (*) -> EuclideanDomain ring
