@@ -1,3 +1,40 @@
+commit 86fdf1a3c136695ea4336bfdebe980f86138c104
+Author:     rohit3499 <47004225+rohit3499@users.noreply.github.com>
+AuthorDate: Mon Feb 25 01:45:48 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 01:45:48 2019 +0530
+
+    Updated Report
+
+ _reports/rohit/rohit.md | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+commit 1ea453bc165ffdc61ba458e229f36968afbcc6fe
+Author:     rohit3499 <47004225+rohit3499@users.noreply.github.com>
+AuthorDate: Mon Feb 25 00:58:03 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 00:58:03 2019 +0530
+
+    Definitions of Euclidian Domains
+    
+    Euclidian Norms and Euclidian Domains and also updated the definition of an Integral Domain.
+
+ Code/Ring.idr | 36 ++++++++++++++++++++++--------------
+ 1 file changed, 22 insertions(+), 14 deletions(-)
+
+commit 4da929e6969f7a1e549c23a0cabceaaa2850275d
+Author:     rohit3499 <47004225+rohit3499@users.noreply.github.com>
+AuthorDate: Sun Feb 24 18:56:10 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Feb 24 18:56:10 2019 +0530
+
+    Added definitions for zero divisors and Integral Domains
+    
+    Zero Divisors and Integral Domains
+
+ Code/Ring.idr | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
 commit c8ad0d45487523d6ad5fa570750350a7fcec07d3
 Author:     rohit3499 <47004225+rohit3499@users.noreply.github.com>
 AuthorDate: Mon Feb 11 01:27:40 2019 +0530

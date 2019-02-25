@@ -1,3 +1,14 @@
+commit 3dca174f14f05a1e332f8cbaa459bead0fc0cfb6
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Feb 23 15:57:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 15:57:45 2019 +0530
+
+    started a proof of pigeonhole principle
+
+ Code/pigeonhole.idr | 80 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 80 insertions(+)
+
 commit 515d7e6f0128a7143e70e0e5d37c935b8a741584
 Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
 AuthorDate: Sat Feb 23 00:25:43 2019 +0530

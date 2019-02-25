@@ -1,3 +1,86 @@
+commit 8d909f97ef2104bca45ddf4284fdc200a537aee5
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 08:16:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 08:16:55 2019 +0530
+
+    Added data types, ideals, PIDs
+    
+    Defined data types for different kinds of rings
+    Adjusted some definitions (stemming from rings being defined as multiplicative monoids instead of magmas)
+    Defined ring homomorphisms
+    Defined ideals of rings
+    Defined PIDs
+
+ Code/Ring.idr | 150 +++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 118 insertions(+), 32 deletions(-)
+
+commit d9efdb0f4159a83c229bb5d24fd17ce0565f2e6a
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 06:27:23 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 06:27:23 2019 +0530
+
+    Update report for Chinmaya Kausik
+
+ _reports/chinmaya/chinmaya.md | 70 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 69 insertions(+), 1 deletion(-)
+
+commit e7639fe2b7ebca1f56bfa25b3c1d7b640a6eab45
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 05:27:27 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 05:27:27 2019 +0530
+
+    Proofs about the reverse function
+    
+    Proofs establishing that the reverse function is:
+    
+    1) In some sense, pseudocontravariant with concatenation
+    2) Self-inverse
+
+ Code/Lists.idr | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+commit 3ce383dbe4e3ea4741b024e414268d3f93107fef
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 04:54:26 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 04:54:26 2019 +0530
+
+    Created a file for properties of rings
+    
+    Added proofs that conclude 0*a = a*0 = 0
+
+ Code/Ring.Properties.idr | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+
+commit d11d38bbd060a50379d7be3bb11d4e187765fbe1
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Feb 23 11:44:04 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 11:44:04 2019 +0530
+
+    Delete Group.CosetRep.idr
+    
+    It was added to the main directory by accident
+
+ Group.CosetRep.idr | 30 ------------------------------
+ 1 file changed, 30 deletions(-)
+
+commit ff01e90ca2e0205bc1cbca47f54138929d9a8840
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Feb 23 11:43:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 11:43:19 2019 +0530
+
+    Updated CosetRep for fst and snd
+    
+    Also, the previous version was added to the main directory instead of code. It would be great if that could be deleted. My apologies.
+
+ Code/Group.CosetRep.idr | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
 commit 40b31095f9ce59dee55b5c3b409ec5825081e8cc
 Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
 AuthorDate: Thu Feb 21 23:51:26 2019 +0530

@@ -1,3 +1,83 @@
+commit 8878b26f73c90ec209d93c690020b3e8eb80de56
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Mon Feb 25 01:20:10 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Mon Feb 25 01:20:10 2019 +0530
+
+    minor change to report
+
+ _reports/adithya/adithya.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit ca95d24091d62ebb8234b68fb201545802d2aa19
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Mon Feb 25 01:18:19 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Mon Feb 25 01:18:19 2019 +0530
+
+    added report
+
+ Code/NatOrder.idr           |  3 +++
+ _reports/adithya/adithya.md | 44 +++++++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 42 insertions(+), 5 deletions(-)
+
+commit 2024a1d453be04004733efe0d8d21aa9ba329f05
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sun Feb 24 23:54:24 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sun Feb 24 23:54:24 2019 +0530
+
+    minor changes
+
+ Code/NatUtils.idr           |  1 -
+ _reports/adithya/adithya.md | 16 ++++++++++++++--
+ 2 files changed, 14 insertions(+), 3 deletions(-)
+
+commit 768b288367f52657926482aaaed412134d7f2465
+Merge: 2640739 e083426
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sun Feb 24 23:06:16 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sun Feb 24 23:06:16 2019 +0530
+
+    Merge remote-tracking branch 'upstream/master'
+
+commit 26407399234d823f3dea035b318f07a5e33fa37b
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sun Feb 24 23:05:25 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sun Feb 24 23:05:25 2019 +0530
+
+    Added proofs about order
+
+ Code/NatOrder.idr |  20 +++++++++++
+ Code/NatUtils.idr |  24 +++++++++++--
+ Code/Order.idr    | 100 ++++++++++++++++++++++++++++++++++++++++++++++++++----
+ 3 files changed, 135 insertions(+), 9 deletions(-)
+
+commit 6c266f22c331efb44035e754b4adea1fe18b1756
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sun Feb 24 02:35:54 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sun Feb 24 02:35:54 2019 +0530
+
+    Small correction
+
+ Code/NatOrder.idr | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 02250c2cd0abefde9354431139c2ffc083045de7
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sun Feb 24 02:32:54 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sun Feb 24 02:32:54 2019 +0530
+
+    Added functions to NatUtils.idr and NatOrder.idr
+
+ Code/NatOrder.idr | 118 ++++++++++++++++++++++++++++++++++++++++++------------
+ Code/NatUtils.idr |  64 ++++++++++++++++++++---------
+ 2 files changed, 137 insertions(+), 45 deletions(-)
+
 commit 49e9fb7a87f02dcc6d021e125d8a3293c4431a63
 Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
 AuthorDate: Fri Feb 22 12:25:23 2019 +0530

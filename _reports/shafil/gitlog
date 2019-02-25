@@ -1,3 +1,168 @@
+commit 7040bd71e3ed10410ca039065708650468f41b7b
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Feb 24 21:06:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Feb 24 21:06:19 2019 +0530
+
+    Added some documentation
+    
+    Added some documentation
+
+ Code/GCDZZ.idr | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit 3cc8b0b75378c9bc8f47fa938bf3cd27e6a12e63
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Feb 24 21:02:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Feb 24 21:02:07 2019 +0530
+
+    Fixed an error in the documentation
+    
+    Fixed an error in the documentation
+
+ Code/Divisors.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 151a3b374fb9d69aca91fe2f812410fe746ede9d
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Feb 24 21:00:32 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Feb 24 21:00:32 2019 +0530
+
+    Update report
+    
+    Update report
+
+ _reports/shafil/shafil.md | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+commit 06ead397df34bdfb07cb1a2486f8aa40dedc3c78
+Merge: c1ba88a 96d92f2
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Feb 24 20:59:53 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Feb 24 20:59:53 2019 +0530
+
+    Merge pull request #17 from siddhartha-gadgil/master
+    
+    s
+
+commit c1ba88aaac4886a6d146d2add6150145a0871b7a
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 23 22:14:47 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 22:14:47 2019 +0530
+
+    Added the NonNegative data type
+    
+    Added the NonNegative data type
+
+ Code/ZZUtils.idr | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+commit 1e286ac0f776da7d3094a578b966d210eca5ea76
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 23 22:05:53 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 22:05:53 2019 +0530
+
+    exported it
+    
+    exported it
+
+ Code/GCDZZ.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit cabe3ee49e3995300e52993d717294e29ed6124e
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 23 21:59:51 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 21:59:51 2019 +0530
+
+    gcdZZ returns gcd with proof for a and b where a and b are not both zero
+    
+    gcdZZ returns gcd with proof for a and b where a and b are not both zero
+
+ Code/GCDZZ.idr | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+commit 73af360c14ae88bbbbb385aaa447e48187f55b65
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 23 21:57:51 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 21:57:51 2019 +0530
+
+    A minor name change
+
+ Code/Divisors.idr | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit d0c7a97ea7447cd14e544e5b688005686bf7ccc7
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 23 20:50:14 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 20:50:14 2019 +0530
+
+    Created a GCDCalc function
+    
+    Created a GCDCalc function that returns GCD with proof for two integers a and  such that a is positive and b is non negative.
+    I couldn't convince idris that it is total. So I did this in a new file.
+
+ Code/GCDZZ.idr | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
+commit 806336344553fcfce20edd3a40e4c77528744736
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 23 20:47:29 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 20:47:29 2019 +0530
+
+    Added a subOnBothSides function
+    
+    Added a subOnBothSides function which states that if a = b+c , then a+(-c)=b
+
+ Code/ZZ.idr | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit 24a18b9e0ed934f9ec563e7dc8963b5142cd24f7
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 23 20:46:16 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 20:46:16 2019 +0530
+
+    A utility file for ZZ
+    
+    Created a utility file for ZZ .
+
+ Code/ZZUtils.idr | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+
+commit 099b3a34fdd34529526fab7e5823ddd195aa9bbb
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 23 20:44:49 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 20:44:49 2019 +0530
+
+    Added a few functions that help in finding Gcd
+    
+    Added a few functions that help in finding Gcd which include different versions of euclidConservesGcd and also that gcd (-a,b)=gcd (a,b)
+    and other auxiliary functions
+
+ Code/Divisors.idr | 70 +++++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 66 insertions(+), 4 deletions(-)
+
+commit 82bdb6a015b8684663fbb77d65ef775128357ba8
+Merge: 8b72b8e eeec890
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Feb 23 20:42:51 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 20:42:51 2019 +0530
+
+    Merge pull request #16 from siddhartha-gadgil/master
+    
+    s
+
 commit 8b72b8e7f55bd58a2cca4c3d15d6c2f3c168a761
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Wed Feb 20 13:59:19 2019 +0530

@@ -1,3 +1,104 @@
+commit dbd83a440bcfce34a3ab346802aef2ffc65e4572
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Sun Feb 24 20:54:48 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Sun Feb 24 20:54:48 2019 +0530
+
+    added more functions to primes, created lists file
+
+ Code/Lists.idr              |  9 +++++++++
+ Code/Primes.idr             | 24 +++++++++++++++++++++---
+ _reports/sideart/sideart.md | 30 ++++++++++++++++++++++++++++++
+ 3 files changed, 60 insertions(+), 3 deletions(-)
+
+commit 90a292838e25c3e3b9d6158c1592db331dbac0c1
+Merge: 29b47f9 96d92f2
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Sun Feb 24 15:31:31 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Sun Feb 24 15:31:31 2019 +0530
+
+    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
+
+commit 29b47f98a3703fe20f078ee1361e69403d36a4de
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Sun Feb 24 15:31:26 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Sun Feb 24 15:31:26 2019 +0530
+
+    Update NatUtils.idr
+
+ Code/NatUtils.idr | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 9c94ff6b87b827f723788dce5df6a88291564ec2
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Sun Feb 24 03:20:38 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Sun Feb 24 03:20:38 2019 +0530
+
+    redefined primes
+    
+    redefined primes (removed them as data type), and created functions to show that a number cannot be both prime and composite
+
+ Code/Primes.idr | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
+commit 60967574f5ae4141f78ea4ee5ffa7edda3129583
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Sun Feb 24 01:08:15 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Sun Feb 24 01:08:15 2019 +0530
+
+    corrected primes
+
+ Code/Group.idr    |  1 -
+ Code/NatUtils.idr |  9 +++++++
+ Code/Primes.idr   | 71 ++++++++++++++++++++++++++++++++++++++++++++++---------
+ 3 files changed, 69 insertions(+), 12 deletions(-)
+
+commit cd372cc4b8af243ff69a02816aaabcb527410623
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Sat Feb 23 14:17:55 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Sat Feb 23 14:17:55 2019 +0530
+
+    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
+
+ Code/Graph_alt.idr                            |  45 +++++++++
+ Group.CosetRep.idr => Code/Group.CosetRep.idr |  13 ++-
+ Code/Group.FiniteGenerate.idr                 |   4 +-
+ Code/NatOrder.idr                             | 139 ++++++++++++++++++++++++++
+ Code/NatUtils.idr                             |  15 ++-
+ Code/Primes.idr                               |  72 ++++---------
+ Code/fn_to_vect.idr                           |  74 ++++++++++++++
+ _reports/adithya/gitlog                       | 109 ++++++++++++++++++++
+ _reports/arka/gitlog                          |  44 ++++++++
+ _reports/chinmaya/gitlog                      |  79 +++++++++++++++
+ _reports/nabarun/gitlog                       |  33 ++++++
+ _reports/ss/gitlog                            |  47 +++++++++
+ 12 files changed, 607 insertions(+), 67 deletions(-)
+
+commit 32638dd89a9252aacd389a7011c2015f2e683140
+Merge: 56ffb11 4d1ec44
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Fri Feb 22 15:10:32 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Fri Feb 22 15:10:32 2019 +0530
+
+    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
+
+commit 56ffb1128840ea38549d4e6791bda9befcc78e43
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Fri Feb 22 15:07:14 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Fri Feb 22 15:07:14 2019 +0530
+
+    have to clean the code
+
+ Code/Primes.idr | 42 +++++++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
+
 commit 677a7bddcc9cc810ea419fcae5b794cb39f14483
 Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
 AuthorDate: Wed Feb 20 20:45:10 2019 +0530

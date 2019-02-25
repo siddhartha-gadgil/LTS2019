@@ -1,3 +1,95 @@
+commit 29e14f6be8cb6e36e41e61cceecc95cdec5ee5b2
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 00:25:31 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 00:25:31 2019 +0530
+
+    Finished Report
+    
+    I added the links to the relevant commits.
+    
+    -- Abishek (AR-MA210)
+
+ _reports/ar/ar.md | 37 ++++++++++++++++++++-----------------
+ 1 file changed, 20 insertions(+), 17 deletions(-)
+
+commit 56d26de18aed2ef923c0c51dbbc6d78127abeeca
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 00:14:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 00:14:19 2019 +0530
+
+    correction + more functions
+    
+    I made a correction in the simplification routine and also added some functions which will eventually used to find the rank of a linear transformation.
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+commit 975e01f95e5f1de41329b0a6b5058812fc99e432
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 23 17:07:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 17:07:45 2019 +0530
+
+    Update Report
+    
+    Added to Sorting.
+    
+    -- Abishek (AR-MA210)
+
+ _reports/ar/ar.md | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit af78ca7a21e563d6e5c1568818fa6bd53ce08254
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 23 17:04:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 17:04:55 2019 +0530
+
+    switched to Vectors + more
+    
+    I made the code run using Vectors instead of lists. Also, I added a function which produces the minimum element in a Vector, and used it to check if a Vector is Sorted. This can be upgraded with a proof that the minimum element is the minimum and eventually that a Sorted Vector is Sorted.
+    
+    -- Abishek (AR-MA210)
+
+ Code/InsertionSort.idr | 29 ++++++++++++++++++++++-------
+ 1 file changed, 22 insertions(+), 7 deletions(-)
+
+commit a6f16af8aeb42880a6e96910f46e4f2456665b2c
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 23 16:38:32 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 16:38:32 2019 +0530
+
+    moved something from 'Remaining' to 'Done'
+    
+    Added simplification of matrices.
+    
+    -- Abishek (AR-MA210)
+
+ _reports/ar/ar.md | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit abd348d60ffca6de7adc9b87ceebb493d21aa375
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 23 16:35:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 16:35:07 2019 +0530
+
+    Added simplification routine, fixed import
+    
+    I added functions which convert a matrix of ZZPairs to a matrix in simplified form.
+    
+    The file BaseN was imported here, but it got changed and one function was lost, so I added it here.
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 53 ++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 45 insertions(+), 8 deletions(-)
+
 commit 60e1cd5159aa90a194768c3f550f91e1407e9d11
 Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
 AuthorDate: Sat Feb 16 01:06:46 2019 +0530
