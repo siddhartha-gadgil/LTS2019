@@ -67,22 +67,14 @@ checking pigeonhole.idr
 checking Primes.idr
 checking Quicksort.idr
 checking Quotient_Group.idr
-Quotient_Group.idr:19:9-36:
+Quotient_Group.idr:40:61-57:64:
    |
-19 |        (Subgroup h (+) pf1 g (*) pf2) -> (a : g) -> Type
-   |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-When checking type of Quotient_Group.Coset:
-When checking an application of function Group.Subgroup:
-        Type mismatch between
-                h -> h -> h (Type of (+))
-        and
-                Group h (Expected type)
-        
-        Specifically:
-                Type mismatch between
-                        \uv => h -> uv
-                and
-                        Group
+40 | Coset_property_1 h (+) pfh g (*) pfg pfSub a b pf_a_in_Cb = let
+   |                                                             ~~~ ...
+When checking right hand side of Coset_property_1 with expected type
+        Is_in_Coset h (+) pfh g (*) pfg pfSub b a
+
+Can't infer type for {letval_123}
 
 checking Rationals.idr
 checking Ring.idr
