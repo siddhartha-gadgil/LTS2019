@@ -152,6 +152,18 @@ lteMultLeft : (k : Nat) -> (m : Nat) -> (LTE m ((S k) * m))
 lteMultLeft Z m = rewrite (multOneLeftNeutral m) in (lteRefl)
 lteMultLeft (S k) m = ltePlusConstant m (lteMultLeft k m)
 
+|||Proof that if a<=b then a< c+b when cis not zero
+ltePlusConstantLt:(c:Nat)->(Not(c=Z))->LTE a b -> LT a (c+b)
+ltePlusConstantLt Z cnotz prf = void (cnotz Refl)
+ltePlusConstantLt (S k) cnotz LTEZero = LTESucc LTEZero
+ltePlusConstantLt {a=(S j)}{b=(S i)}(S k) cnotz (LTESucc prf) =
+	LTESucc (rewrite (sym(plusSuccRightSucc k  i)) in (ltePlusConstantLt (S k) cnotz prf))
+
+|||Proof that a positive number (S m) is less than (S m) multiplied by a number greater that one
+ltMultPosByGt1: (k:Nat)->(m:Nat)->(LT (S m) ((S (S k)*(S m))))
+ltMultPosByGt1 Z m = rewrite (plusZeroRightNeutral m) in ltePlusConstantLt (S m) SIsNotZ lteRefl
+ltMultPosByGt1 (S k) m = ltePlusConstantLt (S m) SIsNotZ (ltImpliesLTE (ltMultPosByGt1 k m))
+
 |||Proof that a <= b implies (c * a) <= (c * b)
 lteMultConstantLeft : {a : Nat} -> {b : Nat} -> (c : Nat) -> (LTE a b) -> (LTE (c * a) (c * b))
 lteMultConstantLeft {a} {b} Z _ = LTEZero
@@ -189,13 +201,21 @@ ltImpliesNotEqNotGT {a = S k} {b = S l} (LTESucc proofLT) =
 eqImpliesNotLTNotGT : {a : Nat} -> {b : Nat} -> (a = b) -> (Not (LT a b), Not (LT b a))
 eqImpliesNotLTNotGT {a = k} {b = k} Refl = (succNotLTEn, succNotLTEn)
 
+
+|||Proof that a*b = c*b implies a = c
+multRightCancel:(left1:Nat)->(left2:Nat)->(right:Nat)->Not (right =0)->(left1*right=left2*right)->(left1 = left2)
+multRightCancel left1 left2 Z rightnotzero prf = void (rightnotzero Refl)
+multRightCancel Z Z (S k) rightnotzero prf = Refl
+multRightCancel Z (S _) (S _) _ Refl impossible
+multRightCancel (S _) Z (S _) _ Refl impossible
+multRightCancel (S j) (S i) (S k) rightnotzero prf = cong (multRightCancel j i (S k) rightnotzero (plusLeftCancel (S k) (j*(S k)) (i*(S k))  prf))
 |||Proof that a*b = a*c implies b = c
-multLeftCancel : (left : Nat) -> (right : Nat) -> (right1 : Nat) -> Not(left = 0) -> (left*right = left*right1) -> (right = right1)
-multLeftCancel Z _ _ pfnotz _ = void (pfnotz Refl)
-multLeftCancel (S Z) right right1 SIsNotZ pfrefl =  rewrite (sym (multOneLeftNeutral right)) in
-																										rewrite (sym (multOneLeftNeutral right1)) in
-																										pfrefl
-multLeftCancel (S (S k)) right right1 pf pfeq = ?fill
+multLeftCancel : (left : Nat) -> (right1 : Nat) -> (right2 : Nat) -> Not(left = 0) -> (left*right1 = left*right2) -> (right1 = right2)
+multLeftCancel left right1 right2 lnotz prf =
+	multRightCancel right1 right2 left lnotz
+	 (rewrite (multCommutative  right1 left) in
+	  rewrite (multCommutative  right2 left) in
+		prf)
 
 |||Proof that a not LTE b implies b LTE a
 -- taken from Lecture.GCD
