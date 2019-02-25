@@ -12,20 +12,6 @@ import Rationals
 
 -- Some auxillary functions for elementary operations
 
---Euclid's div
-Eucl: (a: Nat) -> (b: Nat) -> (Nat, Nat)
-Eucl Z b = (0,0)
-Eucl (S k) b = case (lte (S (S k)) b) of
-                    False => (S(fst(Eucl (minus (S k) b) b)), snd(Eucl (minus (S k) b) b))
-                    True => (0, S k)
-
---Nat to Fin (modular values)
-tofinNat: (a: Nat) -> (n: Nat) -> Fin n
-tofinNat Z (S j) = FZ
-tofinNat (S k) (S j) = case lte (S k) (S j) of
-                True => FS (tofinNat k j)
-                False =>  (tofinNat (snd(Eucl (S k) (S j))) (S j))
-
 FST: ZZPair -> ZZ
 FST (a, b) = a
 
