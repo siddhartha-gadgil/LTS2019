@@ -10,15 +10,6 @@ CommitDate: Sun Feb 24 20:26:43 2019 +0530
  Code/Primes.idr   | 18 ++++++++++++++++++
  2 files changed, 33 insertions(+)
 
-commit be63e8bbc2f196ce5d16b5ed941d433e6c0b07af
-Merge: 2118cbf 96d92f2
-Author:     Insignificant <aditvishnu3@gmail.com>
-AuthorDate: Sun Feb 24 14:28:00 2019 +0530
-Commit:     Insignificant <aditvishnu3@gmail.com>
-CommitDate: Sun Feb 24 14:28:00 2019 +0530
-
-    Merge remote-tracking branch 'upstream/master'
-
 commit 2118cbf68ebf6a678903efb2f870d2de08368347
 Author:     Insignificant <aditvishnu3@gmail.com>
 AuthorDate: Sun Feb 24 14:27:47 2019 +0530

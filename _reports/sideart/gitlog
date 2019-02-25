@@ -22,15 +22,6 @@ CommitDate: Sun Feb 24 20:54:48 2019 +0530
  _reports/sideart/sideart.md | 30 ++++++++++++++++++++++++++++++
  3 files changed, 60 insertions(+), 3 deletions(-)
 
-commit 90a292838e25c3e3b9d6158c1592db331dbac0c1
-Merge: 29b47f9 96d92f2
-Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
-AuthorDate: Sun Feb 24 15:31:31 2019 +0530
-Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
-CommitDate: Sun Feb 24 15:31:31 2019 +0530
-
-    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
-
 commit 29b47f98a3703fe20f078ee1361e69403d36a4de
 Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
 AuthorDate: Sun Feb 24 15:31:26 2019 +0530
@@ -90,15 +81,6 @@ CommitDate: Sat Feb 23 14:17:55 2019 +0530
  _reports/ss/gitlog                            |  47 +++++++++
  12 files changed, 607 insertions(+), 67 deletions(-)
 
-commit 32638dd89a9252aacd389a7011c2015f2e683140
-Merge: 56ffb11 4d1ec44
-Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
-AuthorDate: Fri Feb 22 15:10:32 2019 +0530
-Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
-CommitDate: Fri Feb 22 15:10:32 2019 +0530
-
-    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
-
 commit 56ffb1128840ea38549d4e6791bda9befcc78e43
 Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
 AuthorDate: Fri Feb 22 15:07:14 2019 +0530
@@ -131,33 +113,6 @@ CommitDate: Wed Feb 20 16:19:38 2019 +0530
 
  Code/Primes.idr | 50 ++++++++++++++++++++++++--------------------------
  1 file changed, 24 insertions(+), 26 deletions(-)
-
-commit 85abbfaa7e4a6593da4db9beec34a619ce059d2a
-Merge: 1fafcf3 6fa582e
-Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
-AuthorDate: Wed Feb 20 14:33:39 2019 +0530
-Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
-CommitDate: Wed Feb 20 14:33:39 2019 +0530
-
-    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
-
-commit 1fafcf328677bf3d42d921c54e9fa1580ab6b0bd
-Merge: 3582d2a 4b9ee83
-Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
-AuthorDate: Sun Feb 17 12:27:09 2019 +0530
-Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
-CommitDate: Sun Feb 17 12:27:09 2019 +0530
-
-    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
-
-commit 11c32ce9e08636f807a8a9cbc2ee82ffc3798040
-Merge: 044be52 4a99917
-Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
-AuthorDate: Thu Feb 14 16:57:30 2019 +0530
-Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
-CommitDate: Thu Feb 14 16:57:30 2019 +0530
-
-    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
 
 commit 044be5279e8bd8dfb4325f4e13d4d2e66136c7a2
 Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>

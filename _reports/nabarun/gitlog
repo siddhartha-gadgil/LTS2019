@@ -20,15 +20,6 @@ CommitDate: Mon Feb 25 01:25:03 2019 +0530
  Code/Merge.idr | 34 +++++++++++++++++++++++++++++++++-
  1 file changed, 33 insertions(+), 1 deletion(-)
 
-commit 45969ed12382c1e8baf002f9ce2a12a615d8fc72
-Merge: 4b9089b d2ddda7
-Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
-AuthorDate: Thu Feb 21 22:05:47 2019 +0530
-Commit:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
-CommitDate: Thu Feb 21 22:05:47 2019 +0530
-
-    Merge branch 'master' of https://github.com/NabarunDeka/LTS2019
-
 commit 4b9089bd6eb2b5b17778f70ba189d966ef19beba
 Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
 AuthorDate: Thu Feb 21 22:05:44 2019 +0530
@@ -74,15 +65,6 @@ CommitDate: Tue Feb 5 16:28:21 2019 +0530
 
  Code/Merge.idr | 112 +++++++++++++++++++++++++++++++++++++--------------------
  1 file changed, 73 insertions(+), 39 deletions(-)
-
-commit c57cd4dc81f0c7dfcc45bf297555a6b5d4bf44a8
-Merge: 82c90fb 0b4ada4
-Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
-AuthorDate: Tue Feb 5 16:23:56 2019 +0530
-Commit:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
-CommitDate: Tue Feb 5 16:23:56 2019 +0530
-
-    Merge remote-tracking branch 'upstream/master'
 
 commit 82c90fbff5e534addcc23a81a560f0781a5be349
 Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>

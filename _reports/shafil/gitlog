@@ -37,17 +37,6 @@ CommitDate: Sun Feb 24 21:00:32 2019 +0530
  _reports/shafil/shafil.md | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-commit 06ead397df34bdfb07cb1a2486f8aa40dedc3c78
-Merge: c1ba88a 96d92f2
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Sun Feb 24 20:59:53 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sun Feb 24 20:59:53 2019 +0530
-
-    Merge pull request #17 from siddhartha-gadgil/master
-    
-    s
-
 commit c1ba88aaac4886a6d146d2add6150145a0871b7a
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Sat Feb 23 22:14:47 2019 +0530
@@ -152,17 +141,6 @@ CommitDate: Sat Feb 23 20:44:49 2019 +0530
  Code/Divisors.idr | 70 +++++++++++++++++++++++++++++++++++++++++++++++++++----
  1 file changed, 66 insertions(+), 4 deletions(-)
 
-commit 82bdb6a015b8684663fbb77d65ef775128357ba8
-Merge: 8b72b8e eeec890
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Sat Feb 23 20:42:51 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sat Feb 23 20:42:51 2019 +0530
-
-    Merge pull request #16 from siddhartha-gadgil/master
-    
-    s
-
 commit 8b72b8e7f55bd58a2cca4c3d15d6c2f3c168a761
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Wed Feb 20 13:59:19 2019 +0530
@@ -211,17 +189,6 @@ CommitDate: Wed Feb 20 13:41:00 2019 +0530
  _reports/shafil/shafil.md | 37 ++++++++++++++++++++++++++++++++++++-
  1 file changed, 36 insertions(+), 1 deletion(-)
 
-commit 75e203dbc58ebb9247441b4071e2f442139892c5
-Merge: 11b00d3 a5a75c5
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Wed Feb 20 13:39:46 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Wed Feb 20 13:39:46 2019 +0530
-
-    Merge pull request #15 from siddhartha-gadgil/master
-    
-    a
-
 commit 11b00d349f82cee4c88aad11c258e9979bcb16f3
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Tue Feb 19 19:38:15 2019 +0530
@@ -247,17 +214,6 @@ CommitDate: Tue Feb 19 17:33:55 2019 +0530
 
  Code/ZZ.idr | 40 ++++++++++++++++++++++++++++++++++++++++
  1 file changed, 40 insertions(+)
-
-commit c9b1a6dacf4daf99be4d632d320ae6ce0f7283a7
-Merge: 2499963 4b9ee83
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Tue Feb 19 17:31:46 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Tue Feb 19 17:31:46 2019 +0530
-
-    Merge pull request #14 from siddhartha-gadgil/master
-    
-    ds
 
 commit 2499963e7bd8e8a576ce0d302760ac81537189b3
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
@@ -336,17 +292,6 @@ CommitDate: Sat Feb 16 23:04:09 2019 +0530
  Code/NatUtils.idr | 19 +------------------
  1 file changed, 1 insertion(+), 18 deletions(-)
 
-commit e6cbfff9a7123d3dc5e426b3e22db85f1e27dbdf
-Merge: dab2e23 1cb960c
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Sat Feb 16 23:03:24 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sat Feb 16 23:03:24 2019 +0530
-
-    Merge pull request #13 from siddhartha-gadgil/master
-    
-    a
-
 commit dab2e23b626b6d97f60cb10832e5f8dd1d47c074
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Fri Feb 15 20:26:45 2019 +0530
@@ -357,17 +302,6 @@ CommitDate: Fri Feb 15 20:26:45 2019 +0530
 
  Code/Divisors.idr | 52 ++++++++++++++++++++++++++++------------------------
  1 file changed, 28 insertions(+), 24 deletions(-)
-
-commit adb936334c5c96254536d46afd2f78f01185553b
-Merge: 80d1777 46bf738
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Fri Feb 15 20:22:49 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Fri Feb 15 20:22:49 2019 +0530
-
-    Merge pull request #12 from siddhartha-gadgil/master
-    
-    u
 
 commit 80d17770a56c23186b11091d396908b22e37fb21
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
@@ -410,17 +344,6 @@ CommitDate: Wed Feb 13 22:23:45 2019 +0530
  Code/ZZ.idr | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
  1 file changed, 89 insertions(+), 4 deletions(-)
 
-commit 0f10fdd75657f9a6a0445971741d474c1c89dc6f
-Merge: 41e311a 1171493
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Wed Feb 13 22:21:23 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Wed Feb 13 22:21:23 2019 +0530
-
-    Merge pull request #11 from siddhartha-gadgil/master
-    
-    asd
-
 commit 41e311a76ed8086f09976080c00dde49446fe948
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Wed Feb 13 15:53:12 2019 +0530
@@ -446,17 +369,6 @@ CommitDate: Wed Feb 13 15:50:22 2019 +0530
 
  Code/ZZ.idr | 3 +++
  1 file changed, 3 insertions(+)
-
-commit d8e16707f0ed96855a67c362c4ae1417173e194a
-Merge: 3710818 03f3572
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Wed Feb 13 15:48:34 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Wed Feb 13 15:48:34 2019 +0530
-
-    Merge pull request #10 from siddhartha-gadgil/master
-    
-    dfsd
 
 commit 37108182ab621afd71e949eab8bc410ace5c3583
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
@@ -513,17 +425,6 @@ CommitDate: Tue Feb 12 20:31:37 2019 +0530
  Code/ZZ.idr | 17 +++++++++++++++++
  1 file changed, 17 insertions(+)
 
-commit 4c4d6c87f52949209b08ec7c14c6abb19d944d56
-Merge: 519e303 e6ebd31
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Tue Feb 12 20:28:15 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Tue Feb 12 20:28:15 2019 +0530
-
-    Merge pull request #9 from siddhartha-gadgil/master
-    
-    up
-
 commit 519e30325385a58254f35020cea7e08180bb4850
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Tue Feb 12 14:21:35 2019 +0530
@@ -562,17 +463,6 @@ CommitDate: Tue Feb 12 14:16:18 2019 +0530
 
  Code/Bezout.idr | 132 ++++++++++++++++++++++++++++++++++++++++++++++++++------
  1 file changed, 120 insertions(+), 12 deletions(-)
-
-commit 6b1593d6d5df1118c71390a852b903f3632ae490
-Merge: 5172740 43845dc
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Tue Feb 12 14:11:24 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Tue Feb 12 14:11:24 2019 +0530
-
-    Merge pull request #8 from siddhartha-gadgil/master
-    
-    dsf
 
 commit 5172740e01ca549f7b7490084c0545c142677c17
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
@@ -638,17 +528,6 @@ CommitDate: Tue Feb 12 10:27:50 2019 +0530
  Code/Sign.idr | 39 +++++++++++++++++++++++++++++++++++++++
  1 file changed, 39 insertions(+)
 
-commit 3907f2086d47515a169eca2fd94e0383d0a21fe0
-Merge: be28efe 5f78ca1
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Tue Feb 12 08:46:56 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Tue Feb 12 08:46:56 2019 +0530
-
-    Merge pull request #7 from siddhartha-gadgil/master
-    
-    xzx
-
 commit be28efe9bbe3c28da17edadb3d7770034a901178
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Sun Feb 10 15:31:31 2019 +0530
@@ -659,17 +538,6 @@ CommitDate: Sun Feb 10 15:31:31 2019 +0530
 
  Code/gcd.idr | 19 +++++++++++++++++--
  1 file changed, 17 insertions(+), 2 deletions(-)
-
-commit 2ae94e1524a26642c9e76f6653d53b34864adab1
-Merge: c19cbf1 6e1a328
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Sun Feb 10 15:29:18 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sun Feb 10 15:29:18 2019 +0530
-
-    Merge pull request #6 from siddhartha-gadgil/master
-    
-    es
 
 commit c19cbf1c7064121fe551b75304ab797d95f739e2
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
@@ -704,17 +572,6 @@ CommitDate: Fri Feb 8 19:31:10 2019 +0530
  Code/Graph.idr | 14 +++++---------
  1 file changed, 5 insertions(+), 9 deletions(-)
 
-commit 68535b34bcb78bcdcbea7a0484d18da7f2477929
-Merge: 8b7ad87 3535fdf
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Fri Feb 8 19:30:16 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Fri Feb 8 19:30:16 2019 +0530
-
-    Merge pull request #5 from siddhartha-gadgil/master
-    
-    est
-
 commit 8b7ad87014481460ee0440b37e9287332b9e2ef3
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Mon Feb 4 17:42:34 2019 +0530
@@ -725,17 +582,6 @@ CommitDate: Mon Feb 4 17:42:34 2019 +0530
 
  Code/Graph.idr | 44 ++++++++++++++++++++++++++++++++++++++++----
  1 file changed, 40 insertions(+), 4 deletions(-)
-
-commit dee0bb9205182afbc82aea98586210b3c24bff1f
-Merge: 8afdd47 061bdbe
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Mon Feb 4 17:41:41 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Mon Feb 4 17:41:41 2019 +0530
-
-    Merge pull request #4 from siddhartha-gadgil/master
-    
-    Merge pull request #50 from shafilmaheenn/master
 
 commit 8afdd47a839d4991403158ceb3943dfcb15747de
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
@@ -748,17 +594,6 @@ CommitDate: Mon Feb 4 15:11:15 2019 +0530
  Code/Graph.idr | 25 +++++++++++++++++++++++--
  1 file changed, 23 insertions(+), 2 deletions(-)
 
-commit 3ca9fc8c4b7e36a18e4be909a0078c8df4e0c3af
-Merge: a9f7cc4 b8a80c7
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Mon Feb 4 15:08:44 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Mon Feb 4 15:08:44 2019 +0530
-
-    Merge pull request #3 from siddhartha-gadgil/master
-    
-    as
-
 commit a9f7cc46d45735ab8dbdf88bcf93fcaae0706843
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Sat Feb 2 11:59:38 2019 +0530
@@ -770,17 +605,6 @@ CommitDate: Sat Feb 2 11:59:38 2019 +0530
  Code/Graph.idr | 35 ++++++++++++++++++++++++++++++-----
  1 file changed, 30 insertions(+), 5 deletions(-)
 
-commit 9fdb68956e6aa176f9fb2e5ba23c4411241852ff
-Merge: 289c482 1afaf38
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Sat Feb 2 11:58:59 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sat Feb 2 11:58:59 2019 +0530
-
-    Merge pull request #2 from siddhartha-gadgil/master
-    
-    Merge pull request #45 from shafilmaheenn/master
-
 commit 289c48281868bd78b149b27410dba3481d85ed34
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Sat Feb 2 10:16:44 2019 +0530
@@ -791,17 +615,6 @@ CommitDate: Sat Feb 2 10:16:44 2019 +0530
 
  Code/Graph.idr | 15 +++++++++++++++
  1 file changed, 15 insertions(+)
-
-commit 83c95e37422949efb7b51bc7920d46d996d09fca
-Merge: ae10a14 ea5982c
-Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
-AuthorDate: Sat Feb 2 10:14:42 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sat Feb 2 10:14:42 2019 +0530
-
-    Merge pull request #1 from siddhartha-gadgil/master
-    
-    Merge pull request #44 from shafilmaheenn/master
 
 commit ae10a14435004be0a6fbcbc05455272c21c75b8e
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>

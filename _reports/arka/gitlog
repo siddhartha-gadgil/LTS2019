@@ -184,17 +184,6 @@ CommitDate: Thu Feb 14 10:45:08 2019 +0530
  congruence.idr      |   6 +++
  8 files changed, 477 insertions(+)
 
-commit 6dac09676253e46f84dc84a2606815b178bbd93d
-Merge: 2732896 ed8c538
-Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
-AuthorDate: Thu Feb 14 10:43:54 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Thu Feb 14 10:43:54 2019 +0530
-
-    Merge pull request #3 from siddhartha-gadgil/master
-    
-    Syncing files
-
 commit 27328963239decafa1f4b329e01f33f8a3f102c1
 Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
 AuthorDate: Sun Feb 10 23:03:09 2019 +0530
@@ -302,17 +291,6 @@ CommitDate: Thu Feb 7 11:22:22 2019 +0530
  Code/Quotient_Group.idr | 41 +++++++++++++++++++++++++++++++++++++++++
  4 files changed, 122 insertions(+), 32 deletions(-)
 
-commit be4cb9499d6630ab0f9caa19ac1d3a7ce0672415
-Merge: bb58463 b0fe110
-Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
-AuthorDate: Sat Feb 2 20:57:28 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sat Feb 2 20:57:28 2019 +0530
-
-    Merge pull request #2 from siddhartha-gadgil/master
-    
-    Updated on Feb 2
-
 commit bb58463b3ece9b9a4f03530cdcb5052cfc7984e3
 Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
 AuthorDate: Thu Jan 31 02:02:53 2019 +0530
@@ -345,17 +323,6 @@ CommitDate: Wed Jan 30 17:34:42 2019 +0530
 
  Code/Group.idr | 66 +++++++++++++++++++++++++++++++++++++++++-----------------
  1 file changed, 47 insertions(+), 19 deletions(-)
-
-commit 1ffe495e7bc24dbcf2cbf0715c237e88d670e2ce
-Merge: 92e36c3 553da25
-Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
-AuthorDate: Wed Jan 30 16:46:36 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Wed Jan 30 16:46:36 2019 +0530
-
-    Merge pull request #1 from siddhartha-gadgil/master
-    
-    Updating on Jan 30
 
 commit 92e36c301d27377fea7165ea5e5bf2fbe3f47248
 Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>

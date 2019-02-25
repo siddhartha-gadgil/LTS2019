@@ -56,15 +56,6 @@ CommitDate: Wed Feb 20 18:23:55 2019 +0530
  _reports/ss/ss.md | 11 +++++++++++
  1 file changed, 11 insertions(+)
 
-commit 3f79c4874a5a11dfd8009e4bcc1f5e6460227a6f
-Merge: 17f3801 4b9ee83
-Author:     SS-C4 <srirams@iisc.ac.in>
-AuthorDate: Tue Feb 19 18:33:23 2019 +0530
-Commit:     SS-C4 <srirams@iisc.ac.in>
-CommitDate: Tue Feb 19 18:33:23 2019 +0530
-
-    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
-
 commit 17f3801c5a952ff603b19726e20f923c9ab9933c
 Author:     SS-C4 <srirams@iisc.ac.in>
 AuthorDate: Tue Feb 19 18:32:51 2019 +0530
@@ -98,15 +89,6 @@ CommitDate: Sat Feb 16 16:57:26 2019 +0530
  Code/Primes.idr | 29 +++++++++++++++++++----------
  1 file changed, 19 insertions(+), 10 deletions(-)
 
-commit 6b6c8c1739cb0f547dc30ef042b8367a1433a0f9
-Merge: fde49aa 37a720d
-Author:     SS-C4 <srirams@iisc.ac.in>
-AuthorDate: Sat Feb 16 14:58:57 2019 +0530
-Commit:     SS-C4 <srirams@iisc.ac.in>
-CommitDate: Sat Feb 16 14:58:57 2019 +0530
-
-    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
-
 commit fde49aa31786e86e4a8f9ce622225c357ae40ab9
 Author:     SS-C4 <srirams@iisc.ac.in>
 AuthorDate: Sat Feb 16 14:55:56 2019 +0530
@@ -118,15 +100,6 @@ CommitDate: Sat Feb 16 14:55:56 2019 +0530
  Code/NatUtils.idr | 10 ++++++++
  Code/Primes.idr   | 77 +++++++++++++++++++++++++++++++++++++++++++++----------
  2 files changed, 74 insertions(+), 13 deletions(-)
-
-commit c6441f4069273b0687574d0fa3fe931c103dcc5a
-Merge: 08869b0 46bf738
-Author:     SS-C4 <srirams@iisc.ac.in>
-AuthorDate: Fri Feb 15 21:14:08 2019 +0530
-Commit:     SS-C4 <srirams@iisc.ac.in>
-CommitDate: Fri Feb 15 21:14:08 2019 +0530
-
-    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
 
 commit 08869b00f722e0dffe01f86478762397bda444ac
 Author:     SS-C4 <srirams@iisc.ac.in>
@@ -149,24 +122,6 @@ CommitDate: Fri Feb 15 18:18:27 2019 +0530
 
  Code/Primes.idr | 57 ++++++++++++++++++++++++++++++++++++++++++++++++---------
  1 file changed, 48 insertions(+), 9 deletions(-)
-
-commit f55e213b0029f6cb68488660de0a1001dfb64446
-Merge: 3bd46ab 4a3b167
-Author:     SS-C4 <srirams@iisc.ac.in>
-AuthorDate: Fri Feb 15 18:17:09 2019 +0530
-Commit:     SS-C4 <srirams@iisc.ac.in>
-CommitDate: Fri Feb 15 18:17:09 2019 +0530
-
-    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
-
-commit 3bd46abaaf8c1c08000676972edd5eecbf9ce642
-Merge: 4ec18e3 489c9f6
-Author:     SS-C4 <srirams@iisc.ac.in>
-AuthorDate: Fri Feb 15 14:55:09 2019 +0530
-Commit:     SS-C4 <srirams@iisc.ac.in>
-CommitDate: Fri Feb 15 14:55:09 2019 +0530
-
-    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
 
 commit 4ec18e3787fe0c4c6874f8ecedcc14931c70dca7
 Author:     SS-C4 <srirams@iisc.ac.in>
@@ -215,15 +170,6 @@ CommitDate: Sun Feb 10 09:16:59 2019 +0530
  Code/Linear.MultiSolver.idr | 5 +++++
  1 file changed, 5 insertions(+)
 
-commit bd1a129573b5308bcdd816ae828d01b50ca1fc5c
-Merge: 74a47fb 7c88b92
-Author:     SS-C4 <srirams@iisc.ac.in>
-AuthorDate: Sun Feb 10 09:13:41 2019 +0530
-Commit:     SS-C4 <srirams@iisc.ac.in>
-CommitDate: Sun Feb 10 09:13:41 2019 +0530
-
-    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
-
 commit 74a47fb42abdeb7281f7524a1460922cb7fb8bff
 Author:     SS-C4 <srirams@iisc.ac.in>
 AuthorDate: Sun Feb 10 09:09:13 2019 +0530
@@ -247,15 +193,6 @@ CommitDate: Sat Feb 9 21:42:41 2019 +0530
  Code/Linear.MultiSolver.idr | 147 ++++++++++++++++++++++++++++++++++++++++++++
  2 files changed, 148 insertions(+)
 
-commit d5660fbfffb7a1514c2a90edde941f1d42487cfe
-Merge: 62a2c8e 84c75e3
-Author:     SS-C4 <srirams@iisc.ac.in>
-AuthorDate: Thu Feb 7 06:39:12 2019 +0530
-Commit:     SS-C4 <srirams@iisc.ac.in>
-CommitDate: Thu Feb 7 06:39:12 2019 +0530
-
-    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
-
 commit 62a2c8e960d6ecf9956b21e8d3037b0f71ac3521
 Author:     SS-C4 <srirams@iisc.ac.in>
 AuthorDate: Thu Feb 7 06:38:16 2019 +0530
@@ -267,15 +204,6 @@ CommitDate: Thu Feb 7 06:38:16 2019 +0530
  Code/Bezout.idr | 17 +++++++--------
  Code/gcd.idr    | 64 +++++++++++++++++++++++++++++++++++++++++----------------
  2 files changed, 55 insertions(+), 26 deletions(-)
-
-commit ca6cffec7ef5c64102fa358f54dfafc2ad32fbec
-Merge: 4c3f412 2fb9a6f
-Author:     SS-C4 <srirams@iisc.ac.in>
-AuthorDate: Wed Feb 6 05:58:00 2019 +0530
-Commit:     SS-C4 <srirams@iisc.ac.in>
-CommitDate: Wed Feb 6 05:58:00 2019 +0530
-
-    Merge branch 'master' of https://github.com/siddhartha-gadgil/LTS2019
 
 commit 4c3f41272d4ae7351a8dd44ba1012ed612f8a947
 Author:     SS-C4 <srirams@iisc.ac.in>
