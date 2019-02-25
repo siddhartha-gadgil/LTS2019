@@ -5,199 +5,7 @@ checking congruence.idr
 checking Divisors.idr
 checking Field.idr
 checking Finite.idr
-checking fn_to_vect.idr
-checking gcd.idr
-checking GCDZZ.idr
-checking Graph_alt.idr
- Can't find import Matrix
-checking Graphexamples.idr
- Can't find import data/Vect
-checking Graph.idr
-checking Group.CosetRep.idr
- Can't find import Cosets
-checking Group.Cosets.idr
-checking Group.FiniteGenerate.idr
-checking Group.idr
-checking Group_property2.idr
-Group_property2.idr:14:51-83:
-   |
-14 |                     (f : dom -> cod) -> (pfhom : (Hom dom (*) pfdom cod (+) pfcod f)) -> 
-   |                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-When checking type of Group_property2.Group_property_8:
-When checking an application of function Group.Hom:
-        Type mismatch between
-                dom -> dom -> dom (Type of (*))
-        and
-                Group dom (Expected type)
-        
-        Specifically:
-                Type mismatch between
-                        \uv => dom -> uv
-                and
-                        Group
-
-checking Group_property.idr
-checking InsertionSort.idr
-checking Lecture_Evens.idr
-checking Lecture.GCD.idr
-checking Lecture.Intro.idr
-checking Lecture.NatTree.idr
-checking Lecture.RecRule.idr
-checking Lecture.Tuple.idr
-checking LinearAlgebra.idr
-MultiSolver.idr:141:21-144:56:
-    |
-141 |                     replaceAt
-    |                     ~~~~~~~~~ ...
-When checking right hand side of cofRow with expected type
-        Vect (S k) ZZPair
-
-When checking argument iter to MultiSolver.cofRow:
-        No such variable embn
-
-MultiSolver.idr:154:21-157:40:
-    |
-154 |                     replaceAt
-    |                     ~~~~~~~~~ ...
-When checking right hand side of cofMat with expected type
-        Matrix (S k) (S k) ZZPair
-
-When checking argument iter to MultiSolver.cofRow:
-        No such variable tofinNat
-
-MultiSolver.idr:169:15-17:
-    |
-169 |              (S k) => transpose (cofMat (S k) mat (tofinNat (k) (S k)))
-    |               ~~~
-When checking right hand side of MultiSolver.case block in invMat at MultiSolver.idr:167:23 with expected type
-        Vect (S k) (Vect (S k) (ZZ, ZZ))
-
-When checking argument iter to MultiSolver.cofMat:
-        No such variable tofinNat
-
-checking Linear.idr
-checking Lists.idr
-checking Merge.idr
- Can't find import Evens
-checking Monoid.idr
-checking MultiSolver.idr
-MultiSolver.idr:141:21-144:56:
-    |
-141 |                     replaceAt
-    |                     ~~~~~~~~~ ...
-When checking right hand side of cofRow with expected type
-        Vect (S k) ZZPair
-
-When checking argument iter to MultiSolver.cofRow:
-        No such variable embn
-
-MultiSolver.idr:154:21-157:40:
-    |
-154 |                     replaceAt
-    |                     ~~~~~~~~~ ...
-When checking right hand side of cofMat with expected type
-        Matrix (S k) (S k) ZZPair
-
-When checking argument iter to MultiSolver.cofRow:
-        No such variable tofinNat
-
-MultiSolver.idr:169:15-17:
-    |
-169 |              (S k) => transpose (cofMat (S k) mat (tofinNat (k) (S k)))
-    |               ~~~
-When checking right hand side of MultiSolver.case block in invMat at MultiSolver.idr:167:23 with expected type
-        Vect (S k) (Vect (S k) (ZZ, ZZ))
-
-When checking argument iter to MultiSolver.cofMat:
-        No such variable tofinNat
-
-checking NatOrder.idr
-NatOrder.idr:149:17-18:
-    |
-149 | leqTotalOrder = ((leqRefl, leqAntiSymmetric, leqTransitive), leqTotal)
-    |                 ~~
-When checking right hand side of leqTotalOrder with expected type
-        isTotalOrder LEQ
-
-When checking argument b to constructor Builtins.MkPair:
-        Type mismatch between
-                InclusiveEither (LEQ a1 b2) (LEQ b2 a1) (Type of leqTotal)
-        and
-                (a : Nat) ->
-                (b : Nat) ->
-                InclusiveEither (k : Nat ** plus a k = b)
-                                (k : Nat ** plus b k = a) (Expected type)
-        
-        Specifically:
-                Type mismatch between
-                        InclusiveEither (k : Nat ** plus a1 k = b2)
-                                        (k : Nat ** plus b2 k = a1)
-                and
-                        (a : Nat) ->
-                        (b : Nat) ->
-                        InclusiveEither (k : Nat ** plus a k = b)
-                                        (k : Nat ** plus b k = a)
-
-checking NatUtils.idr
-checking Order.idr
-checking PermCons.idr
-checking Permutation.idr
-checking pigeonhole.idr
-checking Primes.idr
-checking Quicksort.idr
-checking Quotient_Group.idr
-Group_property2.idr:14:51-83:
-   |
-14 |                     (f : dom -> cod) -> (pfhom : (Hom dom (*) pfdom cod (+) pfcod f)) -> 
-   |                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-When checking type of Group_property2.Group_property_8:
-When checking an application of function Group.Hom:
-        Type mismatch between
-                dom -> dom -> dom (Type of (*))
-        and
-                Group dom (Expected type)
-        
-        Specifically:
-                Type mismatch between
-                        \uv => dom -> uv
-                and
-                        Group
-
-checking Rationals.idr
-checking Ring.idr
-checking Ring.Properties.idr
- Can't find import Rings
-checking Sign.idr
-checking SortingWithProof.idr
- Can't find import permutation
-checking ZZ.idr
-checking ZZUtils.idr
-checking BaseN.idr
-checking Bezout.idr
-checking Choice.idr
-checking congruence.idr
-checking Divisors.idr
-checking Field.idr
-checking Finite.idr
 checking FinUtils.idr
-FinUtils.idr:24:18-26:35:
-   |
-24 | addfin n x y z = case (tofin ((tonatFin (S n) x)+ (tonatFin (S n) y) + (tonatFin (S n) z)) (S n)) of
-   |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ...
-When checking right hand side of addfin with expected type
-        (Fin (S n), Fin (S n))
-
-No such variable tofin
-
-FinUtils.idr:35:24-37:34:
-   |
-35 | mulfinNat (S n) x y =  case tofin ((tonatFin (S n) x)*(tonatFin (S n) y)) (S n) of
-   |                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ...
-When checking right hand side of mulfinNat with expected type
-        (Fin (S n), Fin (S n))
-
-No such variable tofin
-
 checking fn_to_vect.idr
 checking gcd.idr
 checking GCDZZ.idr
@@ -205,63 +13,25 @@ checking Graph_alt.idr
  Can't find import Matrix
 checking Graphexamples.idr
 checking Graph.idr
-checking Group.CosetRep.idr
- Can't find import Cosets
-checking Group.Cosets.idr
+checking GroupCosetRep.idr
+checking GroupCosets.idr
 checking Group.FiniteGenerate.idr
 checking Group.idr
 checking Group_property2.idr
 checking Group_property.idr
 checking InsertionSort.idr
-checking Lecture_Evens.idr
+checking LectureEvens.idr
 checking Lecture.GCD.idr
 checking Lecture.Intro.idr
 checking Lecture.NatTree.idr
 checking Lecture.RecRule.idr
 checking Lecture.Tuple.idr
 checking LinearAlgebra.idr
-FinUtils.idr:24:18-26:35:
-   |
-24 | addfin n x y z = case (tofin ((tonatFin (S n) x)+ (tonatFin (S n) y) + (tonatFin (S n) z)) (S n)) of
-   |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ...
-When checking right hand side of addfin with expected type
-        (Fin (S n), Fin (S n))
-
-No such variable tofin
-
-FinUtils.idr:35:24-37:34:
-   |
-35 | mulfinNat (S n) x y =  case tofin ((tonatFin (S n) x)*(tonatFin (S n) y)) (S n) of
-   |                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ...
-When checking right hand side of mulfinNat with expected type
-        (Fin (S n), Fin (S n))
-
-No such variable tofin
-
 checking Linear.idr
 checking Lists.idr
 checking Merge.idr
- Can't find import Lecture/Evens
 checking Monoid.idr
 checking MultiSolver.idr
-FinUtils.idr:24:18-26:35:
-   |
-24 | addfin n x y z = case (tofin ((tonatFin (S n) x)+ (tonatFin (S n) y) + (tonatFin (S n) z)) (S n)) of
-   |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ...
-When checking right hand side of addfin with expected type
-        (Fin (S n), Fin (S n))
-
-No such variable tofin
-
-FinUtils.idr:35:24-37:34:
-   |
-35 | mulfinNat (S n) x y =  case tofin ((tonatFin (S n) x)*(tonatFin (S n) y)) (S n) of
-   |                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ...
-When checking right hand side of mulfinNat with expected type
-        (Fin (S n), Fin (S n))
-
-No such variable tofin
-
 checking NatOrder.idr
 NatOrder.idr:149:17-18:
     |
@@ -319,6 +89,5 @@ checking Ring.idr
 checking Ring.Properties.idr
 checking Sign.idr
 checking SortingWithProof.idr
- Can't find import perm_cons
 checking ZZ.idr
 checking ZZUtils.idr

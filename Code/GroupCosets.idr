@@ -1,4 +1,4 @@
-module Group.Cosets
+module GroupCosets
 
 import Group
 %access public export
