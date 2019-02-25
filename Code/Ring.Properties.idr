@@ -1,6 +1,6 @@
 module RingProperties
 
-import Rings
+import Ring
 import Monoid
 import Group
 import Group_property

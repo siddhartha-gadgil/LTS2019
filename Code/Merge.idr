@@ -2,7 +2,7 @@ module Mergesort
 
 import Data.Vect
 
-import Evens
+import Lecture.Evens
 
 -- import SortingWithProof
 

@@ -2,7 +2,7 @@ module sorting_with_proof
 
 import Data.Vect
 import Data.Fin
-import permutation
+import Permutation
 import perm_cons
 import Finite
 
