@@ -1,0 +1,33 @@
+commit 39df013d8ec65e3062fe16fe3e759c11f1f1b970
+Author:     Insignificant <aditvishnu3@gmail.com>
+AuthorDate: Sun Feb 24 20:26:43 2019 +0530
+Commit:     Insignificant <aditvishnu3@gmail.com>
+CommitDate: Sun Feb 24 20:26:43 2019 +0530
+
+    Function to prove either composite or prime
+
+ Code/NatUtils.idr | 15 +++++++++++++++
+ Code/Primes.idr   | 18 ++++++++++++++++++
+ 2 files changed, 33 insertions(+)
+
+commit 2118cbf68ebf6a678903efb2f870d2de08368347
+Author:     Insignificant <aditvishnu3@gmail.com>
+AuthorDate: Sun Feb 24 14:27:47 2019 +0530
+Commit:     Insignificant <aditvishnu3@gmail.com>
+CommitDate: Sun Feb 24 14:27:47 2019 +0530
+
+    Update NatUtils.idr
+
+ Code/NatUtils.idr | 15 ---------------
+ 1 file changed, 15 deletions(-)
+
+commit dcd7bd8e157ddf29708b1e6361cdf82660e241e3
+Author:     Insignificant <aditvishnu3@gmail.com>
+AuthorDate: Sat Feb 23 23:54:19 2019 +0530
+Commit:     Insignificant <aditvishnu3@gmail.com>
+CommitDate: Sat Feb 23 23:54:19 2019 +0530
+
+    Max function added
+
+ Code/NatUtils.idr | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)

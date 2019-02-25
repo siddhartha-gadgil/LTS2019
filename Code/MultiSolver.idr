@@ -6,7 +6,7 @@ module MultiSolver
 import ZZ
 import Data.Matrix.Numeric
 import Data.Fin
-import BaseN
+import FinUtils
 import Rationals
 
 %access public export

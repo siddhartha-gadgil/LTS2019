@@ -7,24 +7,11 @@ import Data.Fin
 import Data.Matrix
 import ZZ
 import Rationals
+import FinUtils
 
 %access public export
 
 -- Some auxillary functions for elementary operations
-
---Euclid's div
-Eucl: (a: Nat) -> (b: Nat) -> (Nat, Nat)
-Eucl Z b = (0,0)
-Eucl (S k) b = case (lte (S (S k)) b) of
-                    False => (S(fst(Eucl (minus (S k) b) b)), snd(Eucl (minus (S k) b) b))
-                    True => (0, S k)
-
---Nat to Fin (modular values)
-tofinNat: (a: Nat) -> (n: Nat) -> Fin n
-tofinNat Z (S j) = FZ
-tofinNat (S k) (S j) = case lte (S k) (S j) of
-                True => FS (tofinNat k j)
-                False =>  (tofinNat (snd(Eucl (S k) (S j))) (S j))
 
 FST: ZZPair -> ZZ
 FST (a, b) = a
@@ -159,7 +146,7 @@ ReduceRow {n = n} x (S k) = case ((FST(ij x (S k) (S k)))) of
                                  (NegS k) => ScaleRow n (ReduceRow x k) (S k) (divZZ (1,1) (ij x (S k) (S k)))
 
 -- This function converts any matrix into the identity. Applying the row operations which do this to an identity matrix would convert it
--- to an inverse. If we want to solve linear equations, this would be enough (for proof, we would need to prove that AA^-1 = I). 
+-- to an inverse. If we want to solve linear equations, this would be enough (for proof, we would need to prove that AA^-1 = I).
 -- Another possibility would be to use back-substitution from the upper-triangular form. This would be simpler because the function
 -- GeneralEqSolver from Linear.idr could be modified a bit to solve n successive 1 - variable equations, and generating a proof would
 -- be easier.
@@ -175,14 +162,14 @@ DiagonalProductHelper x Z = (ij x 0 0)
 DiagonalProductHelper x (S k) = (ij x (S k) (S k)) * (DiagonalProductHelper x k)
 
 -- Calculates the determinant up to the sign ( (-1)^n to be implemented later ). Effectively, this calculates the "volume" of n-vectors in
--- n-dimensional Euclidean space. 
+-- n-dimensional Euclidean space.
 
 DetUpToSign: (x: Matrix n n ZZPair) -> ZZPair
 DetUpToSign {n} x = simplifyRational (DiagonalProductHelper (DiagonalForm x) (Pred n))
 
 -- I propose a simple way to calculate the sign factor: in the conversion to upper-triangular form, the last column is untouched
--- except for by Row Swapping. The last column in upper - triangular form is thus a permutation of the last column of the original 
--- matrix. We just need to check if this is an odd or even permutation (simplification of all elements of the matrices will be 
+-- except for by Row Swapping. The last column in upper - triangular form is thus a permutation of the last column of the original
+-- matrix. We just need to check if this is an odd or even permutation (simplification of all elements of the matrices will be
 -- necessary to ensure that this can be carried out) and multiply appropriately.
 
 -- A short section consisting of functions used to simplify a matrix of ZZPairs
@@ -205,9 +192,19 @@ simplifyRow n x row = simplifyRowHelper n x row (Pred n)
 
 simplifyMatrixHelper: (n: Nat) -> (x: Matrix n n ZZPair) -> (iter: Nat) -> Matrix n n ZZPair
 simplifyMatrixHelper n x Z = simplifyRow n x Z
-simplifyMatrixHelper n x (S k) = simplifyMatrixHelper n (simplifyMatrixHelper n x k) (S k)
+simplifyMatrixHelper n x (S k) = simplifyRow n (simplifyMatrixHelper n x k) (S k)
 
 simplifyMatrix: (x: Matrix n n ZZPair) -> (Matrix n n ZZPair) -- simplifies all the rationals in the matrix, takes a while to run
-simplifyMatrix {n} x = simplifyMatrixHelper n x (Pred n) 
+simplifyMatrix {n} x = simplifyMatrixHelper n x (Pred n)
 
+-- some functions which will be used to find the rank of a matrix
 
+DiagElement: (x: Matrix n n ZZPair) -> (pos: Nat) -> ZZPair
+DiagElement x pos = (ij x pos pos)
+
+DiagElements: (n: Nat) -> (x: Matrix n n ZZPair) -> (iter: Nat) -> Vect n ZZPair
+DiagElements n x Z = ChangeElementRow n (empRow n) Z (DiagElement x Z)
+DiagElements n x (S k) = ChangeElementRow n (DiagElements n x k) (S k) (DiagElement x (S k))
+
+DiagElementVect: Matrix n n ZZPair -> Vect n ZZPair
+DiagElementVect {n} x = DiagElements n x (Pred n)

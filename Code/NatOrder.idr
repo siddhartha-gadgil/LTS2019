@@ -1,6 +1,7 @@
 module NatOrder
 
 import NatUtils
+import Order
 
 %default total
 %access public export
@@ -124,6 +125,28 @@ leqTransitive : {a : Nat} -> {b : Nat} -> {c : Nat} -> (LEQ a b) -> (LEQ b c) ->
 leqTransitive {a} {b} {c} (k ** proofEqLeft) (l ** proofEqRight) = ((k + l) ** proofEq) where
 	proofEq = rewrite (plusAssociative a k l) in
 			trans (cong {f = (\n => n + l)} proofEqLeft) (proofEqRight)
+
+|||Proof that !(a <= b) and !(b <= a) is impossible
+notBothLEQ : {a : Nat} -> {b : Nat} -> (Not (LEQ a b)) -> (Not (LEQ b a)) -> Void
+notBothLEQ {a} {b} notaLEQb notbLEQa =
+	case (notLEQImpliesGNEQ notaLEQb) of
+	(bLEQa, bNotEqa) =>
+		case (notLEQImpliesGNEQ notbLEQa) of
+		(aLEQb, aNotEqb) =>
+			void (aNotEqb (leqAntiSymmetric aLEQb bLEQa))
+
+|||Proof that LEQ is a total order (any two elements are comparable)
+leqTotal : {a : Nat} -> {b : Nat} -> InclusiveEither (LEQ a b) (LEQ b a)
+leqTotal {a} {b} = case (isLEQ a b) of
+				(Yes aLEQb) => case (isLEQ b a) of
+							(Yes bLEQa) => (Both aLEQb bLEQa)
+							(No bNotLEQa) => (LeftInc aLEQb bNotLEQa)
+				(No aNotLEQb) => case (isLEQ b a) of
+							(Yes bLEQa) => (RightInc aNotLEQb bLEQa)
+							(No bNotLEQa) => void (notBothLEQ aNotLEQb bNotLEQa)
+
+-- leqTotalOrder : isTotalOrder LEQ
+-- leqTotalOrder = ((leqRefl, leqAntiSymmetric, leqTransitive), leqTotal)
 
 |||Proof that a <= b implies a <= b + c
 leqPlusRight : {a : Nat} -> {b : Nat} -> (c : Nat) -> (LEQ a b) -> (LEQ a (b + c))

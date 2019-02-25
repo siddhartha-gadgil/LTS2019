@@ -2,7 +2,22 @@ module Mergesort
 
 import Data.Vect
 
-import Evens
+import LectureEvens
+
+-- import SortingWithProof
+
+total
+NatVect : Nat -> Type
+NatVect n = Vect n Nat
+
+total
+SortProof : (n : Nat) -> (NatVect n) -> (Fin n) -> Type
+SortProof Z v a impossible
+SortProof (S k) v l = LTE (Vect.index (pred l) v) (Vect.index l v)
+
+total
+IsSorted : (n : Nat) -> (v : (NatVect n)) -> Type
+IsSorted n v = (k : Fin n) -> (SortProof n v k)
 
 --Takes the first m elements from a vector
 Vecttake : (m:Nat)->Vect n elem -> LTE m n -> Vect m  elem
@@ -13,19 +28,19 @@ Vecttake (S k) (x::xs) (LTESucc pf) = x::(Vecttake k xs pf)
 Vecttakefromlast :(m:Nat)->Vect n elem -> LTE m n ->Vect m elem
 Vecttakefromlast m xs pf = reverse (Vecttake  m (reverse xs) pf)
 
--- Inserts an element at the end of the vector 
+-- Inserts an element at the end of the vector
 insertend : (x:elem)->Vect n elem->Vect (S n) elem
 insertend x [] = [x]
 insertend x (y :: xs) = y::(insertend x xs)
 
 --apNat as defined in class. Lemma that proves that if n = m, then f(n) = f(m)
-apNat : (f: Nat -> Nat) -> (n: Nat) -> (m: Nat) -> n = m -> f n = f m
-apNat f m m Refl = Refl
+-- apNat : (f: Nat -> Nat) -> (n: Nat) -> (m: Nat) -> n = m -> f n = f m
+-- apNat f m m Refl = Refl
 
 --defined in class. Returns n/2 if n is even
-half : (n: Nat) -> IsEven n -> Nat
-half Z ZEven = 0
-half (S (S k)) (SSEven k x) = S (half k x)
+-- half : (n: Nat) -> IsEven n -> Nat
+-- half Z ZEven = 0
+-- half (S (S k)) (SSEven k x) = S (half k x)
 
 --returns (n - 1)/2 if (n + 1) is odd
 halfnMinusone : (n : Nat) -> (IsEven (S n)) -> Nat
@@ -77,11 +92,11 @@ nLTEhalfOddn : (n : Nat) -> (pf : IsEven (S n)) -> LTE n ((half (S n) pf) + (hal
 nLTEhalfOddn n pf = equalImpliesLTE n ((half (S n) pf) + (halfnMinusone n pf)) (sym (nEqualhalfOddn n pf))
 
 -- proof the n is either odd or even (done in class)
-nOrSnEven: (n: Nat) -> Either (IsEven n) (IsEven (S n))
-nOrSnEven Z = Left ZEven
-nOrSnEven (S k) = case (nOrSnEven k) of
-                       (Left l) => Right (SSEven k l)
-                       (Right r) => Left r
+-- nOrSnEven: (n: Nat) -> Either (IsEven n) (IsEven (S n))
+-- nOrSnEven Z = Left ZEven
+-- nOrSnEven (S k) = case (nOrSnEven k) of
+--                        (Left l) => Right (SSEven k l)
+--                        (Right r) => Left r
 
 -- function that takes a vector of even length, and divides it into two equal halves
 halfVectEven : Vect n elem -> (pf : IsEven n) -> ((Vect (half n pf) elem), (Vect (half n pf) elem))
@@ -129,6 +144,9 @@ merge1 {n= (S k)}{m= (S j)} (x :: xs) (y :: ys) = case x<=y of
                                  False => y::(sillycast( (merge1  (x::xs) ys)))
                                  True => x::(merge1 xs (y::ys))
 
+mergeNat : (v1 : (NatVect n)) -> (v2 : (NatVect m)) -> (NatVect (n + m))
+mergeNat v1 v2 = merge1 v1 v2
+
 --The mergesort function
 -- working of mergesort :
 -- Step 1 : Checks if the lenght of the vector is odd or Even
@@ -145,3 +163,17 @@ mergesort [x] = [x]
 mergesort {n} xs = case (nOrSnEven n) of
                     (Left nEven) => sillycastEven n nEven (merge1 (mergesort (fst(halfVectEven xs nEven))) (mergesort (snd(halfVectEven xs nEven))))
                     (Right snEven) => sillycastOdd n snEven (merge1 (mergesort (fst(halfVectOdd xs snEven))) (mergesort (snd(halfVectOdd xs snEven))))
+
+--GOAL : To prove that mergesort v is sorted for all vectors v with elem = Nat
+
+-- Given a sorted vector (call it v) and an element (call it x) that is LTE the first element of v, proof that (x :: v) is sorted
+total
+addElemSorted : (x : Nat) -> (v : NatVect (S k)) -> (LTE x (Vect.index (FZ) v)) -> IsSorted (S k) v -> IsSorted (S (S k)) (x :: v)
+addElemSorted x v pf1 pf2 FZ = reflLTE (Vect.index (FZ) (x :: v))
+addElemSorted x v pf1 pf2 (FS FZ) = pf1
+addElemSorted x v pf1 pf2 (FS (FS j)) = (pf2 (FS j))
+
+-- mergeNatIsSorted : (v1 : Vect n Nat) -> (IsSorted n v1) -> (v2 : Vect m Nat) -> (IsSorted m v2) -> IsSorted (n + m) (mergeNat v1 v2)
+-- mergeNatIsSorted {n = (S k)} {m = (S j)} (z :: xs) x (w :: ys) y = case (isLTE z w) of
+--                                                                   (Yes pf) => addElemSorted z (mergeNat xs (w :: ys)) pf (mergeNatIsSorted xs x (w :: ys) y)
+--                                                                   (No contra) => ?rhs

@@ -11,7 +11,7 @@ import Group_property
 total
 Group_property_8 : (dom : Type) -> ((*) : dom -> dom -> dom) -> (pfdom : IsGroup dom (*)) ->
                     (cod : Type) -> ((+) : cod -> cod -> cod) -> (pfcod : IsGroup cod (+)) ->
-                    (f : dom -> cod) -> (pfhom : (Hom dom (*) pfdom cod (+) pfcod f)) -> 
+                    (f : dom -> cod) -> (pfhom : (Hom dom (MkGroup dom (*) pfdom) cod (MkGroup cod (+) pfcod) f)) -> 
                     (a : dom) -> ( (f (Inv dom (*) pfdom a)) = (Inv cod (+) pfcod (f a)) )
                    
 Group_property_8 dom (*) pfdom cod (+) pfcod f pfhom a = let

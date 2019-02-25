@@ -1,4 +1,4 @@
-module Cosets
+module GroupCosets
 
 import Group
 %access public export
