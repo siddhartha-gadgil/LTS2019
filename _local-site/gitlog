@@ -1,215 +1,276 @@
-commit a302e8f2a1708d4dad8b5b515a9bb4435fdd86c1
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Wed Feb 13 18:59:17 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Wed Feb 13 18:59:17 2019 +0530
+commit 1798fc49166d84bb76a1469bda812231b6c5dfac
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 22 08:38:45 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 22 08:38:45 2019 +0530
 
-    correction + Diagonal Form of a matrix
-    
-    I made a minor correction in a line. Upper - Triangular forms can be found for all matrices now (n x n), modulo computational blow ups. Also, Diagonal Forms can be found as described in the code.
-    
-    Note: finding the magnitude of the determinant is easy using this, but due to Row Swaps, the sign of the determinant must be found in some other way (maybe a clever linear algebra trick).
-    
-    -- Abishek (AR-MA210)
+    More fixes
 
- Code/LinearAlgebra.idr | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ Code/Primes.idr | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-commit a2a2b35f5907291b1aeecccc7f752f20cf9c84fe
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Tue Feb 12 22:16:50 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Tue Feb 12 22:16:50 2019 +0530
+commit c082b340180b0ef56116b2fc02ba35af0a2feee7
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 22 08:35:19 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 22 08:35:19 2019 +0530
 
-    Gauss-Jordan implemented
-    
-    Using the MakeColumnZero function recursively, I implemented Gauss-Jordan elimination as far as to make a matrix upper triangular.
-    
-    -- Abishek (AR-MA210)
+    Some more fixes
 
- Code/LinearAlgebra.idr | 11 +++++++++++
+ Code/Primes.idr | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+commit e1f48fc88b9722de00977c1ade68bfaec1792c0b
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 22 08:31:51 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 22 08:31:51 2019 +0530
+
+    Fixed code broken by subsequent commits.
+
+ Code/Primes.idr | 66 ++++++++++-----------------------------------------------
+ Code/gcd.idr    | 15 +++++++------
+ 2 files changed, 19 insertions(+), 62 deletions(-)
+
+commit 8fce576a81fbd3f6a1904ccdbe09694abd54a256
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Thu Feb 21 14:59:08 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Thu Feb 21 14:59:08 2019 +0530
+
+    Updated NatUtils with a few functions and almost completed the `decDiv` type
+
+ Code/NatUtils.idr | 18 ++++++++---
+ Code/Primes.idr   | 95 +++++++++++++++++++++++++++++++++++++++++++++----------
+ Code/gcd.idr      |  2 +-
+ 3 files changed, 92 insertions(+), 23 deletions(-)
+
+commit d2e8f0b3964fcabd5521f7e8a6ba19be539a7068
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Wed Feb 20 18:23:55 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Wed Feb 20 18:23:55 2019 +0530
+
+    Update report
+
+ _reports/ss/ss.md | 11 +++++++++++
  1 file changed, 11 insertions(+)
 
-commit 1adc1e651b7b7f3d0f58505793e06ec13e93ae50
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Tue Feb 12 15:24:33 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Tue Feb 12 15:24:33 2019 +0530
+commit 17f3801c5a952ff603b19726e20f923c9ab9933c
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Tue Feb 19 18:32:51 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Tue Feb 19 18:32:51 2019 +0530
 
-    Using Row Operations
-    
-    The row operations that I implemented earlier can now be put to use - namely for making a particular element in a matrix zero 'MakeElementZero' takes a matrix M, a row A, a row B, a position P in the row, and does a row operation to make M[A][P] equal to zero. 'MakeColumnZero' takes a matrix M, a specified column, and calls MakeElementZero to insert zeros appropriately (into upper triangular form). The next step here is to recursively use MakeColumnZero to make a matrix upper triangular (good for finding the determinant and solving linear equations/inverting).
-    
-    -- Abishek (AR-MA210)
+    decidability updated - one case left
 
- Code/LinearAlgebra.idr | 63 +++++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 55 insertions(+), 8 deletions(-)
+ Code/Primes.idr | 69 ++++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 61 insertions(+), 8 deletions(-)
 
-commit 7a12fcc8932277255b89ad5143c43e0d5c01b7cc
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Sun Feb 10 20:36:52 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sun Feb 10 20:36:52 2019 +0530
+commit c082b7e4ba83d14b8d8ebb2ec576f6581d2edc26
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sat Feb 16 17:05:44 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sat Feb 16 17:05:44 2019 +0530
 
-    started Linear Dependence
-    
-    Checking if vectors are dependent can be done through the determinant. However, to check if vectors are linearly dependent (and to give a proof), we need a linear combination of them which is zero. For this, we can use standard elimination techniques in Linear Algebra. To do this, I started implementing elementary operations to do Gaussian elimination (row operations and swapping rows).
-    
-    -- Abishek (AR-MA210)
+    Commented out the code producing errors
 
- Code/LinearAlgebra.idr | 59 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ Code/NatUtils.idr | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-commit 17fca0022588c0c3d3e7e3a69e7b634df61dc2a8
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Sun Feb 10 20:35:27 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sun Feb 10 20:35:27 2019 +0530
+commit 6e97ab4697f5bd80ea08b4092c78eb279142249d
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sat Feb 16 16:57:26 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sat Feb 16 16:57:26 2019 +0530
 
-    public export
-    
-    added export
+    Started work on a decidable routine for divisibility
 
- Code/Linear.idr | 2 ++
- 1 file changed, 2 insertions(+)
+ Code/Primes.idr | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-commit 55fe7ea3e76e97f6fa4a7de852fec0ba9f3c93e2
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Sat Feb 9 19:49:07 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sat Feb 9 19:49:07 2019 +0530
+commit fde49aa31786e86e4a8f9ce622225c357ae40ab9
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sat Feb 16 14:55:56 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sat Feb 16 14:55:56 2019 +0530
 
-    Done with 1 variable rational equations, moving to Diophantine
-    
-    The general linear equation ax+b=c can be solved using this with a proof that it is a solution. As explained in the program, I will extend this to Diophantine equations (this will require use of the quotient-remainder algorithm to check if the denominator is a divisor of the numerator, and if so, to print the quotient as the integer solution; details can be found in the previous update).
-    
-    Also, unfortunately, I am not able to prove that ( a*c + a*(-b) + b*a = a*c ) in the function helper4; the methods which worked to transform equalities in other helper functions somehow lead to type errors in this. I have left it as a hole for now.
-    
-    -- Abishek (AR-MA210)
+    Added some lemmas to Primes and NatUtils, will be useful in defining a decidable type for divisibility.
 
- Code/Linear.idr | 35 ++++++++++++++++++++++++++++++++---
+ Code/NatUtils.idr | 10 ++++++++
+ Code/Primes.idr   | 77 +++++++++++++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 74 insertions(+), 13 deletions(-)
+
+commit 08869b00f722e0dffe01f86478762397bda444ac
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 15 18:55:37 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 15 18:55:37 2019 +0530
+
+    Updated the report with current progress
+
+ _reports/ss/ss.md | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
+
+commit f6b8654ee55cd3d58a7452dd68d206c7cd63605e
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 15 18:18:27 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 15 18:18:27 2019 +0530
+
+    Started work on primes. Defined a total order for Nats, and created a primitive primality checker
+
+ Code/Primes.idr | 57 ++++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 48 insertions(+), 9 deletions(-)
+
+commit 4ec18e3787fe0c4c6874f8ecedcc14931c70dca7
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Thu Feb 14 10:35:32 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Thu Feb 14 10:35:32 2019 +0530
+
+    Pushing.
+
+ Code/Primes.idr | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+commit 8d438c15a8a4837bd6dde5a066970f8d3eeda4a8
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Thu Feb 14 10:00:12 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Thu Feb 14 10:00:12 2019 +0530
+
+    Changed filename, and added the divZZ function in MultiSolver.idr (for Abishek's LinearAlgebra to compile)
+
+ Code/LinearAlgebra.idr                           | 8 ++++++--
+ Code/{Linear.MultiSolver.idr => MultiSolver.idr} | 8 ++++++--
+ 2 files changed, 12 insertions(+), 4 deletions(-)
+
+commit 4d81e7e8dfb585de2e09997a5537b62092fbe4b5
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Tue Feb 12 11:14:40 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Tue Feb 12 11:14:40 2019 +0530
+
+    Completed the proof.
+    GeneralEqSolver now can solve an equation
+    ax+b=c (a,b,c :ZZ)with proof that it is actually a solution.
+
+ Code/Linear.idr | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
+
+commit 5071a3bbe4ae3da0e2013e105ab3c20ae5aa6752
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sun Feb 10 09:16:59 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sun Feb 10 09:16:59 2019 +0530
+
+    Added usage instructions
+
+ Code/Linear.MultiSolver.idr | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit 74a47fb42abdeb7281f7524a1460922cb7fb8bff
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sun Feb 10 09:09:13 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sun Feb 10 09:09:13 2019 +0530
+
+    Changed input type to ZZPair and implemented a solver for a system of linear equations
+
+ Code/Linear.MultiSolver.idr | 98 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 63 insertions(+), 35 deletions(-)
+
+commit 228398917996fa51a64aa4eb5d312d59dc796a63
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sat Feb 9 21:42:41 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sat Feb 9 21:42:41 2019 +0530
+
+    Defined inverses for matrices of ZZPairsand framework for solving systems of linear equations
+
+ Code/BaseN.idr              |   1 +
+ Code/Linear.MultiSolver.idr | 147 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 148 insertions(+)
+
+commit 62a2c8e960d6ecf9956b21e8d3037b0f71ac3521
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Thu Feb 7 06:38:16 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Thu Feb 7 06:38:16 2019 +0530
+
+    Minor changes in Bezout (to ZZ) and almost complete proof of gcd dividing both a and b.
+
+ Code/Bezout.idr | 17 +++++++--------
+ Code/gcd.idr    | 64 +++++++++++++++++++++++++++++++++++++++++----------------
+ 2 files changed, 55 insertions(+), 26 deletions(-)
+
+commit 4c3f41272d4ae7351a8dd44ba1012ed612f8a947
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Wed Feb 6 05:56:57 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Wed Feb 6 05:56:57 2019 +0530
+
+    update simplifyRational and aux functions
+
+ Code/Rationals.idr | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
+
+commit 6be8c52558546ca254c4b1bc498e3b257d4ca280
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Wed Feb 6 05:55:44 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Wed Feb 6 05:55:44 2019 +0530
+
+    added ZZ.idr and converted some functions to ZZ
+
+ Code/ZZ.idr | 355 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 355 insertions(+)
+
+commit 55bd91abd5b018088f85c3af26941d2d7a788f11
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Mon Feb 4 13:04:20 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Mon Feb 4 13:04:20 2019 +0530
+
+    Added solver for single equation, also checking if the solution exists.
+    Proofs TBD.
+
+ Code/Linear.idr    | 16 ++++++++++++++++
+ Code/Rationals.idr |  2 ++
+ 2 files changed, 18 insertions(+)
+
+commit c92a54c3a915e40b049eabfa008c3bb482ca878a
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Tue Jan 29 13:59:56 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Tue Jan 29 13:59:56 2019 +0530
+
+    Shifted Rationals.idr to Code/
+
+ Code/Rationals.idr | 96 ++++++++++++++++++++++++++++++++++++------------------
+ Rationals.idr      | 87 -------------------------------------------------
+ 2 files changed, 64 insertions(+), 119 deletions(-)
+
+commit 20442039fe1f17278007c319120729b7755a2c89
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Mon Jan 28 07:41:05 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Mon Jan 28 07:41:05 2019 +0530
+
+    Added equality type and simplifyRational
+
+ Rationals.idr | 36 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
+
+commit f3333ebc609f4807cebee152a4b4691fdff298bb
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sun Jan 27 22:59:07 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sun Jan 27 22:59:07 2019 +0530
+
+    Added function to simplify rationals and to generate inverses of rationals.
+    Proofs still remain to be done. Boolean version of equality implemented.
+
+ Code/Rationals.idr | 35 ++++++++++++++++++++++++++++++++---
  1 file changed, 32 insertions(+), 3 deletions(-)
-
-commit 0d2a515ea420abcfa9b0eb8a91b901d32db2dc01
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Thu Feb 7 14:21:39 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Thu Feb 7 14:21:39 2019 +0530
-
-    Added the proof of ncase
-    
-    I added the solution of (ax + b = 0) with proof. I also showed the equivalence between (ax + b = c) and (ax + b + (-c) = 0), so this solution technique can be extended to solve any equation ax + b = c over the rationals. Regarding the solution of Diophantine equations, I think the next step could be proving the reverse implication (any solution of such an equation is of this form) and conclude that the Diophantine equation in one variable has a solution iff the denominator of the rational is 1 or -1.
-    
-    --Abishek (AR-MA210)
-
- Code/Linear.idr | 54 +++++++++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 45 insertions(+), 9 deletions(-)
-
-commit 1f7cab801381a1f2b7e5c14c712d0893bc62effa
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Wed Feb 6 16:48:46 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Wed Feb 6 16:48:46 2019 +0530
-
-    Finished the proof of zcase
-    
-    The equation has been split into two cases based on the value of b. I added in the proof of zcase (the case where b = 0), using a bunch of helper functions. Also, the if-else flow of control was removed because it ensure that proofs can be done smoothly.
-    
-    -- Abishek (AR-MA210)
-
- Code/Linear.idr | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
-
-commit 38ebca11b53fc2db493a99d45a858dd98098e9ff
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Sat Feb 2 22:42:08 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sat Feb 2 22:42:08 2019 +0530
-
-    minor additions and shifting to ZZ
-    
-    The proof for the additive identity is nearly complete - all of the necessary helper proof functions are in place. It just needs to be shown that the sum of the numerator and denominator being zero implies that the rational is zero.
-    
-    Also, the shift from Integer to ZZ has been implemented in most parts of the code (this is useful as proofs can be done with ZZ in the ZZ library).
-    
-    -- Abishek (AR-MA210)
-
- Code/Rationals.idr | 65 +++++++++++++++++++++++-------------------------------
- 1 file changed, 28 insertions(+), 37 deletions(-)
-
-commit ac3ee364e84b3aa82fb602c401499e42bfc8cc0f
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Sat Feb 2 01:21:32 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sat Feb 2 01:21:32 2019 +0530
-
-    partial proofs for additive identity
-    
-    I started the process of proving that the sum of a rational number and it's inverse is 0. For this, I needed the type ZZ (which is an implementation of that integers that allows proofs). I added a few functions for converting between pairs of ZZ and integers. I believe that using cong, the next step (showing that x = -y implies that x+y = 0) can be used to show that the first number in the pair of addition of a number and its inverse is always zero.
-    
-    A similar process can be used for multiplicative inverses, but will involve simplification of the rational generated and showing that it is equal to (1,1).
-    
-    Documentation for ZZ:
-    
-    https://github.com/idris-lang/Idris-dev/blob/master/libs/contrib/Data/ZZ.idr
-
- Code/Rationals.idr | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
-
-commit 429fd11b09106392452f09a37a97eb25e7ecf189
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Tue Jan 29 17:03:27 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Tue Jan 29 17:03:27 2019 +0530
-
-    Some fixes to simplifyRational
-    
-    There was an issue in the simplifyRational function - it gave incorrect results due to an error in the gccd function (calculating the GCD when one number is negative leads to issues with examples such as (3,-6), which is erroneously simplified to (0,1)). I made a minor fix here by forcing the GCD to be a positive number.
-    
-    An issue related to this project: there were two files which were the predecessor of this one. Somehow they were merged, but some of the history seems to be lost in the history of this file. For reference, here are the previous edits:
-    
-    https://github.com/SS-C4/LTS2019/commits/c92a54c3a915e40b049eabfa008c3bb482ca878a/Code/Rationals.idr
-    
-    https://github.com/siddhartha-gadgil/LTS2019/commits/a2b3964a651f0d6dcd75f3985e736392602a7acd/Rationals.idr
-
- Code/Rationals.idr | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
-
-commit 080fd5d0065efffb0afb79720220d35fd9b757c7
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Sat Jan 26 23:56:21 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sat Jan 26 23:56:21 2019 +0530
-
-    A few updates to the non-unique Q
-    
-    I added in proofs for validity of addition and multiplication (with inverses) and extended them to subtraction/division. Simplified form of rationals can be implemented with the necessary proof type for the GCD function (integer division is a bit cumbersome in this). Along with this, defining fields (and showing that this implementation is one) could be the next step.
-
- Rationals.idr | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
-
-commit 4c261057f0b6b9edf38883015d19137bb9855465
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Fri Jan 25 15:49:21 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Fri Jan 25 15:49:21 2019 +0530
-
-    Basic Implementation of Q (non-unique version)
-    
-    This creates the framework for the implementation of Q as p/q. Arithmetic is partially defined (inverses need to be given and non-zero proofs will be inserted where appropriate).
-
- Code/Rationals.idr | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
-
-commit e23e7f5b2d4df83ab81539da2efc5648da11c130
-Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
-AuthorDate: Wed Jan 23 18:30:00 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Wed Jan 23 18:30:00 2019 +0530
-
-    Add files via upload
-    
-    This code performs insertion sort on an array. The sortedness and permutedness will be implemented.
-
- Code/InsertionSort.idr | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
