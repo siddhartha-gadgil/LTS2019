@@ -1,3 +1,75 @@
+commit 257252b8155c9b7b69992e95ecf619cead4128a3
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Tue Feb 26 11:03:56 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 26 11:03:56 2019 +0530
+
+    Syncing
+
+ Code/BaseN.idr                | 177 +++++++++++++--------
+ Code/Bezout.idr               |  57 +++----
+ Code/Divisors.idr             | 175 +++++++++++++++-----
+ Code/FinUtils.idr             |  39 +++++
+ Code/GCDZZ.idr                |  52 ++++++
+ Code/Graph.idr                |  93 +++++++++--
+ Code/Graph_alt.idr.fixme      |  45 ++++++
+ Code/Graphexamples.idr        |   2 +-
+ Code/Group.FiniteGenerate.idr |  26 +++
+ Code/Group.idr                |  50 ++----
+ Code/GroupCosetRep.idr        |  29 ++++
+ Code/GroupCosets.idr          |  45 ++++++
+ Code/Group_property2.idr      |   2 +-
+ Code/InsertionSort.idr        |  29 +++-
+ Code/LectureEvens.idr         |  88 ++++++++++
+ Code/Linear.idr               |  34 +++-
+ Code/LinearAlgebra.idr        |  97 +++++++++++-
+ Code/Lists.idr                |  30 ++++
+ Code/Merge.idr                | 200 +++++++++++++++++------
+ Code/MultiSolver.idr          |   2 +-
+ Code/NatOrder.idr             | 229 +++++++++++++++++++++++++++
+ Code/NatUtils.idr             | 277 ++++++++++++++++++++++++++------
+ Code/Order.idr                | 120 ++++++++++++++
+ Code/Primes.idr               | 361 ++++++++++++++++++++++++++++++++++++++++++
+ Code/Quotient_Group.idr       |  77 ++++-----
+ Code/Rationals.idr            |   4 -
+ Code/Ring.Properties.idr      |  40 +++++
+ Code/Ring.idr                 | 147 ++++++++++++++---
+ Code/SortingWithProof.idr     |  34 ++--
+ Code/ZZ.idr                   |  90 +++++++----
+ Code/ZZUtils.idr              |  61 +++++++
+ Code/check-all.sh             |   5 +
+ Code/gcd.idr                  | 151 +++++++++---------
+ Code/midterm-check.txt        |  85 ++++++++++
+ 34 files changed, 2463 insertions(+), 490 deletions(-)
+
+commit ccca3992434f94bb3a4085ec97651c7fe2736572
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Tue Feb 26 10:41:37 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 26 10:41:37 2019 +0530
+
+    additional file
+
+commit 7ecad91480c6b7a1847cb2500b062f6167424b27
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Tue Feb 26 10:41:02 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 26 10:41:02 2019 +0530
+
+    Add files via upload
+
+commit a9730da6b6a3607eae7c9ec225b1bb45b31f6c76
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Tue Feb 26 10:40:17 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 26 10:40:17 2019 +0530
+
+    Defined Some basic methods for graphs
+
+ Code/Graph.idr  | 93 ++++++++-------------------------------------------------
+ Code/Matrix.idr | 56 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 69 insertions(+), 80 deletions(-)
+
 commit 3dca174f14f05a1e332f8cbaa459bead0fc0cfb6
 Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
 AuthorDate: Sat Feb 23 15:57:45 2019 +0530
