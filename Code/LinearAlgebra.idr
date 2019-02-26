@@ -1,25 +1,29 @@
 module LinearAlgebra
 
-import BaseN
-import Linear.MultiSolver
+import MultiSolver
 import Data.Matrix.Numeric
 import Data.Vect
 import Data.Fin
-import Merge
 import Data.Matrix
 import ZZ
 import Rationals
+import FinUtils
 
 %access public export
 
 -- Some auxillary functions for elementary operations
 
-FST: ZZPair -> ZZ --some issue with fst
+FST: ZZPair -> ZZ
 FST (a, b) = a
 
-Pred: Nat -> Nat -- needed to get (n-1) for number of operations
+Pred: Nat -> Nat
 Pred Z = Z
 Pred (S k) = k
+
+--Takes the first m elements from a vector
+Vecttake : (m:Nat)->Vect n elem->Vect m  elem
+Vecttake Z xs = []
+Vecttake (S k) (x::xs) = x::(Vecttake k xs)
 
 SimpleCast:  (v1:(Vect (k+ (S Z)) elem)) ->( Vect (S k) elem)  -- necessary for type matching, taken from Shafil's code
 SimpleCast {k} v1 = (Vecttake (S k) v1)
@@ -58,6 +62,11 @@ First_k_rows_from_RowP n x p Z = []
 First_k_rows_from_RowP n x p (S k) = SimpleCast ((First_k_rows_from_RowP n x p k) ++ [RowN x (p+k)])
 
 -- A section on elementary operations (to eventually implement the Gauss-Jordan process)
+
+-- Scales a row by dividing it by a rational number.
+
+ScaleRow: (n: Nat) -> Matrix n n ZZPair -> (row_a: Nat) -> (c: ZZPair) -> Matrix n n ZZPair
+ScaleRow n x row_a c = replaceAt (tofinNat row_a n) (ScaleVect n (RowN x row_a) c) (x)
 
 -- Swaps two rows in a matrix (indexing from 0)
 
@@ -123,3 +132,79 @@ UpperTriangularForm {n} x = UpperTriangularize x (Pred (Pred n))
 
 DiagonalForm: (x: Matrix n n ZZPair) -> Matrix n n ZZPair
 DiagonalForm {n} x = UpperTriangularForm (transpose (UpperTriangularForm x))
+
+-- once a matrix is in diagonal form, we can convert it to the identity by dividing each row by its only nonzero element
+
+ReduceRow: (x: Matrix n n ZZPair) -> (iter: Nat) -> Matrix n n ZZPair
+ReduceRow {n = n} x Z = case (FST(ij x Z Z)) of
+                             (Pos Z) => x
+                             (Pos (S k)) => ScaleRow n x Z (divZZ (1,1) (ij x 0 0))
+                             (NegS k) => ScaleRow n x Z (divZZ (1,1) (ij x 0 0))
+ReduceRow {n = n} x (S k) = case ((FST(ij x (S k) (S k)))) of
+                                 (Pos Z) => x
+                                 (Pos (S k)) => ScaleRow n (ReduceRow x k) (S k) (divZZ (1,1) (ij x (S k) (S k)))
+                                 (NegS k) => ScaleRow n (ReduceRow x k) (S k) (divZZ (1,1) (ij x (S k) (S k)))
+
+-- This function converts any matrix into the identity. Applying the row operations which do this to an identity matrix would convert it
+-- to an inverse. If we want to solve linear equations, this would be enough (for proof, we would need to prove that AA^-1 = I).
+-- Another possibility would be to use back-substitution from the upper-triangular form. This would be simpler because the function
+-- GeneralEqSolver from Linear.idr could be modified a bit to solve n successive 1 - variable equations, and generating a proof would
+-- be easier.
+
+TotalReduce: (x: Matrix n n ZZPair) -> (Matrix n n ZZPair)
+TotalReduce {n} x = ReduceRow (DiagonalForm x) (Pred n)
+
+-- Once we have a matrix in diagonal (or even upper triangular) form, we can calculate the magnitude of its determinant by multiplying
+-- the diagonal elements.
+
+DiagonalProductHelper: (x: Matrix n n ZZPair) -> (iter: Nat) -> ZZPair
+DiagonalProductHelper x Z = (ij x 0 0)
+DiagonalProductHelper x (S k) = (ij x (S k) (S k)) * (DiagonalProductHelper x k)
+
+-- Calculates the determinant up to the sign ( (-1)^n to be implemented later ). Effectively, this calculates the "volume" of n-vectors in
+-- n-dimensional Euclidean space.
+
+DetUpToSign: (x: Matrix n n ZZPair) -> ZZPair
+DetUpToSign {n} x = simplifyRational (DiagonalProductHelper (DiagonalForm x) (Pred n))
+
+-- I propose a simple way to calculate the sign factor: in the conversion to upper-triangular form, the last column is untouched
+-- except for by Row Swapping. The last column in upper - triangular form is thus a permutation of the last column of the original
+-- matrix. We just need to check if this is an odd or even permutation (simplification of all elements of the matrices will be
+-- necessary to ensure that this can be carried out) and multiply appropriately.
+
+-- A short section consisting of functions used to simplify a matrix of ZZPairs
+
+ChangeElementRow: (n: Nat) -> Vect n ZZPair -> (pos: Nat) -> (new: ZZPair) -> Vect n ZZPair
+ChangeElementRow n xs pos new = replaceAt (tofinNat pos n) (new) xs
+
+ChangeElementMatrix: (n: Nat) -> (x: Matrix n n ZZPair) -> (i: Nat) -> (j: Nat) -> (new: ZZPair) -> Matrix n n ZZPair
+ChangeElementMatrix n x i j new = replaceAt (tofinNat i n) (ChangeElementRow n (RowN x i) j new) (x)
+
+SimplifyElement: (n: Nat) -> (x: Matrix n n ZZPair) -> (i: Nat) -> (j: Nat) -> Matrix n n ZZPair
+SimplifyElement n x i j = ChangeElementMatrix n x i j (simplifyRational (ij x i j))
+
+simplifyRowHelper: (n: Nat) -> (x: Matrix n n ZZPair) -> (row: Nat) -> (iter: Nat) -> Matrix n n ZZPair
+simplifyRowHelper n x row Z = SimplifyElement n x row Z
+simplifyRowHelper n x row (S k) = SimplifyElement n (simplifyRowHelper n x row k) row (S k)
+
+simplifyRow: (n: Nat) -> (x: Matrix n n ZZPair) -> (row: Nat) -> (Matrix n n ZZPair)
+simplifyRow n x row = simplifyRowHelper n x row (Pred n)
+
+simplifyMatrixHelper: (n: Nat) -> (x: Matrix n n ZZPair) -> (iter: Nat) -> Matrix n n ZZPair
+simplifyMatrixHelper n x Z = simplifyRow n x Z
+simplifyMatrixHelper n x (S k) = simplifyRow n (simplifyMatrixHelper n x k) (S k)
+
+simplifyMatrix: (x: Matrix n n ZZPair) -> (Matrix n n ZZPair) -- simplifies all the rationals in the matrix, takes a while to run
+simplifyMatrix {n} x = simplifyMatrixHelper n x (Pred n)
+
+-- some functions which will be used to find the rank of a matrix
+
+DiagElement: (x: Matrix n n ZZPair) -> (pos: Nat) -> ZZPair
+DiagElement x pos = (ij x pos pos)
+
+DiagElements: (n: Nat) -> (x: Matrix n n ZZPair) -> (iter: Nat) -> Vect n ZZPair
+DiagElements n x Z = ChangeElementRow n (empRow n) Z (DiagElement x Z)
+DiagElements n x (S k) = ChangeElementRow n (DiagElements n x k) (S k) (DiagElement x (S k))
+
+DiagElementVect: Matrix n n ZZPair -> Vect n ZZPair
+DiagElementVect {n} x = DiagElements n x (Pred n)

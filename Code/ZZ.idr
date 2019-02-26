@@ -1,5 +1,5 @@
 module Data.ZZ
-
+import NatUtils
 import Decidable.Equality
 import Sign
 
@@ -396,31 +396,12 @@ multNegateRightIsNegateZ a b c prf = (rewrite (multNegateRightZ b c) in ( number
 |||The theorem that ((a+b)+(-b))=a
 addAndSubNeutralZ: (a:ZZ)->(b:ZZ)->(((a+b)+(-b))=a)
 addAndSubNeutralZ a b = rewrite (sym (plusAssociativeZ a b (-b))) in (rewrite (plusNegateInverseLZ b) in (rewrite (plusZeroRightNeutralZ a) in Refl))
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
---Some more functions of Natural numbers that might be useful
----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|||The theorem that (m<=n) and (n<=m) implies n=m
-lteAndGteImpliesEqual:{m:Nat}-> {n:Nat}->(LTE m n)-> (LTE n m)->(n=m)
-lteAndGteImpliesEqual LTEZero LTEZero = Refl
-lteAndGteImpliesEqual (LTESucc x) (LTESucc y) = cong (lteAndGteImpliesEqual x y)
-|||The theorem (m<=n) implies (m<=(c+n))
-plusConstantLeftSide:{m:Nat}->{n:Nat}->(c:Nat)->LTE m n ->LTE m (c+n)
-plusConstantLeftSide Z x = x
-plusConstantLeftSide (S k) x = lteSuccRight (plusConstantLeftSide k x)
-
-plusConstantLeftPreservesLte:{m:Nat}-> {n:Nat}->(c:Nat)->(LTE m n)->(LTE (c+m) (c+n))
-plusConstantLeftPreservesLte Z x = x
-plusConstantLeftPreservesLte (S k) x = LTESucc (plusConstantLeftPreservesLte k x)
-
-plusConstantRightPreservesLte:{m:Nat}-> {n:Nat}->(c:Nat)->(LTE m n)->(LTE (m+c) (n+c))
-plusConstantRightPreservesLte {m}{n}c x = rewrite (plusCommutative m c)  in (rewrite (plusCommutative n c) in (plusConstantLeftPreservesLte c x))
+|||The theorem that a = b+c, then a+(-c) = b
+subOnBothSides: (a:ZZ)->(b:ZZ)->(c:ZZ)->(a=b+c)->(a+(-c)=b)
+subOnBothSides a b c prf =  rewrite (sym (addAndSubNeutralZ b c))in 
+       (plusConstantRightZ a (b+c) (-c) prf)
 
 
-|||The theorem that for any natural numbers k and m (m<= (S k)*m)
-natLteMultNatNat: (k:Nat)->(m:Nat)->(LTE m ((S k)*m))
-natLteMultNatNat Z m = rewrite (multOneLeftNeutral m) in (lteRefl)
-natLteMultNatNat (S k) m =     plusConstantLeftSide m (natLteMultNatNat  k m)
 
 -----------------------------------------------------------------------------------------------------------------
 --Implementation of LTE for ZZ
@@ -435,7 +416,7 @@ data LTEZ :ZZ->ZZ->Type where
 
 |||The theorem that for positive integers n and m (n<=(m*n))
 posLteMultPosPosZ:  (n:ZZ)->(m:ZZ)->(IsPositive n)->(IsPositive m)->(LTEZ n  (m*n))
-posLteMultPosPosZ (Pos (S j)) (Pos (S k)) Positive Positive = PositiveLTE (natLteMultNatNat k (S j))
+posLteMultPosPosZ (Pos (S j)) (Pos (S k)) Positive Positive = PositiveLTE (lteMultLeft k (S j))
 
 |||The proof that if an integer is not not positive , it is positive (This  looks useless , but I couldnt find a better way to implement some other theorems)
 notNotPositiveimpliesPositive:{k:ZZ}->((IsNotPositive k)->Void)->(IsPositive k)
@@ -467,13 +448,68 @@ posDivByPosIsPos {c}{d}{q} cPos dPos eqProof = notNotPositiveimpliesPositive (Po
 
 |||The theorem (m<=n) and (n<=m) implies n=m for integers
 lteAndGteImpliesEqualZ:{m:ZZ}-> {n:ZZ}->(LTEZ m n)-> (LTEZ n m)->(n=m)
-lteAndGteImpliesEqualZ (PositiveLTE x) (PositiveLTE y) =  cong (lteAndGteImpliesEqual x y)
+lteAndGteImpliesEqualZ (PositiveLTE x) (PositiveLTE y) = cong {f = Pos} (lteAndGTEImpliesEqual y x)
 lteAndGteImpliesEqualZ NegLessPositive (PositiveLTE _) impossible
 lteAndGteImpliesEqualZ NegLessPositive NegLessPositive impossible
 lteAndGteImpliesEqualZ NegLessPositive (NegativeLte _) impossible
-lteAndGteImpliesEqualZ (NegativeLte x) (NegativeLte y) = cong (lteAndGteImpliesEqual y x)
+lteAndGteImpliesEqualZ (NegativeLte x) (NegativeLte y) = cong {f = NegS} (lteAndGTEImpliesEqual x y)
 
 |||A proof that if c and d are positive and d =c*q then (c<=d)
 posLteMultPosPosEqZ: {q:ZZ}->(c:ZZ)->(d:ZZ)->(IsPositive c)->(IsPositive d)->(d=c*q)->(LTEZ c d)
 posLteMultPosPosEqZ {q} c d cPos dPos prf = rewrite prf in (rewrite (multCommutativeZ c q) in (posLteMultPosPosZ c q cPos qPos)) where
   qPos= posDivByPosIsPos dPos cPos prf
+
+{-small auxillary proofs regarding the equality type-}
+
+apZZ : (f: ZZ -> ZZ) -> (n: ZZ) -> (m: ZZ) -> n = m -> f n = f m
+apZZ f m m Refl = Refl
+addsame : (t: ZZ)->(n:ZZ)->(m:ZZ)-> n = m -> (n+t)=(m+t)
+addsame t m m Refl=Refl
+addeqns : (a:ZZ)->(b:ZZ)-> a=b -> (p:ZZ)->(q:ZZ)-> p=q -> ((a+p)=(b+q))
+addeqns a a Refl p p Refl=Refl
+equality1 : (p:ZZ)->(k:ZZ)->(a:ZZ)-> (a=p*k)->(l:ZZ)->(b:ZZ)->(b=p*l)->(a+b)=(p*k + p*l)
+equality1 p k a x l b y = addeqns a (p*k) x b (p*l) y
+equality2 : (p:ZZ)->(k:ZZ)->(a:ZZ)-> (a=p*k)->(l:ZZ)->(b:ZZ)->(b=p*l)->(a+b)=p*(k+l)
+equality2 p k a x l b y = trans (equality1 p k a x l b y) (sym (multDistributesOverPlusRightZ p k l))
+
+{-end of auxillary proofs-}
+
+
+LTEZSucc: {a:ZZ}->{b:ZZ}->(LTEZ a b)->LTEZ (1+a) (1+b)
+LTEZSucc (PositiveLTE x) = PositiveLTE (LTESucc x)
+LTEZSucc {a=NegS Z}{b=Pos j} NegLessPositive = PositiveLTE LTEZero
+LTEZSucc {a=NegS  (S k)}{b=Pos j} NegLessPositive = NegLessPositive
+LTEZSucc {a=NegS Z}{b=NegS Z}(NegativeLte LTEZero) = PositiveLTE LTEZero
+LTEZSucc {a=NegS (S right)}{b=NegS Z}(NegativeLte x) = NegLessPositive
+LTEZSucc {a=NegS (S right)}{b=NegS (S k)}(NegativeLte (LTESucc x)) =
+  NegativeLte x
+
+LTEZPred:{a:ZZ}->{b:ZZ}->(LTEZ a b)->LTEZ ((-1)+a) ((-1)+b)
+LTEZPred {a=Pos Z}{b=Pos Z}(PositiveLTE LTEZero) = NegativeLte LTEZero
+LTEZPred {a=Pos Z}{b=Pos (S k)}(PositiveLTE LTEZero) = NegLessPositive
+LTEZPred {a=Pos (S left)}{b=Pos (S right)}(PositiveLTE (LTESucc x)) =
+  PositiveLTE x
+LTEZPred {a=NegS k}{b=Pos Z} NegLessPositive = NegativeLte LTEZero
+LTEZPred {a=NegS k}{b=Pos  (S j)} NegLessPositive = NegLessPositive
+LTEZPred (NegativeLte x) = NegativeLte (LTESucc x)
+
+posNotLessThanNegative : LTEZ (Pos  k) (NegS j) -> Void
+posNotLessThanNegative (PositiveLTE _) impossible
+posNotLessThanNegative NegLessPositive impossible
+posNotLessThanNegative (NegativeLte _) impossible
+
+LTEZZtoNat: LTEZ (Pos k) (Pos j)->LTE k j
+LTEZZtoNat (PositiveLTE x) = x
+
+LTEZZtoNatNeg :LTEZ (NegS k) (NegS j)->LTE j k
+LTEZZtoNatNeg (NegativeLte x) = x
+
+isLTEZ:(a:ZZ)->(b:ZZ)->Dec (LTEZ a b)
+isLTEZ (Pos k) (Pos j) = case (isLTE k j) of
+                              (Yes prf) => Yes (PositiveLTE prf)
+                              (No contra) => No (contra . LTEZZtoNat)
+isLTEZ (Pos k) (NegS j) = No (posNotLessThanNegative)
+isLTEZ (NegS k) (Pos j) = Yes NegLessPositive
+isLTEZ (NegS k) (NegS j) = case isLTE j k of
+                                (Yes prf) => Yes (NegativeLte prf)
+                                (No contra) => No (contra . LTEZZtoNatNeg)

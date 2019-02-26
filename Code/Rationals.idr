@@ -16,15 +16,11 @@ ZZtoDb x = cast{from=Integer}{to=Double} (cast{from=ZZ}{to=Integer} x)
 DbtoZZ : Double -> ZZ
 DbtoZZ x = cast{from=Integer}{to=ZZ} (cast{from=Double}{to=Integer} x)
 
-apZZ : (f: ZZ -> ZZ) -> (n: ZZ) -> (m: ZZ) -> n = m -> f n = f m
-apZZ f m m Refl = Refl
 
 isNotZero : Nat -> Bool
 isNotZero Z = False
 isNotZero (S k) = True
 
-isFactorInt : Integer -> Integer -> Type  --Needed for defining Integer division
-isFactorInt m n = (k : Integer ** (m * k = n))
 
 divides : (m: Integer) -> (n: Integer) -> (k: Integer ** (m * k = n)) -> Integer
 divides m n k = (fst k)
