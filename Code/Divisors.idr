@@ -35,6 +35,16 @@ multBothSidesOfDiv:(m:ZZ)->(IsDivisibleZ a d)->(IsDivisibleZ (m*a) (m*d))
 multBothSidesOfDiv{d} m (x ** pf) =
   (x** (rewrite (sym (multAssociativeZ m d x)) in (cong pf)))
 
+||| Theorem that if a = k*d and and c|k then c*d|a
+multBothSidesOfDivRightWithProof :(a=k*d)->(IsDivisibleZ k c)->
+   (IsDivisibleZ a (c*d))
+multBothSidesOfDivRightWithProof {a}{k}{c}{d} prf x =
+  rewrite prf in
+  rewrite (multCommutativeZ k d) in
+  rewrite (multCommutativeZ c d) in
+   (multBothSidesOfDiv d x)
+
+
 |||The theorem d|a and d|b =>d|(a+b)
 plusDiv : (IsDivisibleZ a d)->(IsDivisibleZ b d)->(IsDivisibleZ (a+b) d)
 plusDiv {d}{a}{b} (n**prf1) (m**prf2) =
@@ -191,3 +201,38 @@ euclidConservesGcdWithProof: {a:ZZ}->{b:ZZ}->{quot:ZZ}->{rem:ZZ}->
 euclidConservesGcdWithProof {a}{b}{quot}{rem}equality (dPos,(dDivb,dDivrem),fd) =
   (dPos,(dDiva,dDivb),(genfunction equality fd)) where
      dDiva = euclidConservesDivisorWithProof equality dDivrem dDivb
+
+|||The theorem that if d is positive and cd|d then c=1 or c=-1
+cdDividesdThenAbscOne:(IsPositive d)->(IsDivisibleZ d (c*d))->Either (c=1) (c=(-1))
+cdDividesdThenAbscOne {c = c}{d = d}x (n ** pf) =
+  (case productOneThenNumbersOne c n cnIs1 of
+      (Left (a, b)) => Left a
+      (Right (a, b)) => Right a) where
+        cnIs1 = multRightCancelZ (c*n) 1 d (posThenNotZero x) expression where
+          expression = rewrite ( sym (multCommuAndAssocZ1{c=c}{d=d}{n=n})) in
+                        rewriteRightAsOneTimesRight{b=d} (sym pf)
+
+|||A helper function for divideByGcdThenGcdOne
+genFunctionForDivideByGcdThenGcdOne:({k:ZZ}->(IsCommonFactorZ a b k)->
+  (IsDivisibleZ d k))->IsPositive d
+   ->(aByd:ZZ)->(bByd:ZZ)->a=aByd*d->b=bByd*d->
+         ({c:ZZ}->(IsCommonFactorZ aByd bByd c)->(IsDivisibleZ 1 c))
+genFunctionForDivideByGcdThenGcdOne f dPos aByd bByd prf prf1 (cDivaByd,cDivbByd) =
+  let cdDivd = f ((multBothSidesOfDivRightWithProof prf cDivaByd),
+      (multBothSidesOfDivRightWithProof prf1 cDivbByd))in
+  (case (cdDividesdThenAbscOne dPos cdDivd) of
+        Left Refl => oneDiv 1
+        Right Refl =>minusOneDivides 1)
+
+|||Theorem that gcd ( (a/gcd(a,b)),(b/gcd(a,b)) ) =1
+|||Here, (fst (fst (fst (snd dGcdab))))  = (a/gcd(a,b)) by definition of the
+|||GCDZ type and similarly (fst (snd (fst (snd dGcdab)))) =(b/gcd(a,b))
+divideByGcdThenGcdOne:(dGcdab:(GCDZ a b d))->
+  (GCDZ (fst (fst (fst (snd dGcdab))))  (fst (snd (fst (snd dGcdab)))) 1)
+divideByGcdThenGcdOne{a}{b}{d} (dPos, ((aByd**amd),(bByd**bmd)),fd) =
+  (Positive,((oneDiv _),(oneDiv _)),(genFunctionForDivideByGcdThenGcdOne fd
+    dPos aByd bByd eqa eqb)) where
+      eqa = rewrite (multCommutativeZ aByd d) in amd
+      eqb = rewrite (multCommutativeZ bByd d) in bmd
+
+
