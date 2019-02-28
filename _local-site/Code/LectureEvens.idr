@@ -1,8 +1,7 @@
-module Evens
+module LectureEvens
 
 % access public export
 
-public export
 data IsEven : Nat -> Type where
   ZEven : IsEven 0
   SSEven : (n: Nat) -> IsEven n -> IsEven (S (S n))

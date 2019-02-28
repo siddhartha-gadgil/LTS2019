@@ -1,3 +1,44 @@
+commit 241dc9c4d3ffa47f8c0ac4e940c3fdfc80e99559
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Feb 25 23:31:48 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 23:31:48 2019 +0530
+
+    Some useful functions required for Divisors.idr
+    
+    Defined NotZero type inhabited by nonzero integers
+    and some basic proofs
+
+ Code/ZZUtils.idr | 37 +++++++++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
+
+commit 81965bc41a80f71457f3efadc2e1339d6d2de337
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Feb 25 23:30:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 23:30:09 2019 +0530
+
+    Completed multiplication cancellation laws
+    
+    Completed multiplication cancellation laws and 2 theorems about LT
+
+ Code/NatUtils.idr | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
+
+commit 4edfc4c70b53cf0b94ca3057640792de94f653be
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Feb 25 23:28:48 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 23:28:48 2019 +0530
+
+    Added some useful functions
+    
+    Proved that 0 cannot divide a non zero number
+    Also -1 divides anything
+
+ Code/Divisors.idr | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
 commit 7040bd71e3ed10410ca039065708650468f41b7b
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Sun Feb 24 21:06:19 2019 +0530

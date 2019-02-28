@@ -6,7 +6,8 @@ import Group
 import Group_property 
 
 %access public export
-                         
+%default total 
+                        
 ||| Property 8 - If f : g -> h is group homomorphism then f(inv(a)) = inv(f(a))
 total
 Group_property_8 : (dom : Type) -> ((*) : dom -> dom -> dom) -> (pfdom : IsGroup dom (*)) ->
@@ -68,14 +69,8 @@ Group_property_8 dom (*) pfdom cod (+) pfcod f pfhom a = let
                                                           
                                                          in 
                                                          (Group_property_2 cod (+) pfcod (f a) b c pf8 pf10)
-                                                         
-||| Property 9 - If a*b = c then b = Inv(a) * c
-total
-Group_property_9 : (grp : Type) -> ((*) : grp -> grp -> grp) -> (pfgrp : IsGroup grp (*)) -> 
-                   (a, b, c : grp) -> (a*b = c) -> (b = (Inv grp (*) pfgrp a)*c)
-                                                         
-Group_property_9 grp (*) pfgrp a b c pfEq = ?rhs                                      
-                                                         
+
+      
                                                          
                                                          
                                                          

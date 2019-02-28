@@ -95,11 +95,15 @@ messageStyle: "none",
               <li class="dropdown-header"><strong>Reports</strong></li>
               
               <li>
-                <a href="/reports/adithya.html"> Adithya Upadhyay</a>
+                <a href="/reports/adithya.html"> Adithya Upadhya</a>
               </li>
               
               <li>
-                <a href="/reports/ar.html"> Abhishek Rajan</a>
+                <a href="/reports/adit.html"> Adit Vishnu</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ar.html"> Abishek Rajan</a>
               </li>
               
               <li>
@@ -112,6 +116,10 @@ messageStyle: "none",
               
               <li>
                 <a href="/reports/nabarun.html"> Nabarun Deka</a>
+              </li>
+              
+              <li>
+                <a href="/reports/rathivrunda.html"> Vrunda Rathi</a>
               </li>
               
               <li>
@@ -188,17 +196,340 @@ messageStyle: "none",
 
 
 <h2 class="text-center"> Project Report for Logic, Types, Spaces 2019 </h2>
-<h3 class="text-center"> Abhishek Rajan </h3>
+<h3 class="text-center"> Abishek Rajan </h3>
 
 <h3 >Outline of the work done</h3>
 
-    <p>Please fill in this with references to code.</p>
+    <h2 id="ma-210--midterm-report">MA 210 : Midterm Report</h2>
+
+<h2 id="sorting">Sorting</h2>
+
+<p>I implemented the insertion sort algorithm.</p>
+
+<p>File: InsertionSort.idr</p>
+
+<ol>
+  <li>I defined the <code class="highlighter-rouge">Insert</code> function which takes a natural number, a sorted list, and adds it into its appropriate position in the list by comparison.</li>
+  <li>Using this, I implemented the algorithm through the function <code class="highlighter-rouge">Sort</code>. <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/e23e7f5b2d4df83ab81539da2efc5648da11c130">Link Here</a></li>
+  <li>In the function <code class="highlighter-rouge">CheckSortedVect</code>, I implemented a Boolean test to check if a Vector is Sorted. This will be upgraded to a proof. <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/af78ca7a21e563d6e5c1568818fa6bd53ce08254">Link Here</a></li>
+</ol>
+
+<h4 id="remaining">Remaining</h4>
+
+<p>It remains to be proved that any Vector which is the output of <code class="highlighter-rouge">Sort</code> is a sorted vector. Also, it needs to be shown that <code class="highlighter-rouge">Sort</code> simply permutes the elements of a Vector.</p>
+
+<h2 id="linear-algebra">Linear Algebra</h2>
+
+<h3 id="one-variable-equations">One Variable Equations</h3>
+
+<p>I solved linear equations in one variable with proof.</p>
+
+<p>File: Linear.idr</p>
+
+<ol>
+  <li>I found with proof that the equation ax = 0 has the solution x = (0,1) when a is not zero in <code class="highlighter-rouge">trivialeqSolver</code>.<a href="https://github.com/siddhartha-gadgil/LTS2019/commit/1f7cab801381a1f2b7e5c14c712d0893bc62effa">Link Here</a></li>
+  <li>I found with proof that the equation ax + b = 0 has the solution x = (-b,a) when a,b are not zero in <code class="highlighter-rouge">eqSolver</code>.<a href="https://github.com/siddhartha-gadgil/LTS2019/commit/0d2a515ea420abcfa9b0eb8a91b901d32db2dc01">Link Here</a></li>
+  <li>I found with proof that the equation ax + b = c has the solution x = (c-b,a) when a,b,c are not zero in <code class="highlighter-rouge">GeneralEqSolver</code>.
+<a href="https://github.com/siddhartha-gadgil/LTS2019/commit/55fe7ea3e76e97f6fa4a7de852fec0ba9f3c93e2">Link Here</a></li>
+  <li>I checked whether a Diophantine equation in one variable has an integer solution in the function <code class="highlighter-rouge">IsSolutionZ</code>. <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/393a0a25a43db9975a6db7bc5fe39583a3f8cf7e">Link Here</a></li>
+</ol>
+
+<p>Each of these functions had their own associated helper functions to transition between proofs of equalities.</p>
+
+<h4 id="remaining-1">Remaining</h4>
+
+<p>To make the program run more smoothly, I need to implement a function which takes a,b,c as input and based on non-zero considerations, uses the appropriate solver to output a solution with proof. Also, simplification of rationals needs to be done (will require the GCD with proof from another project). Also, the Diophantine equation needs a proof that it is a solution, but this will also require the GCD with proof to say that a rational number is actually an integer in disguise.</p>
+
+<h3 id="linear-systems">Linear Systems</h3>
+
+<p>File: LinearAlgebra.idr</p>
+
+<p>I implemented the Gauss-Jordan process which due to its versatility has many applications.</p>
+
+<ol>
+  <li>Implemented the basic elementary operations on matrices. <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/7a12fcc8932277255b89ad5143c43e0d5c01b7cc">Link Here</a>
+    <ol>
+      <li>Swap Rows in <code class="highlighter-rouge">Swap_Rows</code></li>
+      <li>Scale a Row in <code class="highlighter-rouge">Scale_Row</code></li>
+      <li>Subtract a multiple of a row from another in <code class="highlighter-rouge">Row_Operation</code></li>
+    </ol>
+  </li>
+  <li>I used these to appropriately convert elements to zero in a matrix with <code class="highlighter-rouge">MakeElementZero</code>.</li>
+  <li>The function <code class="highlighter-rouge">MakeColumnZero</code> uses this technique to fill columns with zeroes. <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/1adc1e651b7b7f3d0f58505793e06ec13e93ae50">Link Here</a></li>
+  <li>The function <code class="highlighter-rouge">UpperTriangularize</code> is a helper function for <code class="highlighter-rouge">UpperTriangularForm</code> which converts a matrix to Upper Triangular Form.<a href="https://github.com/siddhartha-gadgil/LTS2019/commit/a2a2b35f5907291b1aeecccc7f752f20cf9c84fe">Link Here</a></li>
+  <li>I found a diagonal form of a matrix using <code class="highlighter-rouge">DiagonalForm</code> using the above and extended it to convert any matrix to an identity (if all the diagonal elements are non-zero) in <code class="highlighter-rouge">TotalReduce</code>. If not, the zero rows are left as they are while the others are reduced. <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/a302e8f2a1708d4dad8b5b515a9bb4435fdd86c1">Link Here</a></li>
+  <li>I found the magnitude of the determinant using <code class="highlighter-rouge">DetUpToSign</code> on the diagonal form of a matrix. <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/650094ed4a5784dc8220081b785741d35da06788">Link Here</a></li>
+  <li>Also, as computation time signifcantly increases with larger numbers, I added in some functions, culminating in <code class="highlighter-rouge">simplifyMatrix</code>, which convert a matrix to simplified form. <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/abd348d60ffca6de7adc9b87ceebb493d21aa375">Link Here</a></li>
+</ol>
+
+<h4 id="remaining-2">Remaining</h4>
+
+<p>Here are a few possible applications of this process.</p>
+
+<ol>
+  <li>Solving linear systems (from upper triangular form, or from diagonal form) with proof.</li>
+  <li>Calculating the inverse of a matrix (and proving basic facts about it).</li>
+  <li>Finding the rank of a linear transformation, showing that it is independent of the choice of basis.</li>
+</ol>
+
+<h2 id="rationals">Rationals</h2>
+
+<p>I implemented the non-unique representation of the rational numbers.</p>
+
+<ol>
+  <li>I defined the rational numbers as a type <code class="highlighter-rouge">ZZPair</code> (a pair of ZZs, where <code class="highlighter-rouge">ZZ</code> is a form of integers over which proofs can be done easily). <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/4c261057f0b6b9edf38883015d19137bb9855465">Link Here</a></li>
+  <li>I defined the type for divisibility of Integers <code class="highlighter-rouge">isFactorInt</code> which was subsequently renamed for the ZZ type.</li>
+  <li>Using this, I defined the arithmetic operations and the inclusion of integers into the rationals, with implementation of proofs wherever necessary that denominators/numerators should not be zero. <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/080fd5d0065efffb0afb79720220d35fd9b757c7">Link Here</a></li>
+  <li>I made the function <code class="highlighter-rouge">simplifyRational</code> work over all ZZPairs by extending the <code class="highlighter-rouge">CalcGCD</code> function to work over pairs of <code class="highlighter-rouge">ZZ</code> instead of pairs of <code class="highlighter-rouge">Nat</code>. <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/429fd11b09106392452f09a37a97eb25e7ecf189">Link Here</a></li>
+  <li>I started proofs that the sum of a rational and its additive inverse is the additive identity. <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/ac3ee364e84b3aa82fb602c401499e42bfc8cc0f">Link Here</a></li>
+</ol>
+
+<h4 id="remaining-3">Remaining</h4>
+
+<p>The proof of the above result needs the GCD to be implemented (for <code class="highlighter-rouge">simplifyRational</code> to output a proof that the rational is in fact simplified). Also, the corresponding proof involving the multiplicative inverse will require this as well. Using the properties of <code class="highlighter-rouge">ZZ</code>, the distributive law can be the next step.</p>
 
 
 <h3> Log of git commits by author </h3>
 
 
 <pre><code class="plaintext">
+commit 27d5f934c841f9f0dbe0c10b9a5417a98a6419b1
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:20:21 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:20:21 2019 +0530
+
+    fixed import
+
+ Code/Graphexamples.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 05a234c4b2a40917df642cf39ef93465c30741a6
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:19:47 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:19:47 2019 +0530
+
+    fixed import
+
+ Code/Merge.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit e9e111d19435554f0151ef2f3735912ca51f19c7
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:19:02 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:19:02 2019 +0530
+
+    fixed import
+
+ Code/SortingWithProof.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 024a827f928372325f9485ba1618e07747a3d309
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:18:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:18:19 2019 +0530
+
+    fixed import
+
+ Code/Ring.Properties.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 29e14f6be8cb6e36e41e61cceecc95cdec5ee5b2
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 00:25:31 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 00:25:31 2019 +0530
+
+    Finished Report
+    
+    I added the links to the relevant commits.
+    
+    -- Abishek (AR-MA210)
+
+ _reports/ar/ar.md | 37 ++++++++++++++++++++-----------------
+ 1 file changed, 20 insertions(+), 17 deletions(-)
+
+commit 56d26de18aed2ef923c0c51dbbc6d78127abeeca
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 00:14:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 00:14:19 2019 +0530
+
+    correction + more functions
+    
+    I made a correction in the simplification routine and also added some functions which will eventually used to find the rank of a linear transformation.
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+commit 975e01f95e5f1de41329b0a6b5058812fc99e432
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 23 17:07:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 17:07:45 2019 +0530
+
+    Update Report
+    
+    Added to Sorting.
+    
+    -- Abishek (AR-MA210)
+
+ _reports/ar/ar.md | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit af78ca7a21e563d6e5c1568818fa6bd53ce08254
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 23 17:04:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 17:04:55 2019 +0530
+
+    switched to Vectors + more
+    
+    I made the code run using Vectors instead of lists. Also, I added a function which produces the minimum element in a Vector, and used it to check if a Vector is Sorted. This can be upgraded with a proof that the minimum element is the minimum and eventually that a Sorted Vector is Sorted.
+    
+    -- Abishek (AR-MA210)
+
+ Code/InsertionSort.idr | 29 ++++++++++++++++++++++-------
+ 1 file changed, 22 insertions(+), 7 deletions(-)
+
+commit a6f16af8aeb42880a6e96910f46e4f2456665b2c
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 23 16:38:32 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 16:38:32 2019 +0530
+
+    moved something from 'Remaining' to 'Done'
+    
+    Added simplification of matrices.
+    
+    -- Abishek (AR-MA210)
+
+ _reports/ar/ar.md | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit abd348d60ffca6de7adc9b87ceebb493d21aa375
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 23 16:35:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 16:35:07 2019 +0530
+
+    Added simplification routine, fixed import
+    
+    I added functions which convert a matrix of ZZPairs to a matrix in simplified form.
+    
+    The file BaseN was imported here, but it got changed and one function was lost, so I added it here.
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 53 ++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 45 insertions(+), 8 deletions(-)
+
+commit 60e1cd5159aa90a194768c3f550f91e1407e9d11
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 16 01:06:46 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 01:06:46 2019 +0530
+
+    Update Linear.idr
+
+ Code/Linear.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 102c70349f413b6947b5fd2127c2c03ada68e307
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 16 01:04:59 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 01:04:59 2019 +0530
+
+    minor additions to report
+    
+    I added to the report.
+    
+    Abishek (AR-MA210).
+
+ _reports/ar/ar.md | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+commit 6ff18f941f2321ae10cc025202d3e35b392274bf
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 16 00:59:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 00:59:45 2019 +0530
+
+    Tweaked ReduceRow
+    
+    I tweaked ReduceRow so that it reduces only those rows with non-zero elements.
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
+
+commit 393a0a25a43db9975a6db7bc5fe39583a3f8cf7e
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 16 00:47:20 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 00:47:20 2019 +0530
+
+    checking for Integer solutions
+    
+    I added a function which solves Diophantine equations by checking if the rational number can be simplified to an integer. This is at a rudimentary stage right now because implementing a proof of this would require a GCD function with proof that it is a GCD.
+    
+    -- Abishek (AR-MA210)
+
+ Code/Linear.idr | 36 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
+
+commit a2d5af5a52ba61488a9c0e26fdb0d9ce2e03597d
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Feb 14 15:57:13 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 15:57:13 2019 +0530
+
+    Update ar.md
+
+ _reports/ar/ar.md | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
+
+commit 650094ed4a5784dc8220081b785741d35da06788
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Feb 14 15:50:56 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 15:50:56 2019 +0530
+
+    magnitude of the Determinant + more
+    
+    I found the magnitude of the determinant as a simple extension of the previous functions. The sign can be calculated by a trick I describe in the file. I also propose a variety of extensions of this code:
+    
+    - finding the inverse by row operations (might be easier for proofs)
+    - solving linear systems (with proof) using extensions to  Linear.idr
+    - finding the rank of a linear transformation by counting the number of nonzero diagonal elements in the Diagonal Form.
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+
+commit 93aa06d16a4a1a7fb3e1e006d6ae05559286a6fc
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Feb 14 15:44:18 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 15:44:18 2019 +0530
+
+    Added Report
+    
+    I filled in most of the report.
+    
+    -- Abishek (AR-MA210.
+
+ _reports/ar/ar.md | 66 +++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 64 insertions(+), 2 deletions(-)
+
 commit a302e8f2a1708d4dad8b5b515a9bb4435fdd86c1
 Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
 AuthorDate: Wed Feb 13 18:59:17 2019 +0530

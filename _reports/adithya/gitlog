@@ -1,3 +1,14 @@
+commit 10cb35bccf7766f925c9c00813b6837fa4d7abf0
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Tue Feb 26 11:52:59 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Tue Feb 26 11:52:59 2019 +0530
+
+    Minor correction to NatOrder.idr
+
+ Code/NatOrder.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 commit 8878b26f73c90ec209d93c690020b3e8eb80de56
 Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
 AuthorDate: Mon Feb 25 01:20:10 2019 +0530
