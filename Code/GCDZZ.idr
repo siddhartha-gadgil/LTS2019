@@ -31,6 +31,22 @@ GCDCalc (Pos (S j)) (Pos  (S k)) Positive NonNegative =
        (case GCDCalc (Pos (S k)) rem Positive remNonNeg of
              (x ** pf) => (x**(euclidConservesGcdWithProof equality pf)))
 
+|||Returns Bezout coefficients with proof for a Positive integer a and
+|||NonNegative integer b with proofs of GCD and equality
+bez:(a:ZZ)->(b:ZZ)->(IsPositive a)->(IsNonNegative b) ->
+   (d**((GCDZ a b d),(m:ZZ**n:ZZ**(d=(m*a)+(n*b)))))
+bez a (Pos Z) x NonNegative = (a**((gcdOfZeroAndInteger a x),(1**0**prf))) where
+  prf = rewrite (multOneLeftNeutralZ a) in
+     (rewrite  (plusZeroRightNeutralZ a) in Refl)
+bez (Pos (S j)) (Pos  (S k)) Positive NonNegative =
+  case QuotRemZ (Pos (S j)) (Pos  (S k)) NonNegative Positive of
+      (quot ** (rem  ** (equality, remLessb,remNonNeg))) =>
+         (case bez (Pos (S k)) rem Positive remNonNeg of
+            (g**((gcdprf),(m1**n1**lincombproof))) =>
+               (g**((euclidConservesGcdWithProof equality gcdprf),((n1)**(m1+(n1*(-quot)))**(bezoutReplace equality lincombproof)))))
+
+
+
 |||Returns gcd of two integers with proof given that not both of them are zero
 gcdZZ:(a:ZZ)->(b:ZZ)->(NotBothZeroZ a b)->(d**(GCDZ a b d))
 gcdZZ (Pos (S k)) (Pos j) LeftPositive =
