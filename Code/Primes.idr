@@ -2,6 +2,7 @@ module Primes
 
 import NatUtils
 import gcd
+import NatOrder
 
 %access public export
 %default total
@@ -154,6 +155,46 @@ help5 {k} {j} prf x = lteMinusConstantRight {c=(S j)}
 bDivAImpBEqAN : (a,b : Nat) -> isDivisible b a ->  (k : Nat ** b = a * k)
 bDivAImpBEqAN a b (p ** (proofGT, proofEq)) = (p ** proofEq)
 
+--To help out help6
+metaHelp6 : (p : Nat) -> (x : Nat) -> (c : Nat) ->
+  (p = x*c) -> q = c -> (p = q*x)
+metaHelp6 p x c prf prf1 = rewrite prf1 in
+                       rewrite multCommutative c x in prf
+
+--To help out a case in notDivIfRem
+help6 : (p : Nat) -> (x : Nat) -> (c : Nat) ->
+  (p = q*x) -> (p = (S r) + q*x) ->
+  (Z = (S r))
+help6 p x c {q} {r} p1 p2 = plusRightCancel Z (S r) (q*x) (trans (sym p1) p2)
+
+--To help out another case of notDivIfRem
+help7 : (p : Nat) -> (x : Nat) -> (c : Nat) -> (k : Nat) -> (r : Nat) ->
+        c + k = q -> p = x*c -> p = (S r) + q*x ->
+        Z = (S r) + k*x
+help7 p x c k r pfSum pfMul pfRem =
+          plusRightCancel Z ((S r)+k*x) (c*x)
+          (rewrite sym (plusAssociative (S r) (k*x) (c*x)) in
+           rewrite plusCommutative (k*x) (c*x) in
+           rewrite sym (multDistributesOverPlusLeft c k x) in
+           rewrite pfSum in
+           rewrite sym (multCommutative x c) in
+           rewrite sym (pfMul) in pfRem)
+
+--To help out the last case, by creating a term of an uninhabited type
+notDivIfRem : (p : Nat) -> (x : Nat) -> (r : Nat) ->
+  (p = (S r) + q*x) -> LT (S r) x ->
+  (c : Nat ** p = x * c) -> Void
+notDivIfRem p x r {q} prfRem prfLt (c ** prfDiv) =
+    case decEq q c of
+        (Yes prf) => absurd $
+                      (help6 p x c (metaHelp6 p x c prfDiv prf) prfRem)
+        (No contra) => case totOrdNat q c of
+              (Left l) => void (contra l)
+              (Right (Left qLtc)) => ?hh_3
+              (Right (Right qGtc)) => case (lteToLEQ (lteSuccLeft qGtc)) of
+                          (k ** pf) => absurd $
+                              (help7 p x c k r pf prfDiv prfRem)
+
 --The usual case for divisibility
 usual : (p : Nat) -> LTE 2 p -> (x : Nat) -> (LT 0 x) -> (LT x p) ->
   (euc : (q : Nat ** (r : Nat ** ((p = r + (q * x)), LT r x)))) ->
@@ -184,7 +225,13 @@ usual (S (S k)) (LTESucc (LTESucc LTEZero))
 
         usual (S (S k)) (LTESucc (LTESucc LTEZero))
               (S j) (LTESucc LTEZero)
-              xLtp euc | (_ ** ((S a) ** (pf,_))) = No ?e4
+              xLtp euc | (_ ** ((S a) ** (pf1,pf2))) = No
+                              (impliesContrapositive
+                                (isDivisible (S (S k)) (S j))
+                                (c : Nat ** (S (S k)) = (S j) * c)
+                                (bDivAImpBEqAN (S j) (S (S k)))
+                                (notDivIfRem (S (S k)) (S j) a pf1 pf2))
+
 
 --Decidability for divisibility
 decDiv : (p : Nat) -> LTE 2 p -> (x : Nat) ->
