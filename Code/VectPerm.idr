@@ -4,6 +4,31 @@ import Data.Vect
 
 -- Auxillary functions
 
+FST: (Vect k Nat, Vect k Nat) -> Vect k Nat
+FST (a, b) = a
+
+SND: (Vect k Nat, Vect k Nat) -> Vect k Nat
+SND (a, b) = b
+
+headL: (s: List Nat) -> (Not (s = [])) -> Nat
+headL [] x = 0
+headL (y :: xs) x = y
+
+-- converting lists to vectors
+
+makeVectList: (n: Nat) -> (Vect n Nat) -> (List Nat)
+makeVectList Z [] = []
+makeVectList (S len) (x :: xs) = [x] ++ (makeVectList len xs)
+
+makeVectPairListPair: (Vect n Nat, Vect n Nat) -> (List Nat, List Nat)
+makeVectPairListPair {n} (a, b) = (makeVectList n a, makeVectList n b)
+
+makeListVect: (s: List Nat) -> (Vect (length s) Nat)
+makeListVect s = (fromList s)
+
+makeListPairVectPair: (a: (List Nat, List Nat)) -> (Vect (length (fst a)) Nat, Vect (length (snd a)) Nat)
+makeListPairVectPair a = (makeListVect (fst a), makeListVect (snd a))
+
 Pred: Nat -> Nat
 Pred Z = Z
 Pred (S k) = k
@@ -49,3 +74,43 @@ findIn {n} x find = (improveElem n (Pred n) x find)
 -- by deleting the element from the position k
 
 -- This can be used to check whether one vector is a permutation of another.
+
+-- gives all occurences of x[pos] in y with proof
+
+thisElemthatVect: (x: Vect n Nat) -> (pos: Nat) -> (y: Vect n Nat) -> (List (k: Nat ** (nPos k n y) = (nPos pos n x)))
+thisElemthatVect {n} x pos y = findIn y (nPos pos n x)
+
+-- given a vector x, it removes the element at position 'pos' (indexing from 0)
+
+removeElem: (n: Nat) -> (x: Vect (S n) Nat) -> (pos: Nat) -> (Vect n Nat)
+removeElem n (x :: xs) Z = xs
+removeElem Z (x :: xs) (S k) = []
+removeElem (S j) (x :: xs) (S k) = [x] ++ (removeElem j xs k)
+
+-- checks if x[pos] occurs in y, and if it does, deletes them from the arrays
+
+checkEqualElement: (n: Nat) -> (x: Vect (S n) Nat) -> (y: Vect (S n) Nat) -> (pos: Nat) -> (k: Nat ** (nPos k (S n) y) = (nPos pos (S n) x)) -> (Vect n Nat, Vect n Nat)
+checkEqualElement Z (x :: xs) (y :: ys) Z z = ([],[])
+checkEqualElement Z [a] [b] (S k) z = ([], [])
+checkEqualElement (S k) (x :: xs) (y :: ys) pos z = ( (removeElem (S k) (x::xs) pos), (removeElem (S k) (y::ys) (fst z)) )
+
+removeIfequal: (x: Vect (S n) Nat) -> (y: Vect (S n) Nat) -> (pos: Nat) -> Either ((Vect (S n) Nat), (Vect (S n) Nat)) ((Vect n Nat), (Vect n Nat))
+removeIfequal {n} x y pos = case (nonEmpty (thisElemthatVect x pos y)) of
+                           (Yes prf) => Right (checkEqualElement n x y pos (head (thisElemthatVect x pos y)))
+                           (No contra) => Left (x, y)
+                           
+-- recursively removes all the elements which occur in both x and y                           
+
+removeRepeatedly: (iter: Nat) -> (x: Vect n Nat) -> (y: Vect n Nat) -> (List Nat, List Nat)
+removeRepeatedly iter [] [] = ([], [])
+removeRepeatedly Z (x :: xs) (y :: ys) = case (removeIfequal (x::xs) (y::ys) Z) of
+                                              (Left l) => (makeVectPairListPair l)
+                                              (Right r) => (makeVectPairListPair r)
+removeRepeatedly (S k) (x :: xs) (y :: ys) = case (removeIfequal (x::xs) (y::ys) (S k)) of
+                                                  (Left l) => (removeRepeatedly k (FST l) (SND l))
+                                                  (Right r) => (removeRepeatedly k (FST r) (SND r))
+                                                  
+-- produces the elements which occur in only one list and not another (symmetric difference of lists)                                                  
+
+listDifference: (x: Vect n Nat) -> (y: Vect n Nat) -> (List Nat, List Nat)
+listDifference {n} x y = removeRepeatedly (Pred n) x y
