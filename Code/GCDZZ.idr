@@ -43,8 +43,9 @@ bez (Pos (S j)) (Pos  (S k)) Positive NonNegative =
       (quot ** (rem  ** (equality, remLessb,remNonNeg))) =>
          (case bez (Pos (S k)) rem Positive remNonNeg of
             (g**((gcdprf),(m1**n1**lincombproof))) =>
-               (g**((euclidConservesGcdWithProof equality gcdprf),((n1)**(m1+(n1*(-quot)))**(bezoutReplace equality lincombproof)))))
-
+               (g**((euclidConservesGcdWithProof equality gcdprf),
+                    ((n1)**(m1+(n1*(-quot)))**
+                          (bezoutReplace equality lincombproof)))))
 
 
 |||Returns gcd of two integers with proof given that not both of them are zero
@@ -59,10 +60,43 @@ gcdZZ (NegS k) (Pos j) LeftNegative =
     (x**pf) =>(x**(negatingPreservesGcdLeft pf))
 gcdZZ (NegS k) (NegS j) LeftNegative =
   case GCDCalc (-(NegS k)) (-(NegS j)) Positive NonNegative of
-        (x ** pf) => (x**((negatingPreservesGcdLeft (negatingPreservesGcdRight pf))))
+        (x ** pf) => (x**((negatingPreservesGcdLeft
+           (negatingPreservesGcdRight pf))))
 gcdZZ a (Pos (S k)) RightPositive =
   case gcdZZ (Pos (S k)) a LeftPositive of
     (x ** pf) => (x** (gcdSymZ pf))
 gcdZZ a (NegS k) RightNegative =
   case gcdZZ (NegS k) a LeftNegative of
       (x ** pf) => (x** (gcdSymZ pf))
+
+
+|||Returns Bezout coefficients with proof for two integers a and b such that
+|||not both of them are zero with proofs of GCD and equality
+bezoutCoeffs:(a:ZZ)->(b:ZZ)->NotBothZeroZ a b->
+   (d**((GCDZ a b d),(m:ZZ**n:ZZ**(d=(m*a)+(n*b)))))
+bezoutCoeffs (Pos (S k)) (Pos j) LeftPositive =
+  bez (Pos (S k)) (Pos j) Positive NonNegative
+bezoutCoeffs (Pos (S k)) (NegS j) LeftPositive =
+  case bez (Pos (S k)) (-(NegS j)) Positive NonNegative of
+    (x **( pf,(m**n**lproof))) =>
+       (x**((negatingPreservesGcdRight pf),(m**(-n)**
+           (rewrite multNegNegNeutralZ n (Pos(S j)) in lproof))))
+bezoutCoeffs (NegS k) (Pos j) LeftNegative =
+  case bez (-(NegS k)) (Pos j) Positive NonNegative of
+    (x**(pf,(m**n**lproof))) =>(x**((negatingPreservesGcdLeft pf),((-m)**n**
+       (rewrite multNegNegNeutralZ m (Pos (S k)) in lproof))))
+bezoutCoeffs (NegS k) (NegS j) LeftNegative =
+  case bez (-(NegS k)) (-(NegS j)) Positive NonNegative of
+        (x**(pf,(m**n**lproof))) => (x**((((negatingPreservesGcdLeft
+          (negatingPreservesGcdRight pf)))),((-m)**(-n)**
+            (rewrite  multNegNegNeutralZ m (Pos (S k)) in
+             rewrite  multNegNegNeutralZ n (Pos(S j)) in
+              lproof))))
+bezoutCoeffs a (Pos (S k)) RightPositive =
+  case bezoutCoeffs (Pos (S k)) a LeftPositive of
+    (x**(pf,(m**n**lproof))) => (x** ((gcdSymZ pf),(n**m**
+       (rewrite plusCommutativeZ (n*a) (m*(Pos (S k))) in lproof))))
+bezoutCoeffs a (NegS k) RightNegative =
+  case bezoutCoeffs (NegS k) a LeftNegative of
+      (x**(pf,(m**n**lproof))) => (x** ((gcdSymZ pf),(n**m**
+         (rewrite plusCommutativeZ (n*a) (m*(NegS k)) in lproof))))

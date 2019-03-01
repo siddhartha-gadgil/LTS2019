@@ -137,7 +137,13 @@ multLeftCancelZ left right1 right2 x prf =
                  rewrite (multCommutativeZ right2 left) in
                   prf
 
-
+|||Proof that (-a)*(-b) = a*b
+multNegNegNeutralZ: (a:ZZ)->(b:ZZ)->(-a)*(-b)=a*b
+multNegNegNeutralZ a b =
+  rewrite multNegateRightZ (-a) b in
+  rewrite multNegateLeftZ a b in
+  rewrite doubleNegElim (a*b) in
+  Refl
 
 |||The theorem that if  a =r+q*b and g = (m1*b)+(n1*rem)
 |||Then g = (n1*a) + ((m1+n1*(-quot))*b)
