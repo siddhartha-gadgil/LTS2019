@@ -136,3 +136,27 @@ multLeftCancelZ left right1 right2 x prf =
     expression = rewrite (multCommutativeZ right1 left) in
                  rewrite (multCommutativeZ right2 left) in
                   prf
+
+
+
+|||The theorem that if  a =r+q*b and g = (m1*b)+(n1*rem)
+|||Then g = (n1*a) + ((m1+n1*(-quot))*b)
+bezoutReplace:{a:ZZ}->{b:ZZ}->{m1:ZZ}->{rem:ZZ}->
+  {quot:ZZ}->{n1:ZZ}->{g:ZZ}-> (a = rem + (quot *b))->
+     (g=(m1*b)+(n1*rem))->(g = (n1*a) + ((m1+n1*(-quot))*b))
+bezoutReplace {a}{b}{m1}{rem}{quot}{n1}{g}prf prf1 =
+  rewrite multDistributesOverPlusLeftZ m1 (n1*(-quot)) b in
+  rewrite prf in
+  rewrite multDistributesOverPlusRightZ n1 rem (quot*b) in
+  rewrite (sym (plusAssociativeZ (n1*rem) (n1*((quot)*b)) ((m1*b)+((n1*(-quot))*b)))) in
+  rewrite (plusCommutativeZ (m1*b) ((n1*(-quot))*b)) in
+  rewrite (plusAssociativeZ (n1*((quot)*b)) ((n1*(-quot))*b) (m1*b)) in
+  rewrite (multAssociativeZ n1 quot b) in
+  rewrite (sym (multDistributesOverPlusLeftZ (n1*quot) (n1*(-quot)) b)) in
+  rewrite (sym(multDistributesOverPlusRightZ n1 quot (-quot))) in
+  rewrite (plusNegateInverseLZ quot) in
+  rewrite (multZeroRightZeroZ n1) in
+  rewrite (multZeroLeftZeroZ b) in
+  rewrite (plusZeroLeftNeutralZ (m1*b)) in
+  rewrite (plusCommutativeZ (n1*rem) (m1*b)) in
+   prf1
