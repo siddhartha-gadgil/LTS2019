@@ -21,7 +21,7 @@ boundedGCD : (bnd: Nat) -> (n: Nat) -> (m: Nat) -> (LTE n bnd) -> (LTE (S m) bnd
 boundedGCD (S b) Z m x (LTESucc y) = m
 boundedGCD (S b) (S k) Z x (LTESucc y) = (S k)
 boundedGCD (S b) (S Z) (S j) (LTESucc x) (LTESucc y) = S Z
-boundedGCD (S b) (S (S k)) (S Z) (LTESucc x) (LTESucc y) = S Z
+boundedGCD (S b) (S k) (S Z) (LTESucc x) (LTESucc y) = S Z
 boundedGCD (S b) (S (S (k))) (S (S (j))) (LTESucc x) (LTESucc y) =
   case isLTE j k of
         (Yes prf) => case subWithBound k j prf of
