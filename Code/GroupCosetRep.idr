@@ -1,7 +1,7 @@
 module CosetRep
 
 import Group
-import Cosets
+import GroupCosets
 %access public export
 
 --Generates (equivalent) representatives of the image in g of a

@@ -2,7 +2,7 @@ module Primes
 
 import NatUtils
 import gcd
-import Lists
+import NatOrder
 
 %access public export
 %default total
@@ -155,6 +155,84 @@ help5 {k} {j} prf x = lteMinusConstantRight {c=(S j)}
 bDivAImpBEqAN : (a,b : Nat) -> isDivisible b a ->  (k : Nat ** b = a * k)
 bDivAImpBEqAN a b (p ** (proofGT, proofEq)) = (p ** proofEq)
 
+--To help out help6
+metaHelp6 : (p : Nat) -> (x : Nat) -> (c : Nat) ->
+  (p = x*c) -> q = c -> (p = q*x)
+metaHelp6 p x c prf prf1 = rewrite prf1 in
+                       rewrite multCommutative c x in prf
+
+--To help out a case in notDivIfRem
+help6 : (p : Nat) -> (x : Nat) -> (c : Nat) ->
+  (p = q*x) -> (p = (S r) + q*x) ->
+  (Z = (S r))
+help6 p x c {q} {r} p1 p2 = plusRightCancel Z (S r) (q*x) (trans (sym p1) p2)
+
+--To help out another case of notDivIfRem
+help7 : (p : Nat) -> (x : Nat) -> (c : Nat) -> (k : Nat) -> (r : Nat) ->
+        c + k = q -> p = x*c -> p = (S r) + q*x ->
+        Z = (S r) + k*x
+help7 p x c k r pfSum pfMul pfRem =
+          plusRightCancel Z ((S r)+k*x) (c*x)
+          (rewrite sym (plusAssociative (S r) (k*x) (c*x)) in
+           rewrite plusCommutative (k*x) (c*x) in
+           rewrite sym (multDistributesOverPlusLeft c k x) in
+           rewrite pfSum in
+           rewrite sym (multCommutative x c) in
+           rewrite sym (pfMul) in pfRem)
+
+--Helper for help8
+metahelp8 : (x : Nat) -> (S q) + k = c -> x +(q+k)*x = c*x
+metahelp8 x prf = rewrite sym prf in Refl
+
+--Last case!
+help8 : (p : Nat) -> (x : Nat) -> (c : Nat) -> (k : Nat) ->
+        (m : Nat) -> (r : Nat) -> (q : Nat) ->
+        (S q) + k = c -> (S (S r)) + m = x -> p = x*c -> p = (S r) + q*x ->
+        Z = k*(S r) + (S k)*(S m)
+help8 p x c k m r q qLtc srLtx pfMul pfRem =
+          plusLeftCancel (S r) Z (k*(S r) + (S k)*(S m))
+          (rewrite plusAssociative (S r) (k*(S r)) ((S k)*(S m)) in
+           rewrite sym (multDistributesOverPlusRight (S k) (S r) (S m)) in
+           rewrite plusAssociative r (S Z) m in
+           rewrite plusCommutative r (S Z) in
+           rewrite srLtx in
+           rewrite sym (plusCommutative (k*x) ((S (S r)) + m)) in
+           rewrite srLtx in
+           rewrite plusCommutative (k*x) x in
+           rewrite plusZeroRightNeutral r in
+           plusLeftCancel (q*x) (S r) (x + k*x)
+           (rewrite plusAssociative (q*x) x (k*x) in
+            rewrite plusCommutative (q*x) x in
+            rewrite sym (multDistributesOverPlusLeft (S q) k x) in
+            rewrite metahelp8 {q=q} {k=k} {c=c} x qLtc in
+            rewrite (multCommutative c x) in
+            rewrite sym pfMul in
+            rewrite plusCommutative (q*x) (S r) in
+            (sym pfRem)))
+
+help9 : (k,r,m : Nat) ->
+        Z = k*(S r) + (S k)*(S m) -> Z = (S k)*(S m) + k*(S r)
+help9 k r m prf = rewrite plusCommutative ((S k)*(S m)) (k*(S r)) in prf
+
+--To help out the last case, by creating a term of an uninhabited type
+notDivIfRem : (p : Nat) -> (x : Nat) -> (r : Nat) -> {q : Nat} ->
+  (p = (S r) + q*x) -> LT (S r) x ->
+  (c : Nat ** p = x * c) -> Void
+notDivIfRem p x r {q=q} prfRem prfLt (c ** prfDiv) =
+    case decEq q c of
+        (Yes prf) => absurd $
+                      (help6 p x c (metaHelp6 p x c prfDiv prf) prfRem)
+        (No contra) => case totOrdNat q c of
+              (Left l) => void (contra l)
+              (Right (Left qLtc)) => case (lteToLEQ qLtc) of
+                        (k ** pf1) => case (lteToLEQ prfLt) of
+                          (m ** pf2) => absurd $
+                              help9 k r m
+                                (help8 p x c k m r q pf1 pf2 prfDiv prfRem)
+              (Right (Right qGtc)) => case (lteToLEQ (lteSuccLeft qGtc)) of
+                          (k ** pf) => absurd $
+                              (help7 p x c k r pf prfDiv prfRem)
+
 --The usual case for divisibility
 usual : (p : Nat) -> LTE 2 p -> (x : Nat) -> (LT 0 x) -> (LT x p) ->
   (euc : (q : Nat ** (r : Nat ** ((p = r + (q * x)), LT r x)))) ->
@@ -185,17 +263,23 @@ usual (S (S k)) (LTESucc (LTESucc LTEZero))
 
         usual (S (S k)) (LTESucc (LTESucc LTEZero))
               (S j) (LTESucc LTEZero)
-              xLtp euc | (_ ** ((S a) ** (pf,_))) = No ?e4
+              xLtp euc | (_ ** ((S a) ** (pf1,pf2))) = No
+                              (impliesContrapositive
+                                (isDivisible (S (S k)) (S j))
+                                (c : Nat ** (S (S k)) = (S j) * c)
+                                (bDivAImpBEqAN (S j) (S (S k)))
+                                (notDivIfRem (S (S k)) (S j) a pf1 pf2))
+
 
 --Decidability for divisibility
 decDiv : (p : Nat) -> LTE 2 p -> (x : Nat) ->
-  --{euc : (q : Nat ** (r : Nat ** ((p = r + (q * x)), LT r x)))} ->
+  {euc : (q : Nat ** (r : Nat ** ((p = r + (q * x)), LT r x)))} ->
   Dec (isDivisible p x)
 decDiv Z LTEZero _ impossible
 decDiv Z (LTESucc _) _ impossible
 decDiv (S Z) (LTESucc LTEZero) _ impossible
 decDiv (S Z) (LTESucc (LTESucc _)) _ impossible
-decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x =
+decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x {euc=big} =
     case totOrdNat (S (S k)) x of
       (Left l) => Yes (1 ** ((LTESucc LTEZero),
                              rewrite l in
@@ -207,9 +291,8 @@ decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x =
                               l)
       (Right (Right r)) => case x of
           Z => No (zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)))
-          (S m) => ?ssd
-          --(S m) => usual (S (S k)) (LTESucc (LTESucc LTEZero)) (S m)
-                  -- (LTESucc LTEZero) r big
+          (S m) => usual (S (S k)) (LTESucc (LTESucc LTEZero)) (S m)
+                   (LTESucc LTEZero) r big
 
 
 -- creates a list with all the factors of a number upto the second arguement
@@ -218,25 +301,22 @@ genFact Z Z = []
 genFact Z (S k) = []
 genFact (S j) Z = []
 genFact (S Z) (S k) = [(S Z ** oneDiv (S Z))]
-genFact (S (S j)) (S k) = case (decDiv (S (S j)) (LTESucc (LTESucc (LTEZero{right = j}))) (S k)) of
+genFact (S (S j)) (S k) =
+    case (decDiv (S (S j)) (LTESucc (LTESucc (LTEZero{right = j}))) (S k)
+          {euc=euclidDivide (S (S j)) (S k) SIsNotZ }) of
                (Yes prf) => (genFact (S (S j)) k) ++ [(S k ** prf)]
                (No contra) => (genFact (S (S j)) k)
 
-isDivImpInList : (n : Nat) -> (k : Nat) -> {j : Nat} -> (pf : isDivisible n k) -> (ls : List (k : Nat ** isDivisible n k)) -> (isElementOfList (k : Nat ** isDivisible n k) ls (k ** pf))
-isDivImpInList n k {j = Z} pf ls = case(index' Z ls) of
-                                    (Just z) => case (decEq (fst (z)) k) of
-                                      Yes pf => (Z ** Refl)
-                                      No contra => isDivImpInList n k {j = (S Z) pf ls}
-                                    (Nothing) => ?fill_2
+
 
 --if the List has only 2 elements, i.e 1 and p, then the number is prime. the function outputs a list (secretly genFact)
 -- along with the proof that the length of the list of factors is 2
-isPrimeCalc : (p: Nat) -> {auto pf: LTE 2 p} -> Type
-isPrimeCalc p = (length (genFact p p) = 2)
+isPrimeWithoutProof : (p: Nat) -> {auto pf: LTE 2 p} -> Type
+isPrimeWithoutProof p = length (genFact p p) = 2
 
 -- more than 2 factors implies number is composite
-isCompositeCalc : (n: Nat) -> {auto pf: LTE 2 n} -> Type
-isCompositeCalc n = Prelude.Nat.GT (Prelude.List.length (genFact n n)) 2
+isCompositeWithoutProof : (n: Nat) -> {auto pf: LTE 2 n} -> Type
+isCompositeWithoutProof n = Prelude.Nat.GT (Prelude.List.length (genFact n n)) 2
 
 
 --prime proof

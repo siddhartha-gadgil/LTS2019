@@ -1,10 +1,11 @@
-git log --pretty=fuller --stat --author=AR-MA210 > _reports/ar/gitlog
-git log --pretty=fuller --stat --author=Chinmaya > _reports/chinmaya/gitlog
-git log --pretty=fuller --stat --author=Nabarun > _reports/nabarun/gitlog
-git log --pretty=fuller --stat --author=rohit > _reports/rohit/gitlog
-git log --pretty=fuller --stat --author=shaf > _reports/shafil/gitlog
-git log --pretty=fuller --stat --author=SS > _reports/ss/gitlog
-git log --pretty=fuller --stat --author=anotherArka > _reports/arka/gitlog
-git log --pretty=fuller --stat --author=Sidh > _reports/sideart/gitlog
-git log --pretty=fuller --stat --author=Adit > _reports/adithya/gitlog
-git log --pretty=fuller --stat --author=rathivrunda > _reports/rathivrunda/gitlog
+git log --pretty=fuller --stat --no-merges --author=AR-MA210 > _reports/ar/gitlog
+git log --pretty=fuller --stat --no-merges --author=Chinmaya > _reports/chinmaya/gitlog
+git log --pretty=fuller --stat --no-merges --author=Nabarun > _reports/nabarun/gitlog
+git log --pretty=fuller --stat --no-merges --author=rohit > _reports/rohit/gitlog
+git log --pretty=fuller --stat --no-merges --author=shaf > _reports/shafil/gitlog
+git log --pretty=fuller --stat --no-merges --author=SS > _reports/ss/gitlog
+git log --pretty=fuller --stat --no-merges --author=anotherArka > _reports/arka/gitlog
+git log --pretty=fuller --stat --no-merges --author=Sidh > _reports/sideart/gitlog
+git log --pretty=fuller --stat --no-merges --author=Adit > _reports/adithya/gitlog
+git log --pretty=fuller --stat --no-merges --author=rathivrunda > _reports/rathivrunda/gitlog
+git log --pretty=fuller --stat --no-merges --author=Insignificant > _reports/aditvishnu/gitlog

@@ -1,3 +1,86 @@
+commit 257252b8155c9b7b69992e95ecf619cead4128a3
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Tue Feb 26 11:03:56 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 26 11:03:56 2019 +0530
+
+    Syncing
+
+ Code/BaseN.idr                | 177 +++++++++++++--------
+ Code/Bezout.idr               |  57 +++----
+ Code/Divisors.idr             | 175 +++++++++++++++-----
+ Code/FinUtils.idr             |  39 +++++
+ Code/GCDZZ.idr                |  52 ++++++
+ Code/Graph.idr                |  93 +++++++++--
+ Code/Graph_alt.idr.fixme      |  45 ++++++
+ Code/Graphexamples.idr        |   2 +-
+ Code/Group.FiniteGenerate.idr |  26 +++
+ Code/Group.idr                |  50 ++----
+ Code/GroupCosetRep.idr        |  29 ++++
+ Code/GroupCosets.idr          |  45 ++++++
+ Code/Group_property2.idr      |   2 +-
+ Code/InsertionSort.idr        |  29 +++-
+ Code/LectureEvens.idr         |  88 ++++++++++
+ Code/Linear.idr               |  34 +++-
+ Code/LinearAlgebra.idr        |  97 +++++++++++-
+ Code/Lists.idr                |  30 ++++
+ Code/Merge.idr                | 200 +++++++++++++++++------
+ Code/MultiSolver.idr          |   2 +-
+ Code/NatOrder.idr             | 229 +++++++++++++++++++++++++++
+ Code/NatUtils.idr             | 277 ++++++++++++++++++++++++++------
+ Code/Order.idr                | 120 ++++++++++++++
+ Code/Primes.idr               | 361 ++++++++++++++++++++++++++++++++++++++++++
+ Code/Quotient_Group.idr       |  77 ++++-----
+ Code/Rationals.idr            |   4 -
+ Code/Ring.Properties.idr      |  40 +++++
+ Code/Ring.idr                 | 147 ++++++++++++++---
+ Code/SortingWithProof.idr     |  34 ++--
+ Code/ZZ.idr                   |  90 +++++++----
+ Code/ZZUtils.idr              |  61 +++++++
+ Code/check-all.sh             |   5 +
+ Code/gcd.idr                  | 151 +++++++++---------
+ Code/midterm-check.txt        |  85 ++++++++++
+ 34 files changed, 2463 insertions(+), 490 deletions(-)
+
+commit ccca3992434f94bb3a4085ec97651c7fe2736572
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Tue Feb 26 10:41:37 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 26 10:41:37 2019 +0530
+
+    additional file
+
+commit 7ecad91480c6b7a1847cb2500b062f6167424b27
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Tue Feb 26 10:41:02 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 26 10:41:02 2019 +0530
+
+    Add files via upload
+
+commit a9730da6b6a3607eae7c9ec225b1bb45b31f6c76
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Tue Feb 26 10:40:17 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 26 10:40:17 2019 +0530
+
+    Defined Some basic methods for graphs
+
+ Code/Graph.idr  | 93 ++++++++-------------------------------------------------
+ Code/Matrix.idr | 56 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 69 insertions(+), 80 deletions(-)
+
+commit 3dca174f14f05a1e332f8cbaa459bead0fc0cfb6
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Feb 23 15:57:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 15:57:45 2019 +0530
+
+    started a proof of pigeonhole principle
+
+ Code/pigeonhole.idr | 80 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 80 insertions(+)
+
 commit 515d7e6f0128a7143e70e0e5d37c935b8a741584
 Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
 AuthorDate: Sat Feb 23 00:25:43 2019 +0530
@@ -173,17 +256,6 @@ CommitDate: Thu Feb 14 10:45:08 2019 +0530
  congruence.idr      |   6 +++
  8 files changed, 477 insertions(+)
 
-commit 6dac09676253e46f84dc84a2606815b178bbd93d
-Merge: 2732896 ed8c538
-Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
-AuthorDate: Thu Feb 14 10:43:54 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Thu Feb 14 10:43:54 2019 +0530
-
-    Merge pull request #3 from siddhartha-gadgil/master
-    
-    Syncing files
-
 commit 27328963239decafa1f4b329e01f33f8a3f102c1
 Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
 AuthorDate: Sun Feb 10 23:03:09 2019 +0530
@@ -291,17 +363,6 @@ CommitDate: Thu Feb 7 11:22:22 2019 +0530
  Code/Quotient_Group.idr | 41 +++++++++++++++++++++++++++++++++++++++++
  4 files changed, 122 insertions(+), 32 deletions(-)
 
-commit be4cb9499d6630ab0f9caa19ac1d3a7ce0672415
-Merge: bb58463 b0fe110
-Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
-AuthorDate: Sat Feb 2 20:57:28 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Sat Feb 2 20:57:28 2019 +0530
-
-    Merge pull request #2 from siddhartha-gadgil/master
-    
-    Updated on Feb 2
-
 commit bb58463b3ece9b9a4f03530cdcb5052cfc7984e3
 Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
 AuthorDate: Thu Jan 31 02:02:53 2019 +0530
@@ -334,17 +395,6 @@ CommitDate: Wed Jan 30 17:34:42 2019 +0530
 
  Code/Group.idr | 66 +++++++++++++++++++++++++++++++++++++++++-----------------
  1 file changed, 47 insertions(+), 19 deletions(-)
-
-commit 1ffe495e7bc24dbcf2cbf0715c237e88d670e2ce
-Merge: 92e36c3 553da25
-Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
-AuthorDate: Wed Jan 30 16:46:36 2019 +0530
-Commit:     GitHub <noreply@github.com>
-CommitDate: Wed Jan 30 16:46:36 2019 +0530
-
-    Merge pull request #1 from siddhartha-gadgil/master
-    
-    Updating on Jan 30
 
 commit 92e36c301d27377fea7165ea5e5bf2fbe3f47248
 Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>

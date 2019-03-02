@@ -1,6 +1,7 @@
 module Divisors
 
 import ZZ
+import ZZUtils
 %access public export
 %default total
 |||IsDivisibleZ a b can be constucted if b divides a
@@ -28,6 +29,21 @@ multDiv {d} (n**Refl) c =
 |||The theorem d|a =>d|ca
 multDivLeft:(IsDivisibleZ a d) ->(c:ZZ)->(IsDivisibleZ (c*a) d)
 multDivLeft{a} x c = rewrite (multCommutativeZ c a) in (multDiv x c)
+
+|||The theorem that if d|a then md|ma
+multBothSidesOfDiv:(m:ZZ)->(IsDivisibleZ a d)->(IsDivisibleZ (m*a) (m*d))
+multBothSidesOfDiv{d} m (x ** pf) =
+  (x** (rewrite (sym (multAssociativeZ m d x)) in (cong pf)))
+
+||| Theorem that if a = k*d and and c|k then c*d|a
+multBothSidesOfDivRightWithProof :(a=k*d)->(IsDivisibleZ k c)->
+   (IsDivisibleZ a (c*d))
+multBothSidesOfDivRightWithProof {a}{k}{c}{d} prf x =
+  rewrite prf in
+  rewrite (multCommutativeZ k d) in
+  rewrite (multCommutativeZ c d) in
+   (multBothSidesOfDiv d x)
+
 
 |||The theorem d|a and d|b =>d|(a+b)
 plusDiv : (IsDivisibleZ a d)->(IsDivisibleZ b d)->(IsDivisibleZ (a+b) d)
@@ -87,6 +103,23 @@ dDividesNegative{a}{d} (x ** pf) =
 |||The theorem that d|(-a) implies d|a
 dDividesNegative2:  (IsDivisibleZ (-a) d)->(IsDivisibleZ  a d)
 dDividesNegative2 {a}x = rewrite (sym (doubleNegElim a)) in (dDividesNegative x)
+|||The theorem that d|a implies (-d)|a
+negativeDivides:(IsDivisibleZ a d)->(IsDivisibleZ a (-d))
+negativeDivides {a}{d}(x ** pf) =
+  ((-x)**(rewrite pf in (sym negateMultNegateNeutralZ)))
+|||The theorem that (-d)|a implies d|a
+negativeDivides2:(IsDivisibleZ a (-d))->(IsDivisibleZ a d)
+negativeDivides2 {a}{d}x = rewrite (sym (doubleNegElim d)) in (negativeDivides x)
+|||The theorem that -1|a for all integers
+minusOneDivides:(a:ZZ)->(IsDivisibleZ a (-1))
+minusOneDivides a = negativeDivides (oneDiv _)
+|||The theorem that 0 doesnt divide a non zero quantity
+zeroDoesntDivideNonZero:{d:ZZ}->(NotZero d)->(IsDivisibleZ d 0)->Void
+zeroDoesntDivideNonZero{d = (Pos (S k))} PositiveZ (x** pf)=
+  (posIsNotZeroTimesInteger pf)
+zeroDoesntDivideNonZero{d = (NegS k)} NegativeZ (x ** pf) =
+  (negSIsNotZeroTimesInteger pf)
+
 
 |||The theorem c|b and c|(a+bp) then c|a
 cDiva :{p:ZZ} ->(cDIvb :(IsDivisibleZ b c))->
@@ -168,3 +201,38 @@ euclidConservesGcdWithProof: {a:ZZ}->{b:ZZ}->{quot:ZZ}->{rem:ZZ}->
 euclidConservesGcdWithProof {a}{b}{quot}{rem}equality (dPos,(dDivb,dDivrem),fd) =
   (dPos,(dDiva,dDivb),(genfunction equality fd)) where
      dDiva = euclidConservesDivisorWithProof equality dDivrem dDivb
+
+|||The theorem that if d is positive and cd|d then c=1 or c=-1
+cdDividesdThenAbscOne:(IsPositive d)->(IsDivisibleZ d (c*d))->Either (c=1) (c=(-1))
+cdDividesdThenAbscOne {c = c}{d = d}x (n ** pf) =
+  (case productOneThenNumbersOne c n cnIs1 of
+      (Left (a, b)) => Left a
+      (Right (a, b)) => Right a) where
+        cnIs1 = multRightCancelZ (c*n) 1 d (posThenNotZero x) expression where
+          expression = rewrite ( sym (multCommuAndAssocZ1{c=c}{d=d}{n=n})) in
+                        rewriteRightAsOneTimesRight{b=d} (sym pf)
+
+|||A helper function for divideByGcdThenGcdOne
+genFunctionForDivideByGcdThenGcdOne:({k:ZZ}->(IsCommonFactorZ a b k)->
+  (IsDivisibleZ d k))->IsPositive d
+   ->(aByd:ZZ)->(bByd:ZZ)->a=aByd*d->b=bByd*d->
+         ({c:ZZ}->(IsCommonFactorZ aByd bByd c)->(IsDivisibleZ 1 c))
+genFunctionForDivideByGcdThenGcdOne f dPos aByd bByd prf prf1 (cDivaByd,cDivbByd) =
+  let cdDivd = f ((multBothSidesOfDivRightWithProof prf cDivaByd),
+      (multBothSidesOfDivRightWithProof prf1 cDivbByd))in
+  (case (cdDividesdThenAbscOne dPos cdDivd) of
+        Left Refl => oneDiv 1
+        Right Refl =>minusOneDivides 1)
+
+|||Theorem that gcd ( (a/gcd(a,b)),(b/gcd(a,b)) ) =1
+|||Here, (fst (fst (fst (snd dGcdab))))  = (a/gcd(a,b)) by definition of the
+|||GCDZ type and similarly (fst (snd (fst (snd dGcdab)))) =(b/gcd(a,b))
+divideByGcdThenGcdOne:(dGcdab:(GCDZ a b d))->
+  (GCDZ (fst (fst (fst (snd dGcdab))))  (fst (snd (fst (snd dGcdab)))) 1)
+divideByGcdThenGcdOne{a}{b}{d} (dPos, ((aByd**amd),(bByd**bmd)),fd) =
+  (Positive,((oneDiv _),(oneDiv _)),(genFunctionForDivideByGcdThenGcdOne fd
+    dPos aByd bByd eqa eqb)) where
+      eqa = rewrite (multCommutativeZ aByd d) in amd
+      eqb = rewrite (multCommutativeZ bByd d) in bmd
+
+

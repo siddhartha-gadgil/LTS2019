@@ -1,7 +1,7 @@
 module Graphexamples
 
 import Graph
-import data.Vect
+import Data.Vect
 
 am1 :(Vect 6 (Vect 6  Nat))
 am1 = [[0,1,1,0,0,0],[1,0,1,0,0,0],[1,1,0,0,0,0],[0,0,0,0,1,0],[0,0,0,1,0,1],[0,0,0,0,1,0]]
