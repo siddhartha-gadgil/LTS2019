@@ -180,17 +180,55 @@ help7 p x c k r pfSum pfMul pfRem =
            rewrite sym (multCommutative x c) in
            rewrite sym (pfMul) in pfRem)
 
+--Helper for help8
+metahelp8 : (x : Nat) -> (S q) + k = c -> x +(q+k)*x = c*x
+metahelp8 x prf = rewrite sym prf in Refl
+
+--Last case!
+help8 : (p : Nat) -> (x : Nat) -> (c : Nat) -> (k : Nat) ->
+        (m : Nat) -> (r : Nat) -> (q : Nat) ->
+        (S q) + k = c -> (S (S r)) + m = x -> p = x*c -> p = (S r) + q*x ->
+        Z = k*(S r) + (S k)*(S m)
+help8 p x c k m r q qLtc srLtx pfMul pfRem =
+          plusLeftCancel (S r) Z (k*(S r) + (S k)*(S m))
+          (rewrite plusAssociative (S r) (k*(S r)) ((S k)*(S m)) in
+           rewrite sym (multDistributesOverPlusRight (S k) (S r) (S m)) in
+           rewrite plusAssociative r (S Z) m in
+           rewrite plusCommutative r (S Z) in
+           rewrite srLtx in
+           rewrite sym (plusCommutative (k*x) ((S (S r)) + m)) in
+           rewrite srLtx in
+           rewrite plusCommutative (k*x) x in
+           rewrite plusZeroRightNeutral r in
+           plusLeftCancel (q*x) (S r) (x + k*x)
+           (rewrite plusAssociative (q*x) x (k*x) in
+            rewrite plusCommutative (q*x) x in
+            rewrite sym (multDistributesOverPlusLeft (S q) k x) in
+            rewrite metahelp8 {q=q} {k=k} {c=c} x qLtc in
+            rewrite (multCommutative c x) in
+            rewrite sym pfMul in
+            rewrite plusCommutative (q*x) (S r) in
+            (sym pfRem)))
+
+help9 : (k,r,m : Nat) ->
+        Z = k*(S r) + (S k)*(S m) -> Z = (S k)*(S m) + k*(S r)
+help9 k r m prf = rewrite plusCommutative ((S k)*(S m)) (k*(S r)) in prf
+
 --To help out the last case, by creating a term of an uninhabited type
-notDivIfRem : (p : Nat) -> (x : Nat) -> (r : Nat) ->
+notDivIfRem : (p : Nat) -> (x : Nat) -> (r : Nat) -> {q : Nat} ->
   (p = (S r) + q*x) -> LT (S r) x ->
   (c : Nat ** p = x * c) -> Void
-notDivIfRem p x r {q} prfRem prfLt (c ** prfDiv) =
+notDivIfRem p x r {q=q} prfRem prfLt (c ** prfDiv) =
     case decEq q c of
         (Yes prf) => absurd $
                       (help6 p x c (metaHelp6 p x c prfDiv prf) prfRem)
         (No contra) => case totOrdNat q c of
               (Left l) => void (contra l)
-              (Right (Left qLtc)) => ?hh_3
+              (Right (Left qLtc)) => case (lteToLEQ qLtc) of
+                        (k ** pf1) => case (lteToLEQ prfLt) of
+                          (m ** pf2) => absurd $
+                              help9 k r m
+                                (help8 p x c k m r q pf1 pf2 prfDiv prfRem)
               (Right (Right qGtc)) => case (lteToLEQ (lteSuccLeft qGtc)) of
                           (k ** pf) => absurd $
                               (help7 p x c k r pf prfDiv prfRem)
@@ -235,13 +273,13 @@ usual (S (S k)) (LTESucc (LTESucc LTEZero))
 
 --Decidability for divisibility
 decDiv : (p : Nat) -> LTE 2 p -> (x : Nat) ->
-  --{euc : (q : Nat ** (r : Nat ** ((p = r + (q * x)), LT r x)))} ->
+  {euc : (q : Nat ** (r : Nat ** ((p = r + (q * x)), LT r x)))} ->
   Dec (isDivisible p x)
 decDiv Z LTEZero _ impossible
 decDiv Z (LTESucc _) _ impossible
 decDiv (S Z) (LTESucc LTEZero) _ impossible
 decDiv (S Z) (LTESucc (LTESucc _)) _ impossible
-decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x =
+decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x {euc=big} =
     case totOrdNat (S (S k)) x of
       (Left l) => Yes (1 ** ((LTESucc LTEZero),
                              rewrite l in
@@ -253,9 +291,8 @@ decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x =
                               l)
       (Right (Right r)) => case x of
           Z => No (zNotDivp (S (S k)) (LTESucc (LTESucc LTEZero)))
-          (S m) => ?ssd
-          --(S m) => usual (S (S k)) (LTESucc (LTESucc LTEZero)) (S m)
-                  -- (LTESucc LTEZero) r big
+          (S m) => usual (S (S k)) (LTESucc (LTESucc LTEZero)) (S m)
+                   (LTESucc LTEZero) r big
 
 
 -- creates a list with all the factors of a number upto the second arguement
@@ -264,7 +301,9 @@ genFact Z Z = []
 genFact Z (S k) = []
 genFact (S j) Z = []
 genFact (S Z) (S k) = [(S Z ** oneDiv (S Z))]
-genFact (S (S j)) (S k) = case (decDiv (S (S j)) (LTESucc (LTESucc (LTEZero{right = j}))) (S k)) of
+genFact (S (S j)) (S k) =
+    case (decDiv (S (S j)) (LTESucc (LTESucc (LTEZero{right = j}))) (S k)
+          {euc=euclidDivide (S (S j)) (S k) SIsNotZ }) of
                (Yes prf) => (genFact (S (S j)) k) ++ [(S k ** prf)]
                (No contra) => (genFact (S (S j)) k)
 
