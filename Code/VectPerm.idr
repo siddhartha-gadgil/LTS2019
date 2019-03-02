@@ -4,6 +4,9 @@ import Data.Vect
 
 -- Auxillary functions
 
+Nats: Type
+Nats = (Nat, Nat)
+
 FST: (Vect k Nat, Vect k Nat) -> Vect k Nat
 FST (a, b) = a
 
@@ -54,6 +57,9 @@ intoFin (S k) (S j) = case (isLTE (S k) (S j)) of
 nPos: (a: Nat) -> (n: Nat) -> (x: Vect n Nat) -> Nat
 nPos a n x = Index (intoFin a n) x
 
+replaceWithZ: (x: Vect n Nat) -> (pos: Nat) -> (Vect n Nat)
+replaceWithZ {n} x pos = replaceAt (intoFin pos n) (Z) (x)
+
 -- The function below is a helper function to show where (with proof) an element occurs in a vector
 -- This will be useful for checking (with proof) if a Vector is a permutation of another.
 
@@ -82,24 +88,24 @@ thisElemthatVect {n} x pos y = findIn y (nPos pos n x)
 
 -- given a vector x, it removes the element at position 'pos' (indexing from 0)
 
-removeElem: (n: Nat) -> (x: Vect (S n) Nat) -> (pos: Nat) -> (Vect n Nat)
-removeElem n (x :: xs) Z = xs
-removeElem Z (x :: xs) (S k) = []
-removeElem (S j) (x :: xs) (S k) = [x] ++ (removeElem j xs k)
+removeElem: (x: Vect (S n) Nat) -> (pos: Nat) -> (Vect n Nat)
+removeElem {n} (x :: xs) Z = xs
+removeElem {n=Z} (x :: xs) (S k) = []
+removeElem {n=(S j)} (x :: xs) (S k) = [x] ++ (removeElem xs k)
 
 -- checks if x[pos] occurs in y, and if it does, deletes them from the arrays
 
-checkEqualElement: (n: Nat) -> (x: Vect (S n) Nat) -> (y: Vect (S n) Nat) -> (pos: Nat) -> (k: Nat ** (nPos k (S n) y) = (nPos pos (S n) x)) -> (Vect n Nat, Vect n Nat)
-checkEqualElement Z (x :: xs) (y :: ys) Z z = ([],[])
-checkEqualElement Z [a] [b] (S k) z = ([], [])
-checkEqualElement (S k) (x :: xs) (y :: ys) pos z = ( (removeElem (S k) (x::xs) pos), (removeElem (S k) (y::ys) (fst z)) )
+checkEqualElement: (x: Vect (S n) Nat) -> (y: Vect (S n) Nat) -> (pos: Nat) -> (k: Nat ** (nPos k (S n) y) = (nPos pos (S n) x)) -> (Vect n Nat, Vect n Nat)
+checkEqualElement {n=Z} (x :: xs) (y :: ys) Z z = ([],[])
+checkEqualElement {n=Z} [a] [b] (S k) z = ([], [])
+checkEqualElement {n=(S k)} (x :: xs) (y :: ys) pos z = ( (removeElem (x::xs) pos), (removeElem (y::ys) (fst z)) )
 
 removeIfequal: (x: Vect (S n) Nat) -> (y: Vect (S n) Nat) -> (pos: Nat) -> Either ((Vect (S n) Nat), (Vect (S n) Nat)) ((Vect n Nat), (Vect n Nat))
 removeIfequal {n} x y pos = case (nonEmpty (thisElemthatVect x pos y)) of
-                           (Yes prf) => Right (checkEqualElement n x y pos (head (thisElemthatVect x pos y)))
+                           (Yes prf) => Right (checkEqualElement x y pos (head (thisElemthatVect x pos y)))
                            (No contra) => Left (x, y)
-                           
--- recursively removes all the elements which occur in both x and y                           
+
+-- recursively removes all the elements which occur in both x and y
 
 removeRepeatedly: (iter: Nat) -> (x: Vect n Nat) -> (y: Vect n Nat) -> (List Nat, List Nat)
 removeRepeatedly iter [] [] = ([], [])
@@ -109,8 +115,49 @@ removeRepeatedly Z (x :: xs) (y :: ys) = case (removeIfequal (x::xs) (y::ys) Z) 
 removeRepeatedly (S k) (x :: xs) (y :: ys) = case (removeIfequal (x::xs) (y::ys) (S k)) of
                                                   (Left l) => (removeRepeatedly k (FST l) (SND l))
                                                   (Right r) => (removeRepeatedly k (FST r) (SND r))
-                                                  
--- produces the elements which occur in only one list and not another (symmetric difference of lists)                                                  
+
+-- produces the elements which occur in only one list and not another (symmetric difference of lists)
 
 listDifference: (x: Vect n Nat) -> (y: Vect n Nat) -> (List Nat, List Nat)
 listDifference {n} x y = removeRepeatedly (Pred n) x y
+
+-- Two Boolean tests for permutations. The first one checks if the list difference is zero.
+
+PermutationTest: (x: Vect n Nat) -> (y: Vect n Nat) -> Bool
+PermutationTest x y = case (fst (listDifference x y)) of
+                           [] => True
+                           (x :: xs) => False
+
+-- The second one works recursively. This will be more suited to turning into a proof.
+
+recursiveTest: (x: Vect n Nat) -> (y: Vect n Nat) -> Bool
+recursiveTest {n = Z} x y = True
+recursiveTest {n= (S Z)} [a] [b] = case (decEq a b) of
+                                        (Yes prf) => True
+                                        (No contra) => False
+recursiveTest {n = (S k)} x y = case (thisElemthatVect x Z y) of
+                                     [] => False
+                                     (head :: rest) => recursiveTest (removeElem x Z) (removeElem y (fst head))
+
+
+-- Permutations as Bijections
+
+-- This function is a helper function which checks each position of the Vector x and finds a corresponding element in y. Then, to make
+-- sure nothing is repeated, it replaces the instance of x[pos] in y with Zero (please use positive elements in the vector). This was
+-- required for constructing bijections between Vectors with repeated elements; there is a simpler way to do it in case the elements
+-- are not repeated.
+
+reversedBiject: (x: Vect n Nat) -> (y: Vect n Nat) -> (xpos: Nat) -> (List Nat)
+reversedBiject {n = Z} x y xpos = []
+reversedBiject {n = (S k)} x y Z = case (thisElemthatVect x Z y) of
+                                        [] => []
+                                        (front :: rest) => [(fst front)]
+reversedBiject {n = (S k)} (x :: xs) (y :: ys) (S j) = case (thisElemthatVect (x :: xs) (S j) (y :: ys)) of
+                                            [] => []
+                                            (front :: rest) => [(fst front)] ++ (reversedBiject (x::xs) (replaceWithZ (y::ys) (fst front)) j)
+
+
+
+PermutationBijection: (x: Vect n Nat) -> (y: Vect n Nat) -> (List Nat)
+PermutationBijection {n = Z} x y = []
+PermutationBijection {n = (S k)} x y = reverse ((reversedBiject x y k))
