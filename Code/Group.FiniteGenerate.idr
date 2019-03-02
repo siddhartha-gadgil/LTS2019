@@ -21,6 +21,6 @@ Pow grp (*) pfgrp g (S k) = g*(Pow grp (*) pfgrp g k)
 
 
 
--- check that group is finitely generated
+-- check that element of a group has finite order
 HasFiniteOrder : (grp : Type) -> ((*) : grp -> grp -> grp) -> IsGroup grp (*) -> (g : grp) -> Type
-HasFiniteOrder grp (*) pfgrp g = (n : Nat ** (LT Z n, Pow grp (*) pfgrp g n = fst (Group_id grp (*) pfgrp)))
+HasFiniteOrder grp (*) pfgrp g = (n : Nat ** (Not (n=Z), Pow grp (*) pfgrp g n = fst (Group_id grp (*) pfgrp)))

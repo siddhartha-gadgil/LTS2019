@@ -2,6 +2,7 @@ module Primes
 
 import NatUtils
 import gcd
+import Lists
 
 %access public export
 %default total
@@ -221,16 +222,21 @@ genFact (S (S j)) (S k) = case (decDiv (S (S j)) (LTESucc (LTESucc (LTEZero{righ
                (Yes prf) => (genFact (S (S j)) k) ++ [(S k ** prf)]
                (No contra) => (genFact (S (S j)) k)
 
-
+isDivImpInList : (n : Nat) -> (k : Nat) -> {j : Nat} -> (pf : isDivisible n k) -> (ls : List (k : Nat ** isDivisible n k)) -> (isElementOfList (k : Nat ** isDivisible n k) ls (k ** pf))
+isDivImpInList n k {j = Z} pf ls = case(index' Z ls) of
+                                    (Just z) => case (decEq (fst (z)) k) of
+                                      Yes pf => (Z ** Refl)
+                                      No contra => isDivImpInList n k {j = (S Z) pf ls}
+                                    (Nothing) => ?fill_2
 
 --if the List has only 2 elements, i.e 1 and p, then the number is prime. the function outputs a list (secretly genFact)
 -- along with the proof that the length of the list of factors is 2
-isPrimeWithoutProof : (p: Nat) -> {auto pf: LTE 2 p} -> Type
-isPrimeWithoutProof p = length (genFact p p) = 2
+isPrimeCalc : (p: Nat) -> {auto pf: LTE 2 p} -> Type
+isPrimeCalc p = (length (genFact p p) = 2)
 
 -- more than 2 factors implies number is composite
-isCompositeWithoutProof : (n: Nat) -> {auto pf: LTE 2 n} -> Type
-isCompositeWithoutProof n = Prelude.Nat.GT (Prelude.List.length (genFact n n)) 2
+isCompositeCalc : (n: Nat) -> {auto pf: LTE 2 n} -> Type
+isCompositeCalc n = Prelude.Nat.GT (Prelude.List.length (genFact n n)) 2
 
 
 --prime proof
