@@ -21,6 +21,10 @@ data NotZero:ZZ->Type where
 data IsNegative:ZZ->Type where
   Negative: IsNegative (NegS k)
 
+|||Zero is not positive
+zeroNotPos:IsPositive (Pos Z)->Void
+zeroNotPos Positive impossible
+
 |||Proof that NotBothZeroZ 0 0 is uninhabited
 zeroZeroBothZero:NotBothZeroZ (Pos Z) (Pos Z) ->Void
 zeroZeroBothZero LeftPositive impossible
@@ -37,12 +41,12 @@ decNotBothZero (Pos (S k)) b = Yes LeftPositive
 decNotBothZero (NegS k) b = Yes LeftNegative
 
 |||Checks 2 numbers and produces a proof of either (a=0,b=0) or (NotBothZeroZ a b)
-cheeckNotBothZero : (a:ZZ)->(b:ZZ)->Either ((a=0),(b=0)) (NotBothZeroZ a b)
-cheeckNotBothZero (Pos Z) (Pos Z) = Left (Refl, Refl)
-cheeckNotBothZero (Pos Z) (Pos (S k)) = Right RightPositive
-cheeckNotBothZero (Pos Z) (NegS k) = Right RightNegative
-cheeckNotBothZero (Pos (S k)) b = Right LeftPositive
-cheeckNotBothZero (NegS k) b = Right LeftNegative
+checkNotBothZero : (a:ZZ)->(b:ZZ)->Either ((a=0),(b=0)) (NotBothZeroZ a b)
+checkNotBothZero (Pos Z) (Pos Z) = Left (Refl, Refl)
+checkNotBothZero (Pos Z) (Pos (S k)) = Right RightPositive
+checkNotBothZero (Pos Z) (NegS k) = Right RightNegative
+checkNotBothZero (Pos (S k)) b = Right LeftPositive
+checkNotBothZero (NegS k) b = Right LeftNegative
 
 |||Proof that positive numbers are not zero
 posThenNotZero:{a:ZZ}->(IsPositive a)->(NotZero a)
@@ -54,6 +58,14 @@ rewriteRightAsOneTimesRight {a}{b}prf = rewrite ( (multOneLeftNeutralZ b)) in pr
 |||Rewrites a=b as 1*a=b
 rewriteLeftAsOneTimesLeft: {a:ZZ}->{b:ZZ}->(a=b)->(1*a=b)
 rewriteLeftAsOneTimesLeft {a}{b}prf = rewrite ( (multOneLeftNeutralZ a)) in prf
+|||Rewrites 1*a = b as a=b
+rewriteOneTimesLeftAsLeft:{a:ZZ}->{b:ZZ}->((1*a) = b)->(a=b)
+rewriteOneTimesLeftAsLeft {a}{b}prf  =
+  rewrite ( sym $(multOneLeftNeutralZ a)) in prf
+|||Rewrites   (a*1)=b as a=b
+rewriteLeftTimesOneAsLeft : {a:ZZ}->{b:ZZ}->((a*1)=b)->(a=b)
+rewriteLeftTimesOneAsLeft {a}{b}prf =
+  rewrite ( sym $(multOneRightNeutralZ a)) in prf
 
 |||Proof that negative integers are not non negative
 negsAreNotNonNegs:(IsNonNegative (NegS k))->Void
