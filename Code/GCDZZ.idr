@@ -4,6 +4,7 @@ import ZZ
 import NatUtils
 import gcd
 import ZZUtils
+%default total
 %access public export
 
 |||Converts the expression (a=r+(q*b)) to its integer equivalent
@@ -135,3 +136,77 @@ gcdOfMultiple{a}{b}{d} m mPos (dPos, (dDiva,dDivb),fd)  notzero=
                  (multBothSidesOfDiv m dDivb)),
                      (genfunctionGcdOfMultiple{d=d} (rewrite (gcdIsUnique gisgcd (dPos, (dDiva,dDivb),fd)) in linpf) m ))
 
+|||The proof that if c = (2*c)*n, then 1 = (2*n)
+|||A helper function for gcdZeroZeroContra
+helping1: {c:ZZ}->{n:ZZ}->(IsPositive c)->(c = (2*c)*n) ->(1= (2*n))
+helping1{n}{c} cPos prf =
+  (multRightCancelZ 1 (2*n) c (posThenNotZero cPos) exp) where
+    exp = rewrite multOneLeftNeutralZ c in
+          rewrite sym $ multAssociativeZ 2 n c in
+          rewrite multCommutativeZ n c in
+          rewrite multAssociativeZ 2 c n in
+          prf
+|||Proof that 2=1 is impossible
+twoIsNotOne:Pos (S (S Z))= Pos (S Z)->Void
+twoIsNotOne Refl impossible
+|||Proof that 2= -1 is impossible
+twoIsNotMinusOne: (Pos (S (S Z))= (NegS Z))->Void
+twoIsNotMinusOne Refl impossible
+
+|||Proof that 1 = (2*n) is impossible
+oneIsTwoTimesIntContra:{n:ZZ}-> (1= (2*n))->Void
+oneIsTwoTimesIntContra{n} prf =
+  (case productOneThenNumbersOne 2 n (sym prf) of
+        (Left (a,b )) => twoIsNotOne a
+        (Right (a,b)) => twoIsNotMinusOne a)
+
+|||Proof that if c is positive, 2c|c is impossible
+twiceDividesOnceContra:IsPositive c ->(IsDivisibleZ  c (2*c) )->Void
+twiceDividesOnceContra cPos (n ** pf) =oneIsTwoTimesIntContra( helping1 cPos pf)
+|||GCD of 0 and 0 does not exist
+gcdZeroZeroContra:{k:ZZ}->(GCDZ 0 0 k)->Void
+gcdZeroZeroContra {k} (kPos,(kDivZ1,kDivZ2),fk) =
+ twiceDividesOnceContra kPos (fk {c=(2*k)} (zzDividesZero (2*k),zzDividesZero (2*k)))
+
+|||The actual definition of GCD as the 'greatest' common divisor
+GCDZr: (a:ZZ) -> (b:ZZ) -> (d:ZZ) -> Type
+GCDZr a b d = ((IsCommonFactorZ a b d),
+  ({c:ZZ}->(IsCommonFactorZ a b c)->(LTEZ c d)))
+
+|||GCD of 0 and 0 does not exist even in this definition.
+gcdrZeroZeroContra:{k:ZZ}->(GCDZr 0 0 k)->Void
+gcdrZeroZeroContra{k} ((kDiv1, kDiv2),fk) =
+  succNotLteNumZ k (fk((zzDividesZero (1+k)),(zzDividesZero (1+k))))
+
+|||A helper function function for GCDZImpliesGCDZr
+helperGCDZImpliesGCDZr:({k:ZZ}->(IsCommonFactorZ a b k)->(IsDivisibleZ d k))->(IsPositive d)->
+   {c:ZZ}->(IsCommonFactorZ a b c)->(LTEZ c d)
+helperGCDZImpliesGCDZr {d=(Pos (S k))} f Positive {c = (NegS j)} y = NegLessPositive
+helperGCDZImpliesGCDZr {d=(Pos (S k))} f Positive {c = (Pos Z)} y = PositiveLTE (LTEZero)
+helperGCDZImpliesGCDZr {d=(Pos (S k))} f Positive {c = (Pos (S j))} y =
+  posDivPosImpliesLte (f y) Positive Positive
+
+|||Proof that (GCDZ a b d) implies (GCDZr a b d)
+GCDZImpliesGCDZr:(GCDZ a b d)->(GCDZr a b d)
+GCDZImpliesGCDZr (dPos,cfab,fd) = (cfab,(helperGCDZImpliesGCDZr fd dPos))
+
+|||Rewrites GCDZr a b e as GCDZr c d e , given a prrof that a=c and b=d
+gcdReplace:{a:ZZ}->{b:ZZ}->(a=c)->(b=d)->GCDZr a b e -> GCDZr c d e
+gcdReplace prf prf1 x = rewrite (sym prf) in
+                        rewrite (sym prf1) in
+                        x
+|||GCD is unique even in this definition
+gcdrIsUnique:(GCDZr a b c)->(GCDZr a b d)->(c=d)
+gcdrIsUnique (comfactc,fc) (comfactd,fd) =
+  lteAndGteImpliesEqualZ (fc (comfactd)) (fd (comfactc))
+
+|||Proof that (GCDZr a b d) implies (GCDZ a b d)
+GCDZrImpliesGCDZ:{a:ZZ}->{b:ZZ}-> (GCDZr a b d)->(GCDZ a b d)
+GCDZrImpliesGCDZ {a}{b}{d} gcdr =
+  (case cheeckNotBothZero a b  of
+        Left (aZ,bZ) => void (gcdrZeroZeroContra (gcdReplace aZ bZ gcdr))
+        Right notZ =>
+           (case bezoutCoeffs a b notZ of
+                 (g**(gisgcd,(j**k**linpf))) =>
+                    rewrite (gcdrIsUnique gcdr (GCDZImpliesGCDZr gisgcd)) in
+                        gisgcd))

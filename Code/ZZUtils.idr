@@ -18,6 +18,32 @@ data NotZero:ZZ->Type where
   PositiveZ:NotZero (Pos (S k))
   NegativeZ:NotZero (NegS k)
 
+data IsNegative:ZZ->Type where
+  Negative: IsNegative (NegS k)
+
+|||Proof that NotBothZeroZ 0 0 is uninhabited
+zeroZeroBothZero:NotBothZeroZ (Pos Z) (Pos Z) ->Void
+zeroZeroBothZero LeftPositive impossible
+zeroZeroBothZero LeftNegative impossible
+zeroZeroBothZero RightPositive impossible
+zeroZeroBothZero RightNegative impossible
+
+|||Decides whther two numbers are not both zero or not.
+decNotBothZero : (a:ZZ)->(b:ZZ)->Dec (NotBothZeroZ a b)
+decNotBothZero (Pos Z) (Pos Z) = No ( zeroZeroBothZero)
+decNotBothZero (Pos Z) (Pos (S k)) = Yes RightPositive
+decNotBothZero (Pos Z) (NegS k) = Yes RightNegative
+decNotBothZero (Pos (S k)) b = Yes LeftPositive
+decNotBothZero (NegS k) b = Yes LeftNegative
+
+|||Checks 2 numbers and produces a proof of either (a=0,b=0) or (NotBothZeroZ a b)
+cheeckNotBothZero : (a:ZZ)->(b:ZZ)->Either ((a=0),(b=0)) (NotBothZeroZ a b)
+cheeckNotBothZero (Pos Z) (Pos Z) = Left (Refl, Refl)
+cheeckNotBothZero (Pos Z) (Pos (S k)) = Right RightPositive
+cheeckNotBothZero (Pos Z) (NegS k) = Right RightNegative
+cheeckNotBothZero (Pos (S k)) b = Right LeftPositive
+cheeckNotBothZero (NegS k) b = Right LeftNegative
+
 |||Proof that positive numbers are not zero
 posThenNotZero:{a:ZZ}->(IsPositive a)->(NotZero a)
 posThenNotZero {a = (Pos (S k))} Positive = PositiveZ
@@ -25,6 +51,9 @@ posThenNotZero {a = (Pos (S k))} Positive = PositiveZ
 |||Rewrites a=b as a=1*b
 rewriteRightAsOneTimesRight: {a:ZZ}->{b:ZZ}->(a=b)->(a=(1*b))
 rewriteRightAsOneTimesRight {a}{b}prf = rewrite ( (multOneLeftNeutralZ b)) in prf
+|||Rewrites a=b as 1*a=b
+rewriteLeftAsOneTimesLeft: {a:ZZ}->{b:ZZ}->(a=b)->(1*a=b)
+rewriteLeftAsOneTimesLeft {a}{b}prf = rewrite ( (multOneLeftNeutralZ a)) in prf
 
 |||Proof that negative integers are not non negative
 negsAreNotNonNegs:(IsNonNegative (NegS k))->Void
@@ -46,6 +75,38 @@ LTZ a b = LTEZ (1+a) b
 |||then, (Pos a) <(Pos b)
 ltNatToZZ:{a:Nat}->{b:Nat}->(LT a b)->(LTZ (Pos a) (Pos b))
 ltNatToZZ (LTESucc x) = PositiveLTE (LTESucc x)
+|||Proves that a<= a for any integer a
+lteReflZ:{a:ZZ}->LTEZ a a
+lteReflZ {a =(Pos k)} = PositiveLTE (lteRefl {n=k})
+lteReflZ {a= (NegS k)} = NegativeLte (lteRefl {n=k})
+|||Proof that a number is less than its successor
+numLtSucc:(a:ZZ)->LTZ a (1+a)
+numLtSucc a = lteReflZ
+|||Proof that one is not less than zero
+oneNotLTEZero:(LTEZ (Pos (S Z)) (Pos Z))->Void
+oneNotLTEZero (PositiveLTE LTEZero) impossible
+oneNotLTEZero (PositiveLTE (LTESucc _)) impossible
+|||Proof that a number greater than or equal to 1 is positive
+gteOnePositive:(a:ZZ)->(LTEZ 1 a)->(IsPositive a)
+gteOnePositive (Pos Z) (PositiveLTE LTEZero) impossible
+gteOnePositive (Pos Z) (PositiveLTE (LTESucc _)) impossible
+gteOnePositive (Pos (S k)) x = Positive
+gteOnePositive (NegS _) (PositiveLTE _) impossible
+gteOnePositive (NegS _) NegLessPositive impossible
+gteOnePositive (NegS _) (NegativeLte _) impossible
+
+|||Proof that it is impossible that (1+a)<=a
+succNotLteNumZ:(a:ZZ)->(LTEZ (1+a) a) ->Void
+succNotLteNumZ (Pos k)  y =
+  impliesContrapositive (LTEZ (Pos (S k)) (Pos k)) (LTE (S k) k)
+    LTEZZtoNat  (succNotLTEnum k) y
+succNotLteNumZ (NegS Z)  (PositiveLTE _)  impossible
+succNotLteNumZ (NegS Z)  NegLessPositive  impossible
+succNotLteNumZ (NegS Z)  (NegativeLte _)  impossible
+succNotLteNumZ (NegS (S k))  y  =
+  impliesContrapositive (LTEZ (NegS k) (NegS (S k))) (LTE (S k) k)
+     LTEZZtoNatNeg (succNotLTEnum k) y
+
 |||Multiplying positive numbers gives a positive number.
 posMultPosIsPos: (IsPositive m)->(IsPositive d)->(IsPositive (m*d))
 posMultPosIsPos{m = (Pos (S k))}{d = (Pos (S j))} Positive Positive = Positive
