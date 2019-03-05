@@ -195,6 +195,11 @@ gcdReplace:{a:ZZ}->{b:ZZ}->(a=c)->(b=d)->GCDZr a b e -> GCDZr c d e
 gcdReplace prf prf1 x = rewrite (sym prf) in
                         rewrite (sym prf1) in
                         x
+|||Rewrites GCDZ a b e as GCDZ c d e , given a prrof that a=c and b=d
+gcdzReplace:{a:ZZ}->{b:ZZ}->(a=c)->(b=d)->GCDZ a b e -> GCDZ c d e
+gcdzReplace prf prf1 x = rewrite (sym prf) in
+                        rewrite (sym prf1) in
+                        x
 |||GCD is unique even in this definition
 gcdrIsUnique:(GCDZr a b c)->(GCDZr a b d)->(c=d)
 gcdrIsUnique (comfactc,fc) (comfactd,fd) =
@@ -203,10 +208,97 @@ gcdrIsUnique (comfactc,fc) (comfactd,fd) =
 |||Proof that (GCDZr a b d) implies (GCDZ a b d)
 GCDZrImpliesGCDZ:{a:ZZ}->{b:ZZ}-> (GCDZr a b d)->(GCDZ a b d)
 GCDZrImpliesGCDZ {a}{b}{d} gcdr =
-  (case cheeckNotBothZero a b  of
+  (case checkNotBothZero a b  of
         Left (aZ,bZ) => void (gcdrZeroZeroContra (gcdReplace aZ bZ gcdr))
         Right notZ =>
            (case bezoutCoeffs a b notZ of
                  (g**(gisgcd,(j**k**linpf))) =>
                     rewrite (gcdrIsUnique gcdr (GCDZImpliesGCDZr gisgcd)) in
                         gisgcd))
+|||If d = gcd (a,b) then there exists m and n such that d =ma +nb
+gcdIsLinComb:(GCDZ a b d)->(m:ZZ**n:ZZ**(d=(m*a)+(n*b)))
+gcdIsLinComb {a}{b} gcd =
+  (case checkNotBothZero a b  of
+        Left (aZ,bZ) => void (gcdZeroZeroContra (gcdzReplace aZ bZ gcd))
+        (Right notZ) =>
+          (case bezoutCoeffs a b notZ of
+                (g**(gisgcd,(j**k**linpf))) =>
+                  (j**k**(rewrite (sym(gcdIsUnique gcd gisgcd)) in linpf))))
+
+|||Theorem that if c|ab and gcd (a,c) =1 , then c|b
+caCoprimeThencDivb : (IsDivisibleZ (a*b) c)->(GCDZ a c 1)->
+   (IsDivisibleZ b c)
+caCoprimeThencDivb cDivab gcd1{a}{b}{c} =
+  (case gcdIsLinComb gcd1 of
+        (m**n**linpf) =>
+        linCombDivLeftWithProof {a=(a*b)} {b=(c*b)} {d=b} {c=c} {m=m} {n=n}
+             ( rewrite multAssociativeZ m a b in
+               rewrite multAssociativeZ n c b in
+               rewrite sym $ multDistributesOverPlusLeftZ (m*a) (n*c) b in
+               rewrite multCommutativeZ ((m*a)+(n*c)) b in
+               (rewriteLeftTimesOneAsLeft (cong linpf)))
+                      (cDivab,(multDiv  (selfDivide c) b)))
+
+|||SmallestPosLinComb a b d is a proof that d is the smallest positive
+|||linear combination of a and b
+SmallestPosLinComb: (a:ZZ)->(b:ZZ)->(d:ZZ)->Type
+SmallestPosLinComb a b d = ((IsPositive d),(m**n**(d=(m*a)+(n*b))),
+ ({c:ZZ}->{j:ZZ}->{k:ZZ}->(IsPositive c)-> (c=j*a+k*b)->(LTEZ d c)))
+|||The theorem that the smallest positive linear combination is unique
+smallestPosLinCombIsUnique :(SmallestPosLinComb a b c)->
+    (SmallestPosLinComb a b d)->(c=d)
+smallestPosLinCombIsUnique (cPos,(m**n**prfc),fc) (dPos,(u**v**prfd),fd) =
+  lteAndGteImpliesEqualZ (fd cPos prfc) (fc dPos prfd)
+
+|||Proof that  j+0=j+(n*0) for any integer n
+helping2:{j:ZZ}->(n:ZZ)->j+0=j+(n*0)
+helping2 n = rewrite  multZeroRightZeroZ n in Refl
+|||Proof that any linear combination of 0 and 0 is 0
+linCombZeroZeroIsZero: (m:ZZ**n:ZZ**(k=(m*0)+(n*0)))->(k=0)
+linCombZeroZeroIsZero (m**n**lprf) =
+  rewrite sym $ multZeroRightZeroZ m in
+  rewrite sym $ plusZeroRightNeutralZ (m*0) in
+  rewrite helping2 {j=(m*0)} n in
+   lprf
+
+|||The theorem that smallest positive linear combination of Zero andZero
+|||doesnt exist
+smallestPosLinCombZeroZeroVoid:{k:ZZ}->(SmallestPosLinComb 0 0 k)->Void
+smallestPosLinCombZeroZeroVoid (kPos,(m**n**prfk),fk) =
+  zeroNotPos (rewrite sym $(linCombZeroZeroIsZero (m**n**prfk)) in kPos)
+
+|||The theorem that gcd(a,b) is less than or equal to any
+|||positive linear combination of a and b
+gcdIsSmallerThanLinComb: (GCDZ a b d)->
+   ({c:ZZ}->{j:ZZ}->{k:ZZ}->(IsPositive c)-> (c=j*a+k*b)->(LTEZ d c))
+gcdIsSmallerThanLinComb (dPos,(dDiva,dDivb),fd) cPos prf =
+  posDivPosImpliesLte (linCombDivLeftWithProof prf (dDiva,dDivb)) cPos dPos
+
+|||Theorem that gcd(a,b) is the smallest positive linear combination of
+|||a and b
+gcdIsSmallestPosLinComb: (GCDZ a b d)->(SmallestPosLinComb a b d)
+gcdIsSmallestPosLinComb (dPos,(dDiva,dDivb),fd) =
+  (case gcdIsLinComb (dPos,(dDiva,dDivb),fd) of
+        (m**n**prf) =>
+        (dPos,(m**n**prf),
+             (gcdIsSmallerThanLinComb (dPos,(dDiva,dDivb),fd))))
+
+|||Rewrites SmallestPosLinComb a b e to SmallestPosLinComb c d e
+|||when given a proof that a=c and b=d
+smallestPosLinCombReplace:{a:ZZ}->{b:ZZ}->(a=c)->(b=d)->SmallestPosLinComb a b e ->
+    SmallestPosLinComb c d e
+smallestPosLinCombReplace prf prf1 x = rewrite (sym prf) in
+                                       rewrite (sym prf1) in
+                                           x
+|||Theorem that the smallest positive linear combination of a and b is
+|||the gcd of a and b
+smallestPosLinCombIsGcd:(SmallestPosLinComb a b d)->(GCDZ a b d)
+smallestPosLinCombIsGcd {a} {b} splc =
+  (case checkNotBothZero a b of
+        (Left (aZ,bZ)) => void (smallestPosLinCombZeroZeroVoid
+             (smallestPosLinCombReplace aZ bZ splc))
+        Right notZ =>
+        (case bezoutCoeffs a b notZ of
+              (g**(gisgcd,(j**k**linpf))) =>
+                 rewrite (smallestPosLinCombIsUnique splc (gcdIsSmallestPosLinComb gisgcd)) in
+                     gisgcd))
