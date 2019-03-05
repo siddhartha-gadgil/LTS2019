@@ -52,6 +52,9 @@ checkNotBothZero (NegS k) b = Right LeftNegative
 posThenNotZero:{a:ZZ}->(IsPositive a)->(NotZero a)
 posThenNotZero {a = (Pos (S k))} Positive = PositiveZ
 
+NegSThenNotZero:{a:ZZ}->(IsNegative a)->(NotZero a)
+NegSThenNotZero {a = (NegS k)} ZZUtils.Negative = NegativeZ
+
 |||Rewrites a=b as a=1*b
 rewriteRightAsOneTimesRight: {a:ZZ}->{b:ZZ}->(a=b)->(a=(1*b))
 rewriteRightAsOneTimesRight {a}{b}prf = rewrite ( (multOneLeftNeutralZ b)) in prf
@@ -239,3 +242,18 @@ bezoutReplace {a}{b}{m1}{rem}{quot}{n1}{g}prf prf1 =
   rewrite (plusZeroLeftNeutralZ (m1*b)) in
   rewrite (plusCommutativeZ (n1*rem) (m1*b)) in
    prf1
+
+
+zeroNotNonZero: (NotZero (Pos Z)) -> Void
+zeroNotNonZero PositiveZ impossible
+zeroNotNonZero NegativeZ impossible
+
+decZero: (a: ZZ) -> Dec (NotZero a)
+decZero (Pos Z) = No zeroNotNonZero
+decZero (Pos (S k)) = Yes (posThenNotZero Positive)
+decZero (NegS k) = Yes (NegSThenNotZero Negative)
+
+nonZeroNotZero: (a: ZZ) -> ( (a = (Pos Z) ) -> Void) -> (NotZero a)
+nonZeroNotZero (Pos Z) f = ?nonZeroNotZero_rhs_1
+nonZeroNotZero (Pos (S k)) f = ?nonZeroNotZero_rhs_4
+nonZeroNotZero (NegS k) f = ?nonZeroNotZero_rhs_2
