@@ -1,6 +1,18 @@
 module Rationals
 
 import ZZ
+import ZZUtils
+import GCDZZ
+import Divisors
+
+-- The functions below are completely based on the code from GCDZZ; they were written to improve
+-- readability.
+
+Quotient: (a: ZZ) -> (b: ZZ) -> (IsNonNegative a) -> (IsPositive b) -> (ZZ)
+Quotient a b x y = Prelude.Pairs.DPair.fst (QuotRemZ a b x y)
+
+Remainder: (a: ZZ) -> (b: ZZ) -> (IsNonNegative a) -> (IsPositive b) -> (ZZ)
+Remainder a b x y = Prelude.Pairs.DPair.fst(Prelude.Pairs.DPair.snd (QuotRemZ a b x y))
 
 %access public export
 
@@ -16,11 +28,12 @@ ZZtoDb x = cast{from=Integer}{to=Double} (cast{from=ZZ}{to=Integer} x)
 DbtoZZ : Double -> ZZ
 DbtoZZ x = cast{from=Integer}{to=ZZ} (cast{from=Double}{to=Integer} x)
 
-
-isNotZero : Nat -> Bool
+isNotZero :  Nat -> Bool
 isNotZero Z = False
 isNotZero (S k) = True
 
+isFactorInt : Integer -> Integer -> Type  --Needed for defining Integer division
+isFactorInt m n = (k : Integer ** (m * k = n))
 
 divides : (m: Integer) -> (n: Integer) -> (k: Integer ** (m * k = n)) -> Integer
 divides m n k = (fst k)
@@ -37,11 +50,6 @@ OnlyPositive x = (if (fst x)>0 then fst x else (-1)*(fst x), if(snd x)>0 then (s
 gccd : (Integer, Integer) -> Integer
 gccd x = CalcGCD (OnlyPositive x)
 
-data NotZero : Integer -> Type where --Proof that a number is not zero, needed to construct Q
-  OneNotZero : NotZero 1
-  NegativeNotZero : ( n: Integer ) -> NotZero n -> NotZero (-n)
-  PositiveNotZero : ( m: Integer ) -> LTE 1 (fromIntegerNat m)  -> NotZero m
-
 data ZZNotZero : ZZ -> Type where
   ZZOneNotZero : ZZNotZero 1
   ZZNegativeNotZero : ( n: ZZ ) -> ZZNotZero n -> ZZNotZero (-n)
@@ -49,15 +57,15 @@ data ZZNotZero : ZZ -> Type where
 
 
 --Type for equality of two Rationals
-data EqRat : Pair -> Pair -> Type where
-  IdEq : (m : Pair) -> EqRat m m
-  MulEq : (c : Integer) -> EqRat n m -> EqRat ((fst n)*c,(snd n)*c) m
+data EqRat : (x: ZZPair) -> (y: ZZPair) -> ((fst x)*(snd y) = (fst y)*(snd x)) -> Type where
+  IdEq : (m : ZZPair) -> EqRat m m Refl
+  MulEq : (x: ZZPair) -> (y: ZZPair) -> (prf : (fst x)*(snd y) = (fst y)*(snd x)) -> EqRat x y prf
 
-make_rational : (p: Nat) -> (q: Integer) -> NotZero q -> Pair
-make_rational p q x = (toIntegerNat(p), q)
+make_rational : (p: Nat) -> (q: ZZ) -> ZZNotZero q -> ZZPair
+make_rational p q x = (fromInt(toIntegerNat(p)), q)
 
-InclusionMap : (n : Nat) -> Pair --Includes the naturals in Q
-InclusionMap n = make_rational n 1 OneNotZero
+InclusionMap : (n : Nat) -> ZZPair --Includes the naturals in Q
+InclusionMap n = make_rational n 1 ZZOneNotZero
 
 AddRationals : (x: ZZPair) -> ZZNotZero (snd x) -> (y: ZZPair) -> ZZNotZero (snd y) -> ZZPair
 AddRationals x a y b = ((fst x)*(snd y) + (snd x)*(fst y), (snd x)*(snd y))
@@ -77,12 +85,23 @@ Subtraction x a y b = AddRationals x a (AddInverse y b) b
 Division : (x: ZZPair) -> ZZNotZero (snd x) -> (y: ZZPair) -> ZZNotZero (fst y) -> ZZNotZero (snd y) -> ZZPair
 Division x a y b c = MultiplyRationals x a (MultInverse y b c) b
 
---SimplifyRational : (x: Pair) -> NotZero (snd x) -> Pair
---SimplifyRational x a = (divides (gcdab fromIntegerNat((fst x)) fromIntegerNat((snd x))) ___ (fst x), divides (gcdab fromIntegerNat((fst x)) fromIntegerNat((snd x)) __ (snd x))
+Scaling: (a: ZZ) -> (x: ZZPair) -> ZZPair
+Scaling a x = (a*(fst x), (snd x))
+
+remZeroDivisible: (a: ZZ) -> (b: ZZ) -> (quot: ZZ) -> (rem: ZZ) -> (a = rem + quot*b) -> (rem = 0) -> (a=quot*b)
+remZeroDivisible a b quot rem prf prf1 = rewrite sym (plusZeroLeftNeutralZ (quot*b)) in
+                                         rewrite sym prf1 in
+                                         prf
+
+IsRationalZ: (x: ZZPair) -> (prf1 :IsNonNegative (fst x)) -> (prf2: IsPositive (snd x)) -> Either (quot: ZZ ** ((fst x)=quot*(snd x))) (NotZero (fst (snd (QuotRemZ (fst x) (snd x) prf1 prf2) )) )
+IsRationalZ x prf1 prf2 = case (decEq (fst (snd (QuotRemZ (fst x) (snd x) prf1 prf2))) (Pos Z)) of
+                          (Yes prf) => Left ( (Quotient (fst x) (snd x) prf1 prf2) **
+                          (remZeroDivisible (fst x) (snd x) (Quotient (fst x) (snd x) prf1 prf2) (Remainder (fst x) (snd x) prf1 prf2) (Prelude.Basics.fst (Prelude.Pairs.DPair.snd (Prelude.Pairs.DPair.snd (QuotRemZ (fst x) (snd x) prf1 prf2)) )) prf ) )
+                          (No contra) => Right (nonZeroNotZero (fst (snd (QuotRemZ (fst x) (snd x) prf1 prf2))) contra)
+
 
 --To prove that the SimplifyRational works, we can just check if the output is equal to the input
 -- To be done
-
 simplifyRational : (x : ZZPair) -> ZZPair
 simplifyRational (a, b) = (sa, sb) where
   sa = DbtoZZ (da / g) where
@@ -93,7 +112,6 @@ simplifyRational (a, b) = (sa, sb) where
     db = ZZtoDb b
     g = cast {from=Integer} {to=Double}
       (gccd (cast {from=ZZ} {to=Integer}a,cast {from=ZZ} {to=Integer}b))
-
 
 --Above, I will need to supply a proof that the GCD divides the two numbers. Then, the function defined above will produce the rational in simplified form.
 
