@@ -242,6 +242,17 @@ divideByGcdThenGcdOne{a}{b}{d} (dPos, ((aByd**amd),(bByd**bmd)),fd) =
       eqa = rewrite (multCommutativeZ aByd d) in amd
       eqb = rewrite (multCommutativeZ bByd d) in bmd
 
+intDividesOneThenIntOne: (IsDivisibleZ 1 c) -> Either (c=1 ) (c = (-1))
+intDividesOneThenIntOne (x ** pf) =
+   case productOneThenNumbersOne c x (sym pf) of
+    (Left (k,j)) => Left k
+    (Right (k,j)) => Right k
 
+genfunctiongcdOfOneAndInteger:({c:ZZ}->(IsCommonFactorZ a 1 c)->(IsDivisibleZ 1 c))
+genfunctiongcdOfOneAndInteger (cDiva,cDiv1) =
+  (case intDividesOneThenIntOne cDiv1 of
+        (Left cIs1) => rewrite cIs1 in (oneDiv 1)
+        (Right cisn1) => rewrite cisn1 in (minusOneDivides 1))
 
-
+gcdOfOneAndInteger: (a:ZZ)->(GCDZ a 1 1)
+gcdOfOneAndInteger a = (Positive, ((oneDiv a),(oneDiv 1)), genfunctiongcdOfOneAndInteger)
