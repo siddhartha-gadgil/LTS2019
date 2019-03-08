@@ -81,29 +81,114 @@ insertHelper2 (S k) a x (y :: xs) pfLTE pfSort (FS (FS (FS l))) =
  
 -----------------------------------------------------------------
 
-insertProof : (n : Nat) -> (a : Nat) -> (xs : Vect n Nat) -> 
-              (IsSorted n xs) ->
-              (IsSorted (S n) (insert a xs)) 
+insertHelper3 : (a : Nat) -> (x : Nat) -> (LTE x a) -> 
+                (IsSorted (S (S Z)) (x :: [a]) )
 
-insertProof Z a Nil pf = fun where
-    fun : (k : Fin (S Z)) -> 
-          (LTE (index (pred k) (a :: Nil)) (index k (a :: Nil)))
-    fun FZ = (LTE_Property1 a)
-    fun (FS k) impossible
-
-insertProof (S k) a (x :: xs) fun = case (decMin a x) of
-    (left pfMin) => ?rhs_last_1  
-    (right pfMin) => ?rhs_last
+insertHelper3 a x pfLTE FZ = LTE_Property1 x
+insertHelper3 a x pfLTE (FS FZ) = pfLTE  
 
 -----------------------------------------------------------------
 
+insertHelper4 : (k : Nat) -> (a, x, y : Nat) -> (xs : Vect k Nat) -> 
+                (LTE x a) -> (LTE a y) -> 
+                (IsSorted (S (S k)) (x :: y :: xs)) ->
+                (IsSorted (S (S (S k))) (x :: a :: y :: xs))  
 
+insertHelper4 k a x y xs pf_xa pf_ay pfSort FZ = LTE_Property1 x
+insertHelper4 k a x y xs pf_xa pf_ay pfSort (FS FZ) = pf_xa
+insertHelper4 k a x y xs pf_xa pf_ay pfSort (FS (FS (FZ))) = pf_ay
+insertHelper4 k a x y xs pf_xa pf_ay pfSort (FS (FS (FS l))) =
+    pfSort (FS (FS l))
+    
+-----------------------------------------------------------------
+
+insertHelper5 : (k : Nat) -> (x, y : Nat) -> 
+                (xs : Vect k Nat) -> 
+                (IsSorted (S (S k)) (x :: y :: xs )) ->
+                (IsSorted k xs)
+
+insertHelper5 (S k) x y xs pfSort FZ = 
+    LTE_Property1 (index FZ xs)                
+    
+insertHelper5 (S k) x y xs pfSort (FS l) = 
+    (pfSort (FS (FS (FS l))))    
+    
+-----------------------------------------------------------------
+
+insertHelper8 : (y : Nat) -> (IsSorted (S Z) [y])
+insertHelper8 y FZ = LTE_Property1 y 
+
+-----------------------------------------------------------------
+
+insertHelper9 : (k : Nat) -> (x : Nat) -> (xs : Vect k Nat) ->
+                (IsSorted (S k) (x :: xs)) -> 
+                (IsSorted k xs)
+
+insertHelper9 (S k) x xs pfSort FZ = LTE_Property1 (index FZ xs)
+insertHelper9 (S k) x xs pfSort (FS l) = pfSort (FS (FS l))                 
+
+-----------------------------------------------------------------
+
+mutual
+
+    insertProof : (n : Nat) -> (a : Nat) -> (xs : Vect n Nat) -> 
+                  (IsSorted n xs) ->
+                  (v : (Vect (S n) Nat) ** (IsSorted (S n) v) ) 
+
+    insertHelper6 : (k : Nat) -> (a, y : Nat) -> (xs : (Vect k Nat)) ->
+                    (LTE a y) -> (pf1 : (IsSorted k xs)) ->
+                    (pf2 : (IsSorted (S k) (y :: xs))) -> 
+                    ((y :: (fst (insertProof k a xs pf1))) = 
+                     (fst (insertProof (S k) a (y :: xs) pf2)))            
+                                         
+    insertHelper7 : (a, y : Nat) -> (LTE a y) -> 
+                    (pfS : (IsSorted (S Z) [y])) -> 
+                    ((a :: [y]) = (fst (insertProof (S Z) a [y] pfS)))
+    
+    insertProof Z a Nil pf = ((a :: Nil) ** fun) where
+        fun : (k : Fin (S Z)) -> 
+              (LTE (index (pred k) (a :: Nil)) (index k (a :: Nil)))
+        fun FZ = (LTE_Property1 a)
+        fun (FS k) impossible
+
+    insertProof (S Z) a (x :: Nil) pfSort = 
+        case (decMin a x) of
+            
+            (left pfLTE) => ((a :: x :: Nil) ** 
+                (insertHelper1 Z a x Nil pfLTE pfSort))
+                
+            (right pfLTE) => ((x :: a :: Nil) ** 
+                (insertHelper3 a x pfLTE))
+                
+    insertHelper7 a y pfLTE pfS = ?rhs
+    
+    insertHelper6 Z a y Nil pfLTE pf_xs pf_yxs = ?rhs1            
+            
+    insertProof (S (S k)) a (x :: y :: xs) pfSort = 
+        case (decMin a x) of
+        
+            (left pfLTE) => ((a :: x :: y :: xs ) ** 
+                 (insertHelper1 (S k) a x (y :: xs) pfLTE pfSort))
+             
+            (right pfLTE) => case (decMin a y) of 
+                (left pfLTE1) => ((x :: a :: y :: xs) ** 
+                    (insertHelper4 k a x y xs pfLTE pfLTE1 pfSort))
+                 
+                (right pfLTE1) => let
+                    v_pf = (insertProof (S k) a (y :: xs) (insertHelper9 k y xs pfSort) )  
+                    v = fst v_pf
+                    in
+                    ( (x :: y :: v) ** ?rhs_last) 
+                        
+-----------------------------------------------------------------
+
+{-
 sortProof : (n : Nat) -> (Vect n Nat) -> 
             (v : (Vect n Nat) ** (IsSorted n v))
 sortProof Z Nil = (Nil ** fun) where
     fun : (IsSorted Z Nil) 
     fun elem impossible
-    
+-}    
 -----------------------------------------------------------------
 
 
