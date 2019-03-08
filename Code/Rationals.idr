@@ -8,12 +8,6 @@ import Divisors
 -- The functions below are completely based on the code from GCDZZ; they were written to improve
 -- readability.
 
-Quotient: (a: ZZ) -> (b: ZZ) -> (IsNonNegative a) -> (IsPositive b) -> (ZZ)
-Quotient a b x y = Prelude.Pairs.DPair.fst (QuotRemZ a b x y)
-
-Remainder: (a: ZZ) -> (b: ZZ) -> (IsNonNegative a) -> (IsPositive b) -> (ZZ)
-Remainder a b x y = Prelude.Pairs.DPair.fst(Prelude.Pairs.DPair.snd (QuotRemZ a b x y))
-
 %access public export
 
 Pair : Type
@@ -93,12 +87,34 @@ remZeroDivisible a b quot rem prf prf1 = rewrite sym (plusZeroLeftNeutralZ (quot
                                          rewrite sym prf1 in
                                          prf
 
-IsRationalZ: (x: ZZPair) -> (prf1 :IsNonNegative (fst x)) -> (prf2: IsPositive (snd x)) -> Either (quot: ZZ ** ((fst x)=quot*(snd x))) (NotZero (fst (snd (QuotRemZ (fst x) (snd x) prf1 prf2) )) )
-IsRationalZ x prf1 prf2 = case (decEq (fst (snd (QuotRemZ (fst x) (snd x) prf1 prf2))) (Pos Z)) of
+IsRationalZPOS: (x: ZZPair) -> (prf1 :IsNonNegative (fst x)) -> (prf2: IsPositive (snd x)) -> Either (quot: ZZ ** ((fst x)=quot*(snd x))) (NotZero (fst (snd (QuotRemZ (fst x) (snd x) prf1 prf2) )) )
+IsRationalZPOS x prf1 prf2 = case (decEq (fst (snd (QuotRemZ (fst x) (snd x) prf1 prf2))) (Pos Z)) of
                           (Yes prf) => Left ( (Quotient (fst x) (snd x) prf1 prf2) **
                           (remZeroDivisible (fst x) (snd x) (Quotient (fst x) (snd x) prf1 prf2) (Remainder (fst x) (snd x) prf1 prf2) (Prelude.Basics.fst (Prelude.Pairs.DPair.snd (Prelude.Pairs.DPair.snd (QuotRemZ (fst x) (snd x) prf1 prf2)) )) prf ) )
                           (No contra) => Right (nonZeroNotZero (fst (snd (QuotRemZ (fst x) (snd x) prf1 prf2))) contra)
 
+
+CheckIsQuotientZ: (a: ZZ) -> (b: ZZ) -> (NotZero b) -> Either (quot: ZZ ** (a=quot*b)) (ZZPair)
+CheckIsQuotientZ a (Pos Z) x impossible
+CheckIsQuotientZ (Pos Z) (Pos (S j)) x = case ((IsRationalZPOS ((Pos Z), (Pos (S j))) NonNegative Positive)) of
+                                            (Left l) => (Left l)
+                                            (Right r) => Right ((Pos Z),(Pos (S j)))
+CheckIsQuotientZ (Pos (S k)) (Pos (S j)) x = case ((IsRationalZPOS ((Pos (S k)), (Pos (S j))) NonNegative Positive)) of
+                                            (Left l) => (Left l)
+                                            (Right r) => Right ((Pos (S k)), (Pos (S j)))
+CheckIsQuotientZ (NegS k) (Pos (S j)) x = case ((IsRationalZPOS ((Pos (S k)), (Pos (S j))) NonNegative Positive)) of
+                                            (Left l) =>  Left (QRproof1 (Pos (S k)) (Pos (S j)) Refl Refl l)
+                                            (Right r) => Right ((Pos (S k)), (Pos (S j)))
+CheckIsQuotientZ (Pos Z) (NegS j) x = Left (Pos Z ** Refl)
+CheckIsQuotientZ (Pos (S k)) (NegS j) x = case ((IsRationalZPOS ((Pos (S k)), (Pos (S j))) NonNegative Positive)) of
+                                            (Left l) =>  Left (QRproof3 (Pos (S k)) (Pos (S j)) Refl Refl l)
+                                            (Right r) => Right ((Pos (S k)), (Pos (S j)))
+CheckIsQuotientZ (NegS k) (NegS j) x = case ((IsRationalZPOS ((Pos (S k)), (Pos (S j))) NonNegative Positive)) of
+                                            (Left l) =>  Left (QRproof4 (Pos (S k)) (Pos (S j)) Refl Refl l)
+                                            (Right r) => Right ((Pos (S k)), (Pos (S j)))
+
+simplification: (a: ZZ) -> (b: ZZ) -> (NotBothZeroZ a b) -> (y: ZZPair ** (GCDZ (fst y) (snd y) 1))
+simplification a b prf = ?simplification_rhs
 
 --To prove that the SimplifyRational works, we can just check if the output is equal to the input
 -- To be done
