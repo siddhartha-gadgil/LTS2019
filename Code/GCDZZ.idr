@@ -4,6 +4,7 @@ import ZZ
 import NatUtils
 import gcd
 import ZZUtils
+import BoundedGCD
 %default total
 %access public export
 
@@ -26,14 +27,16 @@ QuotRemZ (Pos j) (Pos (S k)) NonNegative Positive =
 
 
 
-|||Returns gcd of a and b with proof when a is positive and b is nonnegative
 GCDCalc :(a:ZZ)->(b:ZZ)->(IsPositive a)->(IsNonNegative b)->(d**(GCDZ a b d))
-GCDCalc a (Pos Z) x NonNegative = (a**(gcdOfZeroAndInteger a x))
-GCDCalc (Pos (S j)) (Pos  (S k)) Positive NonNegative = assert_total $
-  case QuotRemZ (Pos (S j)) (Pos  (S k)) NonNegative Positive of
-    (quot ** (rem  ** (equality, remLessb,remNonNeg))) =>
-       (case GCDCalc (Pos (S k)) rem Positive remNonNeg of
-             (x ** pf) => (x**(euclidConservesGcdWithProof equality pf)))
+GCDCalc (Pos (S k)) (Pos j) Positive NonNegative =
+  (case isLTE (S j) (S k) of
+        (Yes prf) => boundedGCDZ (S k) (S k) j lteRefl prf LeftIsNotZero
+        (No contra) =>
+           let
+             ineq = notLTEimpliesLT (S j) (S k) contra
+           in
+             boundedGCDZ (S j) (S k) j  (lteSuccLeft ineq) lteRefl LeftIsNotZero)
+
 
 |||Returns Bezout coefficients with proof for a Positive integer a and
 |||NonNegative integer b with proofs of GCD and equality
