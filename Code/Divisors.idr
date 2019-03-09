@@ -77,7 +77,14 @@ IsCommonFactorZ a b c = ((IsDivisibleZ a c),(IsDivisibleZ b c))
 |||d is a common factor of b and a
 commonfactSym: IsCommonFactorZ a b d ->IsCommonFactorZ b a d
 commonfactSym (dDiva, dDivb) = (dDivb,dDiva)
-
+|||The theorem that if (d=(m*a)+(n*b)) and c is a common factor of a and b, then d|c
+linCombDivLeftWithProof:{a:ZZ}->{b:ZZ}->{c:ZZ}->{d:ZZ}->{m:ZZ}->{n:ZZ}->(d=(m*a)+(n*b))->
+   (IsCommonFactorZ a b c)-> (IsDivisibleZ d c)
+linCombDivLeftWithProof {a}{b}{m}{n}{c}{d}prf (cDiva, cDivb) =
+  rewrite prf in
+  rewrite multCommutativeZ m a in
+  rewrite multCommutativeZ n b in
+  linCombDiv m n cDiva cDivb
 
 |||The GCD type that is occupied iff d = gcd (a,b).
 ||| Here GCD is defined as that positive integer such that any common factor
@@ -234,5 +241,7 @@ divideByGcdThenGcdOne{a}{b}{d} (dPos, ((aByd**amd),(bByd**bmd)),fd) =
     dPos aByd bByd eqa eqb)) where
       eqa = rewrite (multCommutativeZ aByd d) in amd
       eqb = rewrite (multCommutativeZ bByd d) in bmd
+
+
 
 
