@@ -1,7 +1,7 @@
 module Linear
 
 import ZZ
-import Rationals_2
+import Rationals
 import Data.Vect
 import GCDZZ
 import ZZUtils
