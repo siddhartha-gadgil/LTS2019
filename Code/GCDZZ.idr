@@ -4,7 +4,6 @@ import ZZ
 import NatUtils
 import gcd
 import ZZUtils
-import BoundedGCD
 %default total
 %access public export
 
@@ -14,8 +13,8 @@ ExpNatToZZ:{a:Nat}->{b:Nat}->(a=r+(q*b))->((Pos a)=Pos(r)+((Pos q)*(Pos b)))
 ExpNatToZZ Refl = Refl
 
 
-|||Given a nonnegative integer a and positive integer b, it returns quotient and
-|||remainder with proof of (a = rem + (quot * b) and that 0<=rem<b
+|||Given a nonnegative integer a and positive integer b, it returns quotient and remainder
+|||with proof of (a = rem + (quot * b) and that 0<=rem<b
 total
 QuotRemZ:(a:ZZ)->(b:ZZ)->IsNonNegative a -> IsPositive b ->
 (quot : ZZ ** (rem : ZZ ** ((a = rem + (quot * b)), LTZ rem b,(IsNonNegative rem))))
@@ -24,94 +23,87 @@ QuotRemZ (Pos j) (Pos (S k)) NonNegative Positive =
     (q ** (r ** (equality, rlessb))) =>
          ((Pos q)**((Pos r)**((ExpNatToZZ equality),(ltNatToZZ rlessb),NonNegative)))
 
-|||Returns Gcd with proof for a positive integer a and a nonNegative
-|||integer  b
+
+
+
+|||Returns gcd of a and b with proof when a is positive and b is nonnegative
 GCDCalc :(a:ZZ)->(b:ZZ)->(IsPositive a)->(IsNonNegative b)->(d**(GCDZ a b d))
-GCDCalc (Pos (S k)) (Pos j) Positive NonNegative =
-  (case isLTE (S j) (S k) of
-        (Yes prf) => boundedGCDZ (S k) (S k) j lteRefl prf LeftIsNotZero
-        (No contra) =>
-           let
-             ineq = notLTEimpliesLT (S j) (S k) contra
-           in
-             boundedGCDZ (S j) (S k) j  (lteSuccLeft ineq) lteRefl LeftIsNotZero)
+GCDCalc a (Pos Z) x NonNegative = (a**(gcdOfZeroAndInteger a x))
+GCDCalc (Pos (S j)) (Pos  (S k)) Positive NonNegative = assert_total $
+  case QuotRemZ (Pos (S j)) (Pos  (S k)) NonNegative Positive of
+    (quot ** (rem  ** (equality, remLessb,remNonNeg))) =>
+       (case GCDCalc (Pos (S k)) rem Positive remNonNeg of
+             (x ** pf) => (x**(euclidConservesGcdWithProof equality pf)))
 
 |||Returns Bezout coefficients with proof for a Positive integer a and
 |||NonNegative integer b with proofs of GCD and equality
 bez:(a:ZZ)->(b:ZZ)->(IsPositive a)->(IsNonNegative b) ->
    (d**((GCDZ a b d),(m:ZZ**n:ZZ**(d=(m*a)+(n*b)))))
-bez (Pos (S k)) (Pos j) Positive NonNegative =
-  (case isLTE (S j) (S k) of
-        (Yes prf) => boundedGCDbez (S k) (S k) j lteRefl prf LeftIsNotZero
-        (No contra) =>
-           let
-             ineq = notLTEimpliesLT (S j) (S k) contra
-           in
-             boundedGCDbez (S j) (S k) j  (lteSuccLeft ineq) lteRefl LeftIsNotZero)
+bez a (Pos Z) x NonNegative = (a**((gcdOfZeroAndInteger a x),(1**0**prf))) where
+  prf = rewrite (multOneLeftNeutralZ a) in
+     (rewrite  (plusZeroRightNeutralZ a) in Refl)
+bez (Pos (S j)) (Pos  (S k)) Positive NonNegative = assert_total $
+  case QuotRemZ (Pos (S j)) (Pos  (S k)) NonNegative Positive of
+      (quot ** (rem  ** (equality, remLessb,remNonNeg))) =>
+         (case bez (Pos (S k)) rem Positive remNonNeg of
+            (g**((gcdprf),(m1**n1**lincombproof))) =>
+               (g**((euclidConservesGcdWithProof equality gcdprf),
+                    ((n1)**(m1+(n1*(-quot)))**
+                          (bezoutReplace equality lincombproof)))))
 
-|||Returns Gcd with proof for integers a and b such that a is not zero
-gcdZZLeftNotZero:(a:ZZ)->(b:ZZ)->(NotZero a)->(d**(GCDZ a b d))
-gcdZZLeftNotZero (Pos (S k)) (Pos j) PositiveZ =
-  GCDCalc (Pos (S k)) (Pos j) Positive NonNegative
-gcdZZLeftNotZero (Pos (S k)) (NegS j) PositiveZ =
-  case GCDCalc (Pos (S k)) (-(NegS j)) Positive NonNegative of
-                (x ** pf) => (x**(negatingPreservesGcdRight pf))
-gcdZZLeftNotZero (NegS k) (Pos j) NegativeZ =
-  case GCDCalc (-(NegS k)) (Pos j) Positive NonNegative of
-    (x**pf) =>(x**(negatingPreservesGcdLeft pf))
-gcdZZLeftNotZero (NegS k) (NegS j) NegativeZ =
-  case GCDCalc (-(NegS k)) (-(NegS j)) Positive NonNegative of
-        (x ** pf) => (x**((negatingPreservesGcdLeft
-           (negatingPreservesGcdRight pf))))
 
 |||Returns gcd of two integers with proof given that not both of them are zero
 gcdZZ:(a:ZZ)->(b:ZZ)->(NotBothZeroZ a b)->(d**(GCDZ a b d))
-gcdZZ (Pos (S k)) b LeftPositive = gcdZZLeftNotZero (Pos (S k)) b PositiveZ
-gcdZZ (NegS k) b LeftNegative = gcdZZLeftNotZero (NegS k) b NegativeZ
-gcdZZ a (Pos (S k)) RightPositive =
-  (case gcdZZLeftNotZero (Pos (S k)) a PositiveZ of
-        (d**gcdpf) => (d**(gcdSymZ gcdpf)))
-gcdZZ a (NegS k) RightNegative =
-  (case gcdZZLeftNotZero (NegS k) a NegativeZ of
-        (d ** gcdpf) => (d** (gcdSymZ gcdpf)))
+gcdZZ (Pos (S k)) (Pos j) LeftPositive =
+  GCDCalc (Pos (S k)) (Pos j) Positive NonNegative
+gcdZZ (Pos (S k)) (NegS j) LeftPositive =
+  case GCDCalc (Pos (S k)) (-(NegS j)) Positive NonNegative of
+                (x ** pf) => (x**(negatingPreservesGcdRight pf))
+gcdZZ (NegS k) (Pos j) LeftNegative =
+  case GCDCalc (-(NegS k)) (Pos j) Positive NonNegative of
+    (x**pf) =>(x**(negatingPreservesGcdLeft pf))
+gcdZZ (NegS k) (NegS j) LeftNegative =
+  case GCDCalc (-(NegS k)) (-(NegS j)) Positive NonNegative of
+        (x ** pf) => (x**((negatingPreservesGcdLeft
+           (negatingPreservesGcdRight pf))))
+gcdZZ a (Pos (S k)) RightPositive = assert_total $
+  case gcdZZ (Pos (S k)) a LeftPositive of
+    (x ** pf) => (x** (gcdSymZ pf))
+gcdZZ a (NegS k) RightNegative = assert_total $
+  case gcdZZ (NegS k) a LeftNegative of
+      (x ** pf) => (x** (gcdSymZ pf))
+
 
 |||Returns Bezout coefficients with proof for two integers a and b such that
-|||a is not zero with proofs of GCD and equality
-bezCofLeftNotZero:(a:ZZ)->(b:ZZ)->NotZero a->
+|||not both of them are zero with proofs of GCD and equality
+bezoutCoeffs:(a:ZZ)->(b:ZZ)->NotBothZeroZ a b->
    (d**((GCDZ a b d),(m:ZZ**n:ZZ**(d=(m*a)+(n*b)))))
-bezCofLeftNotZero (Pos (S k)) (Pos j) PositiveZ =
+bezoutCoeffs (Pos (S k)) (Pos j) LeftPositive =
   bez (Pos (S k)) (Pos j) Positive NonNegative
-bezCofLeftNotZero (Pos (S k)) (NegS j) PositiveZ =
+bezoutCoeffs (Pos (S k)) (NegS j) LeftPositive =
   case bez (Pos (S k)) (-(NegS j)) Positive NonNegative of
     (x **( pf,(m**n**lproof))) =>
        (x**((negatingPreservesGcdRight pf),(m**(-n)**
            (rewrite multNegNegNeutralZ n (Pos(S j)) in lproof))))
-bezCofLeftNotZero (NegS k) (Pos j) NegativeZ =
+bezoutCoeffs (NegS k) (Pos j) LeftNegative =
   case bez (-(NegS k)) (Pos j) Positive NonNegative of
     (x**(pf,(m**n**lproof))) =>(x**((negatingPreservesGcdLeft pf),((-m)**n**
        (rewrite multNegNegNeutralZ m (Pos (S k)) in lproof))))
-bezCofLeftNotZero (NegS k) (NegS j) NegativeZ =
+bezoutCoeffs (NegS k) (NegS j) LeftNegative =
   case bez (-(NegS k)) (-(NegS j)) Positive NonNegative of
         (x**(pf,(m**n**lproof))) => (x**((((negatingPreservesGcdLeft
           (negatingPreservesGcdRight pf)))),((-m)**(-n)**
             (rewrite  multNegNegNeutralZ m (Pos (S k)) in
              rewrite  multNegNegNeutralZ n (Pos(S j)) in
               lproof))))
-
-|||Returns Bezout coefficients with proof for two integers a and b such that
-|||not both of them are zero with proofs of GCD and equality
-bezoutCoeffs:(a:ZZ)->(b:ZZ)->NotBothZeroZ a b->
-   (d**((GCDZ a b d),(m:ZZ**n:ZZ**(d=(m*a)+(n*b)))))
-bezoutCoeffs (Pos (S k)) b LeftPositive = bezCofLeftNotZero (Pos (S k)) b PositiveZ
-bezoutCoeffs (NegS k) b LeftNegative = bezCofLeftNotZero (NegS k) b NegativeZ
-bezoutCoeffs a (Pos (S k)) RightPositive =
-  (case bezCofLeftNotZero (Pos (S k)) a PositiveZ  of
-        (x**(pf,(m**n**lproof))) => (x** ((gcdSymZ pf),(n**m**
-           (rewrite plusCommutativeZ (n*a) (m*(Pos (S k))) in lproof)))))
-bezoutCoeffs a (NegS k) RightNegative =
-  (case bezCofLeftNotZero (NegS k) a NegativeZ of
-        (x**(pf,(m**n**lproof))) => (x** ((gcdSymZ pf),(n**m**
-           (rewrite plusCommutativeZ (n*a) (m*(NegS k)) in lproof)))))
+bezoutCoeffs a (Pos (S k)) RightPositive = assert_total $
+  case bezoutCoeffs (Pos (S k)) a LeftPositive of
+    (x**(pf,(m**n**lproof))) => (x** ((gcdSymZ pf),(n**m**
+       (rewrite plusCommutativeZ (n*a) (m*(Pos (S k))) in lproof))))
+bezoutCoeffs a (NegS k) RightNegative = assert_total $
+  case bezoutCoeffs (NegS k) a LeftNegative of
+      (x**(pf,(m**n**lproof))) => (x** ((gcdSymZ pf),(n**m**
+         (rewrite plusCommutativeZ (n*a) (m*(NegS k)) in lproof))))
 
 |||Proof that if d = ja + kb, then md = jma + kmb
 multOnLeft:{a:ZZ}->(m:ZZ)->(d=(j*a)+(k*b))->((m*d)=j*(m*a)+k*(m*b))
