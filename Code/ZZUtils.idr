@@ -254,6 +254,61 @@ decZero (Pos (S k)) = Yes (posThenNotZero Positive)
 decZero (NegS k) = Yes (NegSThenNotZero Negative)
 
 nonZeroNotZero: (a: ZZ) -> ( (a = (Pos Z) ) -> Void) -> (NotZero a)
+<<<<<<< HEAD
+nonZeroNotZero (Pos Z) f = void (f Refl)
+nonZeroNotZero (Pos (S k)) f = PositiveZ
+nonZeroNotZero (NegS k) f = NegativeZ
+
+ZZSisNotZ: (k: Nat) -> ((Pos (S k))= (Pos Z)) -> Void
+ZZSisNotZ _ Refl impossible
+
+ZZNegisNotZ: (k: Nat) -> ((NegS k) = Pos Z) -> Void
+ZZNegisNotZ _ Refl impossible
+
+negZeroZero: (a: ZZ) -> (a = (Pos Z)) -> (negate a = (Pos Z))
+negZeroZero (Pos Z) Refl = Refl
+negZeroZero (Pos (S k)) prf = void ((ZZSisNotZ k) prf)
+negZeroZero (NegS k) prf = void ((ZZNegisNotZ k) prf)
+
+negNegSIsPos: (a: ZZ) -> (a = (NegS k)) -> (-a = (Pos (S k)))
+negNegSIsPos (Pos k) Refl impossible
+negNegSIsPos (NegS k) Refl = Refl
+
+negPosIsNeg: (a: ZZ) -> (a = (Pos (S k))) -> (-a = (NegS k))
+negPosIsNeg (Pos Z) Refl impossible
+negPosIsNeg (Pos (S k)) Refl = Refl
+negPosIsNeg (NegS k) Refl impossible
+
+quotproof1: {a: ZZ} -> {b: ZZ} -> {quot: ZZ} -> (a=quot*b) -> (-a = (-quot)*b)
+quotproof1 {a} {b} {quot} prf = ?hole1
+
+quotproof2: {a: ZZ} -> {b: ZZ} -> {quot: ZZ} -> (a=quot*b) -> (a = (-quot)*(-b))
+quotproof2 {a} {b} {quot} prf = ?hole2
+
+quotproof3: {a: ZZ} -> {b: ZZ} -> {quot: ZZ} -> (a=quot*b) -> (-a = (quot)*(-b))
+quotproof3 {a} {b} {quot} prf = ?hole3
+
+QRproof1: (a:ZZ) -> (b: ZZ) -> (a = (Pos (S k))) -> (b= (Pos (S j))) -> (quot: ZZ ** a = (quot)*b) -> (nquot: ZZ ** -a=(nquot)*b)
+QRproof1 (Pos Z) b Refl Refl x impossible
+QRproof1 (Pos (S k)) (Pos Z) Refl Refl x impossible
+QRproof1 (Pos (S k)) (Pos (S j)) Refl Refl (quot ** pf) = ((-quot) ** quotproof1(pf))
+QRproof1 (Pos (S k)) (NegS j) Refl Refl x impossible
+QRproof1 (NegS k) b Refl Refl x impossible
+
+QRproof3: (a:ZZ) -> (b: ZZ) -> (a = (Pos (S k))) -> (b= (Pos (S j))) -> (quot: ZZ ** a = (quot)*b) -> (nquot: ZZ ** a=(nquot)*(-b))
+QRproof3 (Pos Z) b Refl Refl x impossible
+QRproof3 (Pos (S k)) (Pos Z) Refl Refl x impossible
+QRproof3 (Pos (S k)) (Pos (S j)) Refl Refl (quot ** pf) = ((-quot) ** quotproof2(pf))
+QRproof3 (Pos (S k)) (NegS j) Refl Refl x impossible
+QRproof3 (NegS k) b Refl Refl x impossible
+
+QRproof4: (a:ZZ) -> (b: ZZ) -> (a = (Pos (S k))) -> (b= (Pos (S j))) -> (quot: ZZ ** a = (quot)*b) -> (quot: ZZ ** (-a)=(quot)*(-b))
+QRproof4 (Pos Z) b Refl Refl x impossible
+QRproof4 (Pos (S k)) (Pos Z) Refl Refl x impossible
+QRproof4 (Pos (S k)) (Pos (S j)) Refl Refl (quot ** pf) = (quot ** quotproof3(pf))
+QRproof4 (Pos (S k)) (NegS j) Refl Refl x impossible
+QRproof4 (NegS k) b Refl Refl x impossible
+=======
 nonZeroNotZero (Pos Z) f = ?nonZeroNotZero_rhs_1
 nonZeroNotZero (Pos (S k)) f = ?nonZeroNotZero_rhs_4
 nonZeroNotZero (NegS k) f = ?nonZeroNotZero_rhs_2
@@ -269,3 +324,4 @@ subSuccSuccNeutrtalZ: ((Pos k)=(Pos n)+(-(Pos m)))->((Pos k)=(Pos (S n))+(-(Pos 
 subSuccSuccNeutrtalZ {n = n}{m = Z}{k = k} prf = rewrite sym $ plusZeroRightNeutralZ (Pos n) in prf
 subSuccSuccNeutrtalZ {n = n}{m = (S j)}{k = k} prf = prf
 
+>>>>>>> 7a03388bdc2ab34b063a9325e96a662e12ec78b0
