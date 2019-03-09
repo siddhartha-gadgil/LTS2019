@@ -125,5 +125,38 @@ IsSolutionZ: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: ZZNotZero a) -> Either (ZZPai
 IsSolutionZ a b c a0 = case (SND (Eucl (absZ(c-b)) (absZ a) )) of
                             Z => Right ((NatToZZ(FST (Eucl (absZ(c-b)) (absZ a) )))*(findSignDiff c b))
                             (S k) => Left((c-b),a)
+                            
+-- some helper functions for the DiophantineProof
+
+helper5: (quot: ZZ) -> (a: ZZ) -> (quot*a=a*quot)
+helper5 quot a = multCommutativeZ (quot) (a)
+
+helper6: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (quot: ZZ) -> (c-b=quot*a) -> (c-b=a*quot)
+helper6 a b c quot prf = trans (prf) (helper5 (quot) (a))
+
+helper7: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (quot: ZZ) -> (c-b=a*quot) -> ((c-b+b)=a*quot+b)
+helper7 a b c quot prf = ApZZ (\x => x+ b) (prf)
+
+helper8: (b: ZZ) -> (-b+b=0)
+helper8 b = plusNegateInverseRZ b
+
+helper10: (c: ZZ) -> (b: ZZ) -> ((c-b)+b=c)
+helper10 c b = ?hole
+
+helper11: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (quot: ZZ) -> (c-b=a*quot) -> (c=a*quot+b)
+helper11 a b c quot prf = trans (sym (helper10 c b)) (helper7 a b c quot prf)
+
+-- If a Diophantine equation has a solution, this generates the proof.
+
+DiophantineProof: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (quot: ZZ) -> (c-b=quot*a) -> ((a*quot+b=c))
+DiophantineProof a b c quot x = sym (helper11 (a) (b) (c) (quot) (helper6 a b c quot x))
+
+--This solves the equation ax+b=c and if it has an integer solution, it generates the solution with proof.
+
+DiophantineSolver: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: NotZero a)
+-> Either (x: ZZ ** (a*x+b=c)) (y: ZZPair ** (SolExists, a*(fst y)+b*(snd y) = (snd y)*c))
+DiophantineSolver a b c a0 = case (CheckIsQuotientZ (c-b) (a) a0) of
+                                  (Left l) => Left ((fst l) ** (DiophantineProof a b c (fst l) (snd l)))
+                                  (Right r) => Right (GeneralEqSolver a b c (a0))
 
                             
