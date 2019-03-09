@@ -307,3 +307,14 @@ QRproof4 (Pos (S k)) (Pos Z) Refl Refl x impossible
 QRproof4 (Pos (S k)) (Pos (S j)) Refl Refl (quot ** pf) = (quot ** quotproof3(pf))
 QRproof4 (Pos (S k)) (NegS j) Refl Refl x impossible
 QRproof4 (NegS k) b Refl Refl x impossible
+
+
+succIsPlusOneRight:{n:Nat}->(Pos (S n)) = (Pos n) +1
+succIsPlusOneRight {n} = rewrite plusCommutativeZ (Pos n) 1 in
+                       Refl
+succIsPlusOneLeft :{n:Nat}->(Pos (S n)) =1+ (Pos n)
+succIsPlusOneLeft = Refl
+
+subSuccSuccNeutrtalZ: ((Pos k)=(Pos n)+(-(Pos m)))->((Pos k)=(Pos (S n))+(-(Pos (S m))))
+subSuccSuccNeutrtalZ {n = n}{m = Z}{k = k} prf = rewrite sym $ plusZeroRightNeutralZ (Pos n) in prf
+subSuccSuccNeutrtalZ {n = n}{m = (S j)}{k = k} prf = prf
