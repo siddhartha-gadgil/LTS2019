@@ -278,18 +278,14 @@ negPosIsNeg (Pos Z) Refl impossible
 negPosIsNeg (Pos (S k)) Refl = Refl
 negPosIsNeg (NegS k) Refl impossible
 
-|||The theorem (a=(b*c)) => ((-a)=((-b)*c)))
-multNegateLeftIsNegateZ:(a:ZZ)->(b:ZZ)->(c:ZZ)->(a=(b*c))->((-a)=(-b)*c)
-multNegateLeftIsNegateZ a b c prf = (rewrite (multNegateLeftZ b c) in ( numbersSameNegativesSame prf))
-
 quotproof1: {a: ZZ} -> {b: ZZ} -> {quot: ZZ} -> (a=quot*b) -> (-a = (-quot)*b)
-quotproof1 {a} {b} {quot} prf = (multNegateLeftIsNegateZ a quot b prf)
+quotproof1 {a} {b} {quot} prf = ?hole1
 
 quotproof2: {a: ZZ} -> {b: ZZ} -> {quot: ZZ} -> (a=quot*b) -> (a = (-quot)*(-b))
-quotproof2 {a} {b} {quot} prf = trans (prf) (sym (multNegNegNeutralZ (quot) (b)))
+quotproof2 {a} {b} {quot} prf = ?hole2
 
 quotproof3: {a: ZZ} -> {b: ZZ} -> {quot: ZZ} -> (a=quot*b) -> (-a = (quot)*(-b))
-quotproof3 {a} {b} {quot} prf = (multNegateRightIsNegateZ a quot b prf)
+quotproof3 {a} {b} {quot} prf = ?hole3
 
 QRproof1: (a:ZZ) -> (b: ZZ) -> (a = (Pos (S k))) -> (b= (Pos (S j))) -> (quot: ZZ ** a = (quot)*b) -> (nquot: ZZ ** -a=(nquot)*b)
 QRproof1 (Pos Z) b Refl Refl x impossible
