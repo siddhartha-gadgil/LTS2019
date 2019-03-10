@@ -117,6 +117,10 @@ negativeDivides {a}{d}(x ** pf) =
 |||The theorem that (-d)|a implies d|a
 negativeDivides2:(IsDivisibleZ a (-d))->(IsDivisibleZ a d)
 negativeDivides2 {a}{d}x = rewrite (sym (doubleNegElim d)) in (negativeDivides x)
+|||The theorem that (d|a) implies ((-d)|(-a))
+doubleNegativeDivides : (IsDivisibleZ a d)->(IsDivisibleZ (-a) (-d))
+doubleNegativeDivides x = negativeDivides (dDividesNegative x)
+
 |||The theorem that -1|a for all integers
 minusOneDivides:(a:ZZ)->(IsDivisibleZ a (-1))
 minusOneDivides a = negativeDivides (oneDiv _)
