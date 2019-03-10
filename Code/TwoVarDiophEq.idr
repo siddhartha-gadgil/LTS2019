@@ -97,8 +97,7 @@ divByGcdNotZero {a = (NegS k)}{b = b}{d = d} (dPos, ((abyd**apf),(bbyd**bpf)),fd
 NegativeZ = NegSThenNotZero (negDivByPosIsNeg Negative dPos apf)
 
 |||Proves that if a is not zero and 0 =xa + yb, then there exists an integer k such that
-||| x= k* there exists an integer k such that
-||| y = k* (-b/(gcd(a,b))) and y = k* (a/(gcd(a,b)))
+||| x = k* (-b/(gcd(a,b))) and y = k* (a/(gcd(a,b)))
 homoOnlySoln:(gcdpf:GCDZ a b d)->(0 = x*a + y*b) ->NotZero a->
    (k:ZZ**((x = k * (-(bByd gcdpf))),(y = k * (aByd gcdpf))))
 homoOnlySoln {a}{b}{d}{x}{y} (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf anotz =
