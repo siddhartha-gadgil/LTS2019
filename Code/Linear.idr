@@ -143,7 +143,10 @@ helper8: (b: ZZ) -> (-b+b=0)
 helper8 b = plusNegateInverseRZ b
 
 helper10: (c: ZZ) -> (b: ZZ) -> ((c-b)+b=c)
-helper10 c b = ?hole
+helper10 c b = rewrite sym (plusAssociativeZ (c) (-b) (b)) in
+               rewrite plusNegateInverseRZ (b) in
+               rewrite plusZeroRightNeutralZ c in
+               Refl
 
 helper11: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (quot: ZZ) -> (c-b=a*quot) -> (c=a*quot+b)
 helper11 a b c quot prf = trans (sym (helper10 c b)) (helper7 a b c quot prf)
@@ -160,3 +163,18 @@ DiophantineSolver: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: NotZero a)
 DiophantineSolver a b c a0 = case (CheckIsQuotientZ (c-b) (a) a0) of
                                   (Left l) => Left ((fst l) ** (DiophantineProof a b c (fst l) (snd l)))
                                   (Right r) => Right (GeneralEqSolver a b c (a0))
+ 
+ -- Now, for 2 variable Diophantine equations
+
+||| The solution of the homogeneous equation ax + by =0 is any integer multiple of (-b,a)
+homogeneous: (a: ZZ) -> (b: ZZ) -> (k: ZZ) -> ((a*(k*(-b))+b*(k*a))=0)
+homogeneous a b k = rewrite (multAssociativeZ (a) (k) (-b)) in
+                    rewrite (multCommutativeZ (a) (k)) in
+                    rewrite (multAssociativeZ (b) (k) (a)) in
+                    rewrite (multCommutativeZ (b) (k)) in
+                    rewrite sym (multAssociativeZ (k) (a) (-b)) in
+                    rewrite sym (multAssociativeZ (k) (b) (a)) in
+                    rewrite sym (multDistributesOverPlusRightZ k (a*(-b)) (b*a)) in
+                    rewrite (SolutionProof (a) (b)) in
+                    rewrite multZeroRightZeroZ k in
+                    Refl
