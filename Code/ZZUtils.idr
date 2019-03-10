@@ -52,9 +52,33 @@ checkNotBothZero (NegS k) b = Right LeftNegative
 posThenNotZero:{a:ZZ}->(IsPositive a)->(NotZero a)
 posThenNotZero {a = (Pos (S k))} Positive = PositiveZ
 
+|||Negative numbers are not zero
 NegSThenNotZero:{a:ZZ}->(IsNegative a)->(NotZero a)
 NegSThenNotZero {a = (NegS k)} ZZUtils.Negative = NegativeZ
+|||negative of a negative number is positive
+negateNegativePos:(IsNegative c) ->IsPositive (-c)
+negateNegativePos {c = (NegS k)} Negative = Positive
+|||negative of a positive number is negative
+negatePosIsNeg: IsPositive q ->IsNegative (-q)
+negatePosIsNeg {q = (Pos (S k))} Positive =Negative
 
+
+|||If c and d are negative and c = d*q, then q is positive
+negDivByNegIsPos:{c:ZZ}->{d:ZZ}->{q:ZZ}->(IsNegative c)->
+      (IsNegative d)->(c=(d*q))->(IsPositive q)
+negDivByNegIsPos {c = (NegS k)}{d = (NegS j)}{q = q}
+    Negative Negative prf = posDivByPosIsPos {c=(-(NegS k))}{d=(-(NegS j))}
+        Positive Positive (rewrite multNegateLeftZ (NegS j) q in (numbersSameNegativesSame prf))
+|||If c is negative, d is positive and c = d*q, then q is negative
+negDivByPosIsNeg:{c:ZZ}->{d:ZZ}->{q:ZZ}->(IsNegative c)->
+      (IsPositive d)->(c=(d*q))->(IsNegative q)
+negDivByPosIsNeg {c}{d}{q} cNeg dPos prf =
+  (case (posDivByPosIsPos {c =(-c)} {d=d} {q=-q}
+         (negateNegativePos cNeg) dPos
+            (rewrite  multNegateRightZ d q in
+             numbersSameNegativesSame prf)) of
+               negqpos => (rewrite sym $ doubleNegElim q in
+                               negatePosIsNeg negqpos))
 |||Rewrites a=b as a=1*b
 rewriteRightAsOneTimesRight: {a:ZZ}->{b:ZZ}->(a=b)->(a=(1*b))
 rewriteRightAsOneTimesRight {a}{b}prf = rewrite ( (multOneLeftNeutralZ b)) in prf
@@ -180,6 +204,31 @@ productOneThenNumbersOne (NegS (S k)) (Pos Z) prf = void (negTimesZeroIsNotPos{k
 productOneThenNumbersOne (NegS (S _)) (Pos (S _)) Refl impossible
 productOneThenNumbersOne (NegS (S _)) (NegS Z) Refl impossible
 productOneThenNumbersOne (NegS (S _)) (NegS (S _)) Refl impossible
+
+|||Right cancellation law for addition
+|||Proves that a+r=b+r implies a = b
+plusRightCancelZ:(left1:ZZ)->(left2:ZZ)->(right:ZZ)->
+   (left1+right=left2+right)->(left1 = left2)
+plusRightCancelZ left1 left2 right prf =
+  rewrite sym $plusZeroRightNeutralZ left1 in
+  rewrite sym $plusZeroRightNeutralZ left2 in
+  rewrite sym $plusNegateInverseRZ right in
+  rewrite plusAssociativeZ left1 (-right) right in
+  rewrite plusAssociativeZ left2 (-right) right in
+  rewrite plusCommutativeZ left1 (-right) in
+  rewrite plusCommutativeZ left2 (-right) in
+  rewrite sym $ plusAssociativeZ (-right) left1 right in
+  rewrite sym $ plusAssociativeZ (-right) left2 right in
+  cong prf
+
+|||Left cancellation law for addition
+|||Proves that l+a=l+b implies a =b
+plusLeftCancelZ:(left : ZZ) -> (right1 : ZZ) -> (right2 : ZZ) ->
+   (left+right1 = left+right2) -> (right1 = right2)
+plusLeftCancelZ left right1 right2 prf =
+  plusRightCancelZ right1 right2 left (rewrite plusCommutativeZ right1 left in
+                                       rewrite plusCommutativeZ right2 left in
+                                       prf)
 
 |||Right cancellation law for multiplication when right is positive
 multRightCancelPosZ:(left1:ZZ)->(left2:ZZ)->(right:ZZ)->
