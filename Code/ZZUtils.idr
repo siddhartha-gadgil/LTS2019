@@ -254,7 +254,6 @@ decZero (Pos (S k)) = Yes (posThenNotZero Positive)
 decZero (NegS k) = Yes (NegSThenNotZero Negative)
 
 nonZeroNotZero: (a: ZZ) -> ( (a = (Pos Z) ) -> Void) -> (NotZero a)
-<<<<<<< HEAD
 nonZeroNotZero (Pos Z) f = void (f Refl)
 nonZeroNotZero (Pos (S k)) f = PositiveZ
 nonZeroNotZero (NegS k) f = NegativeZ
@@ -279,14 +278,18 @@ negPosIsNeg (Pos Z) Refl impossible
 negPosIsNeg (Pos (S k)) Refl = Refl
 negPosIsNeg (NegS k) Refl impossible
 
+|||The theorem (a=(b*c)) => ((-a)=((-b)*c)))
+multNegateLeftIsNegateZ:(a:ZZ)->(b:ZZ)->(c:ZZ)->(a=(b*c))->((-a)=(-b)*c)
+multNegateLeftIsNegateZ a b c prf = (rewrite (multNegateLeftZ b c) in ( numbersSameNegativesSame prf))
+
 quotproof1: {a: ZZ} -> {b: ZZ} -> {quot: ZZ} -> (a=quot*b) -> (-a = (-quot)*b)
-quotproof1 {a} {b} {quot} prf = ?hole1
+quotproof1 {a} {b} {quot} prf = (multNegateLeftIsNegateZ a quot b prf)
 
 quotproof2: {a: ZZ} -> {b: ZZ} -> {quot: ZZ} -> (a=quot*b) -> (a = (-quot)*(-b))
-quotproof2 {a} {b} {quot} prf = ?hole2
+quotproof2 {a} {b} {quot} prf = trans (prf) (sym (multNegNegNeutralZ (quot) (b)))
 
 quotproof3: {a: ZZ} -> {b: ZZ} -> {quot: ZZ} -> (a=quot*b) -> (-a = (quot)*(-b))
-quotproof3 {a} {b} {quot} prf = ?hole3
+quotproof3 {a} {b} {quot} prf = (multNegateRightIsNegateZ a quot b prf)
 
 QRproof1: (a:ZZ) -> (b: ZZ) -> (a = (Pos (S k))) -> (b= (Pos (S j))) -> (quot: ZZ ** a = (quot)*b) -> (nquot: ZZ ** -a=(nquot)*b)
 QRproof1 (Pos Z) b Refl Refl x impossible
@@ -308,10 +311,6 @@ QRproof4 (Pos (S k)) (Pos Z) Refl Refl x impossible
 QRproof4 (Pos (S k)) (Pos (S j)) Refl Refl (quot ** pf) = (quot ** quotproof3(pf))
 QRproof4 (Pos (S k)) (NegS j) Refl Refl x impossible
 QRproof4 (NegS k) b Refl Refl x impossible
-=======
-nonZeroNotZero (Pos Z) f = ?nonZeroNotZero_rhs_1
-nonZeroNotZero (Pos (S k)) f = ?nonZeroNotZero_rhs_4
-nonZeroNotZero (NegS k) f = ?nonZeroNotZero_rhs_2
 
 
 succIsPlusOneRight:{n:Nat}->(Pos (S n)) = (Pos n) +1
@@ -323,5 +322,3 @@ succIsPlusOneLeft = Refl
 subSuccSuccNeutrtalZ: ((Pos k)=(Pos n)+(-(Pos m)))->((Pos k)=(Pos (S n))+(-(Pos (S m))))
 subSuccSuccNeutrtalZ {n = n}{m = Z}{k = k} prf = rewrite sym $ plusZeroRightNeutralZ (Pos n) in prf
 subSuccSuccNeutrtalZ {n = n}{m = (S j)}{k = k} prf = prf
-
->>>>>>> 7a03388bdc2ab34b063a9325e96a662e12ec78b0

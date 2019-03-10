@@ -3,6 +3,8 @@ module Linear
 import ZZ
 import Rationals
 import Data.Vect
+import GCDZZ
+import ZZUtils
 
 %access public export
 
@@ -87,7 +89,7 @@ trivialeqSolver a b prf = Left ((0,1) ** (YesExists, (ZeroProof a b prf)))
 
 -- Solving the linear equation ax+b = 0 in general
 
-eqSolver : (a: ZZ) -> (b : ZZ) -> (ZZNotZero b) -> Either (x : ZZPair ** (SolExists, a*(fst x) + b*(snd x) = 0)) (SolExists)
+eqSolver : (a: ZZ) -> (b : ZZ) -> (NotZero b) -> Either (x : ZZPair ** (SolExists, a*(fst x) + b*(snd x) = 0)) (SolExists)
 eqSolver a b prf = case (is_a_zero(a)) of
   (True) => Right (DNExist)
   (False) => Left ((-b, a) ** (YesExists, (SolutionProof a b))) -- The solution is (-b/a), a rational number, with proof.
@@ -113,7 +115,7 @@ GeneralProof a b c = trans (helper2 a b c) (helper4 a b c)
 
 -- Solving the linear equation ax + b = c (2x +3 = 7, for example) over the rationals
 
-GeneralEqSolver: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: ZZNotZero a) ->
+GeneralEqSolver: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: NotZero a) ->
   (x : ZZPair ** (SolExists, a*(fst x) + b*(snd x) = (snd x)*c))
 GeneralEqSolver a b c a0 = ( ( (c-b) , a ) ** (YesExists, (GeneralProof a b c) )) -- Solves the equation with proof
 
@@ -121,9 +123,40 @@ GeneralEqSolver a b c a0 = ( ( (c-b) , a ) ** (YesExists, (GeneralProof a b c) )
 -- solution; if it did, the denominator of the rational solution would divide the numerator. If it didn't, the equation
 -- would have no solutions in the integers.
 
-IsSolutionZ: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: ZZNotZero a) -> Either (ZZPair) (ZZ)
+IsSolutionZ: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: NotZero a) -> Either (ZZPair) (ZZ)
 IsSolutionZ a b c a0 = case (SND (Eucl (absZ(c-b)) (absZ a) )) of
                             Z => Right ((NatToZZ(FST (Eucl (absZ(c-b)) (absZ a) )))*(findSignDiff c b))
                             (S k) => Left((c-b),a)
 
-                            
+-- some helper functions for the DiophantineProof
+
+helper5: (quot: ZZ) -> (a: ZZ) -> (quot*a=a*quot)
+helper5 quot a = multCommutativeZ (quot) (a)
+
+helper6: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (quot: ZZ) -> (c-b=quot*a) -> (c-b=a*quot)
+helper6 a b c quot prf = trans (prf) (helper5 (quot) (a))
+
+helper7: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (quot: ZZ) -> (c-b=a*quot) -> ((c-b+b)=a*quot+b)
+helper7 a b c quot prf = ApZZ (\x => x+ b) (prf)
+
+helper8: (b: ZZ) -> (-b+b=0)
+helper8 b = plusNegateInverseRZ b
+
+helper10: (c: ZZ) -> (b: ZZ) -> ((c-b)+b=c)
+helper10 c b = ?hole
+
+helper11: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (quot: ZZ) -> (c-b=a*quot) -> (c=a*quot+b)
+helper11 a b c quot prf = trans (sym (helper10 c b)) (helper7 a b c quot prf)
+
+-- If a Diophantine equation has a solution, this generates the proof.
+
+DiophantineProof: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (quot: ZZ) -> (c-b=quot*a) -> ((a*quot+b=c))
+DiophantineProof a b c quot x = sym (helper11 (a) (b) (c) (quot) (helper6 a b c quot x))
+
+--This solves the equation ax+b=c and if it has an integer solution, it generates the solution with proof.
+
+DiophantineSolver: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: NotZero a)
+-> Either (x: ZZ ** (a*x+b=c)) (y: ZZPair ** (SolExists, a*(fst y)+b*(snd y) = (snd y)*c))
+DiophantineSolver a b c a0 = case (CheckIsQuotientZ (c-b) (a) a0) of
+                                  (Left l) => Left ((fst l) ** (DiophantineProof a b c (fst l) (snd l)))
+                                  (Right r) => Right (GeneralEqSolver a b c (a0))
