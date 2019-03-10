@@ -178,6 +178,7 @@ genFunctionForGcdNeg f (cDiva,cDivb) = f (cDivNega,cDivb) where
 gcdSymZ: (GCDZ a b d)->(GCDZ b a d)
 gcdSymZ (dPos,(dDiva,dDivb),fd) = (dPos, (dDivb, dDiva), (genFunctionForGcdSym fd))
 
+
 |||Theorem that gcd(-a,b)=gcd(a,b)
 negatingPreservesGcdLeft: (GCDZ (-a) b d)->(GCDZ a b d)
 negatingPreservesGcdLeft (dPos,(dDivNega,dDivb),fd) =
@@ -187,6 +188,10 @@ negatingPreservesGcdLeft (dPos,(dDivNega,dDivb),fd) =
 negatingPreservesGcdRight: (GCDZ p (-q) r)->(GCDZ p q r)
 negatingPreservesGcdRight {p}{q} x =
   gcdSymZ{a=q}{b=p} (negatingPreservesGcdLeft (gcdSymZ {a=p}{b=(-q)} x))
+|||Theorem that gcd (a,b) = gcd (-a,b)
+negatingPreservesGcdLeft1:(GCDZ a b d)->(GCDZ (-a) b d)
+negatingPreservesGcdLeft1{a} x =
+  negatingPreservesGcdLeft (rewrite doubleNegElim a in x)
 
 |||Theorem that if d|rem , d|b and a = rem+(quot*b) then d|a
 euclidConservesDivisorWithProof :{a:ZZ}->{b:ZZ}->{quot:ZZ}->{rem:ZZ}->
@@ -246,17 +251,18 @@ divideByGcdThenGcdOne{a}{b}{d} (dPos, ((aByd**amd),(bByd**bmd)),fd) =
       eqa = rewrite (multCommutativeZ aByd d) in amd
       eqb = rewrite (multCommutativeZ bByd d) in bmd
 
+|||Proves that if c divides one then either c =1 or c=-1
 intDividesOneThenIntOne: (IsDivisibleZ 1 c) -> Either (c=1 ) (c = (-1))
 intDividesOneThenIntOne (x ** pf) =
    case productOneThenNumbersOne c x (sym pf) of
     (Left (k,j)) => Left k
     (Right (k,j)) => Right k
-
+|||A helper function for gcdOfOneAndInteger
 genfunctiongcdOfOneAndInteger:({c:ZZ}->(IsCommonFactorZ a 1 c)->(IsDivisibleZ 1 c))
 genfunctiongcdOfOneAndInteger (cDiva,cDiv1) =
   (case intDividesOneThenIntOne cDiv1 of
         (Left cIs1) => rewrite cIs1 in (oneDiv 1)
         (Right cisn1) => rewrite cisn1 in (minusOneDivides 1))
-
+|||Proves that for any integer a , (gcd(a,1))=1
 gcdOfOneAndInteger: (a:ZZ)->(GCDZ a 1 1)
 gcdOfOneAndInteger a = (Positive, ((oneDiv a),(oneDiv 1)), genfunctiongcdOfOneAndInteger)
