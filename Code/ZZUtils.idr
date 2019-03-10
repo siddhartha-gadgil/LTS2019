@@ -69,7 +69,7 @@ negDivByNegIsPos:{c:ZZ}->{d:ZZ}->{q:ZZ}->(IsNegative c)->
 negDivByNegIsPos {c = (NegS k)}{d = (NegS j)}{q = q}
     Negative Negative prf = posDivByPosIsPos {c=(-(NegS k))}{d=(-(NegS j))}
         Positive Positive (rewrite multNegateLeftZ (NegS j) q in (numbersSameNegativesSame prf))
-|||If c is negative, d is positive and c = d*q, then q is positive
+|||If c is negative, d is positive and c = d*q, then q is negative
 negDivByPosIsNeg:{c:ZZ}->{d:ZZ}->{q:ZZ}->(IsNegative c)->
       (IsPositive d)->(c=(d*q))->(IsNegative q)
 negDivByPosIsNeg {c}{d}{q} cNeg dPos prf =
