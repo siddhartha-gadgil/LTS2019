@@ -7,6 +7,26 @@ import decDivZ
 %access public export
 %default total
 
+|||Any integer is a solution for c=xa+yb when a=b=c=0
+zeroLinCombZeroZero:a=0->b=0->c=0->{x:ZZ}->{y:ZZ}->c=x*a+y*b
+zeroLinCombZeroZero az bz cz {x} {y} = rewrite az in
+                                       rewrite bz in
+                                       rewrite cz in
+                                       rewrite multZeroRightZeroZ x in
+                                       rewrite multZeroRightZeroZ y in
+                                       Refl
+
+|||If a=b=0 and c is not zero, it is impossible that c = xa +yb
+notZeroNotLinCombZeroZero:a=0->b=0->NotZero c ->
+   {x:ZZ}->{y:ZZ}->c=x*a+y*b->Void
+notZeroNotLinCombZeroZero aZ bZ cnotz {x}{y} =
+  rewrite aZ in
+  rewrite bZ in
+  rewrite multZeroRightZeroZ x in
+  rewrite multZeroRightZeroZ y in
+  (notZeroNonZero cnotz)
+
+
 |||Proves that if d = gcd (a,b) and c= xa +yb , then d|c
 gcdDivLinComb:GCDZ a b d->c=x*a+y*b -> IsDivisibleZ c d
 gcdDivLinComb (dPos,dcommonfactab,fd) prf =
@@ -111,3 +131,29 @@ homoOnlySoln {a}{b}{d}{x}{y} (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf anotz =
                  rewrite sym $ adivy in
                  rewrite multCommutativeZ y (-bbyd) in
                  sym $ divgpf)),adivy))))
+
+|||Given three integers a, b and c, it outputs either
+|||a proof that c = xa +yb is impossible or
+|||a proof that all integers x and y satisfy the equation (this happens when a=b=c=0)
+|||or 4 integers x1 , y1 , pa and pb such that for any integer k,
+|||x=x1+k*pa  y=y1+k*pb is a solution of c=xa+yb
+|||and whenever c=xa+yb ,there exists an integer, k such that
+||| x=x1+k*pa  y=y1+k*pb
+findAllSolutions: (a:ZZ)->(b:ZZ)->(c:ZZ)->
+  Either ({x:ZZ}->{y:ZZ}->c=x*a+y*b->Void)
+  (Either ({x:ZZ}->{y:ZZ}->c=x*a+y*b)
+    (x1:ZZ**y1:ZZ**pa:ZZ**pb:ZZ**(({k:ZZ}->(x=x1+k*pa)->(y=y1+k*pb)->(c=x*a+y*b)),
+      ((c=x*a+y*b)->(k**((x=x1+k*pa),(y=y1+k*pb)))))))
+findAllSolutions a b c =
+  (case checkNotBothZero a b of
+        (Left (aZ,bZ)) =>
+           (case decZero c of
+                 (Yes cnotz) => Left (notZeroNotLinCombZeroZero aZ bZ cnotz)
+                 (No ciszero) => Right (Left (zeroLinCombZeroZero aZ bZ
+                    (notNotZeroThenZero ciszero))))
+        (Right abnotZ) =>
+          (case gcdZZ a b abnotZ of
+            (g**gcdpf) =>
+             (case decDivisibleZ c g of
+                   (Yes prf) => ?findAllSolutions_rhs_1
+                   (No contra) => Left (contra . (gcdDivLinComb gcdpf) ))))
