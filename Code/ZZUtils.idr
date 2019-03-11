@@ -307,6 +307,16 @@ nonZeroNotZero (Pos Z) f = void (f Refl)
 nonZeroNotZero (Pos (S k)) f = PositiveZ
 nonZeroNotZero (NegS k) f = NegativeZ
 
+notNotZeroThenZero: ((NotZero c)->Void)->c= 0
+notNotZeroThenZero {c = (Pos Z)} f = Refl
+notNotZeroThenZero {c = (Pos (S k))} f = void ( f (PositiveZ))
+notNotZeroThenZero {c = (NegS k)} f = void ( f (NegativeZ))
+
+notZeroNonZero:(NotZero a)->(a=0->Void)
+notZeroNonZero {a = (Pos (S _))} PositiveZ Refl impossible
+notZeroNonZero {a = (NegS _)} NegativeZ Refl impossible
+
+
 ZZSisNotZ: (k: Nat) -> ((Pos (S k))= (Pos Z)) -> Void
 ZZSisNotZ _ Refl impossible
 
