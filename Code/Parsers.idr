@@ -15,7 +15,7 @@ parse p s = parseChars p (unpack s)
 
 
 charPred : (Char -> Bool) -> Parser Char
-charPred p = \l => (case l of
+charPred p l = (case l of
                      [] => ParseFailed  ([])
                      (x :: xs) =>
                        if (p x) then (ParseSuccess x xs) else ParseFailed (x :: xs))
@@ -29,28 +29,41 @@ map p f cs = (case (p cs) of
                            (ParseFailed  rest) => ParseFailed  rest)
 
 (++) : {a : Type} -> {b: Type} -> Parser a -> Parser b -> Parser (Pair a b)
-(++) p q = \l => (case p l of
+(++) p q l = (case p l of
                        (ParseSuccess result1 rest1) => (case (q rest1) of
                                                            (ParseSuccess result2 rest2) => ParseSuccess ((result1, result2)) rest2
                                                            (ParseFailed rest2) => ParseFailed l)
                        (ParseFailed rest) => ParseFailed rest)
 
+-- charsLit: (List Char) -> Parser (List Char)
+-- charsLit cs  l = case cs of
+--                    [] =>  ParseSuccess [] l
+--                    (x :: xs) =>
+--                     let
+--                     h = charLit x
+--                     t = charsLit xs
+--                     in
+--                     map (h ++ t) (\pair => (case pair of
+--                                                  (a, b) => a :: b))
+
+
 charsLit: (List Char) -> Parser (List Char)
-charsLit cs = case cs of
-                   [] => \l => ParseSuccess [] l
-                   (x :: xs) =>
-                    let
-                    h = charLit x
-                    t = charsLit xs
-                    in
-                    map (h ++ t) (\pair => (case pair of
-                                                 (a, b) => a :: b))
+charsLit []  l = ParseSuccess [] l
+charsLit (x :: xs) [] = ParseFailed []
+charsLit (x :: xs) (a :: bs) =
+                  (case charLit x (a :: bs) of
+                        (ParseSuccess result1 rest) => (case (charsLit xs bs) of
+                                                             (ParseSuccess result2 rest) => ParseSuccess (result1 :: result2) rest
+                                                             (ParseFailed rest) => ParseFailed (a :: bs))
+                        (ParseFailed rest) => ParseFailed rest)
+
+
 
 S: String -> Parser String
 S s = map (charsLit (unpack s)) pack
 
 (||) : {a: Type} -> Parser a -> Parser a -> Parser a
-(||) p q = \l => (case (p l) of
+(||) p q l = (case (p l) of
                        (ParseSuccess result rest) => ParseSuccess result rest
                        (ParseFailed rest) => q rest)
 
@@ -99,10 +112,32 @@ sumVal (a, b) = foldl((+))(a)(b)
 sum: Parser Nat
 sum = map(sumExpr)(sumVal)
 
+infix 10 +>
+
+(+>) : {a : Type} -> {b: Type} -> Parser a -> Parser b -> Parser a
+(+>) p q l = (case p l of
+                       (ParseSuccess result1 rest1) => (case (q rest1) of
+                                                           (ParseSuccess result2 rest2) => ParseSuccess result1 rest2
+                                                           (ParseFailed rest2) => ParseFailed l)
+                       (ParseFailed rest) => ParseFailed rest)
+
+infix 11 <+
+
+(<+) : {a : Type} -> {b: Type} -> Parser a -> Parser b -> Parser b
+(<+) p q l = (case p l of
+                      (ParseSuccess result1 rest1) => (case (q rest1) of
+                                                          (ParseSuccess result2 rest2) => ParseSuccess result2 rest2
+                                                          (ParseFailed rest2) => ParseFailed l)
+                      (ParseFailed rest) => ParseFailed rest)
+
+
 natHead: Parser Nat
-natHead = map(nat ++ S(","))(\pr => (case pr of
-                                          (a, b) => a))
+natHead = nat +> S(",")
 
 natList: Parser (List Nat)
 natList =  map((natHead)++natList)(\pair => (case pair of
                                                         (x, ys) => x :: ys)) || map(nat)(\n => n ::[])
+
+repSep: {a: Type} -> Parser a -> Char -> Parser (List a)
+repSep p c = map((p +> (charLit c)) ++ (repSep p c))(\pair => (case pair of
+                                                        (x, ys) => x :: ys)) || map(p)(\n => n ::[])
