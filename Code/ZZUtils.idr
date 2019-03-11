@@ -1,373 +1,159 @@
-module ZZUtils
+module TwoVarDiophEq
 import ZZ
-import NatUtils
+import ZZUtils
+import Divisors
+import GCDZZ
+import decDivZ
 %access public export
 %default total
 
-data IsNonNegative : ZZ->Type where
- NonNegative :(IsNonNegative (Pos k))
+|||Any integer is a solution for c=xa+yb when a=b=c=0
+zeroLinCombZeroZero:a=0->b=0->c=0->{x:ZZ}->{y:ZZ}->c=x*a+y*b
+zeroLinCombZeroZero az bz cz {x} {y} = rewrite az in
+                                       rewrite bz in
+                                       rewrite cz in
+                                       rewrite multZeroRightZeroZ x in
+                                       rewrite multZeroRightZeroZ y in
+                                       Refl
+
+|||If a=b=0 and c is not zero, it is impossible that c = xa +yb
+notZeroNotLinCombZeroZero:a=0->b=0->NotZero c ->
+   {x:ZZ}->{y:ZZ}->c=x*a+y*b->Void
+notZeroNotLinCombZeroZero aZ bZ cnotz {x}{y} =
+  rewrite aZ in
+  rewrite bZ in
+  rewrite multZeroRightZeroZ x in
+  rewrite multZeroRightZeroZ y in
+  (notZeroNonZero cnotz)
 
 
-data NotBothZeroZ :ZZ->ZZ->Type where
-  LeftPositive :NotBothZeroZ (Pos (S k)) m
-  LeftNegative :NotBothZeroZ (NegS k) m
-  RightPositive :NotBothZeroZ m (Pos (S k))
-  RightNegative :NotBothZeroZ m (NegS k)
+|||Proves that if d = gcd (a,b) and c= xa +yb , then d|c
+gcdDivLinComb:GCDZ a b d->c=x*a+y*b -> IsDivisibleZ c d
+gcdDivLinComb (dPos,dcommonfactab,fd) prf =
+  linCombDivLeftWithProof prf dcommonfactab
 
-data NotZero:ZZ->Type where
-  PositiveZ:NotZero (Pos (S k))
-  NegativeZ:NotZero (NegS k)
+|||Proves that if d = gcd (a,b) and d|c, then there exists integers x and y
+|||such that c = xa +yb
+multipleOfGcdLinComb:GCDZ a b d -> IsDivisibleZ c d ->
+    (x:ZZ**y:ZZ** (c = x*a + y*b))
+multipleOfGcdLinComb{a} {d}{b} gcdpf (n**eqpf) =
+  (case checkNotBothZero a b of
+        (Left (aZ, bZ)) => void (gcdZeroZeroContra (gcdzReplace aZ bZ gcdpf))
+        (Right r) =>
+          (case gcdIsLinComb gcdpf of
+                (j**l**gcdlc) => ((n*j)**(n*l)**
+                    (rewrite sym $multAssociativeZ n j a in
+                     rewrite sym $multAssociativeZ n l b in
+                     rewrite sym $ multDistributesOverPlusRightZ n (j*a) (l*b) in
+                     rewrite eqpf in
+                     rewrite multCommutativeZ d n in
+                     cong gcdlc) )))
 
-data IsNegative:ZZ->Type where
-  Negative: IsNegative (NegS k)
+|||Extracts a/gcd(a,b) from the definition of GCDZ
+aByd:GCDZ a b d ->ZZ
+aByd dGcdab = (fst (fst (fst (snd dGcdab))))
+|||Extracts b/gcd(a,b) from the definition of GCDZ
+bByd:GCDZ a b d ->ZZ
+bByd dGcdab = (fst (snd (fst (snd dGcdab))))
 
-|||Zero is not positive
-zeroNotPos:IsPositive (Pos Z)->Void
-zeroNotPos Positive impossible
+|||Proves that (b/gcd(a,b))*a = (a/gcd(a,b))*b
+divByGcdMultByOtherIsSame:(gcdpf:GCDZ a b d) ->(bByd gcdpf)*a =(aByd gcdpf)*b
+divByGcdMultByOtherIsSame {a}{b}{d} (dPos, ((abyd**apf),(bbyd**bpf)),fd) =
+  multLeftCancelZ d (bbyd*a) (abyd *b) (posThenNotZero dPos)
+    (rewrite multAssociativeZ d bbyd a in
+     rewrite multAssociativeZ d abyd b in
+     rewrite  sym $ bpf in
+     rewrite sym $ apf in
+     rewrite multCommutativeZ b a in
+     Refl)
 
-|||Proof that NotBothZeroZ 0 0 is uninhabited
-zeroZeroBothZero:NotBothZeroZ (Pos Z) (Pos Z) ->Void
-zeroZeroBothZero LeftPositive impossible
-zeroZeroBothZero LeftNegative impossible
-zeroZeroBothZero RightPositive impossible
-zeroZeroBothZero RightNegative impossible
-
-|||Decides whther two numbers are not both zero or not.
-decNotBothZero : (a:ZZ)->(b:ZZ)->Dec (NotBothZeroZ a b)
-decNotBothZero (Pos Z) (Pos Z) = No ( zeroZeroBothZero)
-decNotBothZero (Pos Z) (Pos (S k)) = Yes RightPositive
-decNotBothZero (Pos Z) (NegS k) = Yes RightNegative
-decNotBothZero (Pos (S k)) b = Yes LeftPositive
-decNotBothZero (NegS k) b = Yes LeftNegative
-
-|||Checks 2 numbers and produces a proof of either (a=0,b=0) or (NotBothZeroZ a b)
-checkNotBothZero : (a:ZZ)->(b:ZZ)->Either ((a=0),(b=0)) (NotBothZeroZ a b)
-checkNotBothZero (Pos Z) (Pos Z) = Left (Refl, Refl)
-checkNotBothZero (Pos Z) (Pos (S k)) = Right RightPositive
-checkNotBothZero (Pos Z) (NegS k) = Right RightNegative
-checkNotBothZero (Pos (S k)) b = Right LeftPositive
-checkNotBothZero (NegS k) b = Right LeftNegative
-
-|||Proof that positive numbers are not zero
-posThenNotZero:{a:ZZ}->(IsPositive a)->(NotZero a)
-posThenNotZero {a = (Pos (S k))} Positive = PositiveZ
-
-|||Negative numbers are not zero
-NegSThenNotZero:{a:ZZ}->(IsNegative a)->(NotZero a)
-NegSThenNotZero {a = (NegS k)} ZZUtils.Negative = NegativeZ
-|||negative of a negative number is positive
-negateNegativePos:(IsNegative c) ->IsPositive (-c)
-negateNegativePos {c = (NegS k)} Negative = Positive
-|||negative of a positive number is negative
-negatePosIsNeg: IsPositive q ->IsNegative (-q)
-negatePosIsNeg {q = (Pos (S k))} Positive =Negative
-
-
-|||If c and d are negative and c = d*q, then q is positive
-negDivByNegIsPos:{c:ZZ}->{d:ZZ}->{q:ZZ}->(IsNegative c)->
-      (IsNegative d)->(c=(d*q))->(IsPositive q)
-negDivByNegIsPos {c = (NegS k)}{d = (NegS j)}{q = q}
-    Negative Negative prf = posDivByPosIsPos {c=(-(NegS k))}{d=(-(NegS j))}
-        Positive Positive (rewrite multNegateLeftZ (NegS j) q in (numbersSameNegativesSame prf))
-|||If c is negative, d is positive and c = d*q, then q is negative
-negDivByPosIsNeg:{c:ZZ}->{d:ZZ}->{q:ZZ}->(IsNegative c)->
-      (IsPositive d)->(c=(d*q))->(IsNegative q)
-negDivByPosIsNeg {c}{d}{q} cNeg dPos prf =
-  (case (posDivByPosIsPos {c =(-c)} {d=d} {q=-q}
-         (negateNegativePos cNeg) dPos
-            (rewrite  multNegateRightZ d q in
-             numbersSameNegativesSame prf)) of
-               negqpos => (rewrite sym $ doubleNegElim q in
-                               negatePosIsNeg negqpos))
-|||Rewrites a=b as a=1*b
-rewriteRightAsOneTimesRight: {a:ZZ}->{b:ZZ}->(a=b)->(a=(1*b))
-rewriteRightAsOneTimesRight {a}{b}prf = rewrite ( (multOneLeftNeutralZ b)) in prf
-|||Rewrites a=b as 1*a=b
-rewriteLeftAsOneTimesLeft: {a:ZZ}->{b:ZZ}->(a=b)->(1*a=b)
-rewriteLeftAsOneTimesLeft {a}{b}prf = rewrite ( (multOneLeftNeutralZ a)) in prf
-|||Rewrites 1*a = b as a=b
-rewriteOneTimesLeftAsLeft:{a:ZZ}->{b:ZZ}->((1*a) = b)->(a=b)
-rewriteOneTimesLeftAsLeft {a}{b}prf  =
-  rewrite ( sym $(multOneLeftNeutralZ a)) in prf
-|||Rewrites   (a*1)=b as a=b
-rewriteLeftTimesOneAsLeft : {a:ZZ}->{b:ZZ}->((a*1)=b)->(a=b)
-rewriteLeftTimesOneAsLeft {a}{b}prf =
-  rewrite ( sym $(multOneRightNeutralZ a)) in prf
-
-|||Proof that negative integers are not non negative
-negsAreNotNonNegs:(IsNonNegative (NegS k))->Void
-negsAreNotNonNegs NonNegative impossible
-|||A function that checks whether an integer is non negative and returns a
-|||proof or a contradiction
-decideIsNonNeg:(a: ZZ) -> Dec (IsNonNegative   a)
-decideIsNonNeg (Pos k) = Yes NonNegative
-decideIsNonNeg (NegS k) = No (negsAreNotNonNegs)
-|||Proof that natural numbers are non negative
-naturalsNonNegative: (x:Nat)->IsNonNegative (Pos x)
-naturalsNonNegative x = NonNegative
-
-|||The less than type for ZZ
-LTZ :ZZ->ZZ->Type
-LTZ a b = LTEZ (1+a) b
-
-|||Theorem that if a and b are natural numbers and a<b
-|||then, (Pos a) <(Pos b)
-ltNatToZZ:{a:Nat}->{b:Nat}->(LT a b)->(LTZ (Pos a) (Pos b))
-ltNatToZZ (LTESucc x) = PositiveLTE (LTESucc x)
-|||Proves that a<= a for any integer a
-lteReflZ:{a:ZZ}->LTEZ a a
-lteReflZ {a =(Pos k)} = PositiveLTE (lteRefl {n=k})
-lteReflZ {a= (NegS k)} = NegativeLte (lteRefl {n=k})
-|||Proof that a number is less than its successor
-numLtSucc:(a:ZZ)->LTZ a (1+a)
-numLtSucc a = lteReflZ
-|||Proof that one is not less than zero
-oneNotLTEZero:(LTEZ (Pos (S Z)) (Pos Z))->Void
-oneNotLTEZero (PositiveLTE LTEZero) impossible
-oneNotLTEZero (PositiveLTE (LTESucc _)) impossible
-|||Proof that a number greater than or equal to 1 is positive
-gteOnePositive:(a:ZZ)->(LTEZ 1 a)->(IsPositive a)
-gteOnePositive (Pos Z) (PositiveLTE LTEZero) impossible
-gteOnePositive (Pos Z) (PositiveLTE (LTESucc _)) impossible
-gteOnePositive (Pos (S k)) x = Positive
-gteOnePositive (NegS _) (PositiveLTE _) impossible
-gteOnePositive (NegS _) NegLessPositive impossible
-gteOnePositive (NegS _) (NegativeLte _) impossible
-
-|||Proof that it is impossible that (1+a)<=a
-succNotLteNumZ:(a:ZZ)->(LTEZ (1+a) a) ->Void
-succNotLteNumZ (Pos k)  y =
-  impliesContrapositive (LTEZ (Pos (S k)) (Pos k)) (LTE (S k) k)
-    LTEZZtoNat  (succNotLTEnum k) y
-succNotLteNumZ (NegS Z)  (PositiveLTE _)  impossible
-succNotLteNumZ (NegS Z)  NegLessPositive  impossible
-succNotLteNumZ (NegS Z)  (NegativeLte _)  impossible
-succNotLteNumZ (NegS (S k))  y  =
-  impliesContrapositive (LTEZ (NegS k) (NegS (S k))) (LTE (S k) k)
-     LTEZZtoNatNeg (succNotLTEnum k) y
-
-|||Multiplying positive numbers gives a positive number.
-posMultPosIsPos: (IsPositive m)->(IsPositive d)->(IsPositive (m*d))
-posMultPosIsPos{m = (Pos (S k))}{d = (Pos (S j))} Positive Positive = Positive
-|||The theorem that (-a)*(-b)=a*b
-negateMultNegateNeutralZ: {a:ZZ}->{b:ZZ}->((-a)*(-b)=a*b)
-negateMultNegateNeutralZ{a}{b} =
-  rewrite (multNegateRightZ (-a) b) in
-  rewrite (multNegateLeftZ a b ) in
-  rewrite (doubleNegElim (a*b)) in Refl
-|||Proof that zero times an integer is not positive
-posIsNotZeroTimesInteger:((Pos (S k))=(Pos Z)*a)->Void
-posIsNotZeroTimesInteger{a = (Pos _)} Refl impossible
-posIsNotZeroTimesInteger{a = (NegS _)} Refl impossible
-|||Proof that Zero times an integer is not negative
-negSIsNotZeroTimesInteger :((NegS k)=(Pos Z)*a)->Void
-negSIsNotZeroTimesInteger {a = (Pos _)} Refl impossible
-negSIsNotZeroTimesInteger {a = (NegS _)} Refl impossible
-|||Converts a nonNegative integer into the corresponding Natural number
-nonNegIntegerToNat:(a:ZZ)->(IsNonNegative a)->Nat
-nonNegIntegerToNat (Pos k) NonNegative = k
-|||Proof that a positive number is not zero times a negative number
-zeroTimesNegIsNotPos:(Pos (S k)) = (Pos Z)*(NegS j)->Void
-zeroTimesNegIsNotPos Refl impossible
-|||Proof that a positive number is not a negative number times zero
-negTimesZeroIsNotPos :(Pos (S k)) = (NegS j)*(Pos Z)->Void
-negTimesZeroIsNotPos {k}{j}prf =
-  zeroTimesNegIsNotPos{k=k}{j=j}
-     (rewrite (sym(multCommutativeZ (NegS j) (Pos Z))) in prf)
-
-|||Lemma that (c*d)*n = (c*n)*d
-multCommuAndAssocZ1: {c:ZZ}->{d:ZZ}->{n:ZZ}->(c*d)*n = (c*n)*d
-multCommuAndAssocZ1 {c}{d}{n}= rewrite (sym(multAssociativeZ c n d)) in
-                           rewrite (multCommutativeZ n d ) in
-                           rewrite( (multAssociativeZ c d n))in
-                           Refl
-
-
-
-|||Proof that if (a*b=1) then either (a=1,b=1)  or (a=-1,b=-1)
-productOneThenNumbersOne: (a:ZZ)->(b:ZZ)->(a*b=1) ->Either (a=1,b=1) (a=(-1),b=(-1))
-productOneThenNumbersOne (Pos Z) (Pos _) Refl impossible
-productOneThenNumbersOne (Pos Z) (NegS _) Refl impossible
-productOneThenNumbersOne (Pos (S Z)) (Pos Z) prf = void (posIsNotPosMultZero {k=Z} (sym prf))
-productOneThenNumbersOne (Pos (S Z)) (Pos (S Z)) prf = Left (Refl, Refl)
-productOneThenNumbersOne (Pos (S Z)) (Pos (S (S _))) Refl impossible
-productOneThenNumbersOne (Pos (S Z)) (NegS _) Refl impossible
-productOneThenNumbersOne (Pos (S (S k))) (Pos Z) prf = void (posIsNotPosMultZero  (sym prf))
-productOneThenNumbersOne (Pos (S (S _))) (Pos (S Z)) Refl impossible
-productOneThenNumbersOne (Pos (S (S _))) (Pos (S (S _))) Refl impossible
-productOneThenNumbersOne (Pos (S (S _))) (NegS _) Refl impossible
-productOneThenNumbersOne (NegS Z) (Pos Z) Refl impossible
-productOneThenNumbersOne (NegS Z) (Pos (S _)) Refl impossible
-productOneThenNumbersOne (NegS Z) (NegS Z) prf = Right (Refl,Refl)
-productOneThenNumbersOne (NegS Z) (NegS (S _)) Refl impossible
-productOneThenNumbersOne (NegS (S k)) (Pos Z) prf = void (negTimesZeroIsNotPos{k=Z} (sym prf))
-productOneThenNumbersOne (NegS (S _)) (Pos (S _)) Refl impossible
-productOneThenNumbersOne (NegS (S _)) (NegS Z) Refl impossible
-productOneThenNumbersOne (NegS (S _)) (NegS (S _)) Refl impossible
-
-|||Right cancellation law for addition
-|||Proves that a+r=b+r implies a = b
-plusRightCancelZ:(left1:ZZ)->(left2:ZZ)->(right:ZZ)->
-   (left1+right=left2+right)->(left1 = left2)
-plusRightCancelZ left1 left2 right prf =
-  rewrite sym $plusZeroRightNeutralZ left1 in
-  rewrite sym $plusZeroRightNeutralZ left2 in
-  rewrite sym $plusNegateInverseRZ right in
-  rewrite plusAssociativeZ left1 (-right) right in
-  rewrite plusAssociativeZ left2 (-right) right in
-  rewrite plusCommutativeZ left1 (-right) in
-  rewrite plusCommutativeZ left2 (-right) in
-  rewrite sym $ plusAssociativeZ (-right) left1 right in
-  rewrite sym $ plusAssociativeZ (-right) left2 right in
-  cong prf
-
-|||Left cancellation law for addition
-|||Proves that l+a=l+b implies a =b
-plusLeftCancelZ:(left : ZZ) -> (right1 : ZZ) -> (right2 : ZZ) ->
-   (left+right1 = left+right2) -> (right1 = right2)
-plusLeftCancelZ left right1 right2 prf =
-  plusRightCancelZ right1 right2 left (rewrite plusCommutativeZ right1 left in
-                                       rewrite plusCommutativeZ right2 left in
-                                       prf)
-
-|||Right cancellation law for multiplication when right is positive
-multRightCancelPosZ:(left1:ZZ)->(left2:ZZ)->(right:ZZ)->
-   IsPositive right->(left1*right=left2*right)->(left1 = left2)
-multRightCancelPosZ (Pos j) (Pos i) (Pos (S k)) Positive prf =
- cong (multRightCancel j i (S k) SIsNotZ expression) where
-   expression = posInjective prf
-multRightCancelPosZ (Pos _) (NegS _) (Pos (S _)) Positive Refl impossible
-multRightCancelPosZ (NegS _) (Pos _) (Pos (S _)) Positive Refl impossible
-multRightCancelPosZ (NegS j) (NegS i) (Pos (S k)) Positive prf =
-  cong (succInjective j i (multRightCancel (S j) (S i) (S k) SIsNotZ expression)) where
-    expression = posInjective (negativesSameNumbersSame prf)
-
-
-|||Right cancellation law for multiplication given a proof that right is not zero
-multRightCancelZ:(left1:ZZ)->(left2:ZZ)->(right:ZZ)->
-   NotZero right->(left1*right=left2*right)->(left1 = left2)
-multRightCancelZ left1 left2 (Pos (S k)) PositiveZ prf =
-  multRightCancelPosZ left1 left2 (Pos (S k)) Positive prf
-multRightCancelZ left1 left2 (NegS k) NegativeZ prf =
-  multRightCancelPosZ left1 left2 (-(NegS k)) Positive expression where
-    expression = rewrite (multNegateRightZ left1 (NegS k)) in
-                 rewrite (multNegateRightZ left2 (NegS k)) in
-                  (numbersSameNegativesSame prf)
-|||Left Cancellation law for multiplication given a proof that left is not zero
-multLeftCancelZ :(left : ZZ) -> (right1 : ZZ) -> (right2 : ZZ) ->
-  NotZero left -> (left*right1 = left*right2) -> (right1 = right2)
-multLeftCancelZ left right1 right2 x prf =
-  multRightCancelZ right1 right2 left x expression where
-    expression = rewrite (multCommutativeZ right1 left) in
-                 rewrite (multCommutativeZ right2 left) in
-                  prf
-
-|||Proof that (-a)*(-b) = a*b
-multNegNegNeutralZ: (a:ZZ)->(b:ZZ)->(-a)*(-b)=a*b
-multNegNegNeutralZ a b =
-  rewrite multNegateRightZ (-a) b in
-  rewrite multNegateLeftZ a b in
-  rewrite doubleNegElim (a*b) in
+|||Proves that for any integer k, k*(-b/(gcd(a,b))) and  k*(a/(gcd(a,b)))
+|||are solutions of 0 = xa + yb
+homoSolution:(gcdpf:GCDZ a b d)->(k:ZZ)->
+   (0 = (k*(-(bByd gcdpf)))*a + (k*((aByd gcdpf)))*b)
+homoSolution {a}{b}{d} (dPos, ((abyd**apf),(bbyd**bpf)),fd) k =
+  rewrite sym $ multAssociativeZ k (-bbyd) a in
+  rewrite sym $ multAssociativeZ k (abyd) b in
+  rewrite sym $ multDistributesOverPlusRightZ k ((-bbyd)*a) ((abyd)*b) in
+  rewrite multNegateLeftZ bbyd a in
+  rewrite divByGcdMultByOtherIsSame (dPos, ((abyd**apf),(bbyd**bpf)),fd) in
+  rewrite plusNegateInverseRZ (abyd*b) in
+  rewrite multZeroRightZeroZ k in
   Refl
 
-|||The theorem that if  a =r+q*b and g = (m1*b)+(n1*rem)
-|||Then g = (n1*a) + ((m1+n1*(-quot))*b)
-bezoutReplace:{a:ZZ}->{b:ZZ}->{m1:ZZ}->{rem:ZZ}->
-  {quot:ZZ}->{n1:ZZ}->{g:ZZ}-> (a = rem + (quot *b))->
-     (g=(m1*b)+(n1*rem))->(g = (n1*a) + ((m1+n1*(-quot))*b))
-bezoutReplace {a}{b}{m1}{rem}{quot}{n1}{g}prf prf1 =
-  rewrite multDistributesOverPlusLeftZ m1 (n1*(-quot)) b in
-  rewrite prf in
-  rewrite multDistributesOverPlusRightZ n1 rem (quot*b) in
-  rewrite (sym (plusAssociativeZ (n1*rem) (n1*((quot)*b)) ((m1*b)+((n1*(-quot))*b)))) in
-  rewrite (plusCommutativeZ (m1*b) ((n1*(-quot))*b)) in
-  rewrite (plusAssociativeZ (n1*((quot)*b)) ((n1*(-quot))*b) (m1*b)) in
-  rewrite (multAssociativeZ n1 quot b) in
-  rewrite (sym (multDistributesOverPlusLeftZ (n1*quot) (n1*(-quot)) b)) in
-  rewrite (sym(multDistributesOverPlusRightZ n1 quot (-quot))) in
-  rewrite (plusNegateInverseLZ quot) in
-  rewrite (multZeroRightZeroZ n1) in
-  rewrite (multZeroLeftZeroZ b) in
-  rewrite (plusZeroLeftNeutralZ (m1*b)) in
-  rewrite (plusCommutativeZ (n1*rem) (m1*b)) in
-   prf1
+|||Proves that if 0 = xa +yb, then (-b/gcd(a,b)))*y = (a/(gcd(a,b)))*x
+divHomoEqByGcd:(gcdpf:GCDZ a b d)->(0 = x*a + y*b)->((-(bByd gcdpf))*y = (aByd gcdpf)*x)
+divHomoEqByGcd {x}{y}{a}{b}{d}(dPos, ((abyd**apf),(bbyd**bpf)),fd) prf =
+  rewrite sym $plusZeroLeftNeutralZ ((-bbyd)*y) in
+  rewrite multNegateLeftZ bbyd y in
+  subOnBothSides 0 (abyd*x) ((bbyd)*y)
+    (multLeftCancelZ d 0 ((abyd*x)+(bbyd*y)) (posThenNotZero dPos)
+     (rewrite multZeroRightZeroZ d in
+      rewrite multDistributesOverPlusRightZ d (abyd*x) (bbyd*y) in
+      rewrite multAssociativeZ d abyd x in
+      rewrite multAssociativeZ d bbyd y in
+      rewrite sym $ apf in
+      rewrite sym $ bpf in
+      rewrite multCommutativeZ a x in
+      rewrite multCommutativeZ b y in
+      prf))
 
+|||Proves that if  0 = xa + yb then there exists an integer k such that
+||| y = k* (a/(gcd(a,b)))
+homoOnlySolnForY:(gcdpf:GCDZ a b d)->(0 = x*a + y*b) ->
+   (k:ZZ**(y = k * (aByd gcdpf)))
+homoOnlySolnForY{a}{b}{d}{x}{y} (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf  =
+  (case divHomoEqByGcd (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf  of
+    eqpf  =>
+     (case caCoprimeThencDivb (x**eqpf) (negatingPreservesGcdLeft1
+         (gcdSymZ (divideByGcdThenGcdOne (dPos, ((abyd**apf),(bbyd**bpf)),fd)))) of
+           (quot**divpf) => (quot** (rewrite multCommutativeZ quot abyd in divpf))))
 
-zeroNotNonZero: (NotZero (Pos Z)) -> Void
-zeroNotNonZero PositiveZ impossible
-zeroNotNonZero NegativeZ impossible
+|||Proves that if a is not zero then a/(gcd(a,b)) is not zero
+divByGcdNotZero:(gcdpf:(GCDZ a b d))->NotZero a ->NotZero (aByd gcdpf)
+divByGcdNotZero {a = (Pos (S k))}{b = b}{d = d} (dPos, ((abyd**apf),(bbyd**bpf)),fd)
+    PositiveZ = posThenNotZero (posDivByPosIsPos{c=(Pos (S k))} Positive dPos apf)
+divByGcdNotZero {a = (NegS k)}{b = b}{d = d} (dPos, ((abyd**apf),(bbyd**bpf)),fd)
+NegativeZ = NegSThenNotZero (negDivByPosIsNeg Negative dPos apf)
 
-decZero: (a: ZZ) -> Dec (NotZero a)
-decZero (Pos Z) = No zeroNotNonZero
-decZero (Pos (S k)) = Yes (posThenNotZero Positive)
-decZero (NegS k) = Yes (NegSThenNotZero Negative)
+|||Proves that if a is not zero and 0 =xa + yb, then there exists an integer k such that
+||| x = k* (-b/(gcd(a,b))) and y = k* (a/(gcd(a,b)))
+homoOnlySoln:(gcdpf:GCDZ a b d)->(0 = x*a + y*b) ->NotZero a->
+   (k:ZZ**((x = k * (-(bByd gcdpf))),(y = k * (aByd gcdpf))))
+homoOnlySoln {a}{b}{d}{x}{y} (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf anotz =
+   (case divHomoEqByGcd (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf of
+        divgpf =>
+          (case homoOnlySolnForY (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf of
+            (k**adivy) => (k**((multLeftCancelZ abyd x (k*(-bbyd))
+              (divByGcdNotZero (dPos, ((abyd**apf),(bbyd**bpf)),fd) anotz)
+                (rewrite multAssociativeZ abyd k (-bbyd) in
+                 rewrite multCommutativeZ abyd k in
+                 rewrite sym $ adivy in
+                 rewrite multCommutativeZ y (-bbyd) in
+                 sym $ divgpf)),adivy))))
 
-nonZeroNotZero: (a: ZZ) -> ( (a = (Pos Z) ) -> Void) -> (NotZero a)
-nonZeroNotZero (Pos Z) f = void (f Refl)
-nonZeroNotZero (Pos (S k)) f = PositiveZ
-nonZeroNotZero (NegS k) f = NegativeZ
-
-ZZSisNotZ: (k: Nat) -> ((Pos (S k))= (Pos Z)) -> Void
-ZZSisNotZ _ Refl impossible
-
-ZZNegisNotZ: (k: Nat) -> ((NegS k) = Pos Z) -> Void
-ZZNegisNotZ _ Refl impossible
-
-negZeroZero: (a: ZZ) -> (a = (Pos Z)) -> (negate a = (Pos Z))
-negZeroZero (Pos Z) Refl = Refl
-negZeroZero (Pos (S k)) prf = void ((ZZSisNotZ k) prf)
-negZeroZero (NegS k) prf = void ((ZZNegisNotZ k) prf)
-
-negNegSIsPos: (a: ZZ) -> (a = (NegS k)) -> (-a = (Pos (S k)))
-negNegSIsPos (Pos k) Refl impossible
-negNegSIsPos (NegS k) Refl = Refl
-
-negPosIsNeg: (a: ZZ) -> (a = (Pos (S k))) -> (-a = (NegS k))
-negPosIsNeg (Pos Z) Refl impossible
-negPosIsNeg (Pos (S k)) Refl = Refl
-negPosIsNeg (NegS k) Refl impossible
-
-|||The theorem (a=(b*c)) => ((-a)=((-b)*c)))
-multNegateLeftIsNegateZ:(a:ZZ)->(b:ZZ)->(c:ZZ)->(a=(b*c))->((-a)=(-b)*c)
-multNegateLeftIsNegateZ a b c prf = (rewrite (multNegateLeftZ b c) in ( numbersSameNegativesSame prf))
-
-quotproof1: {a: ZZ} -> {b: ZZ} -> {quot: ZZ} -> (a=quot*b) -> (-a = (-quot)*b)
-quotproof1 {a} {b} {quot} prf = (multNegateLeftIsNegateZ a quot b prf)
-
-quotproof2: {a: ZZ} -> {b: ZZ} -> {quot: ZZ} -> (a=quot*b) -> (a = (-quot)*(-b))
-quotproof2 {a} {b} {quot} prf = trans (prf) (sym (multNegNegNeutralZ (quot) (b)))
-
-quotproof3: {a: ZZ} -> {b: ZZ} -> {quot: ZZ} -> (a=quot*b) -> (-a = (quot)*(-b))
-quotproof3 {a} {b} {quot} prf = (multNegateRightIsNegateZ a quot b prf)
-
-QRproof1: (a:ZZ) -> (b: ZZ) -> (a = (Pos (S k))) -> (b= (Pos (S j))) -> (quot: ZZ ** a = (quot)*b) -> (nquot: ZZ ** -a=(nquot)*b)
-QRproof1 (Pos Z) b Refl Refl x impossible
-QRproof1 (Pos (S k)) (Pos Z) Refl Refl x impossible
-QRproof1 (Pos (S k)) (Pos (S j)) Refl Refl (quot ** pf) = ((-quot) ** quotproof1(pf))
-QRproof1 (Pos (S k)) (NegS j) Refl Refl x impossible
-QRproof1 (NegS k) b Refl Refl x impossible
-
-QRproof3: (a:ZZ) -> (b: ZZ) -> (a = (Pos (S k))) -> (b= (Pos (S j))) -> (quot: ZZ ** a = (quot)*b) -> (nquot: ZZ ** a=(nquot)*(-b))
-QRproof3 (Pos Z) b Refl Refl x impossible
-QRproof3 (Pos (S k)) (Pos Z) Refl Refl x impossible
-QRproof3 (Pos (S k)) (Pos (S j)) Refl Refl (quot ** pf) = ((-quot) ** quotproof2(pf))
-QRproof3 (Pos (S k)) (NegS j) Refl Refl x impossible
-QRproof3 (NegS k) b Refl Refl x impossible
-
-QRproof4: (a:ZZ) -> (b: ZZ) -> (a = (Pos (S k))) -> (b= (Pos (S j))) -> (quot: ZZ ** a = (quot)*b) -> (quot: ZZ ** (-a)=(quot)*(-b))
-QRproof4 (Pos Z) b Refl Refl x impossible
-QRproof4 (Pos (S k)) (Pos Z) Refl Refl x impossible
-QRproof4 (Pos (S k)) (Pos (S j)) Refl Refl (quot ** pf) = (quot ** quotproof3(pf))
-QRproof4 (Pos (S k)) (NegS j) Refl Refl x impossible
-QRproof4 (NegS k) b Refl Refl x impossible
-
-
-succIsPlusOneRight:{n:Nat}->(Pos (S n)) = (Pos n) +1
-succIsPlusOneRight {n} = rewrite plusCommutativeZ (Pos n) 1 in
-                       Refl
-succIsPlusOneLeft :{n:Nat}->(Pos (S n)) =1+ (Pos n)
-succIsPlusOneLeft = Refl
-
-subSuccSuccNeutrtalZ: ((Pos k)=(Pos n)+(-(Pos m)))->((Pos k)=(Pos (S n))+(-(Pos (S m))))
-subSuccSuccNeutrtalZ {n = n}{m = Z}{k = k} prf = rewrite sym $ plusZeroRightNeutralZ (Pos n) in prf
-subSuccSuccNeutrtalZ {n = n}{m = (S j)}{k = k} prf = prf
+|||Given three integers a, b and c, it outputs either
+|||a proof that c = xa +yb is impossible or
+|||a proof that all integers x and y satisfy the equation (this happens when a=b=c=0)
+|||or 4 integers x1 , y1 , pa and pb such that for any integer k,
+|||x=x1+k*pa  y=y1+k*pb is a solution of c=xa+yb
+|||and whenever c=xa+yb ,there exists an integer, k such that
+||| x=x1+k*pa  y=y1+k*pb
+findAllSolutions: (a:ZZ)->(b:ZZ)->(c:ZZ)->
+  Either ({x:ZZ}->{y:ZZ}->c=x*a+y*b->Void)
+  (Either ({x:ZZ}->{y:ZZ}->c=x*a+y*b)
+    (x1:ZZ**y1:ZZ**pa:ZZ**pb:ZZ**(({k:ZZ}->(x=x1+k*pa)->(y=y1+k*pb)->(c=x*a+y*b)),
+      ((c=x*a+y*b)->(k**((x=x1+k*pa),(y=y1+k*pb)))))))
+findAllSolutions a b c =
+  (case checkNotBothZero a b of
+        (Left (aZ,bZ)) =>
+           (case decZero c of
+                 (Yes cnotz) => Left (notZeroNotLinCombZeroZero aZ bZ cnotz)
+                 (No ciszero) => Right (Left (zeroLinCombZeroZero aZ bZ
+                    (notNotZeroThenZero ciszero))))
+        (Right abnotZ) =>
+          (case gcdZZ a b abnotZ of
+            (g**gcdpf) =>
+             (case decDivisibleZ c g of
+                   (Yes prf) => ?findAllSolutions_rhs_1
+                   (No contra) => Left (contra . (gcdDivLinComb gcdpf) ))))
