@@ -59,5 +59,5 @@ mutual
   blockValue ((Expression n) :: xs) = Just n
   blockValue ((Definition var value) :: xs) = Nothing
 
-  interpret : Parser (Maybe Nat)
-  interpret = map(block)(blockValue)
+  interpret : String -> ParseResult (Maybe Nat)
+  interpret s = parse(map(block)(blockValue)) s
