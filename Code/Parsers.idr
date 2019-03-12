@@ -37,17 +37,6 @@ map p f cs = (case (p cs) of
                                                            (ParseFailed rest2) => ParseFailed l)
                        (ParseFailed rest) => ParseFailed rest)
 
--- charsLit: (List Char) -> Parser (List Char)
--- charsLit cs  l = case cs of
---                    [] =>  ParseSuccess [] l
---                    (x :: xs) =>
---                     let
---                     h = charLit x
---                     t = charsLit xs
---                     in
---                     map (h ++ t) (\pair => (case pair of
---                                                  (a, b) => a :: b))
-
 
 charsLit: (List Char) -> Parser (List Char)
 charsLit []  l = ParseSuccess [] l
@@ -100,19 +89,6 @@ nat = map (rep1 (charPred isDigit)) (natFromChars)
 eof : Parser Unit
 eof [] = ParseSuccess () []
 eof (x :: xs) = ParseFailed (x :: xs)
-
-plusNat : Parser Nat
-plusNat = map ((S "+") ++ nat)(\pair => (case pair of
-                                              (a, b) => b))
-
-sumExpr: Parser ((Nat, List Nat))
-sumExpr = nat ++ (rep plusNat)
-
-sumVal: (Nat, List Nat) -> Nat
-sumVal (a, b) = foldl((+))(a)(b)
-
-sum: Parser Nat
-sum = map(sumExpr)(sumVal)
 
 infix 10 +>
 
