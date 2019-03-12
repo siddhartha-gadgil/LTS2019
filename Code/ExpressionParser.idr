@@ -40,7 +40,7 @@ mutual
                                          (name, value) => Definition name value))
 
   stat : Block -> Parser Statement
-  stat bl = ((defn bl) || (expr bl)) +> (SS ";")
+  stat bl = ((defn bl) || (expr bl)) +> ((SS ";") || map(eof)(\u => ";"))
 
   emptyBlock : Block -> Parser Block
   emptyBlock bl = map(rep(SS " ") <+ eof)(\u => bl)
@@ -51,13 +51,17 @@ mutual
     flatMapWithNext(stat bl)(
       \s => blockRec (s :: bl))
 
-  block: Parser Block
-  block = blockRec []
+block: Parser Block
+block = blockRec []
 
-  blockValue: Block -> Maybe Nat
-  blockValue [] = Nothing
-  blockValue ((Expression n) :: xs) = Just n
-  blockValue ((Definition var value) :: xs) = Nothing
+blockValue: Block -> Maybe Nat
+blockValue [] = Nothing
+blockValue ((Expression n) :: xs) = Just n
+blockValue ((Definition var value) :: xs) = Nothing
 
-  interpret : String -> ParseResult (Maybe Nat)
-  interpret s = parse(map(block)(blockValue)) s
+interpret : String -> ParseResult (Maybe Nat)
+interpret s = parse(map(block)(blockValue)) s
+
+
+eg: ParseResult (Maybe Nat)
+eg = interpret "let a = (1 + 2 * (3 + 1)); let b = a + 3 ; a * (b + 1)"
