@@ -141,3 +141,13 @@ natList =  map((natHead)++natList)(\pair => (case pair of
 repSep: {a: Type} -> Parser a -> Char -> Parser (List a)
 repSep p c = map((p +> (charLit c)) ++ (repSep p c))(\pair => (case pair of
                                                         (x, ys) => x :: ys)) || map(p)(\n => n ::[])
+
+mutual
+  simpleTerm : Parser Nat
+  simpleTerm = nat || ( (S "(") <+ expression +> (S ")") )
+
+  term : Parser Nat
+  term = map(repSep simpleTerm '*')(foldl(*)(1)) 
+
+  expression: Parser Nat
+  expression = map(repSep term '+')(foldl(+)(0))
