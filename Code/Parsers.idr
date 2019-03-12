@@ -1,5 +1,7 @@
 module Parsers
 
+%access public export
+
 data ParseResult : Type -> Type where
   ParseSuccess : {a: Type} -> (result : a) -> (rest: List Char) -> ParseResult a
   ParseFailed : {a: Type} -> (rest: List Char) -> ParseResult a
@@ -34,17 +36,6 @@ map p f cs = (case (p cs) of
                                                            (ParseSuccess result2 rest2) => ParseSuccess ((result1, result2)) rest2
                                                            (ParseFailed rest2) => ParseFailed l)
                        (ParseFailed rest) => ParseFailed rest)
-
--- charsLit: (List Char) -> Parser (List Char)
--- charsLit cs  l = case cs of
---                    [] =>  ParseSuccess [] l
---                    (x :: xs) =>
---                     let
---                     h = charLit x
---                     t = charsLit xs
---                     in
---                     map (h ++ t) (\pair => (case pair of
---                                                  (a, b) => a :: b))
 
 
 charsLit: (List Char) -> Parser (List Char)
@@ -99,19 +90,6 @@ eof : Parser Unit
 eof [] = ParseSuccess () []
 eof (x :: xs) = ParseFailed (x :: xs)
 
-plusNat : Parser Nat
-plusNat = map ((S "+") ++ nat)(\pair => (case pair of
-                                              (a, b) => b))
-
-sumExpr: Parser ((Nat, List Nat))
-sumExpr = nat ++ (rep plusNat)
-
-sumVal: (Nat, List Nat) -> Nat
-sumVal (a, b) = foldl((+))(a)(b)
-
-sum: Parser Nat
-sum = map(sumExpr)(sumVal)
-
 infix 10 +>
 
 (+>) : {a : Type} -> {b: Type} -> Parser a -> Parser b -> Parser a
@@ -144,6 +122,7 @@ repSepTrim: {a: Type} -> Parser a -> Char -> Parser (List a)
 repSepTrim p c = map((p +>  (pad(charLit c))) ++ (repSepTrim p c))(\pair => (case pair of
                                                         (x, ys) => x :: ys)) || map(p)(\n => n ::[])
 
+
 mutual
   simpleTerm : Parser Nat
   simpleTerm = nat || ( (SS "(") <+ expression +> (SS ")") )
@@ -153,3 +132,20 @@ mutual
 
   expression: Parser Nat
   expression = map(repSepTrim term '+')(foldl(+)(0))
+
+
+flatMapWithNext : {a : Type} -> {b: Type} -> Parser a -> (a -> Parser b) -> Parser b
+flatMapWithNext p f s = case p s of
+                             (ParseSuccess result rest) => (f result) rest
+                             (ParseFailed rest) => ParseFailed s
+
+mapMaybe : {a : Type} -> {b: Type} -> Parser a -> (a -> Maybe b) -> Parser b
+mapMaybe p f s = case p s of
+                      (ParseSuccess result rest) =>
+                        (case f result of
+                              Nothing => ParseFailed s
+                              (Just b) => ParseSuccess b rest)
+                      (ParseFailed rest) => ParseFailed rest
+
+letter: Parser Char
+letter = charPred (\x => 'a' <= x && x <= 'z')
