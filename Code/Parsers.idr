@@ -1,5 +1,7 @@
 module Parsers
 
+%access public export
+
 data ParseResult : Type -> Type where
   ParseSuccess : {a: Type} -> (result : a) -> (rest: List Char) -> ParseResult a
   ParseFailed : {a: Type} -> (rest: List Char) -> ParseResult a
@@ -144,6 +146,7 @@ repSepTrim: {a: Type} -> Parser a -> Char -> Parser (List a)
 repSepTrim p c = map((p +>  (pad(charLit c))) ++ (repSepTrim p c))(\pair => (case pair of
                                                         (x, ys) => x :: ys)) || map(p)(\n => n ::[])
 
+
 mutual
   simpleTerm : Parser Nat
   simpleTerm = nat || ( (SS "(") <+ expression +> (SS ")") )
@@ -153,3 +156,20 @@ mutual
 
   expression: Parser Nat
   expression = map(repSepTrim term '+')(foldl(+)(0))
+
+
+flatMapWithNext : {a : Type} -> {b: Type} -> Parser a -> (a -> Parser b) -> Parser b
+flatMapWithNext p f s = case p s of
+                             (ParseSuccess result rest) => (f result) rest
+                             (ParseFailed rest) => ParseFailed s
+
+mapMaybe : {a : Type} -> {b: Type} -> Parser a -> (a -> Maybe b) -> Parser b
+mapMaybe p f s = case p s of
+                      (ParseSuccess result rest) =>
+                        (case f result of
+                              Nothing => ParseFailed s
+                              (Just b) => ParseSuccess b rest)
+                      (ParseFailed rest) => ParseFailed rest
+
+letter: Parser Char
+letter = charPred (\x => 'a' <= x && x <= 'z')
