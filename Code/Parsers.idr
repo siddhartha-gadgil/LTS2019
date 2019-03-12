@@ -130,24 +130,26 @@ infix 11 <+
                                                           (ParseFailed rest2) => ParseFailed l)
                       (ParseFailed rest) => ParseFailed rest)
 
-
-natHead: Parser Nat
-natHead = nat +> S(",")
-
-natList: Parser (List Nat)
-natList =  map((natHead)++natList)(\pair => (case pair of
-                                                        (x, ys) => x :: ys)) || map(nat)(\n => n ::[])
-
 repSep: {a: Type} -> Parser a -> Char -> Parser (List a)
 repSep p c = map((p +> (charLit c)) ++ (repSep p c))(\pair => (case pair of
                                                         (x, ys) => x :: ys)) || map(p)(\n => n ::[])
 
+pad : {a: Type} -> Parser a -> Parser a
+pad p =  rep(S " ") <+ p +> rep(S " ")
+
+SS : String -> Parser String
+SS s = pad (S s)
+
+repSepTrim: {a: Type} -> Parser a -> Char -> Parser (List a)
+repSepTrim p c = map((p +>  (pad(charLit c))) ++ (repSepTrim p c))(\pair => (case pair of
+                                                        (x, ys) => x :: ys)) || map(p)(\n => n ::[])
+
 mutual
   simpleTerm : Parser Nat
-  simpleTerm = nat || ( (S "(") <+ expression +> (S ")") )
+  simpleTerm = nat || ( (SS "(") <+ expression +> (SS ")") )
 
   term : Parser Nat
-  term = map(repSep simpleTerm '*')(foldl(*)(1)) 
+  term = map(repSepTrim simpleTerm '*')(foldl(*)(1))
 
   expression: Parser Nat
-  expression = map(repSep term '+')(foldl(+)(0))
+  expression = map(repSepTrim term '+')(foldl(+)(0))
