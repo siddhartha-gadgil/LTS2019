@@ -19,6 +19,8 @@ Remainder a b x y = Prelude.Pairs.DPair.fst(Prelude.Pairs.DPair.snd (QuotRemZ a 
 Pair : Type
 Pair = (Integer, Integer)
 
+
+
 ZZPair : Type
 ZZPair = (ZZ, ZZ)
 
@@ -67,22 +69,22 @@ make_rational p q x = (fromInt(toIntegerNat(p)), q)
 InclusionMap : (n : Nat) -> ZZPair --Includes the naturals in Q
 InclusionMap n = make_rational n 1 ZZOneNotZero
 
-AddRationals : (x: ZZPair) -> ZZNotZero (snd x) -> (y: ZZPair) -> ZZNotZero (snd y) -> ZZPair
+AddRationals : (x: ZZPair) -> NotZero (snd x) -> (y: ZZPair) -> NotZero (snd y) -> ZZPair
 AddRationals x a y b = ((fst x)*(snd y) + (snd x)*(fst y), (snd x)*(snd y))
 
-MultiplyRationals : (x: ZZPair) -> ZZNotZero (snd x) -> (y: ZZPair) -> ZZNotZero (snd y) -> ZZPair
+MultiplyRationals : (x: ZZPair) -> NotZero (snd x) -> (y: ZZPair) -> NotZero (snd y) -> ZZPair
 MultiplyRationals x a y b =((fst x)*(fst y), (snd x)*(snd y))
 
-MultInverse : (x: ZZPair) -> ZZNotZero (fst x) -> ZZNotZero (snd x) -> ZZPair
+MultInverse : (x: ZZPair) -> NotZero (fst x) -> NotZero (snd x) -> ZZPair
 MultInverse x y z = ((snd x), (fst x))
 
-AddInverse : (x: ZZPair) -> ZZNotZero (snd x) -> ZZPair
+AddInverse : (x: ZZPair) -> NotZero (snd x) -> ZZPair
 AddInverse x a = (-(fst x), (snd x))
 
-Subtraction : (x: ZZPair) -> ZZNotZero (snd x) -> (y: ZZPair) -> ZZNotZero (snd y) -> ZZPair
+Subtraction : (x: ZZPair) -> NotZero (snd x) -> (y: ZZPair) -> NotZero (snd y) -> ZZPair
 Subtraction x a y b = AddRationals x a (AddInverse y b) b
 
-Division : (x: ZZPair) -> ZZNotZero (snd x) -> (y: ZZPair) -> ZZNotZero (fst y) -> ZZNotZero (snd y) -> ZZPair
+Division : (x: ZZPair) -> NotZero (snd x) -> (y: ZZPair) -> NotZero (fst y) -> NotZero (snd y) -> ZZPair
 Division x a y b c = MultiplyRationals x a (MultInverse y b c) b
 
 Scaling: (a: ZZ) -> (x: ZZPair) -> ZZPair
@@ -137,6 +139,8 @@ simplifyRational (a, b) = (sa, sb) where
 
 --Above, I will need to supply a proof that the GCD divides the two numbers. Then, the function defined above will produce the rational in simplified form.
 
+-- commented out some old code which should be switched into the new types
+{-
 xAndInverseNotZero : (x: ZZPair) -> (k: ZZNotZero (snd x)) -> ZZNotZero (snd (AddInverse x k))
 xAndInverseNotZero x (ZZPositiveNotZero (snd x) y) = (ZZPositiveNotZero (snd x) y)
 
@@ -157,3 +161,58 @@ addinverseFST x k a prf prf1 = trans (FirstIsInverted x k a prf) (prf1)
 
 addinverseSND: (x: ZZPair) -> (k: ZZNotZero (snd x)) -> (c: ZZ) -> (c = (snd x)) -> (snd (AddInverse x k) = b) -> (c = b)
 addinverseSND x k c prf prf1 = trans (SecondStaysSame x k c prf) (prf1)
+-}
+
+-- Proving the field axioms to show that Q is a field.
+-- The first section concerns those axioms which involve only one or two elements of Q.
+
+|||A rational number is equal to its component representation (Numerator,Denominator)
+pairIsComponents: (x: ZZPair) -> (x=((fst x), (snd x)))
+pairIsComponents (a, b) = Refl
+
+|||AddRationals is commutative
+plusCommutativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (AddRationals x a y b) = (AddRationals y b x a)
+plusCommutativeQ x a y b = rewrite (multCommutativeZ (snd y) (snd x)) in
+                           rewrite (plusCommutativeZ ((fst x)*(snd y)) ((snd x)*(fst y))) in
+                           rewrite (multCommutativeZ (snd x) (fst y)) in
+                           rewrite (multCommutativeZ (snd y) (fst x)) in
+                           Refl
+
+|||MultiplyRationals is commutative
+multCommutativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (MultiplyRationals x a y b) = (MultiplyRationals y b x a)
+multCommutativeQ x a y b = rewrite (multCommutativeZ (fst x) (fst y)) in
+                           rewrite (multCommutativeZ (snd x) (snd y)) in
+                           Refl
+
+||| Zero is the right additive identity, meaning that x + 0 = x
+zeroAddIdentityRight: (x: ZZPair) -> (a: NotZero (snd x)) -> ((AddRationals x a (0,1) PositiveZ) = x)
+zeroAddIdentityRight x a = rewrite (multZeroRightZeroZ (snd x)) in
+                      rewrite (multOneRightNeutralZ (fst x)) in
+                      rewrite (plusZeroRightNeutralZ (fst x)) in
+                      rewrite (multOneRightNeutralZ (snd x)) in
+                      rewrite (sym (pairIsComponents x)) in
+                      Refl
+
+||| Zero is the left additive identity, meaning that 0 + x = x
+zeroAddIdentityLeft: (x: ZZPair) -> (a: NotZero (snd x)) -> ((AddRationals (0,1) PositiveZ x a) = x)
+zeroAddIdentityLeft x a = rewrite (multZeroLeftZeroZ (snd x)) in
+                      rewrite (multOneLeftNeutralZ (fst x)) in
+                      rewrite (plusZeroLeftNeutralZ (fst x)) in
+                      rewrite (multOneLeftNeutralZ (snd x)) in
+                      rewrite ((pairIsComponents x)) in
+                      Refl
+                      
+|||One is the right multiplicative identity (x*1=x)
+oneMultIdentityRight: (x: ZZPair) -> (a: NotZero (snd x)) -> ((MultiplyRationals x a (1,1) PositiveZ) = x)
+oneMultIdentityRight x a = rewrite (multOneRightNeutralZ (fst x)) in
+                           rewrite (multOneRightNeutralZ (snd x)) in
+                           rewrite (sym (pairIsComponents x)) in
+                           Refl
+
+|||One is the left multiplicative identity (1*x=x)
+oneMultIdentityLeft: (x: ZZPair) -> (a: NotZero (snd x)) -> ((MultiplyRationals (1,1) PositiveZ  x a) = x)
+oneMultIdentityLeft x a = rewrite (multOneLeftNeutralZ (fst x)) in
+                           rewrite (multOneLeftNeutralZ (snd x)) in
+                           rewrite ((pairIsComponents x)) in
+                           Refl
+
