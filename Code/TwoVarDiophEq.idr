@@ -69,9 +69,9 @@ divByGcdMultByOtherIsSame {a}{b}{d} (dPos, ((abyd**apf),(bbyd**bpf)),fd) =
 
 |||Proves that for any integer k, k*(-b/(gcd(a,b))) and  k*(a/(gcd(a,b)))
 |||are solutions of 0 = xa + yb
-homoSolution:(gcdpf:GCDZ a b d)->(k:ZZ)->
+homoSolution:(gcdpf:GCDZ a b d)->{k:ZZ}->
    (0 = (k*(-(bByd gcdpf)))*a + (k*((aByd gcdpf)))*b)
-homoSolution {a}{b}{d} (dPos, ((abyd**apf),(bbyd**bpf)),fd) k =
+homoSolution {a}{b}{d}{k} (dPos, ((abyd**apf),(bbyd**bpf)),fd)  =
   rewrite sym $ multAssociativeZ k (-bbyd) a in
   rewrite sym $ multAssociativeZ k (abyd) b in
   rewrite sym $ multDistributesOverPlusRightZ k ((-bbyd)*a) ((abyd)*b) in
@@ -135,38 +135,44 @@ homoOnlySoln {a}{b}{d} x y (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf anotz =
                  rewrite multCommutativeZ y (-bbyd) in
                  sym $ divgpf)),adivy))))
 
-|||Given three integers a, b and c, it outputs either
-|||a proof that c = xa +yb is impossible or
-|||a proof that all integers x and y satisfy the equation (this happens when a=b=c=0)
-|||or 4 integers x1 , y1 , pa and pb such that for any integer k,
-|||x=x1+k*pa  y=y1+k*pb is a solution of c=xa+yb
-|||and whenever c=xa+yb ,there exists an integer, k such that
-||| x=x1+k*pa  y=y1+k*pb
-findAllSolutions: (a:ZZ)->(b:ZZ)->(c:ZZ)->
-  Either ({x:ZZ}->{y:ZZ}->c=x*a+y*b->Void)
-  (Either ({x:ZZ}->{y:ZZ}->c=x*a+y*b)
-    (x1:ZZ**y1:ZZ**pa:ZZ**pb:ZZ**(({k:ZZ}->(x=x1+k*pa)->(y=y1+k*pb)->(c=x*a+y*b)),
-      ((c=x*a+y*b)->(k**((x=x1+k*pa),(y=y1+k*pb)))))))
-findAllSolutions a b c =
-  (case checkNotBothZero a b of
-        (Left (aZ,bZ)) =>
-           (case decZero c of
-                 (Yes cnotz) => Left (notZeroNotLinCombZeroZero aZ bZ cnotz)
-                 (No ciszero) => Right (Left (zeroLinCombZeroZero aZ bZ
-                    (notNotZeroThenZero ciszero))))
-        (Right abnotZ) =>
-          (case gcdZZ a b abnotZ of
-            (g**gcdpf) =>
-             (case decDivisibleZ c g of
-                   (Yes prf) => ?findAllSolutions_rhs_1
-                   (No contra) => Left (contra . (gcdDivLinComb gcdpf) ))))
+
+gcdSymZwithproof:(gcdpf:GCDZ a b d)->(gcdpf2:(GCDZ b a d)**((aByd gcdpf)=(bByd gcdpf2),(bByd gcdpf)=(aByd gcdpf2)))
+gcdSymZwithproof (dPos, ((abyd**apf),(bbyd**bpf)),fd) =
+  ((dPos, ((bbyd**bpf),(abyd**apf)),(genFunctionForGcdSym fd))**(Refl,Refl))
+
+|||Same as homoOnlySolution, NotZero a is replaced with NotBothZeroZ a b
+homoOnlySolnGen:(x: ZZ) -> (y: ZZ) -> (gcdpf:GCDZ a b d)->(0 = x*a + y*b) ->NotBothZeroZ a b->
+   (k:ZZ**((x = k * (-(bByd gcdpf))),(y = k * (aByd gcdpf))))
+homoOnlySolnGen {a = (Pos (S k))}{b = b}{d = d} x y gcdpf prf LeftPositive =
+  homoOnlySoln x y gcdpf prf PositiveZ
+homoOnlySolnGen {a = (NegS k)}{b = b}{d = d} x y gcdpf prf LeftNegative =
+  homoOnlySoln x y gcdpf prf NegativeZ
+homoOnlySolnGen {a = a}{b = (Pos (S k))}{d = d} x y (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf RightPositive =
+  (case gcdSymZwithproof ((dPos, ((abyd**apf),(bbyd**bpf)),fd)) of
+    (gcdpf2**(eqpf1,eqpf2)) =>
+      (case homoOnlySoln {a=(Pos (S k))}{b=a} {d=d} y x gcdpf2 (rewrite plusCommutativeZ (y*(Pos (S k))) (x*a) in prf )  PositiveZ of
+            (j**(ypf,xpf)) => ((-j)**((rewrite multNegNegNeutralZ j bbyd in
+                                       rewrite eqpf2 in
+                                       xpf ),(rewrite multNegateLeftZ j abyd in
+                                              rewrite sym $ multNegateRightZ j abyd in
+                                              rewrite eqpf1 in
+                                              ypf)))))
+homoOnlySolnGen {a = a}{b = (NegS k)}{d = d} x y (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf RightNegative =
+    (case gcdSymZwithproof ((dPos, ((abyd**apf),(bbyd**bpf)),fd)) of
+      (gcdpf2**(eqpf1,eqpf2)) =>
+        (case homoOnlySoln {a=(NegS k)}{b=a} {d=d} y x gcdpf2 (rewrite plusCommutativeZ (y*(NegS k)) (x*a) in prf )  NegativeZ of
+              (j**(ypf,xpf)) => ((-j)**((rewrite multNegNegNeutralZ j bbyd in
+                                         rewrite eqpf2 in
+                                         xpf ),(rewrite multNegateLeftZ j abyd in
+                                                rewrite sym $ multNegateRightZ j abyd in
+                                                rewrite eqpf1 in
+                                                ypf)))))
 
 -- The goal of the following section is to show that the non-homogeneous equation is uniquely solved by the family of
 -- solutions ((x_p+k*x_0), (y_p+k*y_0)).
 
 ||| Produces the difference of two solutions. It will used to show that the difference of two particular
 ||| solutions satisfies the homogeneous equation.
-
 solDifference: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (x1: ZZ) -> (y1: ZZ) -> (x2: ZZ) ->
 (y2: ZZ) -> (c=(x1*a+y1*b)) -> (c=(x2*a+y2*b)) -> ( 0= ( ((x1-x2)*a) + ((y1-y2)*b) ))
 solDifference a b c x1 y1 x2 y2 prf prf1 = rewrite (multDistributesOverPlusLeftZ (x1) (-x2) (a)) in
@@ -196,11 +202,81 @@ addToSol x1 x2 prf = rewrite sym prf in
 
 ||| Proves that two particular solutions differ by a solution of the homogeneous equation.
 diffIsHomogeneous: {a: ZZ} -> {b: ZZ} -> {c: ZZ} -> {d: ZZ} ->  {x1: ZZ} -> {y1: ZZ} -> {x2: ZZ} ->
-{y2: ZZ} -> (IsDivisibleZ c d) -> (gcdpf:GCDZ a b d) -> (NotZero a) -> (NotZero b) -> (c=x1*a+y1*b) -> (c=x2*a+y2*b) -> (k:ZZ** (( (x1-x2) = (k * (-(bByd gcdpf)))),( (y1-y2) = (k * (aByd gcdpf)))))
-diffIsHomogeneous {a}{b}{c}{d}{x1}{y1}{x2}{y2} x gcdpf y z prf prf1 = homoOnlySoln {a}{b}{d} (x1-x2) (y1-y2) (gcdpf) (solDifference a b c x1 y1 x2 y2 prf prf1) (y)
+{y2: ZZ} -> (IsDivisibleZ c d) -> (gcdpf:GCDZ a b d) -> NotBothZeroZ a b  ->
+    (c=x1*a+y1*b) -> (c=x2*a+y2*b) ->
+       (k:ZZ** (( (x1-x2) = (k * (-(bByd gcdpf)))),( (y1-y2) = (k * (aByd gcdpf)))))
+diffIsHomogeneous {a}{b}{c}{d}{x1}{y1}{x2}{y2} x gcdpf abnotZ  prf prf1 =
+ homoOnlySolnGen {a}{b}{d} (x1-x2) (y1-y2) (gcdpf) (solDifference a b c x1 y1 x2 y2 prf prf1) abnotZ
 
 ||| Proves that any solution is a particular solution plus a constant multiple of the solution of
 ||| the homogeneous equation.
 differByHomogeneous: {a: ZZ} -> {b: ZZ} -> {c: ZZ} -> {d: ZZ} ->  {x1: ZZ} -> {y1: ZZ} -> {x2: ZZ} ->
-{y2: ZZ} -> (IsDivisibleZ c d) -> (gcdpf:GCDZ a b d) -> (NotZero a) -> (NotZero b) -> (c=x1*a+y1*b) -> (c=x2*a+y2*b) -> (k:ZZ** (( x1 = x2 + (k * (-(bByd gcdpf)))),( y1 = y2 + (k * (aByd gcdpf)))))
-differByHomogeneous x gcdpf y z prf prf1 = ?hole
+{y2: ZZ} -> (IsDivisibleZ c d) -> (gcdpf:GCDZ a b d) -> NotBothZeroZ a b  ->
+   (c=x1*a+y1*b) -> (c=x2*a+y2*b) ->
+      (k:ZZ** (( x2 = x1 + (k * (-(bByd gcdpf)))),( y2 = y1 + (k * (aByd gcdpf)))))
+differByHomogeneous {x1}{y1}{x2}{y2} x gcdpf y  prf prf1 =
+  (case diffIsHomogeneous x gcdpf y prf1 prf of
+        (k**(xpf,ypf)) => (k**((addToSol x2 x1 xpf),(addToSol y2 y1 ypf))))
+
+|||A helper function for allsolutions.
+|||It proves that all x and y of the given form satisfies the equation.
+helpallsolutions:(gcdpf:(GCDZ a b d))->(bbyd*a=abyd*b)->c = x1*a+y1*b->{k:ZZ}->
+   (x=x1+k*(-bbyd))->(y=y1+k*abyd)->(c=x*a+y*b)
+helpallsolutions{bbyd}{abyd} {x1}{y1}{a}{b}{d}{c}{k} gcdpf bydpf eqpf xpf ypf =
+  rewrite xpf in
+  rewrite ypf in
+  rewrite multDistributesOverPlusLeftZ x1 (k*(-bbyd)) a in
+  rewrite sym $ plusAssociativeZ (x1*a) ((k*(-bbyd))*a) (multZ (plusZ y1 (multZ k abyd)) b) in
+  rewrite plusCommutativeZ ((k*(-bbyd))*a) ((y1+ (k*abyd))*b) in
+  rewrite plusAssociativeZ (x1*a) ((y1+ (k*abyd))*b) ((k*(-bbyd))*a) in
+  rewrite multDistributesOverPlusLeftZ y1 (k*abyd) b in
+  rewrite plusAssociativeZ (x1*a) (y1*b) ((k*abyd)*b) in
+  rewrite sym $ eqpf in
+  rewrite sym $ plusAssociativeZ c ((k*abyd)*b) ((k*(-bbyd))*a) in
+  rewrite sym $ multAssociativeZ k abyd b in
+  rewrite sym $ multAssociativeZ k (-bbyd) a in
+  rewrite sym $ bydpf in
+  rewrite sym $ multDistributesOverPlusRightZ k (bbyd*a) ((-bbyd)*a) in
+  rewrite multNegateLeftZ bbyd a in
+  rewrite plusNegateInverseLZ (bbyd*a) in
+  rewrite multZeroRightZeroZ k in
+  rewrite plusZeroRightNeutralZ c in
+  Refl
+
+|||The function that generates the third case in findAllSolutions function.
+allSolutions:(gcdpf:(GCDZ a b d)) -> IsDivisibleZ c d ->NotBothZeroZ a b ->
+   (x1:ZZ**y1:ZZ**pa:ZZ**pb:ZZ**(({k:ZZ}->(x=x1+k*pa)->(y=y1+k*pb)->(c=x*a+y*b)),
+     ((c=x*a+y*b)->(k**((x=x1+k*pa),(y=y1+k*pb))))))
+allSolutions{a}{b}{d} (dPos, ((abyd**apf),(bbyd**bpf)),fd) dDivc abnotZ =
+  (case ((multipleOfGcdLinComb (dPos, ((abyd**apf),(bbyd**bpf)),fd) dDivc),
+  (divByGcdMultByOtherIsSame (dPos, ((abyd**apf),(bbyd**bpf)),fd))) of
+    ((x1**y1**eqpf),bydpf) =>(x1**y1**(-bbyd)**abyd**(
+     (helpallsolutions (dPos, ((abyd**apf),(bbyd**bpf)),fd) bydpf eqpf ),
+        (differByHomogeneous  dDivc (dPos, ((abyd**apf),(bbyd**bpf)),fd) abnotZ eqpf ))))
+
+
+|||Given three integers a, b and c, it outputs either
+|||a proof that c = xa +yb is impossible or
+|||a proof that all integers x and y satisfy the equation (this happens when a=b=c=0)
+|||or 4 integers x1 , y1 , pa and pb such that for any integer k,
+|||x=x1+k*pa  y=y1+k*pb is a solution of c=xa+yb
+|||and whenever c=xa+yb ,there exists an integer, k such that
+||| x=x1+k*pa  y=y1+k*pb
+findAllSolutions: (a:ZZ)->(b:ZZ)->(c:ZZ)->
+  Either ({x:ZZ}->{y:ZZ}->c=x*a+y*b->Void)
+  (Either ({x:ZZ}->{y:ZZ}->c=x*a+y*b)
+    (x1:ZZ**y1:ZZ**pa:ZZ**pb:ZZ**(({k:ZZ}->(x=x1+k*pa)->(y=y1+k*pb)->(c=x*a+y*b)),
+      ((c=x*a+y*b)->(k**((x=x1+k*pa),(y=y1+k*pb)))))))
+findAllSolutions a b c =
+  (case checkNotBothZero a b of
+        (Left (aZ,bZ)) =>
+           (case decZero c of
+                 (Yes cnotz) => Left (notZeroNotLinCombZeroZero aZ bZ cnotz)
+                 (No ciszero) => Right (Left (zeroLinCombZeroZero aZ bZ
+                    (notNotZeroThenZero ciszero))))
+        (Right abnotZ) =>
+          (case gcdZZ a b abnotZ of
+            (g**gcdpf) =>
+             (case decDivisibleZ c g of
+                   (Yes prf) => Right (Right (allSolutions gcdpf prf abnotZ))
+                   (No contra) => Left (contra . (gcdDivLinComb gcdpf) ))))
