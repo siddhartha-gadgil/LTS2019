@@ -54,14 +54,14 @@ mutual
 block: Parser Block
 block = blockRec []
 
-blockValue: Block -> Maybe Nat
-blockValue [] = Nothing
-blockValue ((Expression n) :: xs) = Just n
-blockValue ((Definition var value) :: xs) = Nothing
+blockValue: Block -> Nat
+blockValue [] = Z
+blockValue ((Expression n) :: xs) = n
+blockValue ((Definition var value) :: xs) = value
 
-interpret : String -> ParseResult (Maybe Nat)
+interpret : String -> ParseResult Nat
 interpret s = parse(map(block)(blockValue)) s
 
 
-eg: ParseResult (Maybe Nat)
+eg: ParseResult Nat
 eg = interpret "let a = (1 + 2 * (3 + 1)); let b = a + 3 ; a * (b + 1)"
