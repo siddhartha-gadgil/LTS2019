@@ -116,11 +116,14 @@ divByGcdNotZero {a = (Pos (S k))}{b = b}{d = d} (dPos, ((abyd**apf),(bbyd**bpf))
 divByGcdNotZero {a = (NegS k)}{b = b}{d = d} (dPos, ((abyd**apf),(bbyd**bpf)),fd)
 NegativeZ = NegSThenNotZero (negDivByPosIsNeg Negative dPos apf)
 
+-- The arguments to the function homoOnlySoln need to be explicit because Idris will not
+-- infer the correct arguments in the functions below.
+
 |||Proves that if a is not zero and 0 =xa + yb, then there exists an integer k such that
 ||| x = k* (-b/(gcd(a,b))) and y = k* (a/(gcd(a,b)))
-homoOnlySoln:(gcdpf:GCDZ a b d)->(0 = x*a + y*b) ->NotZero a->
+homoOnlySoln:(x: ZZ) -> (y: ZZ) -> (gcdpf:GCDZ a b d)->(0 = x*a + y*b) ->NotZero a->
    (k:ZZ**((x = k * (-(bByd gcdpf))),(y = k * (aByd gcdpf))))
-homoOnlySoln {a}{b}{d}{x}{y} (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf anotz =
+homoOnlySoln {a}{b}{d} x y (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf anotz =
    (case divHomoEqByGcd (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf of
         divgpf =>
           (case homoOnlySolnForY (dPos, ((abyd**apf),(bbyd**bpf)),fd) prf of
@@ -157,3 +160,47 @@ findAllSolutions a b c =
              (case decDivisibleZ c g of
                    (Yes prf) => ?findAllSolutions_rhs_1
                    (No contra) => Left (contra . (gcdDivLinComb gcdpf) ))))
+
+-- The goal of the following section is to show that the non-homogeneous equation is uniquely solved by the family of
+-- solutions ((x_p+k*x_0), (y_p+k*y_0)).
+
+||| Produces the difference of two solutions. It will used to show that the difference of two particular
+||| solutions satisfies the homogeneous equation.
+
+solDifference: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (x1: ZZ) -> (y1: ZZ) -> (x2: ZZ) ->
+(y2: ZZ) -> (c=(x1*a+y1*b)) -> (c=(x2*a+y2*b)) -> ( 0= ( ((x1-x2)*a) + ((y1-y2)*b) ))
+solDifference a b c x1 y1 x2 y2 prf prf1 = rewrite (multDistributesOverPlusLeftZ (x1) (-x2) (a)) in
+                                           rewrite (multDistributesOverPlusLeftZ (y1) (-y2) (b)) in
+                                           rewrite sym (plusAssociativeZ (x1*a) ((-x2)*a) (y1*b+((-y2)*b)) ) in
+                                           rewrite (plusCommutativeZ (y1*b) ((-y2)*b)) in
+                                           rewrite (plusAssociativeZ ((-x2)*a) ((-y2)*b) (y1*b)) in
+                                           rewrite (plusCommutativeZ (((-x2)*a) + ((-y2)*b)) (y1*b)) in
+                                           rewrite (plusAssociativeZ (x1*a) (y1*b) (((-x2)*a) + ((-y2)*b))) in
+                                           rewrite (multNegateLeftZ (x2) (a)) in
+                                           rewrite (multNegateLeftZ (y2) (b)) in
+                                           rewrite sym (negateDistributesPlus (x2*a) (y2*b)) in
+                                           rewrite sym (plusNegateInverseLZ (x2*a+y2*b)) in
+                                           rewrite sym prf in
+                                           rewrite sym prf1 in
+                                           rewrite (plusNegateInverseLZ c) in
+                                           Refl
+
+||| Adding x2 to both sides of the equation:
+addToSol: (x1: ZZ) -> (x2: ZZ) -> (x1-x2=d) -> (x1=x2+d)
+addToSol x1 x2 prf = rewrite sym prf in
+                       rewrite (plusCommutativeZ (x1) (-x2)) in
+                       rewrite (plusAssociativeZ (x2) (-x2) (x1)) in
+                       rewrite (plusNegateInverseLZ (x2)) in
+                       rewrite (plusZeroLeftNeutralZ (x1)) in
+                       Refl
+
+||| Proves that two particular solutions differ by a solution of the homogeneous equation.
+diffIsHomogeneous: {a: ZZ} -> {b: ZZ} -> {c: ZZ} -> {d: ZZ} ->  {x1: ZZ} -> {y1: ZZ} -> {x2: ZZ} ->
+{y2: ZZ} -> (IsDivisibleZ c d) -> (gcdpf:GCDZ a b d) -> (NotZero a) -> (NotZero b) -> (c=x1*a+y1*b) -> (c=x2*a+y2*b) -> (k:ZZ** (( (x1-x2) = (k * (-(bByd gcdpf)))),( (y1-y2) = (k * (aByd gcdpf)))))
+diffIsHomogeneous {a}{b}{c}{d}{x1}{y1}{x2}{y2} x gcdpf y z prf prf1 = homoOnlySoln {a}{b}{d} (x1-x2) (y1-y2) (gcdpf) (solDifference a b c x1 y1 x2 y2 prf prf1) (y)
+
+||| Proves that any solution is a particular solution plus a constant multiple of the solution of
+||| the homogeneous equation.
+differByHomogeneous: {a: ZZ} -> {b: ZZ} -> {c: ZZ} -> {d: ZZ} ->  {x1: ZZ} -> {y1: ZZ} -> {x2: ZZ} ->
+{y2: ZZ} -> (IsDivisibleZ c d) -> (gcdpf:GCDZ a b d) -> (NotZero a) -> (NotZero b) -> (c=x1*a+y1*b) -> (c=x2*a+y2*b) -> (k:ZZ** (( x1 = x2 + (k * (-(bByd gcdpf)))),( y1 = y2 + (k * (aByd gcdpf)))))
+differByHomogeneous x gcdpf y z prf prf1 = ?hole
