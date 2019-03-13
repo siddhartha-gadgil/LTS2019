@@ -139,11 +139,15 @@ simplifyRational (a, b) = (sa, sb) where
 
 --Above, I will need to supply a proof that the GCD divides the two numbers. Then, the function defined above will produce the rational in simplified form.
 
--- commented out some old code which should be switched into the new types
-{-
-xAndInverseNotZero : (x: ZZPair) -> (k: ZZNotZero (snd x)) -> ZZNotZero (snd (AddInverse x k))
-xAndInverseNotZero x (ZZPositiveNotZero (snd x) y) = (ZZPositiveNotZero (snd x) y)
+xAndInverseNotZeroPlus : (x: ZZPair) -> (k: NotZero (snd x)) -> (NotZero (snd (AddInverse x k)))
+xAndInverseNotZeroPlus x k = k
 
+xAndInverseNotZeroMult : (x: ZZPair) -> (j: NotZero (fst x)) -> (k: NotZero (snd x)) -> (NotZero (snd (MultInverse x j k)))
+xAndInverseNotZeroMult x j k = j
+
+
+
+{-
 FirstIsInverted : (x: ZZPair) -> (k: ZZNotZero (snd x)) -> (a: ZZ) -> (a = (fst x)) -> ((-a) = fst (AddInverse x k))
 FirstIsInverted x k a prf = (apZZ (\x => -x) a (fst x) prf)
 
@@ -201,7 +205,7 @@ zeroAddIdentityLeft x a = rewrite (multZeroLeftZeroZ (snd x)) in
                       rewrite (multOneLeftNeutralZ (snd x)) in
                       rewrite ((pairIsComponents x)) in
                       Refl
-                      
+
 |||One is the right multiplicative identity (x*1=x)
 oneMultIdentityRight: (x: ZZPair) -> (a: NotZero (snd x)) -> ((MultiplyRationals x a (1,1) PositiveZ) = x)
 oneMultIdentityRight x a = rewrite (multOneRightNeutralZ (fst x)) in
@@ -216,3 +220,31 @@ oneMultIdentityLeft x a = rewrite (multOneLeftNeutralZ (fst x)) in
                            rewrite ((pairIsComponents x)) in
                            Refl
 
+||| x plus its additive inverse is equal to (0,(snd x)*(snd x)). A custom equality type is probably required to set
+||| this equal to (0,1).
+addInverseLeft: (x: ZZPair) -> (a: NotZero (snd x)) -> ((AddRationals x a (AddInverse x a) (xAndInverseNotZeroPlus x a)) = (0, (snd x)*(snd x)))
+addInverseLeft x a = rewrite (multCommutativeZ (fst x) (snd x)) in
+                     rewrite (multNegateRightZ (snd x) (fst x)) in
+                     rewrite (plusNegateInverseLZ ((snd x)*(fst x)) ) in
+                     Refl
+
+||| The additive inverse of x plus itself is equal to (0,(snd x)*(snd x)). A custom equality type is probably required to set
+||| this equal to (0,1).
+addInverseRight: (x: ZZPair) -> (a: NotZero (snd x)) -> ((AddRationals (AddInverse x a) (xAndInverseNotZeroPlus x a) x a) = (0, (snd x)*(snd x)))
+addInverseRight x a = rewrite (multCommutativeZ (snd x) (fst x)) in
+                      rewrite (multNegateLeftZ (fst x) (snd x)) in
+                      rewrite (plusNegateInverseRZ ((fst x)*(snd x)) ) in
+                      Refl
+
+|||x times its multiplicative inverse is equal to ((fst x)*(snd x), (fst x)*(snd x)). A custom equality type is probably required to set
+||| this equal to (1,1).
+multInverseLeft: (x: ZZPair) -> (a: NotZero (fst x)) -> (b: NotZero (snd x)) ->
+(MultiplyRationals x b (MultInverse x a b) (xAndInverseNotZeroMult x j k)) = ((fst x)*(snd x), (fst x)*(snd x))
+multInverseLeft x a b = rewrite (multCommutativeZ (snd x) (fst x)) in 
+                        Refl
+|||The multiplicative inverse of x times itself is equal to ((fst x)*(snd x), (fst x)*(snd x)). A custom equality type is probably required to set
+||| this equal to (1,1).
+multInverseRight: (x: ZZPair) -> (a: NotZero (fst x)) -> (b: NotZero (snd x)) ->
+(MultiplyRationals (MultInverse x a b) (xAndInverseNotZeroMult x j k) x b ) = ((fst x)*(snd x), (fst x)*(snd x))
+multInverseRight x a b = rewrite (multCommutativeZ (snd x) (fst x)) in
+                        Refl
