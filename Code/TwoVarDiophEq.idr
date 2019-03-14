@@ -8,8 +8,8 @@ import decDivZ
 %default total
 
 |||Any integer is a solution for c=xa+yb when a=b=c=0
-zeroLinCombZeroZero:a=0->b=0->c=0->{x:ZZ}->{y:ZZ}->c=x*a+y*b
-zeroLinCombZeroZero az bz cz {x} {y} = rewrite az in
+zeroLinCombZeroZero:a=0->b=0->c=0->(x:ZZ)->(y:ZZ)->c=x*a+y*b
+zeroLinCombZeroZero az bz cz x y = rewrite az in
                                        rewrite bz in
                                        rewrite cz in
                                        rewrite multZeroRightZeroZ x in
@@ -18,8 +18,8 @@ zeroLinCombZeroZero az bz cz {x} {y} = rewrite az in
 
 |||If a=b=0 and c is not zero, it is impossible that c = xa +yb
 notZeroNotLinCombZeroZero:a=0->b=0->NotZero c ->
-   {x:ZZ}->{y:ZZ}->c=x*a+y*b->Void
-notZeroNotLinCombZeroZero aZ bZ cnotz {x}{y} =
+   (x:ZZ)->(y:ZZ)->c=x*a+y*b->Void
+notZeroNotLinCombZeroZero aZ bZ cnotz x y =
   rewrite aZ in
   rewrite bZ in
   rewrite multZeroRightZeroZ x in
@@ -29,8 +29,13 @@ notZeroNotLinCombZeroZero aZ bZ cnotz {x}{y} =
 
 |||Proves that if d = gcd (a,b) and c= xa +yb , then d|c
 gcdDivLinComb:GCDZ a b d->c=x*a+y*b -> IsDivisibleZ c d
-gcdDivLinComb (dPos,dcommonfactab,fd) prf =
+gcdDivLinComb (dPos,dcommonfactab,fd)  prf =
   linCombDivLeftWithProof prf dcommonfactab
+
+gcdDivLinCombContra:GCDZ a b d ->((IsDivisibleZ c d) ->Void)->(x:ZZ)->(y:ZZ)->c=x*a+y*b->Void
+gcdDivLinCombContra gcdpf f x y prf =
+  f (gcdDivLinComb gcdpf prf)
+
 
 |||Proves that if d = gcd (a,b) and d|c, then there exists integers x and y
 |||such that c = xa +yb
@@ -210,19 +215,19 @@ diffIsHomogeneous {a}{b}{c}{d}{x1}{y1}{x2}{y2} x gcdpf abnotZ  prf prf1 =
 
 ||| Proves that any solution is a particular solution plus a constant multiple of the solution of
 ||| the homogeneous equation.
-differByHomogeneous: {a: ZZ} -> {b: ZZ} -> {c: ZZ} -> {d: ZZ} ->  {x1: ZZ} -> {y1: ZZ} -> {x2: ZZ} ->
-{y2: ZZ} -> (IsDivisibleZ c d) -> (gcdpf:GCDZ a b d) -> NotBothZeroZ a b  ->
-   (c=x1*a+y1*b) -> (c=x2*a+y2*b) ->
+differByHomogeneous: {a: ZZ} -> {b: ZZ} -> {c: ZZ} -> {d: ZZ} ->  {x1: ZZ} -> {y1: ZZ} ->
+ (IsDivisibleZ c d) -> (gcdpf:GCDZ a b d) -> NotBothZeroZ a b  ->
+   (c=x1*a+y1*b) ->(x2:ZZ)->(y2:ZZ)-> (c=x2*a+y2*b) ->
       (k:ZZ** (( x2 = x1 + (k * (-(bByd gcdpf)))),( y2 = y1 + (k * (aByd gcdpf)))))
-differByHomogeneous {x1}{y1}{x2}{y2} x gcdpf y  prf prf1 =
+differByHomogeneous {x1}{y1} x gcdpf y  prf x2 y2 prf1 =
   (case diffIsHomogeneous x gcdpf y prf1 prf of
         (k**(xpf,ypf)) => (k**((addToSol x2 x1 xpf),(addToSol y2 y1 ypf))))
 
 |||A helper function for allsolutions.
 |||It proves that all x and y of the given form satisfies the equation.
 helpallsolutions:(gcdpf:(GCDZ a b d))->(bbyd*a=abyd*b)->c = x1*a+y1*b->{k:ZZ}->
-   (x=x1+k*(-bbyd))->(y=y1+k*abyd)->(c=x*a+y*b)
-helpallsolutions{bbyd}{abyd} {x1}{y1}{a}{b}{d}{c}{k} gcdpf bydpf eqpf xpf ypf =
+   (x3:ZZ)->(y3:ZZ)->(x3=x1+k*(-bbyd))->(y3=y1+k*abyd)->(c=(x3)*a+(y3)*b)
+helpallsolutions{bbyd}{abyd} {x1}{y1}{a}{b}{d}{c}{k} gcdpf bydpf eqpf x3 y3 xpf ypf =
   rewrite xpf in
   rewrite ypf in
   rewrite multDistributesOverPlusLeftZ x1 (k*(-bbyd)) a in
@@ -245,14 +250,14 @@ helpallsolutions{bbyd}{abyd} {x1}{y1}{a}{b}{d}{c}{k} gcdpf bydpf eqpf xpf ypf =
 
 |||The function that generates the third case in findAllSolutions function.
 allSolutions:(gcdpf:(GCDZ a b d)) -> IsDivisibleZ c d ->NotBothZeroZ a b ->
-   (x1:ZZ**y1:ZZ**pa:ZZ**pb:ZZ**(({k:ZZ}->(x=x1+k*pa)->(y=y1+k*pb)->(c=x*a+y*b)),
-     ((c=x*a+y*b)->(k**((x=x1+k*pa),(y=y1+k*pb))))))
+   (x1:ZZ**y1:ZZ**pa:ZZ**pb:ZZ**(({k:ZZ}->(x3:ZZ)->(y3:ZZ)->(x3=x1+k*pa)->(y3=y1+k*pb)->(c=x3*a+y3*b)),
+     ((x2:ZZ)->(y2:ZZ)->(c=x2*a+y2*b)->(k**((x2=x1+k*pa),(y2=y1+k*pb))))))
 allSolutions{a}{b}{d} (dPos, ((abyd**apf),(bbyd**bpf)),fd) dDivc abnotZ =
   (case ((multipleOfGcdLinComb (dPos, ((abyd**apf),(bbyd**bpf)),fd) dDivc),
   (divByGcdMultByOtherIsSame (dPos, ((abyd**apf),(bbyd**bpf)),fd))) of
     ((x1**y1**eqpf),bydpf) =>(x1**y1**(-bbyd)**abyd**(
      (helpallsolutions (dPos, ((abyd**apf),(bbyd**bpf)),fd) bydpf eqpf ),
-        (differByHomogeneous  dDivc (dPos, ((abyd**apf),(bbyd**bpf)),fd) abnotZ eqpf ))))
+        ( (differByHomogeneous  dDivc (dPos, ((abyd**apf),(bbyd**bpf)),fd) abnotZ eqpf  ) ))))
 
 
 |||Given three integers a, b and c, it outputs either
@@ -263,10 +268,10 @@ allSolutions{a}{b}{d} (dPos, ((abyd**apf),(bbyd**bpf)),fd) dDivc abnotZ =
 |||and whenever c=xa+yb ,there exists an integer, k such that
 ||| x=x1+k*pa  y=y1+k*pb
 findAllSolutions: (a:ZZ)->(b:ZZ)->(c:ZZ)->
-  Either ({x:ZZ}->{y:ZZ}->c=x*a+y*b->Void)
-  (Either ({x:ZZ}->{y:ZZ}->c=x*a+y*b)
-    (x1:ZZ**y1:ZZ**pa:ZZ**pb:ZZ**(({k:ZZ}->(x=x1+k*pa)->(y=y1+k*pb)->(c=x*a+y*b)),
-      ((c=x*a+y*b)->(k**((x=x1+k*pa),(y=y1+k*pb)))))))
+  Either ((x:ZZ)->(y:ZZ)->c=x*a+y*b->Void)
+  (Either ((x:ZZ)->(y:ZZ)->c=x*a+y*b)
+    (x1:ZZ**y1:ZZ**pa:ZZ**pb:ZZ**(({k:ZZ}->(x:ZZ)->(y:ZZ)->(x=x1+k*pa)->(y=y1+k*pb)->(c=x*a+y*b)),
+      ((x:ZZ)->(y:ZZ)->(c=x*a+y*b)->(k**((x=x1+k*pa),(y=y1+k*pb)))))))
 findAllSolutions a b c =
   (case checkNotBothZero a b of
         (Left (aZ,bZ)) =>
@@ -278,5 +283,5 @@ findAllSolutions a b c =
           (case gcdZZ a b abnotZ of
             (g**gcdpf) =>
              (case decDivisibleZ c g of
-                   (Yes prf) => Right (Right (allSolutions gcdpf prf abnotZ))
-                   (No contra) => Left (contra . (gcdDivLinComb gcdpf) ))))
+                   (Yes prf) => Right (Right (allSolutions gcdpf prf abnotZ ))
+                   (No contra) => Left (gcdDivLinCombContra gcdpf contra ))))
