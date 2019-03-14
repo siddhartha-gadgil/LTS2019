@@ -231,3 +231,11 @@ max : (a : Nat) -> (b : Nat) -> (n : Nat ** ((LTE a n, LTE b n), Either (a=n) (b
 max a b = case isLTE a b of
 	(Yes prf) => (b ** ((prf, lteRefl), (Right Refl)))
 	(No contra) => (a ** ((lteRefl, (switchLTE a b contra)), (Left Refl)))
+
+|||Proof that (S(a)) is not lte a
+succNotLTEnum:(a:Nat)->(LTE (S(a)) a)->Void
+succNotLTEnum Z LTEZero impossible
+succNotLTEnum Z (LTESucc _) impossible
+succNotLTEnum (S k) y =
+	impliesContrapositive (LTE (S (S k)) (S k) ) (LTE (S (k)) k )
+	  fromLteSucc (succNotLTEnum k) y

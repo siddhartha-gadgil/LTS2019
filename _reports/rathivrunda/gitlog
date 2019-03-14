@@ -1,0 +1,86 @@
+commit 707ce724246543572b04ac02c54a312323356d2e
+Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
+AuthorDate: Fri Feb 15 19:41:02 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 19:41:02 2019 +0530
+
+    Update NatUtils.idr
+    
+    imported ZZ as per Shahfils suggestion
+
+ Code/NatUtils.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit fb01ac1a599286747f392719aa1452590d170026
+Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
+AuthorDate: Fri Feb 15 19:16:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 19:16:55 2019 +0530
+
+    Update Rationals.idr
+    
+    had an error in the last commit
+
+ Code/Rationals.idr | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 913c35e473ee0809bd1e376a9ab35ef29dc068a1
+Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
+AuthorDate: Fri Feb 15 19:04:36 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 19:04:36 2019 +0530
+
+    Update Rationals.idr
+    
+    added isFactorZZ
+
+ Code/Rationals.idr | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit d5451aace6ce7d34dd320e8f6d192cc54b0377db
+Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
+AuthorDate: Fri Feb 15 19:02:53 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 19:02:53 2019 +0530
+
+    Update Bezout.idr
+
+ Code/Bezout.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3f68bf6d5cf2067da809c1a10a17ca0e7810a750
+Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
+AuthorDate: Fri Feb 15 19:01:39 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 19:01:39 2019 +0530
+
+    Update Bezout.idr
+
+ Code/Bezout.idr | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 881c4f993bce6ccd6bac605aa70a4c058566ae74
+Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
+AuthorDate: Fri Feb 15 18:59:10 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 18:59:10 2019 +0530
+
+    Update NatUtils.idr
+    
+    auxillary proofs required for the equality type
+
+ Code/NatUtils.idr | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+commit 81fc050558d73ac378d8228847aeb3ef6a2173b7
+Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
+AuthorDate: Fri Feb 15 18:56:59 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 18:56:59 2019 +0530
+
+    Update Bezout.idr
+    
+    Added a function to prove if p|a and p|b p|a+b
+
+ Code/Bezout.idr | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)

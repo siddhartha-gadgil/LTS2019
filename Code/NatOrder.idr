@@ -136,7 +136,7 @@ notBothLEQ {a} {b} notaLEQb notbLEQa =
 			void (aNotEqb (leqAntiSymmetric aLEQb bLEQa))
 
 |||Proof that LEQ is a total order (any two elements are comparable)
-leqTotal : {a : Nat} -> {b : Nat} -> InclusiveEither (LEQ a b) (LEQ b a)
+leqTotal : (a : Nat) -> (b : Nat) -> InclusiveEither (LEQ a b) (LEQ b a)
 leqTotal {a} {b} = case (isLEQ a b) of
 				(Yes aLEQb) => case (isLEQ b a) of
 							(Yes bLEQa) => (Both aLEQb bLEQa)

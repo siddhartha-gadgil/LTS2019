@@ -35,6 +35,16 @@ multBothSidesOfDiv:(m:ZZ)->(IsDivisibleZ a d)->(IsDivisibleZ (m*a) (m*d))
 multBothSidesOfDiv{d} m (x ** pf) =
   (x** (rewrite (sym (multAssociativeZ m d x)) in (cong pf)))
 
+||| Theorem that if a = k*d and and c|k then c*d|a
+multBothSidesOfDivRightWithProof :(a=k*d)->(IsDivisibleZ k c)->
+   (IsDivisibleZ a (c*d))
+multBothSidesOfDivRightWithProof {a}{k}{c}{d} prf x =
+  rewrite prf in
+  rewrite (multCommutativeZ k d) in
+  rewrite (multCommutativeZ c d) in
+   (multBothSidesOfDiv d x)
+
+
 |||The theorem d|a and d|b =>d|(a+b)
 plusDiv : (IsDivisibleZ a d)->(IsDivisibleZ b d)->(IsDivisibleZ (a+b) d)
 plusDiv {d}{a}{b} (n**prf1) (m**prf2) =
@@ -67,7 +77,14 @@ IsCommonFactorZ a b c = ((IsDivisibleZ a c),(IsDivisibleZ b c))
 |||d is a common factor of b and a
 commonfactSym: IsCommonFactorZ a b d ->IsCommonFactorZ b a d
 commonfactSym (dDiva, dDivb) = (dDivb,dDiva)
-
+|||The theorem that if (d=(m*a)+(n*b)) and c is a common factor of a and b, then d|c
+linCombDivLeftWithProof:{a:ZZ}->{b:ZZ}->{c:ZZ}->{d:ZZ}->{m:ZZ}->{n:ZZ}->(d=(m*a)+(n*b))->
+   (IsCommonFactorZ a b c)-> (IsDivisibleZ d c)
+linCombDivLeftWithProof {a}{b}{m}{n}{c}{d}prf (cDiva, cDivb) =
+  rewrite prf in
+  rewrite multCommutativeZ m a in
+  rewrite multCommutativeZ n b in
+  linCombDiv m n cDiva cDivb
 
 |||The GCD type that is occupied iff d = gcd (a,b).
 ||| Here GCD is defined as that positive integer such that any common factor
@@ -100,6 +117,10 @@ negativeDivides {a}{d}(x ** pf) =
 |||The theorem that (-d)|a implies d|a
 negativeDivides2:(IsDivisibleZ a (-d))->(IsDivisibleZ a d)
 negativeDivides2 {a}{d}x = rewrite (sym (doubleNegElim d)) in (negativeDivides x)
+|||The theorem that (d|a) implies ((-d)|(-a))
+doubleNegativeDivides : (IsDivisibleZ a d)->(IsDivisibleZ (-a) (-d))
+doubleNegativeDivides x = negativeDivides (dDividesNegative x)
+
 |||The theorem that -1|a for all integers
 minusOneDivides:(a:ZZ)->(IsDivisibleZ a (-1))
 minusOneDivides a = negativeDivides (oneDiv _)
@@ -157,6 +178,7 @@ genFunctionForGcdNeg f (cDiva,cDivb) = f (cDivNega,cDivb) where
 gcdSymZ: (GCDZ a b d)->(GCDZ b a d)
 gcdSymZ (dPos,(dDiva,dDivb),fd) = (dPos, (dDivb, dDiva), (genFunctionForGcdSym fd))
 
+
 |||Theorem that gcd(-a,b)=gcd(a,b)
 negatingPreservesGcdLeft: (GCDZ (-a) b d)->(GCDZ a b d)
 negatingPreservesGcdLeft (dPos,(dDivNega,dDivb),fd) =
@@ -166,6 +188,10 @@ negatingPreservesGcdLeft (dPos,(dDivNega,dDivb),fd) =
 negatingPreservesGcdRight: (GCDZ p (-q) r)->(GCDZ p q r)
 negatingPreservesGcdRight {p}{q} x =
   gcdSymZ{a=q}{b=p} (negatingPreservesGcdLeft (gcdSymZ {a=p}{b=(-q)} x))
+|||Theorem that gcd (a,b) = gcd (-a,b)
+negatingPreservesGcdLeft1:(GCDZ a b d)->(GCDZ (-a) b d)
+negatingPreservesGcdLeft1{a} x =
+  negatingPreservesGcdLeft (rewrite doubleNegElim a in x)
 
 |||Theorem that if d|rem , d|b and a = rem+(quot*b) then d|a
 euclidConservesDivisorWithProof :{a:ZZ}->{b:ZZ}->{quot:ZZ}->{rem:ZZ}->
@@ -191,3 +217,52 @@ euclidConservesGcdWithProof: {a:ZZ}->{b:ZZ}->{quot:ZZ}->{rem:ZZ}->
 euclidConservesGcdWithProof {a}{b}{quot}{rem}equality (dPos,(dDivb,dDivrem),fd) =
   (dPos,(dDiva,dDivb),(genfunction equality fd)) where
      dDiva = euclidConservesDivisorWithProof equality dDivrem dDivb
+
+|||The theorem that if d is positive and cd|d then c=1 or c=-1
+cdDividesdThenAbscOne:(IsPositive d)->(IsDivisibleZ d (c*d))->Either (c=1) (c=(-1))
+cdDividesdThenAbscOne {c = c}{d = d}x (n ** pf) =
+  (case productOneThenNumbersOne c n cnIs1 of
+      (Left (a, b)) => Left a
+      (Right (a, b)) => Right a) where
+        cnIs1 = multRightCancelZ (c*n) 1 d (posThenNotZero x) expression where
+          expression = rewrite ( sym (multCommuAndAssocZ1{c=c}{d=d}{n=n})) in
+                        rewriteRightAsOneTimesRight{b=d} (sym pf)
+
+|||A helper function for divideByGcdThenGcdOne
+genFunctionForDivideByGcdThenGcdOne:({k:ZZ}->(IsCommonFactorZ a b k)->
+  (IsDivisibleZ d k))->IsPositive d
+   ->(aByd:ZZ)->(bByd:ZZ)->a=aByd*d->b=bByd*d->
+         ({c:ZZ}->(IsCommonFactorZ aByd bByd c)->(IsDivisibleZ 1 c))
+genFunctionForDivideByGcdThenGcdOne f dPos aByd bByd prf prf1 (cDivaByd,cDivbByd) =
+  let cdDivd = f ((multBothSidesOfDivRightWithProof prf cDivaByd),
+      (multBothSidesOfDivRightWithProof prf1 cDivbByd))in
+  (case (cdDividesdThenAbscOne dPos cdDivd) of
+        Left Refl => oneDiv 1
+        Right Refl =>minusOneDivides 1)
+
+|||Theorem that gcd ( (a/gcd(a,b)),(b/gcd(a,b)) ) =1
+|||Here, (fst (fst (fst (snd dGcdab))))  = (a/gcd(a,b)) by definition of the
+|||GCDZ type and similarly (fst (snd (fst (snd dGcdab)))) =(b/gcd(a,b))
+divideByGcdThenGcdOne:(dGcdab:(GCDZ a b d))->
+  (GCDZ (fst (fst (fst (snd dGcdab))))  (fst (snd (fst (snd dGcdab)))) 1)
+divideByGcdThenGcdOne{a}{b}{d} (dPos, ((aByd**amd),(bByd**bmd)),fd) =
+  (Positive,((oneDiv _),(oneDiv _)),(genFunctionForDivideByGcdThenGcdOne fd
+    dPos aByd bByd eqa eqb)) where
+      eqa = rewrite (multCommutativeZ aByd d) in amd
+      eqb = rewrite (multCommutativeZ bByd d) in bmd
+
+|||Proves that if c divides one then either c =1 or c=-1
+intDividesOneThenIntOne: (IsDivisibleZ 1 c) -> Either (c=1 ) (c = (-1))
+intDividesOneThenIntOne (x ** pf) =
+   case productOneThenNumbersOne c x (sym pf) of
+    (Left (k,j)) => Left k
+    (Right (k,j)) => Right k
+|||A helper function for gcdOfOneAndInteger
+genfunctiongcdOfOneAndInteger:({c:ZZ}->(IsCommonFactorZ a 1 c)->(IsDivisibleZ 1 c))
+genfunctiongcdOfOneAndInteger (cDiva,cDiv1) =
+  (case intDividesOneThenIntOne cDiv1 of
+        (Left cIs1) => rewrite cIs1 in (oneDiv 1)
+        (Right cisn1) => rewrite cisn1 in (minusOneDivides 1))
+|||Proves that for any integer a , (gcd(a,1))=1
+gcdOfOneAndInteger: (a:ZZ)->(GCDZ a 1 1)
+gcdOfOneAndInteger a = (Positive, ((oneDiv a),(oneDiv 1)), genfunctiongcdOfOneAndInteger)

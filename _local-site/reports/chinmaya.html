@@ -95,11 +95,15 @@ messageStyle: "none",
               <li class="dropdown-header"><strong>Reports</strong></li>
               
               <li>
-                <a href="/reports/adithya.html"> Adithya Upadhyay</a>
+                <a href="/reports/adithya.html"> Adithya Upadhya</a>
               </li>
               
               <li>
-                <a href="/reports/ar.html"> Abhishek Rajan</a>
+                <a href="/reports/adit.html"> Adit Vishnu</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ar.html"> Abishek Rajan</a>
               </li>
               
               <li>
@@ -112,6 +116,10 @@ messageStyle: "none",
               
               <li>
                 <a href="/reports/nabarun.html"> Nabarun Deka</a>
+              </li>
+              
+              <li>
+                <a href="/reports/rathivrunda.html"> Vrunda Rathi</a>
               </li>
               
               <li>
@@ -192,13 +200,487 @@ messageStyle: "none",
 
 <h3 >Outline of the work done</h3>
 
-    <p>Please fill in this with references to code.</p>
+    <h2 id="groups">Groups</h2>
+
+<h3 id="definitions">Definitions</h3>
+
+<ol>
+  <li>Defined <em>Abelian Groups</em> by the type <code class="highlighter-rouge">IsAbelianGrp</code> in the file <code class="highlighter-rouge">Group.idr</code></li>
+  <li>Defined the type of <em>Injective functions</em> in the file <code class="highlighter-rouge">Group.idr</code> by the type
+<code class="highlighter-rouge">Inj</code> in the file <code class="highlighter-rouge">Group.idr</code></li>
+  <li>Defined the data type <code class="highlighter-rouge">Group</code> for <em>Groups</em> in <code class="highlighter-rouge">Group.idr</code></li>
+  <li>Defined <em>Homomorphisms</em> in the file <code class="highlighter-rouge">Group.idr</code> by the type
+<code class="highlighter-rouge">Hom</code> in the file <code class="highlighter-rouge">Group.idr</code></li>
+  <li>Defined <em>Subgroups</em> in the file <code class="highlighter-rouge">Group.idr</code> by the type <code class="highlighter-rouge">Subgroup</code></li>
+  <li>Defined <em>Self-Conjugate Subgroups</em> in the file <code class="highlighter-rouge">Group.idr</code> by the type <code class="highlighter-rouge">NSub</code></li>
+</ol>
+
+<h2 id="cosets-and-quotienting">Cosets and Quotienting</h2>
+
+<h3 id="definitions-1">Definitions</h3>
+
+<ol>
+  <li>Defined <em>Transversals</em> in the file <code class="highlighter-rouge">Cosets.idr</code> using the type <code class="highlighter-rouge">IsTransversal</code> (composed of types <code class="highlighter-rouge">CosetInj</code> and <code class="highlighter-rouge">CosetAll</code>)</li>
+  <li>Defined the data type for <em>Transversals</em> using the type <code class="highlighter-rouge">Transversal</code> in the file <code class="highlighter-rouge">Cosets.idr</code></li>
+</ol>
+
+<h3 id="functions-and-proofs">Functions and Proofs</h3>
+
+<ol>
+  <li>Defined <em>Coset Multiplication</em> using the function <code class="highlighter-rouge">MulTrans</code> in the file <code class="highlighter-rouge">Cosets.idr</code></li>
+  <li>Generated the <em>Representative</em> of an element of group in a given transversal using the function <code class="highlighter-rouge">repgen</code> in the file <code class="highlighter-rouge">CosetRep.idr</code></li>
+  <li>Prove that <em>Coset Representatives</em> thus generated for the embedding of a transversal in its underlying group are the same as the transversal elements. This is, in some sense, the uniqueness of coset representatives.</li>
+</ol>
+
+<h2 id="rings">Rings</h2>
+
+<h3 id="definitions-in-the-file-ringidr">Definitions (in the file <code class="highlighter-rouge">Ring.idr</code>)</h3>
+
+<ol>
+  <li>Corrected the definition of the type <code class="highlighter-rouge">IsDistributive</code></li>
+  <li>Corrected the definition of the type <code class="highlighter-rouge">IsRing</code> to match apparent intentions and for defining ideals.</li>
+  <li>Defined data types for <em>Rings</em>, <em>Commutative Rings</em>, <em>Useful Rings</em>, <em>Rings with Identity</em>, <em>Integral Domains</em>, <em>Euclidean Domains</em> and <em>PID’s</em> (also defined the raw type for PID’s) in the file</li>
+  <li>Defined some of the functions that show the appropriate relations between these types (e.g <code class="highlighter-rouge">URingisCRing</code> generates the data type of a commutative ring structure from a useful one on a given type)</li>
+  <li>Defined some of the functions that extract the ring operations and multiplicative identity from elements of these data types (e.g. <code class="highlighter-rouge">Ring_Mult_identity</code> provides the multiplicative identity of a ring with identity)</li>
+  <li>Defined <em>Ring Homomorphisms</em> between general rings through the type <code class="highlighter-rouge">RHom</code></li>
+  <li>Defined <em>Ring Homomorphisms</em> between rings with identity through the type <code class="highlighter-rouge">IRHom</code></li>
+  <li>Defined <em>Ideals</em> of rings through the type <code class="highlighter-rouge">IsIdeal</code></li>
+  <li>Defined <em>Principal Ideals</em> through the type <code class="highlighter-rouge">IsPrincipalIdeal</code></li>
+  <li>Defined <em>PID’s</em> through the type <code class="highlighter-rouge">IsPID</code></li>
+</ol>
+
+<h3 id="functions-and-proofs-in-the-file-ringpropertiesidr">Functions and Proofs (in the file <code class="highlighter-rouge">Ring.Properties.idr</code>)</h3>
+
+<ol>
+  <li>Proved that if a+a = a in a given ring, then a = 0</li>
+  <li>Proved that a<em>0 = 0 and 0</em>a = 0</li>
+</ol>
+
+<h2 id="arithmetic-in-base-n">Arithmetic in Base n</h2>
+
+<p>Defined the inductive type <code class="highlighter-rouge">Base</code> (with argument <code class="highlighter-rouge">n</code>) of numbers in <em>Base n</em></p>
+
+<h3 id="functions-and-algorithms-in-the-file-basenidr">Functions and Algorithms (in the file <code class="highlighter-rouge">Basen.idr</code>)</h3>
+
+<ol>
+  <li>Defined the function <code class="highlighter-rouge">Rev</code> (and an auxiliary <code class="highlighter-rouge">Revonto</code>) that <em>Reverses</em> the base n representation of a number</li>
+  <li>Defined the function <code class="highlighter-rouge">concat</code> that <em>Concatenates</em> two numbers in base n</li>
+  <li>Defined the functions <code class="highlighter-rouge">tonatFin</code> and <code class="highlighter-rouge">tonat</code> that <em>Convert</em> a number in Fin n and Base n respectively to their natural number equivalents</li>
+  <li>Defined the functions <code class="highlighter-rouge">tofinNat</code> and <code class="highlighter-rouge">tofin</code> that <em>Convert</em> a natural number to its modular Fin n reduction and representation base n respectively</li>
+  <li>Defined the function <code class="highlighter-rouge">Eucl</code> that finds the <em>Quotient and Remainder</em> for two numbers along the way</li>
+  <li>Defined the function <code class="highlighter-rouge">embn</code> that <em>Vertically Embeds</em> a member of Fin n in Fin (S n)</li>
+  <li>Defined the function <code class="highlighter-rouge">Predec</code> that finds the <em>Predecessor</em> in Fin n of a number in Fin (S n) if it is not equal to n itself.</li>
+  <li>Defined the function <code class="highlighter-rouge">addfin</code> that <em>Adds</em> two numbers in Fin n</li>
+  <li>Defined the function <code class="highlighter-rouge">addfinlist</code> that <em>Adds</em> two numbers in base n</li>
+  <li>Defined the function <code class="highlighter-rouge">mulfinList</code> that <em>Multiplies</em> two numbers in base n</li>
+</ol>
+
+<h2 id="lists">Lists</h2>
+
+<h3 id="proofs-in-the-file-listsidr">Proofs (in the file <code class="highlighter-rouge">Lists.idr</code>)</h3>
+
+<ol>
+  <li>Prove that the reverse function for lists is, in some sense, <em>Pseudo-contravariant with concatenation</em> through the function <code class="highlighter-rouge">reviscontra</code></li>
+  <li>Prove that the  reverse function for lists is <em>Self-Inverse</em> through the function <code class="highlighter-rouge">reveq</code></li>
+</ol>
 
 
 <h3> Log of git commits by author </h3>
 
 
 <pre><code class="plaintext">
+commit 9c8b18265a6ec0cb2405aab9c8f2164b796d1c12
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 10:51:54 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 10:51:54 2019 +0530
+
+    Fixed some broken function types
+    
+    Updated Subgroup call and a dependent type expression
+
+ Code/Quotient_Group.idr | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 042aa31ea748cd2b8e9c165c86ff45e86538a96f
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:38:47 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:38:47 2019 +0530
+
+    Removed functions already defined
+    
+    Functions defined in FinUtils with the same name
+
+ Code/LinearAlgebra.idr | 14 --------------
+ 1 file changed, 14 deletions(-)
+
+commit 6d5b16cd3bfb0453e2f1b3ecc4b12176327e50e3
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:30:36 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:30:36 2019 +0530
+
+    Corrected broken code
+
+ Code/Group_property2.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 25b108c811936ce2dea7af50ca33fec272beda95
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:22:39 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:22:39 2019 +0530
+
+    Changed module name for Cosets
+    
+    Fixing import issue
+
+ Code/Group.Cosets.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 81e0ad3424d5e1dc13171fe2a21c2cd459a3b4a5
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:18:41 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:18:41 2019 +0530
+
+    Create FinUtils.idr
+    
+    To fix Sriram's broken code
+
+ FinUtils.idr | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+
+commit 87ece1108102503ee67e493d2114d9a3ed78cf6e
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:18:20 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:18:20 2019 +0530
+
+    Update MultiSolver.idr
+    
+    Changed import from BaseN to FinUtils
+
+ Code/MultiSolver.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 8d909f97ef2104bca45ddf4284fdc200a537aee5
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 08:16:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 08:16:55 2019 +0530
+
+    Added data types, ideals, PIDs
+    
+    Defined data types for different kinds of rings
+    Adjusted some definitions (stemming from rings being defined as multiplicative monoids instead of magmas)
+    Defined ring homomorphisms
+    Defined ideals of rings
+    Defined PIDs
+
+ Code/Ring.idr | 150 +++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 118 insertions(+), 32 deletions(-)
+
+commit d9efdb0f4159a83c229bb5d24fd17ce0565f2e6a
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 06:27:23 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 06:27:23 2019 +0530
+
+    Update report for Chinmaya Kausik
+
+ _reports/chinmaya/chinmaya.md | 70 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 69 insertions(+), 1 deletion(-)
+
+commit e7639fe2b7ebca1f56bfa25b3c1d7b640a6eab45
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 05:27:27 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 05:27:27 2019 +0530
+
+    Proofs about the reverse function
+    
+    Proofs establishing that the reverse function is:
+    
+    1) In some sense, pseudocontravariant with concatenation
+    2) Self-inverse
+
+ Code/Lists.idr | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+commit 3ce383dbe4e3ea4741b024e414268d3f93107fef
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Mon Feb 25 04:54:26 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 04:54:26 2019 +0530
+
+    Created a file for properties of rings
+    
+    Added proofs that conclude 0*a = a*0 = 0
+
+ Code/Ring.Properties.idr | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+
+commit d11d38bbd060a50379d7be3bb11d4e187765fbe1
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Feb 23 11:44:04 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 11:44:04 2019 +0530
+
+    Delete Group.CosetRep.idr
+    
+    It was added to the main directory by accident
+
+ Group.CosetRep.idr | 30 ------------------------------
+ 1 file changed, 30 deletions(-)
+
+commit ff01e90ca2e0205bc1cbca47f54138929d9a8840
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Feb 23 11:43:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 11:43:19 2019 +0530
+
+    Updated CosetRep for fst and snd
+    
+    Also, the previous version was added to the main directory instead of code. It would be great if that could be deleted. My apologies.
+
+ Code/Group.CosetRep.idr | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
+commit 40b31095f9ce59dee55b5c3b409ec5825081e8cc
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 21 23:51:26 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 21 23:51:26 2019 +0530
+
+    Rename Cosets.idr to Group.Cosets.idr
+
+ Code/{Cosets.idr => Group.Cosets.idr} | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 17aa68f9c4c0f2bf64df82c8561629d060d008d8
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 21 23:50:14 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 21 23:50:14 2019 +0530
+
+    Rename CosetRep.idr to Group.CosetRep.idr
+
+ CosetRep.idr => Group.CosetRep.idr | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 9e5eac15ad423edd9adcc2d8d619a77c7c0c0d44
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 21 23:46:25 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 21 23:46:25 2019 +0530
+
+    Showed uniqueness of coset representatives
+    
+    Proof that the coset representative generated by taking the image of a transversal element in g and finding its representative in the transversal is the same as the original element
+
+ CosetRep.idr | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+
+commit 0498228cc7bdce361d0236898151a8c66fd378fe
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 21 23:31:18 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 21 23:31:18 2019 +0530
+
+    Made all cosets left cosets
+
+ Code/Cosets.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit bf0826f2174a15ae3a30dcd8eb26e43154c7b57a
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 21 21:57:23 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 21 21:57:23 2019 +0530
+
+    Deleted unused commented code
+
+ Code/Group.idr | 16 ----------------
+ 1 file changed, 16 deletions(-)
+
+commit 613549b5800ca66cd14135351369e960a1bbb532
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 21 20:27:24 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 21 20:27:24 2019 +0530
+
+    Modified Groups for cosets
+
+ Code/Group.idr | 42 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 28 insertions(+), 14 deletions(-)
+
+commit 82fc26a12b98e295678263f3ea10cd1cc46cefb7
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 21 20:26:31 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 21 20:26:31 2019 +0530
+
+    Modified the file so that it compiles in time
+
+ Code/Cosets.idr | 79 ++++++++++++++++++++++++---------------------------------
+ 1 file changed, 33 insertions(+), 46 deletions(-)
+
+commit b02f6d2014a10f9b59300951b52c1a66d88a4b68
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Feb 15 15:11:49 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 15:11:49 2019 +0530
+
+    Modified the data type Base
+    
+    Added an explicit argument for the base in each constructor and redid the file
+
+ Code/BaseN.idr | 63 +++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 34 insertions(+), 29 deletions(-)
+
+commit 7d8d6365b484d5899611edbeb86f97b1fecadc1e
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Feb 15 01:33:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 01:33:09 2019 +0530
+
+    Added multiplication
+    
+    The algorithms for Basen have been rewritten with the custom data type
+    
+    We can now start proving things again
+
+ Code/BaseN.idr | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+commit 605c36a899765974b13561188c6e907b713b725f
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Feb 15 01:18:58 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Feb 15 01:18:58 2019 +0530
+
+    Redid addition in custom dat type
+    
+    Defined Base as a custom data type emulating lists, and:
+    
+    1) Defined a rev function, a left strip function, a concatenation function, etc.
+    2) Appropriately modified the definition of addition in Base (S n)
+    3) Modified conversion functions slightly
+
+ Code/BaseN.idr | 185 +++++++++++++++++++++++++++------------------------------
+ 1 file changed, 86 insertions(+), 99 deletions(-)
+
+commit 8c1e07f21c30ce1e98f14fde186478710614cbba
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 23:44:57 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 23:44:57 2019 +0530
+
+    Changed a comment
+
+ Code/BaseN.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 9a136469118fe812c03ce67c6ba6ca3426a9afe9
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 23:43:06 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 23:43:06 2019 +0530
+
+    Added Fin-based addition for Fin n
+    
+    Used auxiliary proofs for case-work on the sum exceeding n in (Fin (S n))
+    
+    1) Isn: Checks whether a given (Fin(S n)) is n itself
+    2) IsnisIsn: Proves the definitional equality for Isn
+    3) IsNotnPf: Pulls back falsity of Isn (S n) (FS x) to Isn n x
+    4) Predec: Predecessor function for values not equal to n
+    5) DecIsn: Somewhat like the decidable type for truth of Isn
+    6) addfin: the actual addition function
+
+ Code/BaseN.idr | 41 +++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 37 insertions(+), 4 deletions(-)
+
+commit f94349acf98a14849e19c5a25033c1494d98229c
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 20:21:38 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 20:21:38 2019 +0530
+
+    Added functions for Fin based addfin
+    
+    Added:
+    1) A generator for n in Fin (S n)
+    2) A function that checks whether a given element of (Fin (S n)) is n
+
+ Code/BaseN.idr | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
+commit 2a33ec0b88ec2e9cd1f51d85d63017ea0d5cf9c9
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 17:21:16 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 17:21:16 2019 +0530
+
+    Corrected some indentation etc
+
+ Code/Cosets.idr | 69 +++++++++++++--------------------------------------------
+ 1 file changed, 15 insertions(+), 54 deletions(-)
+
+commit 174815a027a7bc55143eb6843bf7915d4cd3846b
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 17:16:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 17:16:19 2019 +0530
+
+    Removed coset code from Group.idr
+    
+    Following the request from @SideArt
+
+ Code/Group.idr | 54 ------------------------------------------------------
+ 1 file changed, 54 deletions(-)
+
+commit e38c4b475f6f8dada6668b148a533b083fc0653a
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 17:15:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 17:15:07 2019 +0530
+
+    Moved coset code to a new file
+    
+    On a request from @SideArt
+
+ Code/Cosets.idr | 97 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 97 insertions(+)
+
+commit d1302b7a9413fc96e6fd8fa5051141032275f3fa
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 16:44:17 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 16:44:17 2019 +0530
+
+    Added proofs about lists and basen addition
+    
+    Including commented proofs that don't work
+
+ Code/BaseN.idr | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
+
+commit 2bbac7238ee8ab1efd44775d0695ea6b0e418b72
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Thu Feb 14 16:37:36 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 16:37:36 2019 +0530
+
+    Added the code removed by Arka's pull request
+    
+    He used an older fork
+
+ Code/Group.idr | 77 +++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 55 insertions(+), 22 deletions(-)
+
 commit 518c550a061971b0b4ad2a0d069394f10352cdc0
 Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
 AuthorDate: Wed Feb 13 23:04:29 2019 +0530

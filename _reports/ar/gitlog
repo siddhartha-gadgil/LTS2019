@@ -1,3 +1,240 @@
+commit 27d5f934c841f9f0dbe0c10b9a5417a98a6419b1
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:20:21 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:20:21 2019 +0530
+
+    fixed import
+
+ Code/Graphexamples.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 05a234c4b2a40917df642cf39ef93465c30741a6
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:19:47 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:19:47 2019 +0530
+
+    fixed import
+
+ Code/Merge.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit e9e111d19435554f0151ef2f3735912ca51f19c7
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:19:02 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:19:02 2019 +0530
+
+    fixed import
+
+ Code/SortingWithProof.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 024a827f928372325f9485ba1618e07747a3d309
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 09:18:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 09:18:19 2019 +0530
+
+    fixed import
+
+ Code/Ring.Properties.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 29e14f6be8cb6e36e41e61cceecc95cdec5ee5b2
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 00:25:31 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 00:25:31 2019 +0530
+
+    Finished Report
+    
+    I added the links to the relevant commits.
+    
+    -- Abishek (AR-MA210)
+
+ _reports/ar/ar.md | 37 ++++++++++++++++++++-----------------
+ 1 file changed, 20 insertions(+), 17 deletions(-)
+
+commit 56d26de18aed2ef923c0c51dbbc6d78127abeeca
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Feb 25 00:14:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Feb 25 00:14:19 2019 +0530
+
+    correction + more functions
+    
+    I made a correction in the simplification routine and also added some functions which will eventually used to find the rank of a linear transformation.
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+commit 975e01f95e5f1de41329b0a6b5058812fc99e432
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 23 17:07:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 17:07:45 2019 +0530
+
+    Update Report
+    
+    Added to Sorting.
+    
+    -- Abishek (AR-MA210)
+
+ _reports/ar/ar.md | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit af78ca7a21e563d6e5c1568818fa6bd53ce08254
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 23 17:04:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 17:04:55 2019 +0530
+
+    switched to Vectors + more
+    
+    I made the code run using Vectors instead of lists. Also, I added a function which produces the minimum element in a Vector, and used it to check if a Vector is Sorted. This can be upgraded with a proof that the minimum element is the minimum and eventually that a Sorted Vector is Sorted.
+    
+    -- Abishek (AR-MA210)
+
+ Code/InsertionSort.idr | 29 ++++++++++++++++++++++-------
+ 1 file changed, 22 insertions(+), 7 deletions(-)
+
+commit a6f16af8aeb42880a6e96910f46e4f2456665b2c
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 23 16:38:32 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 16:38:32 2019 +0530
+
+    moved something from 'Remaining' to 'Done'
+    
+    Added simplification of matrices.
+    
+    -- Abishek (AR-MA210)
+
+ _reports/ar/ar.md | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit abd348d60ffca6de7adc9b87ceebb493d21aa375
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 23 16:35:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 23 16:35:07 2019 +0530
+
+    Added simplification routine, fixed import
+    
+    I added functions which convert a matrix of ZZPairs to a matrix in simplified form.
+    
+    The file BaseN was imported here, but it got changed and one function was lost, so I added it here.
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 53 ++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 45 insertions(+), 8 deletions(-)
+
+commit 60e1cd5159aa90a194768c3f550f91e1407e9d11
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 16 01:06:46 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 01:06:46 2019 +0530
+
+    Update Linear.idr
+
+ Code/Linear.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 102c70349f413b6947b5fd2127c2c03ada68e307
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 16 01:04:59 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 01:04:59 2019 +0530
+
+    minor additions to report
+    
+    I added to the report.
+    
+    Abishek (AR-MA210).
+
+ _reports/ar/ar.md | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+commit 6ff18f941f2321ae10cc025202d3e35b392274bf
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 16 00:59:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 00:59:45 2019 +0530
+
+    Tweaked ReduceRow
+    
+    I tweaked ReduceRow so that it reduces only those rows with non-zero elements.
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
+
+commit 393a0a25a43db9975a6db7bc5fe39583a3f8cf7e
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Feb 16 00:47:20 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Feb 16 00:47:20 2019 +0530
+
+    checking for Integer solutions
+    
+    I added a function which solves Diophantine equations by checking if the rational number can be simplified to an integer. This is at a rudimentary stage right now because implementing a proof of this would require a GCD function with proof that it is a GCD.
+    
+    -- Abishek (AR-MA210)
+
+ Code/Linear.idr | 36 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
+
+commit a2d5af5a52ba61488a9c0e26fdb0d9ce2e03597d
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Feb 14 15:57:13 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 15:57:13 2019 +0530
+
+    Update ar.md
+
+ _reports/ar/ar.md | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
+
+commit 650094ed4a5784dc8220081b785741d35da06788
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Feb 14 15:50:56 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 15:50:56 2019 +0530
+
+    magnitude of the Determinant + more
+    
+    I found the magnitude of the determinant as a simple extension of the previous functions. The sign can be calculated by a trick I describe in the file. I also propose a variety of extensions of this code:
+    
+    - finding the inverse by row operations (might be easier for proofs)
+    - solving linear systems (with proof) using extensions to  Linear.idr
+    - finding the rank of a linear transformation by counting the number of nonzero diagonal elements in the Diagonal Form.
+    
+    -- Abishek (AR-MA210)
+
+ Code/LinearAlgebra.idr | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+
+commit 93aa06d16a4a1a7fb3e1e006d6ae05559286a6fc
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Feb 14 15:44:18 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 14 15:44:18 2019 +0530
+
+    Added Report
+    
+    I filled in most of the report.
+    
+    -- Abishek (AR-MA210.
+
+ _reports/ar/ar.md | 66 +++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 64 insertions(+), 2 deletions(-)
+
 commit a302e8f2a1708d4dad8b5b515a9bb4435fdd86c1
 Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
 AuthorDate: Wed Feb 13 18:59:17 2019 +0530
