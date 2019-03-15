@@ -34,4 +34,4 @@ IsSorted n v = (k : Fin n) -> (SortProof n v k)
 total
 SortedVect : (n : Nat) -> (v : (NatVect n)) -> Type
 SortedVect n v = (v_sorted : (NatVect n) **
-                 (perm : (PermC n) ** (((applyPerm n Nat perm v) = v_sorted), (IsSorted n v))))
+                 (perm : (PermC n) ** (((applyPerm n Nat perm v) = v_sorted), (IsSorted n v_sorted))))
