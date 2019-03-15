@@ -1,0 +1,85 @@
+checking BaseN.idr
+checking Bezout.idr
+checking Choice.idr
+checking congruence.idr
+checking Divisors.idr
+checking Field.idr
+checking Finite.idr
+checking FinUtils.idr
+checking fn_to_vect.idr
+checking gcd.idr
+checking GCDZZ.idr
+checking Graph_alt.idr
+ Can't find import Matrix
+checking Graphexamples.idr
+checking Graph.idr
+checking GroupCosetRep.idr
+checking GroupCosets.idr
+checking Group.FiniteGenerate.idr
+checking Group.idr
+checking Group_property2.idr
+checking Group_property.idr
+checking InsertionSort.idr
+checking LectureEvens.idr
+checking Lecture.GCD.idr
+checking Lecture.Intro.idr
+checking Lecture.NatTree.idr
+checking Lecture.RecRule.idr
+checking Lecture.Tuple.idr
+checking LinearAlgebra.idr
+checking Linear.idr
+checking Lists.idr
+checking Merge.idr
+checking Monoid.idr
+checking MultiSolver.idr
+checking NatOrder.idr
+NatOrder.idr:149:17-18:
+    |
+149 | leqTotalOrder = ((leqRefl, leqAntiSymmetric, leqTransitive), leqTotal)
+    |                 ~~
+When checking right hand side of leqTotalOrder with expected type
+        isTotalOrder LEQ
+
+When checking argument b to constructor Builtins.MkPair:
+        Type mismatch between
+                InclusiveEither (LEQ a1 b2) (LEQ b2 a1) (Type of leqTotal)
+        and
+                (a : Nat) ->
+                (b : Nat) ->
+                InclusiveEither (k : Nat ** plus a k = b)
+                                (k : Nat ** plus b k = a) (Expected type)
+        
+        Specifically:
+                Type mismatch between
+                        InclusiveEither (k : Nat ** plus a1 k = b2)
+                                        (k : Nat ** plus b2 k = a1)
+                and
+                        (a : Nat) ->
+                        (b : Nat) ->
+                        InclusiveEither (k : Nat ** plus a k = b)
+                                        (k : Nat ** plus b k = a)
+
+checking NatUtils.idr
+checking Order.idr
+checking PermCons.idr
+checking Permutation.idr
+checking pigeonhole.idr
+checking Primes.idr
+checking Quicksort.idr
+checking Quotient_Group.idr
+Quotient_Group.idr:40:61-57:64:
+   |
+40 | Coset_property_1 h (+) pfh g (*) pfg pfSub a b pf_a_in_Cb = let
+   |                                                             ~~~ ...
+When checking right hand side of Coset_property_1 with expected type
+        Is_in_Coset h (+) pfh g (*) pfg pfSub b a
+
+Can't infer type for {letval_123}
+
+checking Rationals.idr
+checking Ring.idr
+checking Ring.Properties.idr
+checking Sign.idr
+checking SortingWithProof.idr
+checking ZZ.idr
+checking ZZUtils.idr
