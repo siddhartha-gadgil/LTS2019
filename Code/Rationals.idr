@@ -240,11 +240,44 @@ addInverseRight x a = rewrite (multCommutativeZ (snd x) (fst x)) in
 ||| this equal to (1,1).
 multInverseLeft: (x: ZZPair) -> (a: NotZero (fst x)) -> (b: NotZero (snd x)) ->
 (MultiplyRationals x b (MultInverse x a b) (xAndInverseNotZeroMult x j k)) = ((fst x)*(snd x), (fst x)*(snd x))
-multInverseLeft x a b = rewrite (multCommutativeZ (snd x) (fst x)) in 
+multInverseLeft x a b = rewrite (multCommutativeZ (snd x) (fst x)) in
                         Refl
+
 |||The multiplicative inverse of x times itself is equal to ((fst x)*(snd x), (fst x)*(snd x)). A custom equality type is probably required to set
 ||| this equal to (1,1).
 multInverseRight: (x: ZZPair) -> (a: NotZero (fst x)) -> (b: NotZero (snd x)) ->
 (MultiplyRationals (MultInverse x a b) (xAndInverseNotZeroMult x j k) x b ) = ((fst x)*(snd x), (fst x)*(snd x))
 multInverseRight x a b = rewrite (multCommutativeZ (snd x) (fst x)) in
                         Refl
+
+||| If a is not equal to zero and b is not equal to zero, their product is not equal to zero.
+productNonZero: (NotZero a) -> (NotZero b) -> (NotZero (a*b))
+productNonZero PositiveZ PositiveZ = PositiveZ
+productNonZero PositiveZ NegativeZ = NegativeZ
+productNonZero NegativeZ PositiveZ = NegativeZ
+productNonZero NegativeZ NegativeZ = PositiveZ
+
+|||AddRationals is associative. It requires the helper function productNonZero.
+plusAssociativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (z: ZZPair) -> (c: NotZero (snd z)) -> 
+((AddRationals (AddRationals x a y b) (productNonZero a b) z c) = (AddRationals x a (AddRationals y b z c) (productNonZero b c)))
+plusAssociativeQ x a y b z c = rewrite (multAssociativeZ (snd x) (snd y) (snd z)) in
+                               rewrite (multDistributesOverPlusLeftZ ((fst x)*(snd y)) ((snd x)*(fst y)) (snd z)) in
+                               rewrite (sym (plusAssociativeZ (((fst x)*(snd y))*(snd z)) (((snd x)*(fst y))*(snd z)) (((snd x)*(snd y))*(fst z)) )) in
+                               rewrite (sym (multAssociativeZ (snd x) (snd y) (fst z))) in
+                               rewrite (sym (multAssociativeZ (snd x) (fst y) (snd z))) in
+                               rewrite (sym (multAssociativeZ (fst x) (snd y) (snd z))) in
+                               rewrite (multDistributesOverPlusRightZ (snd x) ((fst y)*(snd z)) ((snd y)*(fst z)) ) in
+                               Refl
+
+
+|||MultiplyRationals is associative. It requires the helper function productNonZero.
+multAssociativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (z: ZZPair) -> (c: NotZero (snd z)) -> 
+((MultiplyRationals (MultiplyRationals x a y b) (productNonZero a b) z c) = (MultiplyRationals x a (MultiplyRationals y b z c) (productNonZero b c)))
+multAssociativeQ x a y b z c = rewrite sym (multAssociativeZ (fst x) (fst y) (fst z)) in
+                               rewrite sym (multAssociativeZ (snd x) (snd y) (snd z)) in
+                               Refl
+
+
+
+
+
