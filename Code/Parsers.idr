@@ -4,7 +4,7 @@ module Parsers
 
 data ParseResult : Type -> Type where
   Success : {a: Type} -> (result : a) -> (rest: List Char) -> ParseResult a
-  Failed : {a: Type} -> (rest: List Char) -> ParseResult a
+  Failed : {a: Type} ->  ParseResult a
 
 Parser: Type -> Type
 Parser a = (List Char) -> ParseResult a
@@ -18,9 +18,9 @@ parse p s = parseChars p (unpack s)
 
 charPred : (Char -> Bool) -> Parser Char
 charPred p l = (case l of
-                     [] => Failed  ([])
+                     [] => Failed
                      (x :: xs) =>
-                       if (p x) then (Success x xs) else Failed (x :: xs))
+                       if (p x) then (Success x xs) else Failed)
 
 charLit : Char -> Parser Char
 charLit c = charPred (\x => x == c)
@@ -28,26 +28,26 @@ charLit c = charPred (\x => x == c)
 map : {a: Type} -> {b: Type} -> Parser a -> (a -> b) -> Parser b
 map p f cs = (case (p cs) of
                            (Success  result rest) => Success  (f result) rest
-                           (Failed  rest) => Failed  rest)
+                           Failed => Failed)
 
 (++) : {a : Type} -> {b: Type} -> Parser a -> Parser b -> Parser (Pair a b)
 (++) p q l = (case p l of
                        (Success result1 rest1) =>
                           (case (q rest1) of
                               (Success result2 rest2) => Success ((result1, result2)) rest2
-                              (Failed rest2) => Failed l)
-                       (Failed rest) => Failed rest)
+                              Failed => Failed)
+                       Failed => Failed)
 
 
 charsLit: (List Char) -> Parser (List Char)
 charsLit []  l = Success [] l
-charsLit (x :: xs) [] = Failed []
+charsLit (x :: xs) [] = Failed
 charsLit (x :: xs) (a :: bs) =
                   (case charLit x (a :: bs) of
                         (Success result1 rest) => (case (charsLit xs bs) of
                                 (Success result2 rest) => Success (result1 :: result2) rest
-                                (Failed rest) => Failed (a :: bs))
-                        (Failed rest) => Failed rest)
+                                Failed => Failed)
+                        Failed => Failed)
 
 
 
@@ -57,12 +57,12 @@ S s = map (charsLit (unpack s)) pack
 (||) : {a: Type} -> Parser a -> Parser a -> Parser a
 (||) p q l = (case (p l) of
                        (Success result rest) => Success result rest
-                       (Failed rest) => q rest)
+                       Failed => q l)
 
 repParse: {a: Type} -> Parser a -> (inp: List Char) -> (accum: List a) -> ParseResult (List a)
 repParse p inp accum = case (p inp) of
                             (Success result rest) => repParse p rest (result :: accum)
-                            (Failed rest) => Success accum inp
+                            Failed => Success accum inp
 
 repRev : {a: Type} -> Parser a -> Parser (List a)
 repRev p l =  repParse p l []
@@ -89,13 +89,13 @@ nat = map (rep1 (charPred isDigit)) (natFromChars)
 
 eof : Parser Unit
 eof [] = Success () []
-eof (x :: xs) = Failed (x :: xs)
+eof (x :: xs) = Failed
 
 filter : {a: Type} -> Parser a -> (a -> Bool) -> Parser a
 filter p pred l = case p l of
                        (Success result rest) =>
-                         if pred result then Success result rest else Failed l
-                       (Failed rest) => Failed rest
+                         if pred result then Success result rest else Failed
+                       Failed => Failed
 
 infix 10 +>
 
@@ -103,8 +103,8 @@ infix 10 +>
 (+>) p q l = (case p l of
                        (Success result1 rest1) => (case (q rest1) of
                                       (Success result2 rest2) => Success result1 rest2
-                                      (Failed rest2) => Failed l)
-                       (Failed rest) => Failed rest)
+                                      Failed => Failed)
+                       Failed => Failed)
 
 infix 11 <+
 
@@ -112,8 +112,8 @@ infix 11 <+
 (<+) p q l = (case p l of
                       (Success result1 rest1) => (case (q rest1) of
                                       (Success result2 rest2) => Success result2 rest2
-                                      (Failed rest2) => Failed l)
-                      (Failed rest) => Failed rest)
+                                      Failed => Failed)
+                      Failed => Failed)
 
 repSep: {a: Type} -> Parser a -> Char -> Parser (List a)
 repSep p c =
@@ -150,16 +150,16 @@ flatMapWithNext p parsers input =
   case p input of
           (Success result1 rest1) => (case (parsers result1) rest1 of
                     (Success result2 rest) => Success result2 rest
-                    (Failed rest) => Failed input)
-          (Failed rest) => Failed rest
+                    Failed => Failed)
+          Failed => Failed
 
 mapMaybe : {a : Type} -> {b: Type} -> Parser a -> (a -> Maybe b) -> Parser b
 mapMaybe p f s = case p s of
                       (Success result rest) =>
                         (case f result of
-                              Nothing => Failed s
+                              Nothing => Failed
                               (Just b) => Success b rest)
-                      (Failed rest) => Failed rest
+                      Failed => Failed
 
 letter: Parser Char
 letter = charPred (\x => 'a' <= x && x <= 'z')
