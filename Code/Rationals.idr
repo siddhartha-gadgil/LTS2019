@@ -140,16 +140,16 @@ CheckIsQuotientZ (NegS k) (NegS j) x = case ((IsRationalZPOS ((Pos (S k)), (Pos 
 -- aByd and bByd are taken from the file 'Divisors.idr' (by Shafil)
 
 |||Extracts a/gcd(a,b) from the definition of GCDZ
-aByd:GCDZ a b d ->ZZ
-aByd dGcdab = (fst (fst (fst (snd dGcdab))))
+aBydNum:GCDZ a b d ->ZZ
+aBydNum dGcdab = (fst (fst (fst (snd dGcdab))))
 
 |||Extracts b/gcd(a,b) from the definition of GCDZ
-bByd:GCDZ a b d ->ZZ
-bByd dGcdab = (fst (snd (fst (snd dGcdab))))
+bBydDen:GCDZ a b d ->ZZ
+bBydDen dGcdab = (fst (snd (fst (snd dGcdab))))
 
 |||A helper routine which simplifies a rational number.
 simplification: (a: ZZ) -> (b: ZZ) -> (NotBothZeroZ a b) -> (y: ZZPair ** (GCDZ (fst y) (snd y) 1))
-simplification a b prf = ((aByd (snd (gcdZZ a b prf)), bByd (snd (gcdZZ a b prf))) ** (divideByGcdThenGcdOne (snd (gcdZZ a b prf))))
+simplification a b prf = ((aBydNum (snd (gcdZZ a b prf)), bBydDen (snd (gcdZZ a b prf))) ** (divideByGcdThenGcdOne (snd (gcdZZ a b prf))))
 
 |||If b is not zero, then it is not the case that both 'a' and 'b' are zero.
 NotZeroNotBothZero: (a: ZZ) -> (b: ZZ) -> (NotZero b) -> (NotBothZeroZ a b)
@@ -320,6 +320,3 @@ multAssociativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZ
 multAssociativeQ x a y b z c = rewrite sym (multAssociativeZ (fst x) (fst y) (fst z)) in
                                rewrite sym (multAssociativeZ (snd x) (snd y) (snd z)) in
                                Refl
-
-
-
