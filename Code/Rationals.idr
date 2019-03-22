@@ -57,11 +57,22 @@ data ZZNotZero : ZZ -> Type where
   ZZNegativeNotZero : ( n: ZZ ) -> ZZNotZero n -> ZZNotZero (-n)
   ZZPositiveNotZero : ( m: ZZ ) -> LTE 1 (fromIntegerNat (cast(m)))  -> ZZNotZero m
 
+-- A section on the custom equality of Rationals
 
 --Type for equality of two Rationals
-data EqRat : (x: ZZPair) -> (y: ZZPair) -> ((fst x)*(snd y) = (fst y)*(snd x)) -> Type where
-  IdEq : (m : ZZPair) -> EqRat m m Refl
-  MulEq : (x: ZZPair) -> (y: ZZPair) -> (prf : (fst x)*(snd y) = (fst y)*(snd x)) -> EqRat x y prf
+EqRat : (x: ZZPair) -> (NotZero (snd x)) -> (y: ZZPair) -> (NotZero (snd y)) -> Type
+EqRat x a y b = (fst x)*(snd y)=(snd x)*(fst y)
+
+|||The analog of 'Refl' for equality of rationals.
+EqRatRefl: (x: ZZPair) -> (a: NotZero (snd x)) -> (EqRat x a x a)
+EqRatRefl x a = rewrite (multCommutativeZ (fst x) (snd x)) in
+                  Refl
+
+|||The analog of 'sym' for equality of rationals.
+EqRatSym: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (EqRat x a y b) -> (EqRat y b x a)
+EqRatSym x a y b z = rewrite (multCommutativeZ (snd y) (fst x)) in
+                     rewrite (multCommutativeZ (fst y) (snd x)) in
+                      sym z
 
 make_rational : (p: Nat) -> (q: ZZ) -> ZZNotZero q -> ZZPair
 make_rational p q x = (fromInt(toIntegerNat(p)), q)
@@ -121,8 +132,41 @@ CheckIsQuotientZ (NegS k) (NegS j) x = case ((IsRationalZPOS ((Pos (S k)), (Pos 
                                             (Left l) =>  Left (QRproof4 (Pos (S k)) (Pos (S j)) Refl Refl l)
                                             (Right r) => Right ((Pos (S k)), (Pos (S j)))
 
+-- The following section is on simplification of rationals. There was a function written earlier,
+-- called simplifyRational which used the existence of the numeric type 'Double' in Idris so that
+-- simplification could actually be done. This has now been superseded by the functions below as
+-- the GCD with proof has now been implemented.
+
+-- aByd and bByd are taken from the file 'Divisors.idr' (by Shafil)
+
+|||Extracts a/gcd(a,b) from the definition of GCDZ
+aByd:GCDZ a b d ->ZZ
+aByd dGcdab = (fst (fst (fst (snd dGcdab))))
+
+|||Extracts b/gcd(a,b) from the definition of GCDZ
+bByd:GCDZ a b d ->ZZ
+bByd dGcdab = (fst (snd (fst (snd dGcdab))))
+
+|||A helper routine which simplifies a rational number.
 simplification: (a: ZZ) -> (b: ZZ) -> (NotBothZeroZ a b) -> (y: ZZPair ** (GCDZ (fst y) (snd y) 1))
-simplification a b prf = ?simplification_rhs
+simplification a b prf = ((aByd (snd (gcdZZ a b prf)), bByd (snd (gcdZZ a b prf))) ** (divideByGcdThenGcdOne (snd (gcdZZ a b prf))))
+
+|||If b is not zero, then it is not the case that both 'a' and 'b' are zero.
+NotZeroNotBothZero: (a: ZZ) -> (b: ZZ) -> (NotZero b) -> (NotBothZeroZ a b)
+NotZeroNotBothZero a (Pos (S k)) PositiveZ = RightPositive
+NotZeroNotBothZero a (NegS k) NegativeZ = RightNegative
+
+|||This takes a rational number and simplifies it and provides a proof that it is simplified
+|||(that is, the numerator and denominator have GCD 1)
+simplifyWithProof: (x: ZZPair) -> (NotZero (snd x)) -> (y: ZZPair ** (GCDZ (fst y) (snd y) 1))
+simplifyWithProof x prf = (simplification (fst x) (snd x) (NotZeroNotBothZero (fst x) (snd x) prf))
+
+|||Extracting the simplified rational from the dependent pair.
+simplifyRationalProof: (x: ZZPair) -> (NotZero (snd x)) -> ZZPair
+simplifyRationalProof x prf = fst (simplifyWithProof x prf)
+
+-- below is the old function simplifyRational. I need to make the GCD-based code above
+-- compatible with the code that implements simplifyRational before replacing it.
 
 --To prove that the SimplifyRational works, we can just check if the output is equal to the input
 -- To be done
@@ -258,7 +302,7 @@ productNonZero NegativeZ PositiveZ = NegativeZ
 productNonZero NegativeZ NegativeZ = PositiveZ
 
 |||AddRationals is associative. It requires the helper function productNonZero.
-plusAssociativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (z: ZZPair) -> (c: NotZero (snd z)) -> 
+plusAssociativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (z: ZZPair) -> (c: NotZero (snd z)) ->
 ((AddRationals (AddRationals x a y b) (productNonZero a b) z c) = (AddRationals x a (AddRationals y b z c) (productNonZero b c)))
 plusAssociativeQ x a y b z c = rewrite (multAssociativeZ (snd x) (snd y) (snd z)) in
                                rewrite (multDistributesOverPlusLeftZ ((fst x)*(snd y)) ((snd x)*(fst y)) (snd z)) in
@@ -271,13 +315,11 @@ plusAssociativeQ x a y b z c = rewrite (multAssociativeZ (snd x) (snd y) (snd z)
 
 
 |||MultiplyRationals is associative. It requires the helper function productNonZero.
-multAssociativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (z: ZZPair) -> (c: NotZero (snd z)) -> 
+multAssociativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (z: ZZPair) -> (c: NotZero (snd z)) ->
 ((MultiplyRationals (MultiplyRationals x a y b) (productNonZero a b) z c) = (MultiplyRationals x a (MultiplyRationals y b z c) (productNonZero b c)))
 multAssociativeQ x a y b z c = rewrite sym (multAssociativeZ (fst x) (fst y) (fst z)) in
                                rewrite sym (multAssociativeZ (snd x) (snd y) (snd z)) in
                                Refl
-
-
 
 
 
