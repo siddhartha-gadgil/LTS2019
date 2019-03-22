@@ -18,6 +18,7 @@ data Exp : Ty -> Type where
   App : (a: Ty) -> (b: Ty)  -> (f : Exp (FT a b)) -> (arg: Exp a) -> Exp b
   Sum :  Exp NT -> Exp NT -> Exp NT
   Prod: Exp NT -> Exp NT -> Exp NT
+  Pred: Exp NT -> Exp NT
 
 not: Exp (FT BT BT)
 not = Lam (Var "x" BT) (If (Var "x" BT) (B False) (B True))
@@ -77,6 +78,8 @@ eqExp a b (App x a f arg) (App y b g ar) =
   (eqExp _ _ f g) && (eqExp _ _ arg ar)
 eqExp a b (App x a f arg) y = False
 eqExp NT NT (Sum x z) (Sum p q) = (eqExp NT NT x p) && (eqExp NT NT z q)
+eqExp NT NT (Pred x) (Pred y) = eqExp NT NT x y
+eqExp NT a (Pred x) y = False
 eqExp NT NT (Prod x z) (Prod p q) = (eqExp NT NT x p) && (eqExp NT NT z q)
 eqExp NT b (Sum x z) y = False
 eqExp NT b (Prod x z) y = False
@@ -101,6 +104,7 @@ subs (FT domain codomain) b (Lam var value) x y =
 subs a b (App c a f arg) x y =
   App c a (subs _ _ f x y) (subs c b arg x y)
 subs NT b (Sum z w) x y = Sum (subs NT b z x y) (subs NT b w x y)
+subs NT b (Pred z) x y = Pred (subs NT b z x y)
 subs NT b (Prod z w) x y = Prod (subs NT b z x y) (subs NT b w x y)
 
 data Context : Type where
@@ -126,12 +130,17 @@ simplify ctx BT (EQ x y) = EQ (simplify ctx NT x) (simplify ctx NT y)
 simplify ctx a (If (B True) y z) = y
 simplify ctx a (If (B False) y z) = z
 simplify ctx a (If x y z) = If (simplify ctx _ x) (simplify ctx _ y) (simplify ctx _ z)
-simplify ctx a (Var name a) = Var name a
+simplify ctx a (Var name a) =
+  (case varValue ctx name a of
+        Nothing => Var name a
+        (Just x) => x)
 simplify ctx (FT domain codomain) (Lam var value) = Lam var value
 simplify ctx a (App x a (Lam var value) arg) = subs _ _ value var arg
 simplify ctx a (App x a f arg) = App x a (simplify ctx _ f) (simplify ctx _ arg)
 simplify ctx NT (Sum (N x) (N y)) = N (x + y)
 simplify ctx NT (Sum x y) = Sum (simplify ctx NT x) (simplify ctx NT y)
+simplify ctx NT (Pred (N x)) = N (pred x)
+simplify ctx NT (Pred x) = Pred (simplify ctx NT x)
 simplify ctx NT (Prod (N x) (N y)) = N (x * y)
 simplify ctx NT (Prod x y) = Prod (simplify ctx NT x) (simplify ctx NT y)
 
