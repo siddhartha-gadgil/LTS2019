@@ -1,12 +1,12 @@
 module LittleLang
 
+public export
 data Ty : Type where
   NT : Ty
   BT : Ty
   FT : Ty -> Ty -> Ty
 
-
-
+public export
 data Exp : Ty -> Type where
   N : Nat -> Exp NT
   B : Bool -> Exp BT
@@ -54,35 +54,9 @@ mapTyp (FT y z) (FT w s) (App a (FT y z) f arg) =
           Just(App a (FT w s) g arg)
         )
 
+export
 eqTyp : Ty -> Ty -> Bool
 eqTyp x y = isJust (mapTyp x y (Var "test" x))
-
-eqExp : (a: Ty) -> (b: Ty) -> Exp a -> Exp b -> Bool
-eqExp NT NT (N k) (N l) = k == l
-eqExp BT BT (B x) (B y) = x == y
-eqExp NT b (N k) y = False
-eqExp BT b (B x) y = False
-eqExp BT BT (LTE x z) (LTE p q) = (eqExp NT NT x p) && (eqExp NT NT z q)
-eqExp BT BT (EQ x z) (EQ p q)  = (eqExp NT NT x p) && (eqExp NT NT z q)
-eqExp BT b (LTE x z) y = False
-eqExp BT b (EQ x z) y = False
-eqExp a b (If x z w) (If p q r) =
-  (eqExp BT BT x p) && (eqExp a b z q) && (eqExp a b w r)
-eqExp a b (If x z w) y = False
-eqExp a b (Var name a) (Var other b) = (name == other) && eqTyp a b
-eqExp a b (Var name a) y = False
-eqExp (FT domain codomain) (FT dd cc) (Lam var value) (Lam vr vl) =
-  (eqExp domain dd var vr) && (eqExp codomain cc value vl)
-eqExp (FT domain codomain) b (Lam var value) y = False
-eqExp a b (App x a f arg) (App y b g ar) =
-  (eqExp _ _ f g) && (eqExp _ _ arg ar)
-eqExp a b (App x a f arg) y = False
-eqExp NT NT (Sum x z) (Sum p q) = (eqExp NT NT x p) && (eqExp NT NT z q)
-eqExp NT NT (Pred x) (Pred y) = eqExp NT NT x y
-eqExp NT a (Pred x) y = False
-eqExp NT NT (Prod x z) (Prod p q) = (eqExp NT NT x p) && (eqExp NT NT z q)
-eqExp NT b (Sum x z) y = False
-eqExp NT b (Prod x z) y = False
 
 
 subs: (a: Ty) -> (b: Ty) -> (base: Exp a) -> (x: Exp b) -> (y: Exp b) -> Exp a
@@ -107,6 +81,7 @@ subs NT b (Sum z w) x y = Sum (subs NT b z x y) (subs NT b w x y)
 subs NT b (Pred z) x y = Pred (subs NT b z x y)
 subs NT b (Prod z w) x y = Prod (subs NT b z x y) (subs NT b w x y)
 
+public export
 data Context : Type where
   Empty: Context
   Cons : (name: String) -> (type: Ty) -> (value: Exp type) -> (tail: Context) -> Context
@@ -120,6 +95,7 @@ varValue (Cons x type value tail) name ty =
                (Just x) => Just x)
     else Nothing
 
+export
 simplify : (ctx: Context) -> (a: Ty) -> (exp : Exp a) -> Exp a
 simplify ctx NT (N k) = N k
 simplify ctx BT (B x) = B x
@@ -144,8 +120,22 @@ simplify ctx NT (Pred x) = Pred (simplify ctx NT x)
 simplify ctx NT (Prod (N x) (N y)) = N (x * y)
 simplify ctx NT (Prod x y) = Prod (simplify ctx NT x) (simplify ctx NT y)
 
-interpret : (ctx: Context) -> (a: Ty) -> (exp : Exp a) -> Exp a
-interpret ctx a exp =
-  let next = simplify ctx a exp
-  in
-    if eqExp a a exp next then exp else interpret ctx a next
+reduce : Context -> Exp NT -> Nat
+reduce ctx exp = case (simplify ctx NT exp) of
+                  (N k) => k
+                  x => reduce ctx x
+
+n: Exp NT
+n = Var "n" NT
+
+fac : Exp (FT NT NT)
+fac = Var "fac" (FT NT NT)
+
+prev: Exp NT
+prev = Prod (App NT NT fac (Pred n)) n
+
+rhs : Exp NT
+rhs = If (EQ n (N Z)) (N 1) prev
+
+ctx: Context
+ctx = Cons "fac" (FT NT NT) (Lam n rhs) Empty
