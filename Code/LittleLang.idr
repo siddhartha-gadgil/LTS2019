@@ -139,3 +139,6 @@ rhs = If (EQ n (N Z)) (N 1) prev
 
 ctx: Context
 ctx = Cons "fac" (FT NT NT) (Lam n rhs) Empty
+
+facFn: Nat -> Nat
+facFn n = reduce ctx (App NT NT fac (N n))
