@@ -5,5 +5,7 @@ cd Code
 for file in *.idr
 do
   echo "checking $file"
-  idris --check --package contrib "$file"
+  time idris --check --package contrib "$file"
+  echo "---------------------------------------------------------------------------------"
+  echo ""
 done
