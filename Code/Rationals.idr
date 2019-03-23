@@ -59,6 +59,10 @@ data ZZNotZero : ZZ -> Type where
 
 -- A section on the custom equality of Rationals
 
+|||A rational number is equal to its component representation (Numerator,Denominator)
+pairIsComponents: (x: ZZPair) -> (x=((fst x), (snd x)))
+pairIsComponents (a, b) = Refl
+
 --Type for equality of two Rationals
 EqRat : (x: ZZPair) -> (NotZero (snd x)) -> (y: ZZPair) -> (NotZero (snd y)) -> Type
 EqRat x a y b = (fst x)*(snd y)=(snd x)*(fst y)
@@ -73,6 +77,38 @@ EqRatSym: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd
 EqRatSym x a y b z = rewrite (multCommutativeZ (snd y) (fst x)) in
                      rewrite (multCommutativeZ (fst y) (snd x)) in
                       sym z
+
+
+equalMeansEqualPairs: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (x=y) -> (((fst x), (snd x)) = ((fst y), (snd y)))
+equalMeansEqualPairs x a y b prf = rewrite sym (pairIsComponents x) in
+                                   rewrite sym (pairIsComponents y) in
+                                     prf
+
+
+equalMeansCompEqual: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (x=y) -> ((fst x)=(fst y), (snd x)=(snd y))
+equalMeansCompEqual y a y b Refl = (Refl, Refl)
+
+eqMeansEqRat: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (x=y) -> (EqRat x a y b)
+eqMeansEqRat y a y b Refl = rewrite (multCommutativeZ (fst y) (snd y)) in
+                             Refl
+
+|||(0,1) is "equal" to (0,k) for any nonzero k
+reducedFormZeroLeft: {k: ZZ} -> (a: NotZero k) -> (EqRat (0,1) PositiveZ (0,k) a)
+reducedFormZeroLeft {k} a = rewrite (multZeroLeftZeroZ (k)) in
+                              Refl
+
+|||(0,k) is "equal" to (0,1) for any nonzero k
+reducedFormZeroRight: {k: ZZ} -> (a: NotZero k) -> (EqRat (0,k) a (0,1) PositiveZ )
+reducedFormZeroRight {k} a = rewrite (multZeroRightZeroZ (k)) in
+                              Refl
+
+||| (1,1) is "equal" to (k,k) for any nonzero k
+reducedFormOneLeft: {k: ZZ} -> (a: NotZero k) -> (EqRat (1,1) PositiveZ (k,k) a)
+reducedFormOneLeft {k} a = Refl
+
+||| (k,k) is "equal" to (1,1) for any nonzero k
+reducedFormOneRight: {k: ZZ} -> (a: NotZero k) -> (EqRat (k,k) a (1,1) PositiveZ)
+reducedFormOneRight {k} a = Refl
 
 make_rational : (p: Nat) -> (q: ZZ) -> ZZNotZero q -> ZZPair
 make_rational p q x = (fromInt(toIntegerNat(p)), q)
@@ -191,6 +227,8 @@ xAndInverseNotZeroMult x j k = j
 
 
 
+
+
 {-
 FirstIsInverted : (x: ZZPair) -> (k: ZZNotZero (snd x)) -> (a: ZZ) -> (a = (fst x)) -> ((-a) = fst (AddInverse x k))
 FirstIsInverted x k a prf = (apZZ (\x => -x) a (fst x) prf)
@@ -214,9 +252,6 @@ addinverseSND x k c prf prf1 = trans (SecondStaysSame x k c prf) (prf1)
 -- Proving the field axioms to show that Q is a field.
 -- The first section concerns those axioms which involve only one or two elements of Q.
 
-|||A rational number is equal to its component representation (Numerator,Denominator)
-pairIsComponents: (x: ZZPair) -> (x=((fst x), (snd x)))
-pairIsComponents (a, b) = Refl
 
 |||AddRationals is commutative
 plusCommutativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (AddRationals x a y b) = (AddRationals y b x a)
@@ -320,3 +355,5 @@ multAssociativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZ
 multAssociativeQ x a y b z c = rewrite sym (multAssociativeZ (fst x) (fst y) (fst z)) in
                                rewrite sym (multAssociativeZ (snd x) (snd y) (snd z)) in
                                Refl
+
+
