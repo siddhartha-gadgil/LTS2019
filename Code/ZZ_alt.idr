@@ -1,6 +1,7 @@
 module ZZ_alt
 
 import congruence
+import Quotient_Type
 
 %access public export
 %default total
@@ -156,7 +157,11 @@ IsTrans_ZZ_Rel (a, b) (c, d) (k, l) pf1 pf2 = let
     in
     (plusCancellation_right (plus a l) (plus b k) (plus d c) pf33)
     
-    
+ZZ_Rel_is_EqRel : IsEqRel ZZ1 ZZ_Rel
+ZZ_Rel_is_EqRel = (IsRefl_ZZ_Rel, (IsSym_ZZ_Rel, IsTrans_ZZ_Rel))
+
+ZZ_Quotient : (Quotient_Type ZZ1 ZZ_Rel)
+ZZ_Quotient = quotient_Type ZZ_Rel_is_EqRel    
     
     
     
