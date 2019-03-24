@@ -59,6 +59,13 @@ data ZZNotZero : ZZ -> Type where
 
 -- A section on the custom equality of Rationals
 
+||| If a is not equal to zero and b is not equal to zero, their product is not equal to zero.
+productNonZero: (NotZero a) -> (NotZero b) -> (NotZero (a*b))
+productNonZero PositiveZ PositiveZ = PositiveZ
+productNonZero PositiveZ NegativeZ = NegativeZ
+productNonZero NegativeZ PositiveZ = NegativeZ
+productNonZero NegativeZ NegativeZ = PositiveZ
+
 |||A rational number is equal to its component representation (Numerator,Denominator)
 pairIsComponents: (x: ZZPair) -> (x=((fst x), (snd x)))
 pairIsComponents (a, b) = Refl
@@ -109,6 +116,48 @@ reducedFormOneLeft {k} a = Refl
 ||| (k,k) is "equal" to (1,1) for any nonzero k
 reducedFormOneRight: {k: ZZ} -> (a: NotZero k) -> (EqRat (k,k) a (1,1) PositiveZ)
 reducedFormOneRight {k} a = Refl
+
+|||If a = b and c = d, a*c = b*d
+multEqualEqual: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (d: ZZ) -> (a=b) -> (c=d) -> (a*c=b*d)
+multEqualEqual b b d d Refl Refl = Refl
+
+-- some helper functions for the first case of transitivity
+
+transH1: {x: ZZPair} -> {y: ZZPair} -> {z: ZZPair} -> (((fst x)*(snd y)) = ((snd x)*(fst y))) -> (((fst y)*(snd z)) = ((snd y)*(fst z))) ->
+((((fst x)*(snd y))*((fst y)*(snd z))) = (((snd x)*(fst y))*((snd y)*(fst z))))
+transH1 {x} {y} {z} prf prf1 = (multEqualEqual ((fst x)*(snd y)) ((snd x)*(fst y)) ((fst y)*(snd z)) ((snd y)*(fst z)) prf prf1)
+
+transH2: {x: ZZPair} -> {y: ZZPair} -> {z: ZZPair} -> ((((fst x)*(snd y))*((fst y)*(snd z))) = (((snd x)*(fst y))*((snd y)*(fst z))))
+-> ((((fst x)*(snd z))*((fst y)*(snd y))) = (((snd x)*(fst z))*((fst y)*(snd y))))
+transH2 {x} {y} {z} prf = rewrite (sym (multAssociativeZ (fst x) (snd z) ((fst y)*(snd y)) ) ) in
+                          rewrite (sym (multAssociativeZ (snd x) (fst z) ((fst y)*(snd y)) ) ) in
+                          rewrite (multCommutativeZ (fst y) (snd y)) in
+                          rewrite (multAssociativeZ (snd z) (snd y) (fst y)) in
+                          rewrite (multAssociativeZ (fst x) ((snd z)*(snd y)) (fst y) ) in
+                          rewrite (multCommutativeZ (snd z) (snd y)) in
+                          rewrite (multAssociativeZ (fst z) (snd y) (fst y)) in
+                          rewrite (multCommutativeZ (fst z) (snd y)) in
+                          rewrite (multAssociativeZ (fst x) (snd y) (snd z)) in
+                          rewrite (multCommutativeZ ((snd y)*(fst z)) (fst y)) in
+                          rewrite (multAssociativeZ (snd x) (fst y) ((snd y)*(fst z))) in
+                          rewrite (sym (multAssociativeZ ((fst x)*(snd y)) (snd z) (fst y))) in
+                          rewrite (multCommutativeZ (snd z) (fst y)) in
+                          prf
+
+transH3: {x: ZZPair} -> {y: ZZPair} -> {z: ZZPair} -> ((((fst x)*(snd z))*((fst y)*(snd y))) = (((snd x)*(fst z))*((fst y)*(snd y))))
+-> (b: NotZero (snd y)) -> (k: NotZero (fst y)) -> (((fst x)*(snd z)) = ((snd x)*(fst z)))
+transH3 {x} {y} {z} prf b k = (multRightCancelZ ((fst x)*(snd z)) ((snd x)*(fst z)) ((fst y)*(snd y)) (productNonZero k b) prf)
+
+|||The analog of 'trans' for rationals.
+EqRatTrans: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) ->
+(z: ZZPair) -> (c: NotZero (snd z)) -> (EqRat x a y b) -> (EqRat y b z c) -> (EqRat x a z c)
+EqRatTrans x a y b z c pxy pyz = case (decZero (fst y)) of
+                                      (Yes k) => (transH3 {x} {y} {z} (transH2 {x} {y} {z} (transH1 {x} {y} {z} pxy pyz)) b k )
+                                      (No contra) => ?hole2
+
+-- NOTE: there is another case to be filled in. In the first case, cancellation is possible if the
+-- numerator is nonzero. However, if the numerator of Y is zero, then it remains to be shown that
+-- X and Z are (0,(snd x)) and (0,(snd z)) respectively (and are thus 'equal').
 
 make_rational : (p: Nat) -> (q: ZZ) -> ZZNotZero q -> ZZPair
 make_rational p q x = (fromInt(toIntegerNat(p)), q)
@@ -329,12 +378,6 @@ multInverseRight: (x: ZZPair) -> (a: NotZero (fst x)) -> (b: NotZero (snd x)) ->
 multInverseRight x a b = rewrite (multCommutativeZ (snd x) (fst x)) in
                         Refl
 
-||| If a is not equal to zero and b is not equal to zero, their product is not equal to zero.
-productNonZero: (NotZero a) -> (NotZero b) -> (NotZero (a*b))
-productNonZero PositiveZ PositiveZ = PositiveZ
-productNonZero PositiveZ NegativeZ = NegativeZ
-productNonZero NegativeZ PositiveZ = NegativeZ
-productNonZero NegativeZ NegativeZ = PositiveZ
 
 |||AddRationals is associative. It requires the helper function productNonZero.
 plusAssociativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) -> (z: ZZPair) -> (c: NotZero (snd z)) ->
