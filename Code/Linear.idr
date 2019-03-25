@@ -6,6 +6,7 @@ import Data.Vect
 import GCDZZ
 import ZZUtils
 
+%default total
 %access public export
 
 NatToZZ: Nat -> ZZ
@@ -51,7 +52,9 @@ ApZZ f Refl = Refl
 -- Helper functions for the case ax = 0 --
 
 ZeroSum: (a: ZZ) -> (b: ZZ) -> (a = 0) -> (b = 0) -> (a + b = 0) --sum of two zeroes is zero
-ZeroSum (Pos Z) (Pos Z) Refl Refl = Refl
+ZeroSum a b prf prf1 = rewrite prf in
+                       rewrite (plusZeroLeftNeutralZ (b)) in
+                        prf1
 
 triviality1: (a: ZZ) -> (b: ZZ) -> (b = 0) -> (a*b=0) -- premultiplying 0 by anything returns 0
 triviality1 a b prf = trans (apZZ (\x => a*x) b 0 prf) (multZeroRightZeroZ(a))
