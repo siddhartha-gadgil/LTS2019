@@ -1,3 +1,25 @@
+commit 66aad165c174a867ceb7032e8fed93cc327e5fb6
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sat Mar 2 12:26:02 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sat Mar 2 12:26:02 2019 +0530
+
+    decDiv is complete!
+
+ Code/Primes.idr | 57 ++++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 48 insertions(+), 9 deletions(-)
+
+commit ae26265530c494ce865b3c39d68b646c3bac9a84
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Mar 1 18:31:55 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Mar 1 18:31:55 2019 +0530
+
+    Closer to completing the decDiv function. Hopefully only one case left.
+
+ Code/Primes.idr | 49 ++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 48 insertions(+), 1 deletion(-)
+
 commit 1798fc49166d84bb76a1469bda812231b6c5dfac
 Author:     SS-C4 <srirams@iisc.ac.in>
 AuthorDate: Fri Feb 22 08:38:45 2019 +0530
