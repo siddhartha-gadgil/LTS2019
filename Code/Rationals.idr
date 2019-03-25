@@ -148,16 +148,54 @@ transH3: {x: ZZPair} -> {y: ZZPair} -> {z: ZZPair} -> ((((fst x)*(snd z))*((fst 
 -> (b: NotZero (snd y)) -> (k: NotZero (fst y)) -> (((fst x)*(snd z)) = ((snd x)*(fst z)))
 transH3 {x} {y} {z} prf b k = (multRightCancelZ ((fst x)*(snd z)) ((snd x)*(fst z)) ((fst y)*(snd y)) (productNonZero k b) prf)
 
+|||Nothing is both zero and nonzero.
+NotZeroAndNonZero: (k: ZZ) -> (k=0) -> (NotZero k) -> Void
+NotZeroAndNonZero (Pos (S _)) Refl PositiveZ impossible
+NotZeroAndNonZero (NegS _) Refl NegativeZ impossible
+
+
+|||The integers are an integral domain.
+ZZIntegralDomain: (a: ZZ) -> (b: ZZ) -> (a*b=0) -> (NotZero b) -> (a=0)
+ZZIntegralDomain a b prod bNZ = case (decZero a) of
+                                    (Yes aNZ) => void (NotZeroAndNonZero (a*b) prod (productNonZero aNZ bNZ))
+                                    (No contra) => notNotZeroThenZero (contra)
+
+
+flipSidesAndTerms: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (d: ZZ) -> (a*b=c*d) -> (d*c=b*a)
+flipSidesAndTerms a b c d prf = rewrite (multCommutativeZ (b) (a)) in
+                                rewrite (multCommutativeZ (d) (c)) in
+                                  sym prf
+
+
+|||If ab=cd and d =0 but b is not zero, then a is zero.
+zeroProductZero1: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (d: ZZ) -> (a*b=c*d) -> (d = 0) -> (NotZero b) -> (a=0)
+zeroProductZero1 a b c d prod dZ bNZ = ZZIntegralDomain (a) (b) (trans (prod) (trans (multEqualEqual c c d (Pos 0) Refl dZ) (multZeroRightZeroZ (c)) )) (bNZ)
+
+|||If ab=cd and a=0 but c is not zero, then d is zero.
+zeroProductZero2: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (d: ZZ) -> (a*b=c*d) -> (a = 0) -> (NotZero c) -> (d=0)
+zeroProductZero2 a b c d prod aZ cNZ = zeroProductZero1 d c b a (flipSidesAndTerms a b c d prod) aZ cNZ
+
+|||If the numerator is zero, the fraction is zero.
+allZeroesSame: (x: ZZPair) -> (a: NotZero (snd x)) -> (z: ZZPair) -> (c: NotZero (snd z)) -> (fst x = 0) -> (fst z = 0)
+-> EqRat x a z c
+allZeroesSame x a z c prf prf1 = rewrite prf in
+                                 rewrite prf1 in
+                                 rewrite multZeroLeftZeroZ (snd z) in
+                                 rewrite multZeroRightZeroZ (snd x) in
+                                  Refl
+
 |||The analog of 'trans' for rationals.
 EqRatTrans: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZero (snd y)) ->
 (z: ZZPair) -> (c: NotZero (snd z)) -> (EqRat x a y b) -> (EqRat y b z c) -> (EqRat x a z c)
 EqRatTrans x a y b z c pxy pyz = case (decZero (fst y)) of
                                       (Yes k) => (transH3 {x} {y} {z} (transH2 {x} {y} {z} (transH1 {x} {y} {z} pxy pyz)) b k )
-                                      (No contra) => ?hole2
+                                      (No contra) => (allZeroesSame x a z c (zeroProductZero1 (fst x) (snd y) (snd x) (fst y) pxy (notNotZeroThenZero (contra)) b ) (zeroProductZero2 (fst y) (snd z) (snd y) (fst z) pyz (notNotZeroThenZero (contra)) b ))
 
 -- NOTE: there is another case to be filled in. In the first case, cancellation is possible if the
 -- numerator is nonzero. However, if the numerator of Y is zero, then it remains to be shown that
 -- X and Z are (0,(snd x)) and (0,(snd z)) respectively (and are thus 'equal').
+
+-- UPDATE: Both cases are finished, as shown above.
 
 make_rational : (p: Nat) -> (q: ZZ) -> ZZNotZero q -> ZZPair
 make_rational p q x = (fromInt(toIntegerNat(p)), q)
