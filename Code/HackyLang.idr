@@ -151,3 +151,24 @@ facFn n = getNat ctx (App fac (N n))
 
 facProg: Program
 facProg = Code ctx fac
+
+
+--- Another program, summing lists
+sm: Exp
+sm = Var "sum"
+
+l: Exp
+l = Var "l"
+
+sid: Exp
+sid = If (EQ Null (Right l)) (Left l) (Sum (Left l) (App sm (Right l)))
+
+sctx : Context
+sctx = (Let "sum" (Lam l sid)) :: []
+
+sumProg: Program
+sumProg = Code sctx sm
+
+egList: Exp
+egList = Cons (N 5) (Cons (N 3) (Cons (N 4) Null ))
+--- Run `run sumProg egList` to see lists being added
