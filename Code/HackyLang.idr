@@ -14,6 +14,10 @@ data Exp : Type where
   Sum :  Exp -> Exp -> Exp -- sum
   Prod: Exp -> Exp -> Exp  -- product
   Pred: Exp -> Exp -- predecessor of a natural number
+  Null : Exp
+  Cons: Exp -> Exp -> Exp
+  Left: Exp -> Exp
+  Right : Exp -> Exp
 
 -- substitute `x` by `y` in `base`
 subs:  (base: Exp) -> (x: Exp) -> (y: Exp) -> Exp
@@ -35,6 +39,10 @@ subs (App f arg) x y =
 subs  (Sum z w) x y = Sum (subs  z x y) (subs  w x y)
 subs  (Pred z) x y = Pred (subs   z x y)
 subs  (Prod z w) x y = Prod (subs  z x y) (subs w x y)
+subs Null x y = Null
+subs (Left a) x y = Left (subs a x y)
+subs (Right a) x y = Right (subs a x y)
+subs (Cons a b) x y = Cons (subs a x y) (subs b x y)
 
 data Defn : Type where
   Let : (name: String) -> (value: Exp) -> Defn
@@ -78,6 +86,15 @@ simplify ctx  (Pred (N x)) = N (pred x)
 simplify ctx  (Pred x) = Pred (simplify ctx  x)
 simplify ctx  (Prod (N x) (N y)) = N (x * y)
 simplify ctx  (Prod x y) = Prod (simplify ctx  x) (simplify ctx  y)
+simplify ctx (Left (Cons a b)) = a
+simplify ctx (Right (Cons a b)) = b
+simplify ctx (Left a) = Left (simplify ctx a)
+simplify ctx (Right a) = Right (simplify ctx a)
+simplify ctx (Cons a b) = Cons (simplify ctx a) (simplify ctx b)
+
+
+data Program: Type where
+  Code: (context: Context) -> (main: Exp) -> Program
 
 -- repeatedly simplify an expression till we get a literal natural (or loop forever)
 getNat : Context -> Exp -> Nat
@@ -89,6 +106,8 @@ steps: Context -> Exp -> Nat -> Exp
 steps x y Z = y
 steps x y (S k) = simplify x (steps x y k)
 
+run: Program -> Exp -> Nat
+run (Code context main) exp = getNat context (App main exp)
 
 -- An example
 not: Exp
@@ -119,3 +138,6 @@ ctx = (Let "fac" (Lam n rhs)) :: []
 -- function computing factorial
 facFn: Nat -> Nat
 facFn n = getNat ctx (App fac (N n))
+
+facProg: Program
+facProg = Code ctx fac
