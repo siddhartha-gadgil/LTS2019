@@ -161,7 +161,7 @@ l: Exp
 l = Var "l"
 
 sid: Exp
-sid = If (EQ Null (Right l)) (Left l) (Sum (Left l) (App sm (Right l)))
+sid = If (EQ Null l) (N 0) (Sum (Left l) (App sm (Right l)))
 
 sctx : Context
 sctx = (Let "sum" (Lam l sid)) :: []
