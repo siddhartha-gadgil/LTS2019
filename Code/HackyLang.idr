@@ -70,6 +70,7 @@ simplify ctx  (LTE (N x) (N y)) = B (x <= y)
 simplify ctx  (LTE x y) = LTE (simplify ctx  x) (simplify ctx  y)
 simplify ctx  (EQ (N x) (N y)) = B (x == y)
 simplify ctx  (EQ (B x) (B y)) = B (x == y)
+simplify ctx  (EQ Null Null) = B True
 simplify ctx  (EQ x y) = EQ (simplify ctx  x) (simplify ctx  y)
 simplify ctx (If (B True) y z) = y
 simplify ctx  (If (B False) y z) = z
