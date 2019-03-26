@@ -66,11 +66,20 @@ Simplify an expression in context by one step if possible. The simplifications a
 simplify : (ctx: Context) -> (exp : Exp) -> Exp
 simplify ctx  (N k) = N k
 simplify ctx  (B x) = B x
+simplify ctx  Null = Null
 simplify ctx  (LTE (N x) (N y)) = B (x <= y)
 simplify ctx  (LTE x y) = LTE (simplify ctx  x) (simplify ctx  y)
 simplify ctx  (EQ (N x) (N y)) = B (x == y)
 simplify ctx  (EQ (B x) (B y)) = B (x == y)
 simplify ctx  (EQ Null Null) = B True
+simplify ctx  (EQ Null (N _)) = B False
+simplify ctx  (EQ Null (B _)) = B False
+simplify ctx  (EQ Null (Cons _ _)) = B False
+simplify ctx  (EQ (N _) Null) = B False
+simplify ctx  (EQ (B _) Null) = B False
+simplify ctx  (EQ (Cons _ _) Null) = B False
+simplify ctx  (EQ (B _) (N _)) = B False
+simplify ctx  (EQ (N _) (B _)) = B False
 simplify ctx  (EQ x y) = EQ (simplify ctx  x) (simplify ctx  y)
 simplify ctx (If (B True) y z) = y
 simplify ctx  (If (B False) y z) = z
