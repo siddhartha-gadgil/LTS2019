@@ -36,6 +36,7 @@ We have written in code and illustrated in lectures
 * An interpreter for expressions in `HackyLang` built by recursive application of _simplification_ (__warning:__ simplification may actually complicate).
 * A program in `HackyLang` that can compute the factorial function.
 * Made enhancements to `HackyLang` to include pairs and a notion of running programs.
+* Made a program to sum lists of natural numbers using `HackyLang`.
 
 We hope this is enough to make all the claimed constructions below plausible.
 
