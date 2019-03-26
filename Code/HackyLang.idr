@@ -85,6 +85,11 @@ getNat ctx exp = case (simplify ctx  exp) of
                   (N k) => k
                   x => getNat ctx x
 
+steps: Context -> Exp -> Nat -> Exp
+steps x y Z = y
+steps x y (S k) = simplify x (steps x y k)
+
+
 -- An example
 not: Exp
 not = Lam (Var "x" ) (If (Var "x" ) (B False) (B True))
