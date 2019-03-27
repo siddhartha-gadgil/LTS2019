@@ -30,6 +30,7 @@ layout : report
 1. I created the `Primes` module and defined some useful lemmas and definitions.
   - I created a divisibility type with slight modifications to ensure that it does not admit zero divisors (originally created in __gcd.idr__)
   - I implemented a type `totOrdNat`, which, given `a`, `b` : `Nat` returns a type with a proof if either `a = b`, `a < b` or `a > b`
-  - I defined various other functions as auxxilary for the `decDiv` function, but are useful in their own right in providing contradictions and contrapositives.
+  - I defined various other functions as auxiliary for the `decDiv` function, but are useful in their own right in providing contradictions and contrapositives.
 2. Using all the helper functions defined previously, I defined a `decDiv` function that given `a`, `b`, returns a `Dec (isDivisible a b)` type with proofs and contradictions depending on the values.
-  - Apart from the last case, all other cases are proved. The last case is left as a hole for now. (It requires the euclidean division with proof, which has been done recently, and will be included.)
+  - All cases are complete and `decDiv` is total as well (Required a lot of helpers and extensive use of `rewrite`s for the last case, and was _very difficult_). This will be an important building block for the rest of the _Primes_ project. This was completed in commit [Primes.idr](https://github.com/siddhartha-gadgil/LTS2019/pull/186/commits/66aad165c174a867ceb7032e8fed93cc327e5fb6)
+  - Lots of the named helper functions are useful in an independent setting as well; with respect to divisibility. 
