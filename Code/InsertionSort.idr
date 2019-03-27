@@ -10,7 +10,7 @@ import LTE_Properties
 import SortingWithProof
 
 %access public export
-%default total	
+%default total
 
 Smaller : Nat -> Nat -> Nat
 Smaller Z n = Z
@@ -31,8 +31,8 @@ Min (S a) (S b) = case (Min a b) of
 insert: (k: Nat) -> (Vect n Nat) -> (Vect (S n) Nat)
 insert k Nil = k :: Nil
 insert k (x :: xs) = case (decMin k x) of
-    (left pf) => k :: x :: xs
-    (right pf) => x :: (insert k xs)
+    (Left pf) => k :: x :: xs
+    (Right pf) => x :: (insert k xs)
 
 -----------------------------------------------------------------
 
@@ -46,7 +46,7 @@ VectMin: (n: Nat) -> (Vect n Nat) -> Nat
 VectMin Z [] = Z
 VectMin (S Z) [k] = k
 VectMin (S (S len)) (x :: xs) = Smaller (VectMin (S len) xs) (x)
- 
+
 -----------------------------------------------------------------
 
 
