@@ -105,8 +105,8 @@ reducedFormZeroLeft {k} a = rewrite (multZeroLeftZeroZ (k)) in
                               Refl
 
 |||(0,k) is "equal" to (0,1) for any nonzero k
-reducedFormZeroRight: {k: ZZ} -> (a: NotZero k) -> (EqRat (0,k) a (0,1) PositiveZ )
-reducedFormZeroRight {k} a = rewrite (multZeroRightZeroZ (k)) in
+reducedFormZeroRight: (k: ZZ) -> (a: NotZero k) -> (EqRat (0,k) a (0,1) PositiveZ )
+reducedFormZeroRight k a = rewrite (multZeroRightZeroZ (k)) in
                               Refl
 
 ||| (1,1) is "equal" to (k,k) for any nonzero k
@@ -114,9 +114,8 @@ reducedFormOneLeft: {k: ZZ} -> (a: NotZero k) -> (EqRat (1,1) PositiveZ (k,k) a)
 reducedFormOneLeft {k} a = Refl
 
 ||| (k,k) is "equal" to (1,1) for any nonzero k
-reducedFormOneRight: {k: ZZ} -> (a: NotZero k) -> (EqRat (k,k) a (1,1) PositiveZ)
-reducedFormOneRight {k} a = Refl
-
+reducedFormOneRight: (k: ZZ) -> (a: NotZero k) -> (EqRat (k,k) a (1,1) PositiveZ)
+reducedFormOneRight k a = Refl
 |||If a = b and c = d, a*c = b*d
 multEqualEqual: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (d: ZZ) -> (a=b) -> (c=d) -> (a*c=b*d)
 multEqualEqual b b d d Refl Refl = Refl
@@ -194,8 +193,6 @@ EqRatTrans x a y b z c pxy pyz = case (decZero (fst y)) of
 -- NOTE: there is another case to be filled in. In the first case, cancellation is possible if the
 -- numerator is nonzero. However, if the numerator of Y is zero, then it remains to be shown that
 -- X and Z are (0,(snd x)) and (0,(snd z)) respectively (and are thus 'equal').
-
--- UPDATE: Both cases are finished, as shown above.
 
 make_rational : (p: Nat) -> (q: ZZ) -> ZZNotZero q -> ZZPair
 make_rational p q x = (fromInt(toIntegerNat(p)), q)
@@ -388,7 +385,7 @@ oneMultIdentityLeft x a = rewrite (multOneLeftNeutralZ (fst x)) in
 
 ||| x plus its additive inverse is equal to (0,(snd x)*(snd x)). A custom equality type is probably required to set
 ||| this equal to (0,1).
-addInverseLeft: (x: ZZPair) -> (a: NotZero (snd x)) -> ((AddRationals x a (AddInverse x a) (xAndInverseNotZeroPlus x a)) = (0, (snd x)*(snd x)))
+addInverseLeft: (x: ZZPair) -> (a: NotZero (snd x)) -> ((AddRationals x a (AddInverse x a) (xAndInverseNotZeroPlus x a)) = ((Pos 0), (snd x)*(snd x)))
 addInverseLeft x a = rewrite (multCommutativeZ (fst x) (snd x)) in
                      rewrite (multNegateRightZ (snd x) (fst x)) in
                      rewrite (plusNegateInverseLZ ((snd x)*(fst x)) ) in
@@ -405,16 +402,16 @@ addInverseRight x a = rewrite (multCommutativeZ (snd x) (fst x)) in
 |||x times its multiplicative inverse is equal to ((fst x)*(snd x), (fst x)*(snd x)). A custom equality type is probably required to set
 ||| this equal to (1,1).
 multInverseLeft: (x: ZZPair) -> (a: NotZero (fst x)) -> (b: NotZero (snd x)) ->
-(MultiplyRationals x b (MultInverse x a b) (xAndInverseNotZeroMult x j k)) = ((fst x)*(snd x), (fst x)*(snd x))
+(MultiplyRationals x b (MultInverse x a b) (xAndInverseNotZeroMult x a b)) = ((fst x)*(snd x), (fst x)*(snd x))
 multInverseLeft x a b = rewrite (multCommutativeZ (snd x) (fst x)) in
                         Refl
 
 |||The multiplicative inverse of x times itself is equal to ((fst x)*(snd x), (fst x)*(snd x)). A custom equality type is probably required to set
 ||| this equal to (1,1).
 multInverseRight: (x: ZZPair) -> (a: NotZero (fst x)) -> (b: NotZero (snd x)) ->
-(MultiplyRationals (MultInverse x a b) (xAndInverseNotZeroMult x j k) x b ) = ((fst x)*(snd x), (fst x)*(snd x))
+(MultiplyRationals (MultInverse x a b) (xAndInverseNotZeroMult x a b) x b ) = ((snd x)*(fst x), (snd x)*(fst x))
 multInverseRight x a b = rewrite (multCommutativeZ (snd x) (fst x)) in
-                        Refl
+                         Refl
 
 
 |||AddRationals is associative. It requires the helper function productNonZero.
@@ -436,5 +433,6 @@ multAssociativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZ
 multAssociativeQ x a y b z c = rewrite sym (multAssociativeZ (fst x) (fst y) (fst z)) in
                                rewrite sym (multAssociativeZ (snd x) (snd y) (snd z)) in
                                Refl
-
-
+                               
+                               
+                               
