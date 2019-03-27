@@ -3,7 +3,7 @@ author: Abishek Rajan
 layout : report
 ---
 
-## MA 210 : Midterm Report
+## MA 210 : Final Report
 
 ## Sorting
 
@@ -14,10 +14,14 @@ File: InsertionSort.idr
 1. I defined the `Insert` function which takes a natural number, a sorted list, and adds it into its appropriate position in the list by comparison. 
 2. Using this, I implemented the algorithm through the function `Sort`. [Link Here](https://github.com/siddhartha-gadgil/LTS2019/commit/e23e7f5b2d4df83ab81539da2efc5648da11c130)
 3. In the function `CheckSortedVect`, I implemented a Boolean test to check if a Vector is Sorted. This will be upgraded to a proof. [Link Here](https://github.com/siddhartha-gadgil/LTS2019/commit/af78ca7a21e563d6e5c1568818fa6bd53ce08254)
+4. For working on permutations, I implemented a function which behaves like the `elem` function (which checks for membership of an element in a list or Vector), but with proof, called `improveElem`. Using this, I compared vectors and found all instances of a particular element of a Vector x in another Vector y with proof with `findIn`.
+5. Using the above, I implemented functions which remove an element from a position given a proof that it is at that position `removeElem`.
+6. Using this, I implemented some Boolean tests to check whether a Vector is a permutation of another Vector in `recursiveTest` and `listDifference'.
+7. In the case where two Vectors have the same elements, the function `PermutationBijection` produces the permutation which takes the Vector x to the Vector y.
 
 #### Remaining
 
-It remains to be proved that any Vector which is the output of `Sort` is a sorted vector. Also, it needs to be shown that `Sort` simply permutes the elements of a Vector.
+Although the permutation problem is done, integrating it with the sortedness is very difficult.
 
 ## Linear Algebra
 
@@ -35,9 +39,17 @@ File: Linear.idr
 
 Each of these functions had their own associated helper functions to transition between proofs of equalities.
 
+### Diophantine Equations
+
+1. I found with proof whether or not the equation ax + b = c has an integer solution using the function `DiophantineSolver`. Thus, linear Diophantine equations in one variable are complete.
+2. For the two variable case, the function `homogeneous` is a helper function which transitions between proofs of equalities in the homogeneous case of the two variable Diophantine equation.
+3. I wrote the function `solDifference` which along with `diffIsHomogeneous` proves that if any two pairs satisfy the non-homogeneous equation, then their difference satisfies the homogeneous equation
+4. The function `addToSol` is a helper function which is used in conjugation with `differByHomogeneous` (which was done by Shafil, I only defined the function type) to show that any solution is a particular solution + a homogeneous solution.
+
+
 #### Remaining
 
-To make the program run more smoothly, I need to implement a function which takes a,b,c as input and based on non-zero considerations, uses the appropriate solver to output a solution with proof. Also, simplification of rationals needs to be done (will require the GCD with proof from another project). Also, the Diophantine equation needs a proof that it is a solution, but this will also require the GCD with proof to say that a rational number is actually an integer in disguise.
+This could possibly be extended to n-variable Diophantine equations.
 
 ### Linear Systems
 
@@ -73,7 +85,12 @@ I implemented the non-unique representation of the rational numbers.
 3. Using this, I defined the arithmetic operations and the inclusion of integers into the rationals, with implementation of proofs wherever necessary that denominators/numerators should not be zero. [Link Here](https://github.com/siddhartha-gadgil/LTS2019/commit/080fd5d0065efffb0afb79720220d35fd9b757c7)
 4. I made the function `simplifyRational` work over all ZZPairs by extending the `CalcGCD` function to work over pairs of `ZZ` instead of pairs of `Nat`. [Link Here](https://github.com/siddhartha-gadgil/LTS2019/commit/429fd11b09106392452f09a37a97eb25e7ecf189)
 5. I started proofs that the sum of a rational and its additive inverse is the additive identity. [Link Here](https://github.com/siddhartha-gadgil/LTS2019/commit/ac3ee364e84b3aa82fb602c401499e42bfc8cc0f)
+6. The function `CheckIsQuotientZ` checks if the rational number is equivalent to an integer with proof (for example, 12/4 is 3).
+7. I implemented simplification of rational numbers using a theorem that Shafil proved (dividing two numbers by their GCD makes them coprime) in the function `simplifyWithProof` which returns a simplified rational along with a proof that it is simplified.
+8. I implemented a custom equality type `EqRat` which sets two rational numbers (a,b) (c,d) as equal if ad=bc.
+9. I proved the analogues of reflexivity, symmetry, and transitivity for this type.
+10. Using the above, I proved associativity and commutativity of addition and multiplication, and the existence of identities and inverses for addition and multiplication, which involved a lot of `rewrite` statements. (which is most of the field axioms).
 
 #### Remaining
 
-The proof of the above result needs the GCD to be implemented (for `simplifyRational` to output a proof that the rational is in fact simplified). Also, the corresponding proof involving the multiplicative inverse will require this as well. Using the properties of `ZZ`, the distributive law can be the next step.
+The distributive laws need to be proved.
