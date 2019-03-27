@@ -4,7 +4,7 @@ import ZZ
 import ZZUtils
 import GCDZZ
 import Divisors
-import Rationals_2
+import Rationals
 
 -- The field axioms which require the custom equality EqRat type are verified here.
 
