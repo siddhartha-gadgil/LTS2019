@@ -41,5 +41,6 @@ Given a type `a`, a natural number `q`, an element `j : Fin q` and a vector `v` 
 get the element in position `j` of `v`. Note that this is always well defined.
 
 Note: Define using `inducList` and without pattern matching on the `Fin` family. You may pattern match on Vectors.
+The definition should have only one case, and there should be no case splitting on `Fin`
 -}
 fetchElem : (a: Type) -> (q: Nat) -> (j: Fin q) -> (Vect q a -> a)
