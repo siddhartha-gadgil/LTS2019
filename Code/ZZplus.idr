@@ -55,9 +55,36 @@ plusPassesThrough (a1, a2) (b1, b2) (c1, c2) (d1, d2) pf_ac pf_bd = let
     pf10 : (plus (plus a1 b1) (plus c2 d2) = plus (plus a1 c2) (plus b1 d2)) -- one part 
          = trans (trans (trans (trans (trans pf1 pf3) pf4) pf6) pf8) pf9       
          
+    pf11 : (plus (plus a1 c2) (plus b1 d2) = plus (plus a2 c1) (plus b1 d2))
+         = congruence Nat Nat (plus a1 c2) (plus a2 c1) (\x => (plus x (plus b1 d2))) pf_ac
+    
+    pf12 : (plus (plus a2 c1) (plus b1 d2) = plus (plus a2 c1) (plus b2 d1))
+         = congruence Nat Nat (plus b1 d2) (plus b2 d1) (\x => (plus (plus a2 c1) x)) pf_bd
          
+    pf13 : (plus (plus a2 c1) (plus b2 d1) = plus a2 (plus c1 (plus b2 d1)))
+         = sym (plusAssociative a2 c1 (plus b2 d1))
+         
+    pf14 : (plus c1 (plus b2 d1) = plus (plus b2 d1) c1)
+         = plusCommutative c1 (plus b2 d1)
+         
+    pf15 : (plus (plus b2 d1) c1 = plus b2 (plus d1 c1))
+         = sym (plusAssociative b2 d1 c1)
+    
+    pf16 : (plus c1 (plus b2 d1) = plus b2 (plus d1 c1))
+         = trans pf14 pf15     
+                   
+    pf17 : (plus a2 (plus c1 (plus b2 d1)) = plus a2 (plus b2 (plus d1 c1)))
+         = congruence Nat Nat (plus c1 (plus b2 d1)) (plus b2 (plus d1 c1)) (\x => (plus a2 x)) pf16
+         
+    pf18 : (plus a2 (plus b2 (plus d1 c1)) = plus (plus a2 b2) (plus d1 c1))
+         = plusAssociative a2 b2 (plus d1 c1) 
+         
+    pf19 : (plus (plus a2 b2) (plus d1 c1) = plus (plus a2 b2) (plus c1 d1))
+         = congruence Nat Nat (plus d1 c1) (plus c1 d1) (\x => (plus (plus a2 b2) x)) (plusCommutative d1 c1)                       
+        
+    pf20 = trans (trans (trans (trans (trans (trans pf10 pf11) pf12) pf13) pf17) pf18) pf19
         
     in
-    ?rhs
+    pf20
 
 
