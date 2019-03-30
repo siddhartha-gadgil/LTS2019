@@ -75,6 +75,85 @@ IsRefl_Function_rel : (ty1 : Type) -> (rel1 : ty1 -> ty1 -> Type) -> (pf1 : IsEq
 
 IsRefl_Function_rel ty1 rel1 pf1 ty2 rel2 pf2 f pf_f = pf_f
 
+IsSym_Function_rel : (ty1 : Type) -> (rel1 : ty1 -> ty1 -> Type) -> (pf1 : IsEqRel ty1 rel1) ->
+                     (ty2 : Type) -> (rel2 : ty2 -> ty2 -> Type) -> (pf2 : IsEqRel ty2 rel2) ->
+                     (f : (ty1 -> ty2)) -> (pf_f : Passes_Through ty1 rel1 ty2 rel2 f) ->
+                     (g : (ty1 -> ty2)) -> (pf_g : Passes_Through ty1 rel1 ty2 rel2 g) ->
+                     (Function_rel ty1 rel1 pf1 ty2 rel2 pf2 f g pf_f pf_g) ->
+                     (Function_rel ty1 rel1 pf1 ty2 rel2 pf2 g f pf_g pf_f)
+
+IsSym_Function_rel ty1 rel1 pf1 ty2 rel2 pf2 f pf_f g pf_g pf_rel a b pfab = let
+
+    pf_sym_1 : ((a1 : ty1) -> (b1 : ty1) -> (rel1 a1 b1) -> (rel1 b1 a1))
+        = (fst (snd pf1))
+
+    pf_sym_2 : ((a1 : ty2) -> (b1 : ty2) -> (rel2 a1 b1) -> (rel2 b1 a1))
+        = (fst (snd pf2))
+
+    pf4 : (rel1 b a)
+        = pf_sym_1 a b pfab
+
+    pf5 : (rel2 (f b) (g a))
+        = pf_rel b a pf4
+
+    pf6 : (rel2 (g a) (f b))
+        = pf_sym_2 (f b) (g a) pf5
+    in
+    pf6
+
+IsTrans_Function_rel : (ty1 : Type) -> (rel1 : ty1 -> ty1 -> Type) -> (pf1 : IsEqRel ty1 rel1) ->
+                       (ty2 : Type) -> (rel2 : ty2 -> ty2 -> Type) -> (pf2 : IsEqRel ty2 rel2) ->
+                       (f : (ty1 -> ty2)) -> (pf_f : Passes_Through ty1 rel1 ty2 rel2 f) ->
+                       (g : (ty1 -> ty2)) -> (pf_g : Passes_Through ty1 rel1 ty2 rel2 g) ->
+                       (h : (ty1 -> ty2)) -> (pf_h : Passes_Through ty1 rel1 ty2 rel2 h) ->
+                       (Function_rel ty1 rel1 pf1 ty2 rel2 pf2 f g pf_f pf_g) ->
+                       (Function_rel ty1 rel1 pf1 ty2 rel2 pf2 g h pf_g pf_h) ->
+                       (Function_rel ty1 rel1 pf1 ty2 rel2 pf2 f h pf_f pf_h)
+                       
+IsTrans_Function_rel ty1 rel1 pf1 ty2 rel2 pf2 f pf_f g pf_g h pf_h pf_fg pf_gh a b pf_ab = let
+
+    pf3 : (rel2 (f a) (g b))
+        = pf_fg a b pf_ab
+
+    pf_refl_1 : ((a1 : ty1) -> rel1 a1 a1)
+        = (fst pf1)
+
+    pf_refl_2 : ((a1 : ty2) -> rel2 a1 a1)
+        = (fst pf2)
+
+    -- pf4 : (rel2 (g b) (g b))
+        -- = pf_refl_2 (g b)
+
+    pf5 : (rel2 (g b) (h b))
+        = pf_gh b b (pf_refl_1 b)
+
+    pf_trans_2 : ((a1 : ty2) -> (b1 : ty2) -> (c : ty2) ->
+                 (rel2 a1 b1) -> (rel2 b1 c) -> (rel2 a1 c))
+        = (snd (snd pf2))
+
+    pf6 : (rel2 (f a) (h b))
+        = pf_trans_2 (f a) (g b) (h b) pf3 pf5
+
+    in
+    pf6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {-
 data Quotient_Dependent_Function : (ty : Type) -> (rel : ty -> ty -> Type) ->
