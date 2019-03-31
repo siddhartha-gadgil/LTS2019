@@ -30,7 +30,7 @@ where d = GCD (a,b) in [Bezout.idr](https://github.com/siddhartha-gadgil/LTS2019
 
 ## [gcd.idr](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/gcd.idr)
 1. Implemented `PlusDiv` and `MultDiv` for natural numbers which were later changed to integers in `Divisors.idr`.[Link here](https://github.com/siddhartha-gadgil/LTS2019/commit/be28efe9bbe3c28da17edadb3d7770034a901178)
-2.Made the `euclDivide` function total [Link here](https://github.com/siddhartha-gadgil/LTS2019/commit/11b00d349f82cee4c88aad11c258e9979bcb16f3)
+2. Made the `euclDivide` function total [Link here](https://github.com/siddhartha-gadgil/LTS2019/commit/11b00d349f82cee4c88aad11c258e9979bcb16f3)
 
 ## [Graph.idr ](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/Graph.idr)
 1. The `AdjacentsAreConnected` function returns a proof that 2 adjacent vertices are connected **by an edge** or nothing if they are not connected.
@@ -41,3 +41,36 @@ where d = GCD (a,b) in [Bezout.idr](https://github.com/siddhartha-gadgil/LTS2019
 6. The file [Graphexamples.idr](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/Graphexamples.idr) has a few examples of how to use these functions.
 ## GCD of integers
 1.The file [GCDZZ.idr](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/GCDZZ.idr) has a function `gcdZZ` which returns the gcd of two integers with proof given that not both of them are zero
+
+# Post Midterm
+## [Divisors.idr](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/Divisors.idr)
+1.The function `divideByGcdThenGcdOne` proves that
+gcd ( (a/gcd(a,b)),(b/gcd(a,b)) ) =1
+
+## GCD of integers [GCDZZ.idr](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/GCDZZ.idr)
+1. The function `bezoutCoeffs` takes two integers and a proof that they are not both zero and returns the GCD of the two integers, a proof that it is the gcd and the Bezout coefficients with proof.
+2. The function, `gcdOfMultiple` proves the theorem that if m>0 and a and b are not both zero, then gcd(ma,mb) = m \*gcd (a,b)
+3. The function, `caCoprimeThencDivb` proves the theorem that if c|ab and gcd (a,c) =1 , then c|b
+4. Introduced `GCDZr` type which defines GCD as the greatest of the common divisors and proved the equivalence of the two definitions in the functions `GCDZImpliesGCDZr` and `GCDZrImpliesGCDZ`
+5.  Introduced a `SmallestPosLinComb` which defines the smallest positive linear combination of two integers. Showed that this is equivalent to `GCDZ` in the functions  `gcdIsSmallestPosLinComb` `smallestPosLinCombIsGcd`.
+6. `gcdIsLinComb` function proves that gcd (a,b) is a linear combination of a and b .
+
+## [decDivZ.idr](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/decDivZ.idr)
+1. The function `decDivisibleZ` checks whether one integer is divisible by the other with proof. (It depends on Sriram's decDiv function.) It works for any two integers.
+
+## [ZZUtils.idr](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/ZZUtils.idr)
+1. Defined types  , `IsNonNegative`, `IsNegative`, `NotZero` for integers.
+2. Proved multiplication and addition cancellation laws for integers.
+3. `productOneThenNumbersOne` function  proves  that if (a\*b=1) then either (a=1,b=1) or (a=-1,b=-1)
+3. There are also other useful functions in `ZZUtils`
+
+## [TwoVarDiophEq.idr](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/TwoVarDiophEq.idr)
+ (Done in collaboration with Abhishek)
+1. `aByd` and `bByd` functions extract the values of a/gcd(a,b) and b/gcd(a,b) respectively from the definition of GCDZ.
+2.  Implemented `findAllSolutions` function which  given three integers a, b and c, it outputs either
+a proof that c = xa +yb is impossible or
+a proof that all integers x and y satisfy the equation (this happens when a=b=c=0)
+or 4 integers x1 , y1 , pa and pb such that for any integer k,
+x=x1+k\*pa  y=y1+k\*pb is a solution of c=xa+yb
+and whenever c=xa+yb ,there exists an integer, k such that
+ x=x1+k\*pa  y=y1+k\*pb.
