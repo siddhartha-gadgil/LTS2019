@@ -54,7 +54,7 @@ collections:
     output: true
     permalink: /reports/:title
 
-exclude: ["private/"]
+exclude: ["private/", "Code/", "Assignments/"]
 
 defaults:
   - scope:

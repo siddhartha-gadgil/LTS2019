@@ -1,4 +1,4 @@
-module permutation_with_constructors
+module PermCons
 
 import Data.Vect
 import congruence
@@ -184,7 +184,6 @@ IsBijection n typ f =
 
 ||| Proof that permutations are bijections
 
-
 PermC_are_bij : (n : Nat) -> (typ : Type) -> (perm : PermC n) ->
                 (IsBijection n typ (applyPerm n typ perm) )
 
@@ -193,7 +192,6 @@ PermC_are_bij Z typ perm = (idZ ** (fun, fun)) where
     idZ = applyPerm Z typ perm
     fun : (v : (Vect Z typ)) -> (v = v)
     fun v = Refl
-
 
 PermC_are_bij (S Z) typ perm = (idSZ ** (fun, fun)) where
     idSZ : (Vect (S Z) typ) -> (Vect (S Z) typ)
