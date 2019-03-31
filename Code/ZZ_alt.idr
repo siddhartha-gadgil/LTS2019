@@ -7,7 +7,7 @@ import Quotient_Type
 %default total
 
 ZZ1 : Type
-ZZ1 = (Nat, Nat)
+ZZ1 = (Nat, Nat)	
 	
 ZZ_Rel : (Nat, Nat) -> (Nat, Nat) -> Type
 ZZ_Rel (a, b) (c, d) = ( (plus a d) = (plus b c) )
@@ -161,7 +161,7 @@ ZZ_Rel_is_EqRel : IsEqRel ZZ1 ZZ_Rel
 ZZ_Rel_is_EqRel = (IsRefl_ZZ_Rel, (IsSym_ZZ_Rel, IsTrans_ZZ_Rel))
 
 ZZ_Quotient : (Quotient_Type ZZ1 ZZ_Rel)
-ZZ_Quotient = quotient_Type ZZ_Rel_is_EqRel    
+ZZ_Quotient = Cons_quotient_Type ZZ_Rel_is_EqRel    
     
     
     
