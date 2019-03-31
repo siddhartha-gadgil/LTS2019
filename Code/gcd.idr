@@ -1,9 +1,17 @@
 module gcd
 
 import NatUtils
+import NatOrder
 
 %default total
 %access public export
+
+|||Proof that a < b implies (S a) = b or (S a) < b
+lneqImpliesEqOrLNEQ : (a : Nat) -> (b : Nat) -> (LNEQ a b) -> Either (S a = b) (LNEQ (S a) b)
+lneqImpliesEqOrLNEQ a b ((k ** proofEq), proofNotEq) = case k of
+	Z => void (proofNotEq (rewrite (sym (plusZeroRightNeutral a)) in proofEq))
+	(S Z) => Left (rewrite (plusCommutative (S Z) a) in proofEq)
+	(S (S n)) => Right ((S n ** trans plusSymmetricInS proofEq), nonZeroSumNotEqual (trans plusSymmetricInS proofEq) SIsNotZ)
 
 |||Auxilliary proof for euclidDivide
 --Proof to finish euclidDivide, couldn't add it as a where clause within euclidDivide. If someone knows how to do that, please do so.
@@ -12,18 +20,32 @@ extendedEqualityProof : (a : Nat) -> (b : Nat) -> (q : Nat) -> (r : Nat)->
 extendedEqualityProof a b q r proofSmlEq proofBigEq =
 	trans (cong proofBigEq) (plusConstantRight (S r) b (q * b) proofSmlEq)
 
-||| Given a, b, and a proof that b != 0, returns (q, r) and proofs that a = bq + r, r < b
+||| Given a, b, and a proof that b != 0, returns (q, r) and proofs that a = bq + r, r < b (Old Version)
 --removed possible problems with Rohit's
-euclidDivide : (a : Nat) -> (b : Nat) ->
+euclidDivideOld : (a : Nat) -> (b : Nat) ->
   (b = Z -> Void) -> (q : Nat ** (r : Nat ** ((a = r + (q * b)), LT r b)))
-euclidDivide a Z pf = void(pf Refl)
-euclidDivide Z (S k) SIsNotZ = (Z ** (Z ** (Refl, LTESucc LTEZero)))
-euclidDivide (S n) (S k) SIsNotZ =
-  case (euclidDivide n (S k) SIsNotZ) of
+euclidDivideOld a Z pf = void(pf Refl)
+euclidDivideOld Z (S k) SIsNotZ = (Z ** (Z ** (Refl, LTESucc LTEZero)))
+euclidDivideOld (S n) (S k) SIsNotZ =
+  case (euclidDivideOld n (S k) SIsNotZ) of
 		(q ** (r ** (equalityProof, ltproof))) =>
         case (ltImpliesEqOrLT r (S k) ltproof) of
 						(Right proofSrLTSk) => (q ** ((S r) ** ((cong equalityProof), proofSrLTSk)))
 						(Left proofSreqSk) => ((S q) ** (Z ** ((extendedEqualityProof n (S k) q r proofSreqSk equalityProof), LTESucc LTEZero)))
+
+
+||| Given a, b, and a proof that b != 0, returns (q, r) and proofs that a = bq + r, r < b
+--removed possible problems with Rohit's
+euclidDivide : (a : Nat) -> (b : Nat) -> (Not (b = Z)) ->
+			(q : Nat ** (r : Nat ** (a = r + (q * b), LNEQ r b)))
+euclidDivide _ Z proofeq = void(proofeq Refl)
+euclidDivide Z (S k) SIsNotZ = (Z ** (Z ** (Refl, (LEQZero, ZIsNotS))))
+euclidDivide (S n) (S k) SIsNotZ =
+	case (euclidDivide n (S k) SIsNotZ) of
+		(q ** (r ** (proofEq, proofLNEQ))) =>
+			case (lneqImpliesEqOrLNEQ r (S k) proofLNEQ) of
+				(Right proofSrLNEQSk) => (q ** ((S r) ** ((cong proofEq), proofSrLNEQSk)))
+				(Left proofSrEqSk) => ((S q)** (Z ** ((extendedEqualityProof n (S k) q r proofSrEqSk proofEq), (LEQZero, ZIsNotS))))
 
 |||Type of proof that d divides a
 isDivisible : (a : Nat) -> (d : Nat) -> (Not (d = Z)) -> Type
@@ -45,6 +67,10 @@ divisionReflexive {n} = (S Z ** rewrite multOneLeftNeutral n in Refl)
 isCommonDivisor : (a : Nat) -> (b : Nat) -> (d : Nat) -> (Not (d = Z)) -> Type
 isCommonDivisor a b d proofNotZ = (isDivisible a d proofNotZ, isDivisible b d proofNotZ)
 
+|||Type of proof that d is the GCD of a and b, where atleast one of a and b are non-zero
+isGCD : (a : Nat) -> (b : Nat) -> Either (Not (a = Z)) (Not (b = Z)) -> (d : Nat) -> Type
+isGCD a b notBothZ d = (dIsNotZ : Not (d = Z) ** ((isCommonDivisor a b d dIsNotZ), (n : Nat) -> (proofNotZ : Not (n = Z)) -> (isCommonDivisor a b n proofNotZ) -> (isDivisible d n proofNotZ)))
+
 |||Proof that 1 is a common divisor of all pairs of natural numbers
 oneCommonDivisor : {a : Nat} -> (b : Nat) -> (isCommonDivisor a b (S Z) SIsNotZ)
 oneCommonDivisor {a} {b} = (oneDivides, oneDivides)
@@ -58,11 +84,18 @@ zeroCommonDivisorLeft : {n : Nat} -> (isCommonDivisor Z (S n) (S n) SIsNotZ)
 zeroCommonDivisorLeft {n} = (zeroDivisible, divisionReflexive)
 
 |||Proof that a common divisor of (a, b) is a common divisor of (b, a)
-commonDivisorSymmetric : {a : Nat} -> {b : Nat} -> {d : Nat} -> (isCommonDivisor a b d proofNotZ) -> (isCommonDivisor b a d proofNotZ)
+commonDivisorSymmetric : {a : Nat} -> {b : Nat} -> {d : Nat} -> {proofNotZ : Not (d = Z)} ->
+					(isCommonDivisor a b d proofNotZ) -> (isCommonDivisor b a d proofNotZ)
 commonDivisorSymmetric {a} {b} {d} (proofDividesa, proofDividesb) = (proofDividesb, proofDividesa)
 
+|||Proof d divides a and a = b implies d divides b
+eqConservesDivisible : {a : Nat} -> {b : Nat} -> {d : Nat} -> {proofNotZ : Not (d = Z)} ->
+					(isDivisible a d proofNotZ) -> (a = b) -> (isDivisible b d proofNotZ)
+eqConservesDivisible {a} {d} (n ** proofDivides) Refl = (n ** proofDivides)
+
 |||Proof that d divides a implies d divides c * a
-dividesMultiple : {a : Nat} -> {d : Nat} -> (isDivisible a d proofNotZ) -> (c : Nat)-> (isDivisible (c * a) d proofNotZ)
+dividesMultiple : {a : Nat} -> {d : Nat} -> {proofNotZ : Not (d = Z)} ->
+				(isDivisible a d proofNotZ) -> (c : Nat)-> (isDivisible (c * a) d proofNotZ)
 dividesMultiple {d} (n ** Refl) c = ((c * n) ** (rewrite (multAssociative c n d) in Refl))
 
 |||Proof of distributivity
@@ -75,14 +108,10 @@ distributeProof a b d m n proofDividesa proofDividesb =
 			v2 = plusConstantLeft b (n * d) (m * d) proofDividesb
 
 |||Proof that d is a common divisor of a and b implies d divides a + b
-dividesSum :  {a : Nat} -> {b : Nat} -> {d : Nat} -> (isCommonDivisor a b d proofNotZ)-> (isDivisible (a + b) d proofNotZ)
+dividesSum :  {a : Nat} -> {b : Nat} -> {d : Nat} -> {proofNotZ : Not (d = Z)} ->
+			(isCommonDivisor a b d proofNotZ)-> (isDivisible (a + b) d proofNotZ)
 dividesSum {a} {b} {d} ((m ** proofDividesa), (n ** proofDividesb)) =
 	((m + n) ** (distributeProof a b d m n proofDividesa proofDividesb))
-
-|||Proof d divides a and a = b implies d divides b
-eqConservesDivisible : {a : Nat} -> {b : Nat} -> {d : Nat} -> {proofNotZ : Not (d = Z)} ->
-					(isDivisible a d proofNotZ) -> (a = b) -> (isDivisible b d proofNotZ)
-eqConservesDivisible {a} {d} (n ** proofDivides) Refl = (n ** proofDivides)
 
 |||Proof that d is a common divisor of a and b implies d divides a * x + b * y
 dividesLinearCombination :  {a : Nat} -> {b : Nat} -> {d : Nat} -> {proofNotZ : Not (d = Z)} ->
@@ -90,3 +119,52 @@ dividesLinearCombination :  {a : Nat} -> {b : Nat} -> {d : Nat} -> {proofNotZ : 
 						(isDivisible ((x * a) + (y * b)) d proofNotZ)
 dividesLinearCombination {proofNotZ = prf} commonDivisorProof x y =
 	dividesSum {proofNotZ = prf} ((dividesMultiple {proofNotZ = prf} (fst commonDivisorProof) x), (dividesMultiple {proofNotZ = prf} (snd commonDivisorProof) y))
+
+|||Proof that d divides n and n != 0 implies n >= d
+dividesImpliesGEQ : {n : Nat} -> {d : Nat} -> {proofNotZ : Not (d = Z)} -> (isDivisible n d proofNotZ) -> (Not (n = Z)) -> (LEQ d n)
+dividesImpliesGEQ {n} {d} {proofNotZ} (k ** proofEq) nNotZ =
+	case k of
+		Z => void (nNotZ proofEq)
+		(S l) =>  ((l * d) ** (sym proofEq))
+
+|||Proof that d divides (a + b) and d divides b implies d divides a
+dividesDifference : {a : Nat} -> {b : Nat} -> {d : Nat} -> {proofNotZ : Not (d = Z)} -> (isDivisible (a + b) d proofNotZ) -> (isDivisible b d proofNotZ) -> (isDivisible a d proofNotZ)
+dividesDifference {a} {b} {d} {proofNotZ} (n ** proofDivSum) (m ** proofDivb) =
+	case (leqDivConstantRight proofNotZ (eqPreservesLEQ (a ** (plusCommutative b a)) proofDivb proofDivSum)) of
+	(l ** proofEq) =>
+		(l ** sym (plusLeftCancel b (l * d) a (rewrite (plusCommutative b a) in (rewrite proofDivSum in (rewrite proofDivb in (trans (sym (multDistributesOverPlusLeft m l d)) (cong {f = (\n => n * d)} proofEq)))))))
+
+|||Proof that if n = r + q * d, where r ! = 0 and r < d,  then n is not divisible by d
+notDivisible : {n : Nat} -> {r : Nat} -> {q : Nat} -> {d : Nat} -> (dNotZ : Not (d = Z)) ->
+			(Not (r = Z)) -> (LNEQ r d) -> (n = r + (q * d)) -> (Not (isDivisible n d dNotZ))
+notDivisible {n} {r} {q} {d} dNotZ rNotZ proofLNEQ proofEq (k ** proofDiv) =
+	(leqImpliesNotLNEQ dLEQr proofLNEQ) where
+		dLEQr = (dividesImpliesGEQ {proofNotZ = dNotZ} dDividesr rNotZ) where
+			dDividesr = dividesDifference {proofNotZ = dNotZ} (k ** (trans (sym proofEq) proofDiv)) (q ** Refl)
+
+|||Decision procedure to check if n is divisible by d
+decDivisible : (n : Nat) -> (d : Nat) -> (proofNotZ : Not (d = Z)) -> Dec (isDivisible n d proofNotZ)
+decDivisible n d proofNotZ = case (euclidDivide n d proofNotZ) of
+	(q ** (r ** ((proofEq, proofLNEQ)))) =>
+	case r of
+		Z => Yes (q ** proofEq)
+		(S k) => No (notDivisible proofNotZ SIsNotZ proofLNEQ proofEq)
+
+|||Proof that d divides a, d divides b and a = r + q * b implies d divides r
+dividesDiffExtend : {a : Nat} -> {b : Nat} -> {q : Nat} -> {r : Nat} -> {proofNotZ : Not (d = Z)} ->
+ 				(isDivisible a d proofNotZ) -> (isDivisible b d proofNotZ) -> (a = r + (q * b)) -> (isDivisible r d proofNotZ)
+dividesDiffExtend {a} {b} {q} {r} {proofNotZ = dNotZ} dDividesa dDividesb proofEq =
+	dividesDifference {proofNotZ = dNotZ} (eqConservesDivisible dDividesa proofEq) (dividesMultiple dDividesb q)
+
+|||Returns the GCD of a and b with proof that it is the GCD
+euclidGCD : (a : Nat) -> (b : Nat) -> (notBothZ : (Either (Not (a = Z)) (Not (b = Z)))) -> (d : Nat ** (isGCD a b notBothZ d))
+euclidGCD Z Z notBothZ = case notBothZ of
+				Left notZ => void (notZ Refl)
+				Right notZ => void (notZ Refl)
+euclidGCD (S a) Z notBothZ = ((S a) ** (SIsNotZ ** (zeroCommonDivisorRight, (\n : Nat => (\proofNotZ => (\proofCommonDivisor => (fst proofCommonDivisor)))))))
+euclidGCD Z (S b) notBothZ = ((S b) ** (SIsNotZ ** (zeroCommonDivisorLeft, (\n : Nat => (\proofNotZ => (\proofCommonDivisor => (snd proofCommonDivisor)))))))
+euclidGCD (S a) (S b) notBothZ = case (euclidDivide (S a) (S b) SIsNotZ) of
+			(q ** (r ** (proofEq, proofLEQ))) =>
+				case (euclidGCD (S b) r (Left SIsNotZ)) of
+				(d ** (dNotZ ** (commonDivisorProof,  largestDivisorProof))) =>
+					(d ** (dNotZ ** (((eqConservesDivisible {proofNotZ = dNotZ} (dividesSum {proofNotZ = dNotZ} ((snd commonDivisorProof), dividesMultiple {proofNotZ = dNotZ} (fst commonDivisorProof) q)) (sym proofEq)), (fst commonDivisorProof)), (\n => (\nNotZ => (\commonDivisor => (largestDivisorProof n nNotZ ((snd commonDivisor), (dividesDiffExtend {proofNotZ = nNotZ} (fst commonDivisor) (snd commonDivisor) proofEq)))))))))

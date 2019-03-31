@@ -57,7 +57,7 @@ decDivisibleZnn (Pos (S Z)) (Pos (S (S k))) NonNegative NonNegative= No (oneDoes
 decDivisibleZnn (Pos (S (S k))) (Pos Z) NonNegative NonNegative= No (zeroDoesntDivideNonZero PositiveZ )
 decDivisibleZnn (Pos (S (S k))) (Pos (S j)) NonNegative NonNegative=
    (case decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) (S j)
-               {euc = euclidDivide (S(S k)) (S j) (succNotZ)} of
+               {euc = euclidDivideOld (S(S k)) (S j) (succNotZ)} of
          (Yes prf) => (Yes (isDivisibleImpliesIsDivisibleZ prf))
          (No contra) => No(contra . (isDivisibleZImpliesIsDivisible {b =(S j)} Positive)))
 

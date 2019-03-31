@@ -303,7 +303,7 @@ genFact (S j) Z = []
 genFact (S Z) (S k) = [(S Z ** oneDiv (S Z))]
 genFact (S (S j)) (S k) =
     case (decDiv (S (S j)) (LTESucc (LTESucc (LTEZero{right = j}))) (S k)
-          {euc=euclidDivide (S (S j)) (S k) SIsNotZ }) of
+          {euc=euclidDivideOld (S (S j)) (S k) SIsNotZ }) of
                (Yes prf) => (genFact (S (S j)) k) ++ [(S k ** prf)]
                (No contra) => (genFact (S (S j)) k)
 
