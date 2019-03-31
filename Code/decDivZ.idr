@@ -38,8 +38,8 @@ posSSknotOne Refl impossible
 posSSknotMinusOne: (Pos ( S (S k)))=(-1)->Void
 posSSknotMinusOne Refl impossible
 
-oneDoesntDivideGt2: {k:Nat}->IsDivisibleZ 1 (Pos ( S (S k)))  ->Void
-oneDoesntDivideGt2 {k} (n**eqpf) =
+gt2DoesntDivideOne: {k:Nat}->IsDivisibleZ 1 (Pos ( S (S k)))  ->Void
+gt2DoesntDivideOne {k} (n**eqpf) =
   (case productOneThenNumbersOne (Pos (S (S k))) n (sym eqpf) of
         (Left (a, b)) => posSSknotOne a
         (Right (a, b)) => posSSknotMinusOne a)
@@ -53,7 +53,7 @@ decDivisibleZnn: (a:ZZ)->(b:ZZ)->IsNonNegative a->IsNonNegative b -> Dec (IsDivi
 decDivisibleZnn (Pos Z) b NonNegative y = Yes (zzDividesZero _)
 decDivisibleZnn (Pos (S Z)) (Pos Z) NonNegative NonNegative = No (zeroDoesntDivideNonZero PositiveZ )
 decDivisibleZnn (Pos (S Z)) (Pos (S Z)) NonNegative NonNegative= Yes ( oneDiv 1)
-decDivisibleZnn (Pos (S Z)) (Pos (S (S k))) NonNegative NonNegative= No (oneDoesntDivideGt2 )
+decDivisibleZnn (Pos (S Z)) (Pos (S (S k))) NonNegative NonNegative= No (gt2DoesntDivideOne )
 decDivisibleZnn (Pos (S (S k))) (Pos Z) NonNegative NonNegative= No (zeroDoesntDivideNonZero PositiveZ )
 decDivisibleZnn (Pos (S (S k))) (Pos (S j)) NonNegative NonNegative=
    (case decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) (S j)
@@ -61,6 +61,8 @@ decDivisibleZnn (Pos (S (S k))) (Pos (S j)) NonNegative NonNegative=
          (Yes prf) => (Yes (isDivisibleImpliesIsDivisibleZ prf))
          (No contra) => No(contra . (isDivisibleZImpliesIsDivisible {b =(S j)} Positive)))
 
+|||Given two integers , a and b, it either returns a proof that  b|a or
+||| a proof that b|a is impossible.
 decDivisibleZ: (a:ZZ)->(b:ZZ)->(Dec (IsDivisibleZ a b))
 decDivisibleZ (Pos k) (Pos j) =
   decDivisibleZnn (Pos k) (Pos j) NonNegative NonNegative
