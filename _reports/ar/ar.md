@@ -37,15 +37,20 @@ File: Linear.idr
 [Link Here](https://github.com/siddhartha-gadgil/LTS2019/commit/55fe7ea3e76e97f6fa4a7de852fec0ba9f3c93e2)
 4. I checked whether a Diophantine equation in one variable has an integer solution in the function `IsSolutionZ`. [Link Here](https://github.com/siddhartha-gadgil/LTS2019/commit/393a0a25a43db9975a6db7bc5fe39583a3f8cf7e)
 
+All of the above functions include proofs that the solution (a rational number) is a valid number (nonzero denominator).
+
 Each of these functions had their own associated helper functions to transition between proofs of equalities.
 
 ### Diophantine Equations
+
+The work on two variable Diophantine equations was done in collaboration with Shafil (who had already proven the Bezout Identity).
 
 1. I found with proof whether or not the equation ax + b = c has an integer solution using the function `DiophantineSolver`. Thus, linear Diophantine equations in one variable are complete.
 2. For the two variable case, the function `homogeneous` is a helper function which transitions between proofs of equalities in the homogeneous case of the two variable Diophantine equation.
 3. I wrote the function `solDifference` which along with `diffIsHomogeneous` proves that if any two pairs satisfy the non-homogeneous equation, then their difference satisfies the homogeneous equation
 4. The function `addToSol` is a helper function which is used in conjugation with `differByHomogeneous` (which was done by Shafil, I only defined the function type) to show that any solution is a particular solution + a homogeneous solution.
 
+The Diophantine solver produces a valid rational solution of the equation in case it has no integer solution.
 
 #### Remaining
 
@@ -89,8 +94,21 @@ I implemented the non-unique representation of the rational numbers.
 7. I implemented simplification of rational numbers using a theorem that Shafil proved (dividing two numbers by their GCD makes them coprime) in the function `simplifyWithProof` which returns a simplified rational along with a proof that it is simplified.
 8. I implemented a custom equality type `EqRat` which sets two rational numbers (a,b) (c,d) as equal if ad=bc.
 9. I proved the analogues of reflexivity, symmetry, and transitivity for this type.
-10. Using the above, I proved associativity and commutativity of addition and multiplication, and the existence of identities and inverses for addition and multiplication, which involved a lot of `rewrite` statements. (which is most of the field axioms).
-
+   1. `EqRatRefl` creates an `EqRat` element of every valid (a,b).
+   2. `EqRatRefl` creates an `EqRat` element of (c,d) (a,b) given an `EqRat` element of (a,b) (c,d) (the analogue of symmetry)
+   3. `EqRatTrans` creates an `EqRat` element of (a,b) (e,f) given an `EqRat` element of (a,b) (c,d) and an `EqRat` element of (c,d) (e,f). (all of the constructions are done only in the case of valid rational numbers).
+10. Using the above, I proved associativity and commutativity of addition and multiplication, and the existence of (both left and right) identities and inverses for addition and multiplication, which involved a lot of `rewrite` statements. (which is most of the field axioms).
+11. The above proofs (with explanations) can be found in the file FieldAxioms.idr
+   2. `addIdRightEqRat` and `addIdLeftEqRat`
+   2. `multIdRightEqRat` and`multIdLeftEqRat`
+   2. `addInverseLeftEqRat` and `addInverseRightEqRat`
+   2. `multInverseLeftEqRat` and`multInverseRightEqRat`
+   2. `plusCommQEqRat`
+   2. `multCommQEqRat`
+   2. `plusAssocQEqRat`
+   2. `multAssocQEqRat`
+   
+   
 #### Remaining
 
-The distributive laws need to be proved.
+The distributive laws need to be proved. In addition, a rational number is different from a pair of integers in the respect that the second integer should not be zero. In every function which has an argument involving `ZZPair`, the following argument is usually a proof that the second integer is nonzero. I believe that a new data type (called QQ) could be created, consisting of a ZZPair and a proof that the second integer is nonzero. It would be cleaner to define functions using such a data type and would possibly be easier to use in computation/as arguments to other functions. 
