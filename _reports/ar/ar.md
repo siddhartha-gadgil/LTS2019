@@ -99,14 +99,14 @@ I implemented the non-unique representation of the rational numbers.
    3. `EqRatTrans` creates an `EqRat` element of (a,b) (e,f) given an `EqRat` element of (a,b) (c,d) and an `EqRat` element of (c,d) (e,f). (all of the constructions are done only in the case of valid rational numbers).
 10. Using the above, I proved associativity and commutativity of addition and multiplication, and the existence of (both left and right) identities and inverses for addition and multiplication, which involved a lot of `rewrite` statements. (which is most of the field axioms).
 11. The above proofs (with explanations) can be found in the file FieldAxioms.idr
-   2. `addIdRightEqRat` and `addIdLeftEqRat`
+   1. `addIdRightEqRat` and `addIdLeftEqRat`
    2. `multIdRightEqRat` and`multIdLeftEqRat`
-   2. `addInverseLeftEqRat` and `addInverseRightEqRat`
-   2. `multInverseLeftEqRat` and`multInverseRightEqRat`
-   2. `plusCommQEqRat`
-   2. `multCommQEqRat`
-   2. `plusAssocQEqRat`
-   2. `multAssocQEqRat`
+   3. `addInverseLeftEqRat` and `addInverseRightEqRat`
+   4. `multInverseLeftEqRat` and`multInverseRightEqRat`
+   5. `plusCommQEqRat`
+   6. `multCommQEqRat`
+   7. `plusAssocQEqRat`
+   8. `multAssocQEqRat`
    
    
 #### Remaining
