@@ -22,30 +22,36 @@ Passes_Through : (ty1 : Type) -> (rel_1 : ty1 -> ty1 -> Type) ->
                  (ty2 : Type) -> (rel_2 : ty2 -> ty2 -> Type) ->
                  (f : ty1 -> ty2) -> Type
 
+||| Type of proof that a function passes through the relations
 Passes_Through ty1 rel_1 ty2 rel_2 f =
     (a, b : ty1) -> (rel_1 a b) -> (rel_2 (f a) (f b))
 
+||| Type of function between two quotient types
 data Quotient_Function : (ty1 : Type) -> (rel_1 : ty1 -> ty1 -> Type) ->
                          (ty2 : Type) -> (rel_2 : ty2 -> ty2 -> Type) -> Type where
 
     Cons_quotient_Function : (f : ty1 -> ty2) -> (Passes_Through ty1 rel_1 ty2 rel_2 f)
         -> (Quotient_Function ty1 rel_1 ty2 rel_2)
 
+||| The type of transports of a relation
 Transport_of : (ty : Type) -> (rel : ty -> ty -> Type) -> (P : ty -> Type) -> Type
 Transport_of ty rel P = (a, b : ty) -> (rel a b) -> (P a) -> (P b)
 
+||| Definition of a family of quotient types
 data Quotient_Family : (ty : Type) -> (rel : ty -> ty -> Type) -> Type where
     Cons_quotient_Family : (P : ty -> Type) -> (Transport_of ty rel P) -> (Quotient_Family ty rel)
 
+||| Given a quotient family gets the underlying family.
 get_Family : (ty : Type) -> (rel : ty -> ty -> Type) -> (P : (Quotient_Family ty rel)) ->
              (ty -> Type)
 get_Family ty rel (Cons_quotient_Family p tr) = p
 
+||| Given a quotient type gets the transport
 get_Transport : (ty : Type) -> (rel : ty -> ty -> Type) -> (P : (Quotient_Family ty rel)) ->
                 (Transport_of ty rel (get_Family ty rel P))
 get_Transport ty rel (Cons_quotient_Family P tr) = tr
 
-
+||| Type of proofs that a dependent function passes through the corresponding relations
 Passes_Through_Dependent : (ty1 : Type) -> (rel_1 : ty1 -> ty1 -> Type) ->
                            (P : (Quotient_Family ty1 rel_1)) ->
                            (relP : (a : ty1) -> ((get_Family ty1 rel_1 P) a) -> ((get_Family ty1 rel_1 P) a) -> Type) ->
@@ -54,11 +60,13 @@ Passes_Through_Dependent : (ty1 : Type) -> (rel_1 : ty1 -> ty1 -> Type) ->
 Passes_Through_Dependent ty1 rel_1 P relP f = (a, b : ty1) -> (pt : rel_1 a b) ->
     ( (relP b) ((get_Transport ty1 rel_1 P) a b pt (f a)) (f b))
 
+||| A proof that any equivalence relation factors through equality
 EqRel_factors_through_Eq : (ty : Type) -> (rel : ty -> ty -> Type) -> (IsEqRel ty rel) ->
                            (a, b : ty) -> (a = b) -> (rel a b)
 
 EqRel_factors_through_Eq ty rel pfEqRel a a Refl = (fst pfEqRel) a
 
+||| The condition on the function type A -> B to make it the quotient function type (A, relA) -> (B, relB)
 Function_rel : (ty1 : Type) -> (rel1 : ty1 -> ty1 -> Type) -> (IsEqRel ty1 rel1) ->
                (ty2 : Type) -> (rel2 : ty2 -> ty2 -> Type) -> (IsEqRel ty2 rel2) ->
                (f, g : (ty1 -> ty2)) ->
