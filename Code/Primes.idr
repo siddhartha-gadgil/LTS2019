@@ -2,7 +2,9 @@ module Primes
 
 import NatUtils
 import gcd
+import Data.Fin
 import NatOrder
+import SriramAssRecRule
 
 %access public export
 %default total
@@ -294,8 +296,46 @@ decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x {euc=big} =
           (S m) => usual (S (S k)) (LTESucc (LTESucc LTEZero)) (S m)
                    (LTESucc LTEZero) r big
 
+help10 : (a : Nat) -> (b : Nat) -> (prf : isDivisible a b) ->
+         (lst : List Nat ** (foldList Nat 1 (*) lst = a, NonEmpty lst))
+help10 a b prf with (prf)
+    help10 a b prf | (n ** (_ , pfDiv)) =
+        ([n , b] ** ((rewrite multOneRightNeutral b in
+                     rewrite multCommutative n b in (sym pfDiv)),
+                     IsNonEmpty))
 
--- creates a list with all the factors of a number upto the second arguement
+--Factors a number into 2 other numbers, such that the
+--first one is smaller and is prime (not proven yet)
+--and that the list of factors folded gives back the number
+
+--Give var as n-1
+factor2 : (n : Nat) -> (var : Nat) -> (GT n 0) ->
+          (lst : List Nat ** (foldList Nat 1 (*) lst = n, NonEmpty lst))
+factor2 Z _ LTEZero impossible
+factor2 Z _ (LTESucc _) impossible
+factor2 (S Z) _ (LTESucc LTEZero) = ([1] ** (Refl, IsNonEmpty))
+factor2 (S (S k)) Z (LTESucc LTEZero) = assert_unreachable
+factor2 (S (S k)) (S Z) (LTESucc LTEZero) =
+      ([(S (S k)), 1] **
+       (rewrite multOneRightNeutral k in Refl, IsNonEmpty))
+factor2 (S (S k)) (S (S x)) (LTESucc LTEZero) =
+    case decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) (S (S x))
+          {euc = euclidDivide (S (S k)) (S (S x)) (SIsNotZ)} of
+     (Yes prf) => help10 (S (S k)) (S (S x)) prf
+     (No contra) => factor2 (S (S k)) (S x) (LTESucc LTEZero)
+--
+-- --Factorises a number completely with proof of folding
+-- factorise : (n : Nat) -> (GT n 0) ->
+--             (lst : List Nat ** (foldList Nat 1 (*) lst = n, NonEmpty lst))
+-- factorise Z LTEZero impossible
+-- factorise Z (LTESucc _) impossible
+-- factorise (S Z) (LTESucc LTEZero) = ([1] ** (Refl, IsNonEmpty))
+-- factorise (S (S k)) (LTESucc LTEZero) =
+--     case factor2 (S (S k)) (S k) (LTESucc LTEZero) of
+--       (x ** pf) => (head {ok=snd pf} x ::
+--                     fst (factorise (last {ok=snd pf} x) (LTESucc LTEZero))  ** ?pp)
+
+-- creates a list with all the factors of a number upto the second argument
 genFact : (n : Nat) -> Nat -> List (k : Nat ** isDivisible n k)
 genFact Z Z = []
 genFact Z (S k) = []
