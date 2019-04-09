@@ -4,6 +4,7 @@ import Data.Fin
 import Data.Vect
 
 %default total
+%access public export
 
 recList : (a: Type) ->  (x: Type) -> x -> (a -> List a -> x -> x) -> (List a -> x)
 recList a x base fn [] = base
