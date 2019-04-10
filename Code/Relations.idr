@@ -55,4 +55,26 @@ rel_property_1 ty r1 r2 a b (Inc_sym ty r1 r2 b a pf) = let
     in
     pf2
 
-rel_property_1 ty r1 r2 a c (Inc_trans ty r1 r2 a b c pfab pfbc) = ?rhs_5
+rel_property_1 ty r1 r2 a c (Inc_trans ty r1 r2 a b c pfab pfbc) = let
+    
+    pf1 = rel_property_1 ty r1 r2 a b pfab
+    pf2 = rel_property_1 ty r1 r2 b c pfbc
+    
+    pf3 = congruence (AddRel ty r1 r2 b c) (AddRel ty r1 r2 a c) 
+        (f ty r2 r1 b c (f ty r1 r2 b c pfbc)) pfbc (\k => Inc_trans ty r1 r2 a b c pfab k) pf2
+
+    pf4 = congruence (AddRel ty r1 r2 a b) (AddRel ty r1 r2 a c) 
+        (f ty r2 r1 a b (f ty r1 r2 a b pfab)) pfab (\k => Inc_trans ty r1 r2 a b c k (f ty r2 r1 b c (f ty r1 r2 b c pfbc))) pf1
+
+
+    in
+    (trans pf4 pf3)
+    
+    
+    
+    
+    
+    
+    
+    
+    
