@@ -296,13 +296,19 @@ decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) x {euc=big} =
           (S m) => usual (S (S k)) (LTESucc (LTESucc LTEZero)) (S m)
                    (LTESucc LTEZero) r big
 
-help10 : (a : Nat) -> (b : Nat) -> (prf : isDivisible a b) ->
-         (lst : List Nat ** (foldList Nat 1 (*) lst = a, NonEmpty lst))
-help10 a b prf with (prf)
-    help10 a b prf | (n ** (_ , pfDiv)) =
-        ([n , b] ** ((rewrite multOneRightNeutral b in
-                     rewrite multCommutative n b in (sym pfDiv)),
-                     IsNonEmpty))
+help10 : (a : Nat) -> (b : Nat) -> (k : Nat) -> (S k) = b ->
+         (prf : isDivisible a b) ->
+         (lst : List Nat ** (foldList Nat 1 (*) lst = a,
+           (b : NonEmpty lst ** (LTE 1 (last {ok=b} lst),
+             a = mult (head {ok=b} lst) (last {ok=b} lst)))))
+help10 a b k ee prf with (prf)
+    help10 a b k ee prf | (n ** (_ , pfDiv)) =
+        ([n , (S k)] ** (rewrite multOneRightNeutral k in
+                         rewrite ee in
+                         rewrite multCommutative n b in (sym pfDiv),
+                     (IsNonEmpty ** ((LTESucc LTEZero),
+                        rewrite ee in
+                        rewrite multCommutative n b in pfDiv))))
 
 --Factors a number into 2 other numbers, such that the
 --first one is smaller and is prime (not proven yet)
@@ -310,30 +316,38 @@ help10 a b prf with (prf)
 
 --Give var as n-1
 factor2 : (n : Nat) -> (var : Nat) -> (GT n 0) ->
-          (lst : List Nat ** (foldList Nat 1 (*) lst = n, NonEmpty lst))
+          (lst : List Nat ** (foldList Nat 1 (*) lst = n,
+            (b : NonEmpty lst ** (LTE 1 (last {ok=b} lst),
+              n = mult (head {ok=b} lst) (last {ok=b} lst)))))
 factor2 Z _ LTEZero impossible
 factor2 Z _ (LTESucc _) impossible
-factor2 (S Z) _ (LTESucc LTEZero) = ([1] ** (Refl, IsNonEmpty))
+factor2 (S Z) _ (LTESucc LTEZero) =
+        ([1,1] ** (Refl, (IsNonEmpty ** ((LTESucc LTEZero), Refl))))
 factor2 (S (S k)) Z (LTESucc LTEZero) = assert_unreachable
 factor2 (S (S k)) (S Z) (LTESucc LTEZero) =
       ([(S (S k)), 1] **
-       (rewrite multOneRightNeutral k in Refl, IsNonEmpty))
+       (rewrite multOneRightNeutral k in Refl,
+       (IsNonEmpty ** ((LTESucc LTEZero),
+          rewrite multOneRightNeutral k in Refl))))
 factor2 (S (S k)) (S (S x)) (LTESucc LTEZero) =
     case decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) (S (S x))
           {euc = euclidDivide (S (S k)) (S (S x)) (SIsNotZ)} of
-     (Yes prf) => help10 (S (S k)) (S (S x)) prf
+     (Yes prf) => help10 (S (S k)) (S (S x)) (S x) Refl prf
      (No contra) => factor2 (S (S k)) (S x) (LTESucc LTEZero)
---
--- --Factorises a number completely with proof of folding
--- factorise : (n : Nat) -> (GT n 0) ->
---             (lst : List Nat ** (foldList Nat 1 (*) lst = n, NonEmpty lst))
--- factorise Z LTEZero impossible
--- factorise Z (LTESucc _) impossible
--- factorise (S Z) (LTESucc LTEZero) = ([1] ** (Refl, IsNonEmpty))
--- factorise (S (S k)) (LTESucc LTEZero) =
---     case factor2 (S (S k)) (S k) (LTESucc LTEZero) of
---       (x ** pf) => (head {ok=snd pf} x ::
---                     fst (factorise (last {ok=snd pf} x) (LTESucc LTEZero))  ** ?pp)
+
+--Factorises a number completely with proof of folding
+factorise : (n : Nat) -> (GT n 0) ->
+            (lst : List Nat ** (foldList Nat 1 (*) lst = n, NonEmpty lst))
+factorise Z LTEZero impossible
+factorise Z (LTESucc _) impossible
+factorise (S Z) (LTESucc LTEZero) = ([1] ** (Refl, IsNonEmpty))
+factorise (S (S k)) (LTESucc LTEZero) with
+      (factor2 (S (S k)) (S k) (LTESucc LTEZero))
+  factorise (S (S k)) (LTESucc LTEZero) |
+        (lst ** (fol, (ntMT ** (lastLt, pf2)))) = assert_total(
+               (( (head {ok=ntMT} lst) ::
+                  (fst (factorise (last {ok=ntMT} lst) lastLt))) **
+               (rewrite (fst (snd (factorise (last {ok=ntMT} lst) lastLt))) in (sym pf2), IsNonEmpty)))
 
 -- creates a list with all the factors of a number upto the second argument
 genFact : (n : Nat) -> Nat -> List (k : Nat ** isDivisible n k)
@@ -346,7 +360,6 @@ genFact (S (S j)) (S k) =
           {euc=euclidDivide (S (S j)) (S k) SIsNotZ }) of
                (Yes prf) => (genFact (S (S j)) k) ++ [(S k ** prf)]
                (No contra) => (genFact (S (S j)) k)
-
 
 
 --if the List has only 2 elements, i.e 1 and p, then the number is prime. the function outputs a list (secretly genFact)
@@ -363,8 +376,6 @@ isCompositeWithoutProof n = Prelude.Nat.GT (Prelude.List.length (genFact n n)) 2
 isPrime : (p : Nat) -> LTE 2 p -> Type
 isPrime p proofLTE = {k : Nat} -> isDivisible p k -> Either (k=1)(k=p)
 
-
-
 -- Two is a prime
 twoPr : (isPrime 2 (LTESucc (LTESucc (LTEZero {right =0}))))
 twoPr {k=Z} (x ** pf) = void (SIsNotZ (snd pf))
@@ -375,7 +386,6 @@ twoPr {k=(S (S (S k)))} pf = void (bGtAImpNotbDivA 2 (S (S (S k))) k (LTESucc (L
 --Composite proof
 isComposite : (n : Nat) -> LTE 2 n -> Type
 isComposite n pflte = (a : Nat ** (b : Nat ** ((GT a 1, GT b 1), n = a*b)))
-
 
 --deciability for Composite numbers
 decComposite : (n: Nat) -> (pf : LTE 2 n) -> Dec (isComposite n pf)
