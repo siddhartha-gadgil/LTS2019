@@ -18,11 +18,12 @@ IsEqRel typ rel = ( (IsRefl typ rel) , ( (IsSym typ rel), (IsTrans typ rel) ) )
 data Quotient_Type : (typ : Type) -> (rel : typ -> typ -> Type) -> Type where
     Cons_quotient_Type : (IsEqRel typ rel) -> (Quotient_Type typ rel)
 
+||| Type of proof that a function passes through the relations
+
 Passes_Through : (ty1 : Type) -> (rel_1 : ty1 -> ty1 -> Type) ->
                  (ty2 : Type) -> (rel_2 : ty2 -> ty2 -> Type) ->
                  (f : ty1 -> ty2) -> Type
 
-||| Type of proof that a function passes through the relations
 Passes_Through ty1 rel_1 ty2 rel_2 f =
     (a, b : ty1) -> (rel_1 a b) -> (rel_2 (f a) (f b))
 
