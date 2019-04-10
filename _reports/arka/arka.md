@@ -100,7 +100,8 @@ define _identity matrices_.
 
 ## Relations
 
-Defined a addition operation on the type of relations on a type s.t.
+Defined a addition operation on the type of relations on a type. Proved
+the following
 1. The type of relations form a commutative monoid.
 2. If we consider only equivalence relations then each element is
    an idempotent.
