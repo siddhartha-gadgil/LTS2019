@@ -1,3 +1,48 @@
+commit 0703c874a001167014734bce2c7541ed2d8b1f11
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Wed Apr 10 01:11:15 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Wed Apr 10 01:11:15 2019 +0530
+
+    Factorisation of numbers is done.
+
+ Code/Primes.idr | 62 +++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 36 insertions(+), 26 deletions(-)
+
+commit 8f48fd8193e9573cf3ca7d6bf7f9c4114f1bae53
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Tue Apr 9 15:33:15 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Tue Apr 9 15:33:15 2019 +0530
+
+    `factor2` factorises a number into two others
+
+ Code/Primes.idr           | 44 ++++++++++++++++++++++++++++++++++++++++++--
+ Code/SriramAssRecRule.idr |  1 +
+ 2 files changed, 43 insertions(+), 2 deletions(-)
+
+commit de6436613e290efb4423e1233a1a0cccdf8d6a4c
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Wed Mar 27 10:41:32 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Wed Mar 27 10:41:32 2019 +0530
+
+    Update report
+
+ _reports/ss/ss.md | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 7c03bcab4445d716b3734f5f454dd19c657445ae
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Wed Mar 27 06:46:37 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Wed Mar 27 06:46:37 2019 +0530
+
+    Update report
+
+ _reports/ss/ss.md | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
 commit 66aad165c174a867ceb7032e8fed93cc327e5fb6
 Author:     SS-C4 <srirams@iisc.ac.in>
 AuthorDate: Sat Mar 2 12:26:02 2019 +0530

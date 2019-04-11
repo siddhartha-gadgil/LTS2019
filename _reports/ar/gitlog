@@ -1,3 +1,122 @@
+commit c1d4de437c24f0d1e520724b5ac71286f64267f5
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 4 14:23:32 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 4 14:23:32 2019 +0530
+
+    Update ar.md
+
+ _reports/ar/ar.md | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+commit 2cab5820a02c86a3e1570e4de13e14fd3d71e732
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 4 14:22:34 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 4 14:22:34 2019 +0530
+
+    Update ar.md
+
+ _reports/ar/ar.md | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+commit df20483e0dc8c169ff4f0469e6af126e5a6a20e6
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 4 14:21:56 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 4 14:21:56 2019 +0530
+
+    elaborated on report
+
+ _reports/ar/ar.md | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
+
+commit 696e4623a4e66c0ba5894c407e13a5b8b1683440
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 4 14:00:36 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 4 14:00:36 2019 +0530
+
+    cleaned up some code
+    
+    I included proofs that the solution to some equation is a valid rational number (nonzero denominator). I cleaned up code that was used before but has been improved upon by something with proofs. I've left the previously used code for reference purposes (someone might find the ideas in there useful). I also made everything in here total.
+    
+    -- Abishek (AR-MA210)
+
+ Code/Linear.idr | 45 ++++++++++++++++++++++++++++-----------------
+ 1 file changed, 28 insertions(+), 17 deletions(-)
+
+commit 1f6523c3fdbbcaefd70d109a112be72e1f204fb4
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Wed Mar 27 18:05:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Mar 27 18:05:55 2019 +0530
+
+    Update FieldAxioms.idr
+
+ Code/FieldAxioms.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 1de0415b0ef64c8acb57dabb64b0018d8c924a0d
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Wed Mar 27 17:56:59 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Mar 27 17:56:59 2019 +0530
+
+    updated report for post-midterm
+    
+    I updated my report.
+    
+    -- Abishek (AR-MA210)
+
+ _reports/ar/ar.md | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
+
+commit 2ba0ed896f7843f33fc1b5573d5cddc1e0061280
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Wed Mar 27 17:35:01 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Mar 27 17:35:01 2019 +0530
+
+    Field Axioms Proven with EqRat
+    
+    I verified all the field axioms (except for the distributive laws for now) using the data type `EqRat` and its properties (symmetry, reflexivity, transitivity) for the rational numbers.
+    
+    -- Abishek (AR-MA210)
+
+ Code/FieldAxioms.idr | 89 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 89 insertions(+)
+
+commit 97a87e385b09e612cc42ada0ab33c95ac96e0c13
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Wed Mar 27 17:32:41 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Mar 27 17:32:41 2019 +0530
+
+    some edits
+    
+    I needed to make some minor edits.
+    
+    -- Abishek (AR-MA210)
+
+ Code/Rationals.idr | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
+
+commit 6ff899e9925dda5f393fe4ec78ec333e1297f2f4
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Mar 25 15:15:03 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Mar 25 15:15:03 2019 +0530
+
+    finished transitivity
+    
+    I finished the proof of transitivity of `EqRat`.
+    
+    -- Abishek
+
+ Code/Rationals.idr | 40 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 39 insertions(+), 1 deletion(-)
+
 commit 17ad9cec17709829c5e4fe653f33be654d272e88
 Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
 AuthorDate: Sun Mar 24 14:34:02 2019 +0530

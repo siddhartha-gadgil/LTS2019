@@ -1,3 +1,29 @@
+commit be324c1e5649ad0a683830b611ced1c7855deb1a
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 31 09:30:25 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 31 09:30:25 2019 +0530
+
+    Update report
+    
+    Update report
+
+ _reports/shafil/shafil.md | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
+
+commit 869efe59b6292916d32931e4e4c3e4e0fb887a46
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 31 09:29:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 31 09:29:09 2019 +0530
+
+    Corrected a misleading function name
+    
+    Corrected a misleading function name
+
+ Code/decDivZ.idr | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
 commit 3e87c1bcc98912ff39fda17f12c684ad58a34485
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Wed Mar 13 15:13:09 2019 +0530
