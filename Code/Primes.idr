@@ -9,6 +9,7 @@ import SriramAssRecRule
 %access public export
 %default total
 
+
 --isDivisible a b can be constucted if b divides a
 isDivisible : Nat -> Nat -> Type
 isDivisible a b = (n : Nat ** (GT n 0, a = b * n))
@@ -21,7 +22,6 @@ oneDiv a {x=pf} = (a ** (pf , rewrite plusZeroRightNeutral a in Refl))
 mulDiv : (a, c : Nat) -> {auto pf1 : GT a 0} -> {auto pf2 : GT c 0} ->
   isDivisible a 1 -> isDivisible (a * c) c
 mulDiv a c {pf1=p} x = (a ** (p ,rewrite multCommutative a c in Refl))
-
 
 --Either(a=b)(_) <=> Either (S a = S b)(_)
 help1 : {a : Nat} -> {b : Nat} ->
@@ -331,7 +331,7 @@ factor2 (S (S k)) (S Z) (LTESucc LTEZero) =
           rewrite multOneRightNeutral k in Refl))))
 factor2 (S (S k)) (S (S x)) (LTESucc LTEZero) =
     case decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) (S (S x))
-          {euc = euclidDivide (S (S k)) (S (S x)) (SIsNotZ)} of
+          {euc = euclidDivideOld (S (S k)) (S (S x)) (SIsNotZ)} of
      (Yes prf) => help10 (S (S k)) (S (S x)) (S x) Refl prf
      (No contra) => factor2 (S (S k)) (S x) (LTESucc LTEZero)
 
@@ -351,16 +351,14 @@ factorise (S (S k)) (LTESucc LTEZero) with
 
 -- creates a list with all the factors of a number upto the second argument
 genFact : (n : Nat) -> Nat -> List (k : Nat ** isDivisible n k)
-genFact Z Z = []
+genFact _ Z = []
 genFact Z (S k) = []
-genFact (S j) Z = []
 genFact (S Z) (S k) = [(S Z ** oneDiv (S Z))]
 genFact (S (S j)) (S k) =
     case (decDiv (S (S j)) (LTESucc (LTESucc (LTEZero{right = j}))) (S k)
-          {euc=euclidDivide (S (S j)) (S k) SIsNotZ }) of
+          {euc=euclidDivideOld (S (S j)) (S k) SIsNotZ }) of
                (Yes prf) => (genFact (S (S j)) k) ++ [(S k ** prf)]
                (No contra) => (genFact (S (S j)) k)
-
 
 --if the List has only 2 elements, i.e 1 and p, then the number is prime. the function outputs a list (secretly genFact)
 -- along with the proof that the length of the list of factors is 2
@@ -370,7 +368,6 @@ isPrimeWithoutProof p = length (genFact p p) = 2
 -- more than 2 factors implies number is composite
 isCompositeWithoutProof : (n: Nat) -> {auto pf: LTE 2 n} -> Type
 isCompositeWithoutProof n = Prelude.Nat.GT (Prelude.List.length (genFact n n)) 2
-
 
 --prime proof
 isPrime : (p : Nat) -> LTE 2 p -> Type
@@ -387,7 +384,7 @@ twoPr {k=(S (S (S k)))} pf = void (bGtAImpNotbDivA 2 (S (S (S k))) k (LTESucc (L
 isComposite : (n : Nat) -> LTE 2 n -> Type
 isComposite n pflte = (a : Nat ** (b : Nat ** ((GT a 1, GT b 1), n = a*b)))
 
---deciability for Composite numbers
+--decidability for Composite numbers
 decComposite : (n: Nat) -> (pf : LTE 2 n) -> Dec (isComposite n pf)
 decComposite Z LTEZero impossible
 decComposite Z (LTESucc _) impossible
