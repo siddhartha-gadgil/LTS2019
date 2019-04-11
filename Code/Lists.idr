@@ -28,4 +28,3 @@ reviscontra x (y :: xs) z = trans (trans (trans (revontoeq x [y] (xs++z)) (addl 
 reveq: (x: Type) -> (l: List x) -> (l = reverse(reverse l))
 reveq x [] = Refl
 reveq x (y :: xs) = sym (trans (trans (cong(reviscontra x [y] xs)) (reviscontra x (reverse xs) (reverse [y]))) (cong(sym (reveq x xs))))
-
