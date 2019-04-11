@@ -157,14 +157,16 @@ dividesDiffExtend {a} {b} {q} {r} {proofNotZ = dNotZ} dDividesa dDividesb proofE
 	dividesDifference {proofNotZ = dNotZ} (eqConservesDivisible dDividesa proofEq) (dividesMultiple dDividesb q)
 
 |||Returns the GCD of a and b with proof that it is the GCD
-euclidGCD : (a : Nat) -> (b : Nat) -> (notBothZ : (Either (Not (a = Z)) (Not (b = Z)))) -> (d : Nat ** (isGCD a b notBothZ d))
-euclidGCD Z Z notBothZ = case notBothZ of
+euclidGCD : (bound : Nat) -> (a : Nat) -> (b : Nat) -> (LTE a bound) -> (LTE (S b) bound) -> (notBothZ : (Either (Not (a = Z)) (Not (b = Z)))) -> (d : Nat ** (isGCD a b notBothZ d))
+euclidGCD bound Z Z _ _ notBothZ = case notBothZ of
 				Left notZ => void (notZ Refl)
 				Right notZ => void (notZ Refl)
-euclidGCD (S a) Z notBothZ = ((S a) ** (SIsNotZ ** (zeroCommonDivisorRight, (\n : Nat => (\proofNotZ => (\proofCommonDivisor => (fst proofCommonDivisor)))))))
-euclidGCD Z (S b) notBothZ = ((S b) ** (SIsNotZ ** (zeroCommonDivisorLeft, (\n : Nat => (\proofNotZ => (\proofCommonDivisor => (snd proofCommonDivisor)))))))
-euclidGCD (S a) (S b) notBothZ = case (euclidDivide (S a) (S b) SIsNotZ) of
-			(q ** (r ** (proofEq, proofLEQ))) =>
-				case (euclidGCD (S b) r (Left SIsNotZ)) of
-				(d ** (dNotZ ** (commonDivisorProof,  largestDivisorProof))) =>
-					(d ** (dNotZ ** (((eqConservesDivisible {proofNotZ = dNotZ} (dividesSum {proofNotZ = dNotZ} ((snd commonDivisorProof), dividesMultiple {proofNotZ = dNotZ} (fst commonDivisorProof) q)) (sym proofEq)), (fst commonDivisorProof)), (\n => (\nNotZ => (\commonDivisor => (largestDivisorProof n nNotZ ((snd commonDivisor), (dividesDiffExtend {proofNotZ = nNotZ} (fst commonDivisor) (snd commonDivisor) proofEq)))))))))
+euclidGCD bound (S a) Z _ _ _ = ((S a) ** (SIsNotZ ** (zeroCommonDivisorRight, (\n : Nat => (\proofNotZ => (\proofCommonDivisor => (fst proofCommonDivisor)))))))
+euclidGCD bound Z (S b) _ _ _ = ((S b) ** (SIsNotZ ** (zeroCommonDivisorLeft, (\n : Nat => (\proofNotZ => (\proofCommonDivisor => (snd proofCommonDivisor)))))))
+euclidGCD Z (S a) (S b) lteLeft lteRight _ = void (succNotLTEzero lteLeft)
+euclidGCD (S bound) (S a) (S b) (LTESucc lteLeft) (LTESucc lteRight) notBothZ =
+	case (euclidDivide (S a) (S b) SIsNotZ) of
+	(q ** (r ** (proofEq, proofLNEQ))) =>
+		case (euclidGCD bound (S b) r lteRight (lteTransitive (lneqToLT proofLNEQ) lteRight) (Left SIsNotZ)) of
+		(d ** (dNotZ ** (commonDivisorProof,  largestDivisorProof))) =>
+			(d ** (dNotZ ** (((eqConservesDivisible {proofNotZ = dNotZ} (dividesSum {proofNotZ = dNotZ} ((snd commonDivisorProof), dividesMultiple {proofNotZ = dNotZ} (fst commonDivisorProof) q)) (sym proofEq)), (fst commonDivisorProof)), (\n => (\nNotZ => (\commonDivisor => (largestDivisorProof n nNotZ ((snd commonDivisor), (dividesDiffExtend {proofNotZ = nNotZ} (fst commonDivisor) (snd commonDivisor) proofEq)))))))))
