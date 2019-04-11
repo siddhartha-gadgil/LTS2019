@@ -5,6 +5,9 @@ import Quotient_Type
 import ZZ_alt
 import Product_Type_Eq
 
+%access public export
+%default total
+
 plus : ZZ1 -> ZZ1 -> ZZ1
 plus (a, b) (c, d) = (plus a c, plus b d)
 

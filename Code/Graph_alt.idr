@@ -10,6 +10,7 @@ total
 Graph : (n : Nat) -> Type
 Graph n = Mat_Vect n n Bool
 
+||| The graph with only self loops
 total
 self_loops : (n : Nat) -> (Graph n)
 self_loops n = Identity_Bool n
