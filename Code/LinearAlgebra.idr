@@ -10,6 +10,7 @@ import Rationals
 import FinUtils
 
 %access public export
+%default total
 
 -- Some auxillary functions for elementary operations
 
