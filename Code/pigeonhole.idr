@@ -61,15 +61,26 @@ is_there (S n) m a (x :: v) = case (decEq x a) of
                                                 ((FS l) ** prf4) => (not_in_v (l ** prf4 ) )))) 
     
 ----------------------------------------------------------------------------------------------------------------
+
+swapHelper : (m : Nat) -> (a , b, x : (Fin m)) -> (Dec (x = a)) -> (Dec (x = b)) -> (Fin m)
+swapHelper m a b x (Yes pf) _ = b
+swapHelper m a b x (No con) (Yes pf) = a
+swapHelper m a b x (No con1) (No con2) = x
+
+----------------------------------------------------------------------------------------------------------------
 ||| swaps two element in a vector
 swap : (n : Nat) -> (m : Nat) -> (a, b : Fin m) -> (v : Vect n (Fin m)) -> (Vect n (Fin m))
 swap Z _ _ _ _ = []
-swap (S n) m a b (x :: v) = 
+swap (S n) m a b (x :: v) = (swapHelper m a b x (decEq x a) (decEq x b)) :: (swap n m a b v)
+{-
     case (decEq x a) of
         Yes prf => b :: (swap n m a b v)
         No prf => case (decEq x b) of
             Yes prf => a :: (swap n m a b v)
             No prf => x :: (swap n m a b v)                  
+-}  
+  
+  
                   
 ----------------------------------------------------------------------------------------------------------------
                   
