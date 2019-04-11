@@ -51,7 +51,7 @@ factor2 (S (S k)) (S Z) (LTESucc LTEZero) =
           rewrite multOneRightNeutral k in Refl))))
 factor2 (S (S k)) (S (S x)) (LTESucc LTEZero) =
     case decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) (S (S x))
-          {euc = euclidDivideOld (S (S k)) (S (S x)) (SIsNotZ)} of
+          {euc = eculidDivideAux (S (S k)) (S (S x)) (SIsNotZ)} of
      (Yes prf) => help10 (S (S k)) (S (S x)) (S x) Refl prf
      (No contra) => factor2 (S (S k)) (S x) (LTESucc LTEZero)
 
@@ -90,7 +90,7 @@ genFact (S j) Z = []
 genFact (S Z) (S k) = [(S Z ** oneDiv (S Z))]
 genFact (S (S j)) (S k) =
     case (decDiv (S (S j)) (LTESucc (LTESucc (LTEZero{right = j}))) (S k)
-          {euc=euclidDivideOld (S (S j)) (S k) SIsNotZ }) of
+          {euc=eculidDivideAux (S (S j)) (S k) SIsNotZ }) of
                (Yes prf) => (genFact (S (S j)) k) ++ [(S k ** prf)]
                (No contra) => (genFact (S (S j)) k)
 
