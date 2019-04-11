@@ -6,6 +6,8 @@ import GCDZZ
 import Divisors
 import Rationals
 
+%default total
+
 -- The field axioms which require the custom equality EqRat type are verified here.
 
 EqRatAddInvLeft: (x: ZZPair) -> (a: NotZero (snd x))

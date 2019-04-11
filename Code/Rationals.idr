@@ -4,6 +4,11 @@ import ZZ
 import ZZUtils
 import GCDZZ
 import Divisors
+import BoundedGCD
+
+%default total
+
+-- Everything in this file is total. 
 
 -- The functions below are completely based on the code from GCDZZ; they were written to improve
 -- readability.
@@ -42,8 +47,9 @@ divides m n k = (fst k)
 
 --Integer implemetation of gcd
 CalcGCD : (Integer, Integer) -> Integer
-CalcGCD (a, b) = if (isNotZero (toNat b)) then next else a where
-    next = CalcGCD (b, toIntegerNat (modNat (toNat a) (toNat b)))
+CalcGCD (a, b) = case (decEq b 0) of
+                      (Yes prf) => a
+                      (No contra) => toIntegerNat (gcdAlgo (toNat a) (toNat b))
 
 OnlyPositive : (x: Pair) -> Pair
 OnlyPositive x = (if (fst x)>0 then fst x else (-1)*(fst x), if(snd x)>0 then (snd x) else (-1)*(snd x))
@@ -433,6 +439,6 @@ multAssociativeQ: (x: ZZPair) -> (a: NotZero (snd x)) -> (y: ZZPair) -> (b: NotZ
 multAssociativeQ x a y b z c = rewrite sym (multAssociativeZ (fst x) (fst y) (fst z)) in
                                rewrite sym (multAssociativeZ (snd x) (snd y) (snd z)) in
                                Refl
-                               
-                               
-                               
+
+
+

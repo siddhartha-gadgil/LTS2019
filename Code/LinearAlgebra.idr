@@ -10,6 +10,7 @@ import Rationals
 import FinUtils
 
 %access public export
+%default total
 
 -- Some auxillary functions for elementary operations
 
@@ -20,6 +21,7 @@ Pred: Nat -> Nat
 Pred Z = Z
 Pred (S k) = k
 
+{-
 --Takes the first m elements from a vector
 Vecttake : (m:Nat)->Vect n elem->Vect m  elem
 Vecttake Z xs = []
@@ -27,6 +29,7 @@ Vecttake (S k) (x::xs) = x::(Vecttake k xs)
 
 SimpleCast:  (v1:(Vect (k+ (S Z)) elem)) ->( Vect (S k) elem)  -- necessary for type matching, taken from Shafil's code
 SimpleCast {k} v1 = (Vecttake (S k) v1)
+-}
 
 RowN: Matrix n n ZZPair -> (k: Nat) -> Vect n ZZPair -- returns the nth row (indexing from 0)
 RowN {n} x k = Data.Vect.index (tofinNat k n) x
@@ -57,9 +60,11 @@ First_k_rows n x (S k) = [RowN x k] ++ (First_k_rows n x k)
 Last_k_rows: (n: Nat) -> (x: Matrix n n ZZPair) -> (k: Nat) -> Matrix k n ZZPair
 Last_k_rows n x k = reverse (First_k_rows n (reverse x) k)
 
+{-
 First_k_rows_from_RowP: (n: Nat) -> (x: Matrix n n ZZPair) -> (p: Nat) -> (k: Nat) -> Matrix k n ZZPair
 First_k_rows_from_RowP n x p Z = []
 First_k_rows_from_RowP n x p (S k) = SimpleCast ((First_k_rows_from_RowP n x p k) ++ [RowN x (p+k)])
+-}
 
 -- A section on elementary operations (to eventually implement the Gauss-Jordan process)
 

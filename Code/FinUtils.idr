@@ -14,12 +14,13 @@ Eucl Z b = (0,0)
 Eucl (S k) b = case (lte (S (S k)) b) of
                     False => (S(fst(Eucl (minus (S k) b) b)), snd(Eucl (minus (S k) b) b))
                     True => (0, S k)
---Nat to Fin (modular values)
+--Nat to Fin (NOT modular values; if it overflows, the result is 0)
 tofinNat: (a: Nat) -> (n: Nat) -> Fin n
-tofinNat Z (S j) = FZ
-tofinNat (S k) (S j) = case lte (S k) (S j) of
-                True => FS (tofinNat k j)
-                False =>  (tofinNat (snd(Eucl (S k) (S j))) (S j))
+tofinNat a Z = assert_unreachable
+tofinNat Z (S k) = FZ
+tofinNat (S j) (S k) = case (lte (S j) (S k)) of
+                             False => FS (tofinNat j k)
+                             True => FZ
 
 --adding two Fin n's
 -- addfin: (n: Nat) -> Fin (S n) -> Fin (S n) -> Fin (S n) -> (Fin (S n), Fin (S n))
