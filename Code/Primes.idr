@@ -389,17 +389,7 @@ twoPr {k=(S (S (S k)))} pf = void (bGtAImpNotbDivA 2 (S (S (S k))) k (LTESucc (L
 isComposite : (n : Nat) -> LTE 2 n -> Type
 isComposite n pflte = (a : Nat ** (b : Nat ** ((GT a 1, GT b 1), n = a*b)))
 
-<<<<<<< HEAD
--- --deciability for Composite numbers
--- decComposite : (n: Nat) -> (pf : LTE 2 n) -> Dec (isComposite n pf)
--- decComposite Z LTEZero impossible
--- decComposite Z (LTESucc _) impossible
--- decComposite (S Z) (LTESucc LTEZero) impossible
--- decComposite (S Z) (LTESucc (LTESucc _)) impossible
--- decComposite (S (S k)) pf = ?decCompositerhs_1
---
---
-=======
+
 --decidability for Composite numbers
 decComposite : (n: Nat) -> (pf : LTE 2 n) -> Dec (isComposite n pf)
 decComposite Z LTEZero impossible
@@ -408,8 +398,6 @@ decComposite (S Z) (LTESucc LTEZero) impossible
 decComposite (S Z) (LTESucc (LTESucc _)) impossible
 decComposite (S (S k)) pf = ?decCompositerhs_1
 
-
->>>>>>> a755758a7a1e0a899e04be42f4d21d50a9faee44
 
 
 --if 1<n, a not equal to a*n
