@@ -20,20 +20,6 @@ extendedEqualityProof : (a : Nat) -> (b : Nat) -> (q : Nat) -> (r : Nat)->
 extendedEqualityProof a b q r proofSmlEq proofBigEq =
 	trans (cong proofBigEq) (plusConstantRight (S r) b (q * b) proofSmlEq)
 
-||| Given a, b, and a proof that b != 0, returns (q, r) and proofs that a = bq + r, r < b (Old Version)
---removed possible problems with Rohit's
-euclidDivideOld : (a : Nat) -> (b : Nat) ->
-  (b = Z -> Void) -> (q : Nat ** (r : Nat ** ((a = r + (q * b)), LT r b)))
-euclidDivideOld a Z pf = void(pf Refl)
-euclidDivideOld Z (S k) SIsNotZ = (Z ** (Z ** (Refl, LTESucc LTEZero)))
-euclidDivideOld (S n) (S k) SIsNotZ =
-  case (euclidDivideOld n (S k) SIsNotZ) of
-		(q ** (r ** (equalityProof, ltproof))) =>
-        case (ltImpliesEqOrLT r (S k) ltproof) of
-						(Right proofSrLTSk) => (q ** ((S r) ** ((cong equalityProof), proofSrLTSk)))
-						(Left proofSreqSk) => ((S q) ** (Z ** ((extendedEqualityProof n (S k) q r proofSreqSk equalityProof), LTESucc LTEZero)))
-
-
 ||| Given a, b, and a proof that b != 0, returns (q, r) and proofs that a = bq + r, r < b
 --removed possible problems with Rohit's
 euclidDivide : (a : Nat) -> (b : Nat) -> (Not (b = Z)) ->
@@ -46,6 +32,21 @@ euclidDivide (S n) (S k) SIsNotZ =
 			case (lneqImpliesEqOrLNEQ r (S k) proofLNEQ) of
 				(Right proofSrLNEQSk) => (q ** ((S r) ** ((cong proofEq), proofSrLNEQSk)))
 				(Left proofSrEqSk) => ((S q)** (Z ** ((extendedEqualityProof n (S k) q r proofSrEqSk proofEq), (LEQZero, ZIsNotS))))
+
+
+||| Given a, b, and a proof that b != 0, returns (q, r) and proofs that a = bq + r, r < b (Old Version)
+--removed possible problems with Rohit's
+eculidDivideAux : (a : Nat) -> (b : Nat) ->
+  (b = Z -> Void) -> (q : Nat ** (r : Nat ** ((a = r + (q * b)), LT r b)))
+eculidDivideAux a b pf =
+	let
+		res = euclidDivide a b pf
+		q = DPair.fst res
+		r = DPair.fst (DPair.snd res)
+		eqn = fst (DPair.snd (DPair.snd res))
+		ltpf = lneqToLT (snd (DPair.snd (DPair.snd res)))
+	in
+		(q ** (r ** (eqn , ltpf)))
 
 |||Type of proof that d divides a
 isDivisible : (a : Nat) -> (d : Nat) -> (Not (d = Z)) -> Type

@@ -21,7 +21,7 @@ total
 QuotRemZ:(a:ZZ)->(b:ZZ)->IsNonNegative a -> IsPositive b ->
 (quot : ZZ ** (rem : ZZ ** ((a = rem + (quot * b)), LTZ rem b,(IsNonNegative rem))))
 QuotRemZ (Pos j) (Pos (S k)) NonNegative Positive =
-  case (euclidDivideOld j (S k) (SIsNotZ {x=(k)})) of
+  case (eculidDivideAux j (S k) (SIsNotZ {x=(k)})) of
     (q ** (r ** (equality, rlessb))) =>
          ((Pos q)**((Pos r)**((ExpNatToZZ equality),(ltNatToZZ rlessb),NonNegative)))
 
