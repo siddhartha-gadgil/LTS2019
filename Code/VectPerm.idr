@@ -1,6 +1,9 @@
 module VectPerm
 
+
 import Data.Vect
+
+%default total
 
 -- Auxillary functions
 
