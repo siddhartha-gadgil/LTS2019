@@ -310,6 +310,10 @@ help10 a b k ee prf with (prf)
                         rewrite ee in
                         rewrite multCommutative n b in pfDiv))))
 
+help11 : (x : Nat) -> (lst : List Nat) -> (ntMT : NonEmpty lst) ->
+         last (x :: lst) = last {ok=ntMT} lst
+help11 x (y :: xs) IsNonEmpty = Refl
+
 --Factors a number into 2 other numbers, such that the
 --first one is smaller and is prime (not proven yet)
 --and that the list of factors folded gives back the number
@@ -337,17 +341,18 @@ factor2 (S (S k)) (S (S x)) (LTESucc LTEZero) =
 
 --Factorises a number completely with proof of folding
 factorise : (n : Nat) -> (GT n 0) ->
-            (lst : List Nat ** (foldList Nat 1 (*) lst = n, NonEmpty lst))
+            (lst : List Nat ** (foldList Nat 1 (*) lst = n))
 factorise Z LTEZero impossible
 factorise Z (LTESucc _) impossible
-factorise (S Z) (LTESucc LTEZero) = ([1] ** (Refl, IsNonEmpty))
+factorise (S Z) (LTESucc LTEZero) = ([] ** Refl)
 factorise (S (S k)) (LTESucc LTEZero) with
       (factor2 (S (S k)) (S k) (LTESucc LTEZero))
   factorise (S (S k)) (LTESucc LTEZero) |
         (lst ** (fol, (ntMT ** (lastLt, pf2)))) = assert_total(
                (( (head {ok=ntMT} lst) ::
                   (fst (factorise (last {ok=ntMT} lst) lastLt))) **
-               (rewrite (fst (snd (factorise (last {ok=ntMT} lst) lastLt))) in (sym pf2), IsNonEmpty)))
+                  (rewrite (snd (factorise (last {ok=ntMT} lst) lastLt))
+                  in (sym pf2)) ))
 
 -- creates a list with all the factors of a number upto the second argument
 genFact : (n : Nat) -> Nat -> List (k : Nat ** isDivisible n k)
@@ -387,15 +392,15 @@ twoPr {k=(S (S (S k)))} pf = void (bGtAImpNotbDivA 2 (S (S (S k))) k (LTESucc (L
 isComposite : (n : Nat) -> LTE 2 n -> Type
 isComposite n pflte = (a : Nat ** (b : Nat ** ((GT a 1, GT b 1), n = a*b)))
 
---deciability for Composite numbers
-decComposite : (n: Nat) -> (pf : LTE 2 n) -> Dec (isComposite n pf)
-decComposite Z LTEZero impossible
-decComposite Z (LTESucc _) impossible
-decComposite (S Z) (LTESucc LTEZero) impossible
-decComposite (S Z) (LTESucc (LTESucc _)) impossible
-decComposite (S (S k)) pf = ?decCompositerhs_1
-
-
+-- --deciability for Composite numbers
+-- decComposite : (n: Nat) -> (pf : LTE 2 n) -> Dec (isComposite n pf)
+-- decComposite Z LTEZero impossible
+-- decComposite Z (LTESucc _) impossible
+-- decComposite (S Z) (LTESucc LTEZero) impossible
+-- decComposite (S Z) (LTESucc (LTESucc _)) impossible
+-- decComposite (S (S k)) pf = ?decCompositerhs_1
+--
+--
 
 
 --if 1<n, a not equal to a*n
@@ -429,69 +434,11 @@ notBothPrimeandComp {n = (S (S k))} pftwolten (pfprime , (a ** (b ** ((pfagtone,
                                   pfaeqn =  case (pfprime (b ** ((lteTransitive (LTESucc (LTEZero {right = (S Z)})) pfbgtone), pfneqab))) of
                                           Left pf => void ((Prelude.Basics.fst (ltImpliesNotEqNotGT {a=(S Z)} {b = a} pfagtone)) (sym pf))
                                           Right pf => pf
-
--- given n >= 2, it is either prime or Composite
-eitherPrimeOrComp : {n : Nat} -> (pf : LTE 2 n) -> Either (isPrime n pf)(isComposite n pf)
-eitherPrimeOrComp {n = Z} LTEZero impossible
-eitherPrimeOrComp {n = Z} (LTESucc _) impossible
-eitherPrimeOrComp {n = (S Z)} (LTESucc LTEZero) impossible
-eitherPrimeOrComp {n = (S Z)} (LTESucc (LTESucc _)) impossible
-eitherPrimeOrComp {n = (S (S k))} pflte = ?rhs_1
-
-  -- data Prime : (p : Nat) -> Type where
-  --  IsPrime : LTE 2 p -> ((k : Nat) -> isDivisible p k -> Either (k=1)(k=p)) -> Prime p
-
-  -- function to check that 2 is prime
-  -- twoPr : (k : Nat) -> (isDivisible 2 k) -> Either (k = 1)(k = 2)
-  -- twoPr Z (x ** pf) = void (SIsNotZ (snd pf))
-  -- twoPr (S Z) (x ** pf) = Left Refl
-  -- twoPr (S (S Z)) (x ** pf) = Right Refl
-  -- twoPr (S (S (S k))) pf = void (bGtAImpNotbDivA 2 (S (S (S k))) k (LTESucc (LTESucc (LTESucc (LTEZero {right = k})))) (pf))
-  --
-  -- --two is Prime
-  -- twoIsPrime : Prime 2
-  -- twoIsPrime = IsPrime (LTESucc (LTESucc (LTEZero {right =0}))) twoPr
-
-
--- notBothPrimeandComp Z LTEZero _ _ impossible
--- notBothPrimeandComp Z (LTESucc _) _ _ impossible
--- notBothPrimeandComp (S Z) (LTESucc LTEZero) _ _ impossible
--- notBothPrimeandComp (S Z) (LTESucc (LTESucc _)) _ _ impossible
--- notBothPrimeandComp (S (S k)) pfgt pfprime pfcomp = ?jk
-
-
-
-
-
---same as oneDiv, but fits the format for the following functions
--- oneIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (head' (List Nat)) = (S Z))
--- oneIsFactor Z LTEZero impossible
--- oneIsFactor Z (LTESucc _) impossible
--- oneIsFactor (S k) pf =
 --
--- -- n is the last element of the list of its factors
--- nIsFactor : (n : Nat) -> (LTE 1 n) -> (fromMaybe 0 (tail' (genFact n n)) = n)
--- nIsFactor Z LTEZero impossible
--- nIsFactor Z (LTESucc _) impossible
--- nIsFactor (S k) pf = Refl
-
-
---Spare code
-{-
---Type for isPrime. A number p is prime if all numbers dividing
---it are either p or 1. (In the primality checker, I am checking
---for numbers until p, hence the p case is not included. Will
---be changed in a future update.)
-isPrime : Nat -> Type
-isPrime p = (LTE 2 p ,
-            (x : Nat **
-            (isDivisible p x , x = 1)))
---Does the job, but is not very useful. Will be replaced later.
-checkPrime : (p : Nat) -> LTE 2 p -> {default (p-1) iter : Nat} ->
-  Maybe (isPrime p)
-checkPrime p pf {iter=Z} = Nothing
-checkPrime p pf {iter=(S Z)} = Just (pf, ((S Z) ** (oneDiv p, Refl)))
-checkPrime p pf {iter=(S k)} = case modNatNZ p (S k) SIsNotZ of
-                            Z => Nothing
-                            (S m) => checkPrime p pf {iter=k}
--}
+-- -- given n >= 2, it is either prime or Composite
+-- eitherPrimeOrComp : {n : Nat} -> (pf : LTE 2 n) -> Either (isPrime n pf)(isComposite n pf)
+-- eitherPrimeOrComp {n = Z} LTEZero impossible
+-- eitherPrimeOrComp {n = Z} (LTESucc _) impossible
+-- eitherPrimeOrComp {n = (S Z)} (LTESucc LTEZero) impossible
+-- eitherPrimeOrComp {n = (S Z)} (LTESucc (LTESucc _)) impossible
+-- eitherPrimeOrComp {n = (S (S k))} pflte = ?rhs_1
