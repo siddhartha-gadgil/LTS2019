@@ -1,7 +1,7 @@
 module RingExamples
 
 import Ring
-import Ring.Properties
+import RingProperties
 import Group
 import Group_property
 import ZZ
