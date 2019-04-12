@@ -38,3 +38,31 @@ Zmultright r (MkRing r (+) (*) pfr) a = (aplusaZ r (MkRing r (+) (*) pfr) (a*z) 
     pfz a = Basics.fst ((DPair.snd (RingAdditive_id r (MkRing r (+) (*) pfr))) a)
     pfd: (a: r) -> (b: r) -> (c: r) -> (a*(b+c) = (a*b) + (a*c))
     pfd a b c = Basics.fst ((Basics.snd (Basics.snd pfr)) a b c)
+
+|||Proof that for a ring homomorphism f between rings with identity, f(0) = 0
+RHomZtoZ: (r1: Type) -> (pf1: Ring r1) -> (r2: Type) -> (pf2: Ring r2) -> (f: r1 -> r2) -> RHom r1 pf1 r2 pf2 f -> f(fst(RingAdditive_id r1 pf1)) = fst (RingAdditive_id r2 pf2)
+RHomZtoZ r1 (MkRing r1 ((+)) (m) pf1) r2 (MkRing r2 (*) m1 pf2) f pfhom = aplusaZ r2 (MkRing r2 (*) m1 pf2) (f z1) (
+    trans
+    (sym (Basics.fst(pfhom z1 z1)))
+    (cong (Basics.fst(pfid1 z1)))
+    ) where
+  z1: r1
+  z1 = fst(RingAdditive_id r1 (MkRing r1 ((+)) (m) pf1))
+  pfid1: (a : r1) -> ((a+z1) = a, (z1+a) = a)
+  pfid1 = snd(RingAdditive_id r1 (MkRing r1 ((+)) (m) pf1))
+  
+|||Proof that for a ring homomorphism f, f(0) = 0
+IRHomZtoZ: (r1: Type) -> (pf1: Ring_with_identity r1) -> (r2: Type) -> (pf2: Ring_with_identity r2) -> (f: r1 -> r2) -> IRHom r1 pf1 r2 pf2 f -> f(fst(RingAdditive_id r1 (Ring_with_identity_isRing r1 pf1))) = fst (RingAdditive_id r2 (Ring_with_identity_isRing r2 pf2))
+IRHomZtoZ r1 (MkRing_with_identity r1 ((((+)))) (m) (a, b)) r2 (MkRing_with_identity r2 (((*))) (m1) (a', b')) f pfhom = aplusaZ r2 prf2 (f z1) (
+    trans
+    (sym (Basics.fst(pfhom z1 z1)))
+    (cong (Basics.fst(pfid1 z1)))
+    ) where
+  prf1: Ring r1
+  prf1 = MkRing r1 (+) (m) (a, ((Basics.fst (Basics.fst b)), (Basics.snd b)))
+  prf2: Ring r2
+  prf2 = MkRing r2 (*) (m1) (a', ((Basics.fst (Basics.fst b')), (Basics.snd b')))
+  z1: r1
+  z1 = fst(RingAdditive_id r1 prf1)
+  pfid1: (a : r1) -> ((a + z1) = a, (z1 + a) = a)
+  pfid1 a = snd(RingAdditive_id r1 prf1) a
