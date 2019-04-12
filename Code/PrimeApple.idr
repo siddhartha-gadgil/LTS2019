@@ -12,19 +12,53 @@ import SriramAssRecRule
 %access public export
 %default total
 
-help10 : (a : Nat) -> (b : Nat) -> (k : Nat) -> (S k) = b ->
+--Prime type
+isPrime : (p : Nat) -> LTE 2 p -> Type
+isPrime p proofLTE = {k : Nat} -> isDivisible p k -> Either (k=1)(k=p)
+
+--Transitivity of divisibility
+transDiv : (isDivisible b a) -> (isDivisible c b) -> isDivisible c a
+transDiv {a} {b} {c} (n ** pf1) (m ** pf2) = (m*n **
+              (lteMultIsLTE (fst pf2) (fst pf1) ,
+                rewrite (snd pf2) in
+                rewrite (snd pf1) in
+                rewrite sym (multAssociative a n m) in
+                rewrite multCommutative n m in Refl))
+
+--The smallest factor of a number is prime
+leastDivIsPrime : (m : Nat) -> LTE 2 m ->
+                  (p : Nat) -> (pGt2 : LTE 2 p) -> isDivisible m p ->
+                  ((b : Nat) -> LTE b p -> (isDivisible m b) ->
+                   Either (b=1)(b=p)) ->
+                  isPrime p pGt2
+leastDivIsPrime m mGt2 p pGt2 pDivm func = g where
+  g : {k : Nat} -> isDivisible p k -> Either (k=1)(k=p)
+  g {k = a} pff = func a (bDivAImpAGtB p a (fst pff) pff) (transDiv pff pDivm)
+
+help10 : (a : Nat) -> (q : Nat) -> (S (S q)) = a ->
+         (b : Nat) -> (k : Nat) -> (S (S k)) = b ->
          (prf : isDivisible a b) ->
          (lst : List Nat ** (foldList Nat 1 (*) lst = a,
            (b : NonEmpty lst ** (LTE 1 (last {ok=b} lst),
-             a = mult (head {ok=b} lst) (last {ok=b} lst)))))
-help10 a b k ee prf with (prf)
-    help10 a b k ee prf | (n ** (_ , pfDiv)) =
-        ([n , (S k)] ** (rewrite multOneRightNeutral k in
+             (a = mult (head {ok=b} lst) (last {ok=b} lst),
+             Either (x: LTE 2 (last {ok=b} lst) ** isPrime (last {ok=b} lst) x) (last {ok=b} lst = 1))))))
+help10 a q ww b k ee prf with (prf)
+    help10 a q ww b k ee prf | (m ** (pfPos , pfDiv)) =
+        ([m , (S (S k))] ** (rewrite multOneRightNeutral (S k) in
                          rewrite ee in
-                         rewrite multCommutative n b in (sym pfDiv),
+                         rewrite multCommutative m b in (sym pfDiv),
                      (IsNonEmpty ** ((LTESucc LTEZero),
-                        rewrite ee in
-                        rewrite multCommutative n b in pfDiv))))
+                        ((rewrite ee in
+                        rewrite multCommutative m b in pfDiv),
+                        Left (LTESucc (LTESucc LTEZero) **
+                                leastDivIsPrime
+                                (S (S q)) (LTESucc (LTESucc LTEZero))
+                                (S (S k)) (LTESucc (LTESucc LTEZero))
+                                (m ** (pfPos,
+                                      rewrite ww in
+                                      rewrite multConstantRight m ee in pfDiv))
+                                (?func))
+)))))
 
 help11 : (x : Nat) -> (lst : List Nat) -> (ntMT : NonEmpty lst) ->
          last (x :: lst) = last {ok=ntMT} lst
@@ -38,21 +72,23 @@ help11 x (y :: xs) IsNonEmpty = Refl
 factor2 : (n : Nat) -> (var : Nat) -> (GT n 0) ->
           (lst : List Nat ** (foldList Nat 1 (*) lst = n,
             (b : NonEmpty lst ** (LTE 1 (last {ok=b} lst),
-              n = mult (head {ok=b} lst) (last {ok=b} lst)))))
+              (n = mult (head {ok=b} lst) (last {ok=b} lst),
+                Either (x: LTE 2 (last {ok=b} lst) ** isPrime (last {ok=b} lst) x) (last {ok=b} lst = 1))))))
 factor2 Z _ LTEZero impossible
 factor2 Z _ (LTESucc _) impossible
 factor2 (S Z) _ (LTESucc LTEZero) =
-        ([1,1] ** (Refl, (IsNonEmpty ** ((LTESucc LTEZero), Refl))))
+        ([1,1] ** (Refl, (IsNonEmpty **
+                  ((LTESucc LTEZero), (Refl, Right Refl)))))
 factor2 (S (S k)) Z (LTESucc LTEZero) = assert_unreachable
 factor2 (S (S k)) (S Z) (LTESucc LTEZero) =
       ([(S (S k)), 1] **
        (rewrite multOneRightNeutral k in Refl,
        (IsNonEmpty ** ((LTESucc LTEZero),
-          rewrite multOneRightNeutral k in Refl))))
+          (rewrite multOneRightNeutral k in Refl, Right Refl)))))
 factor2 (S (S k)) (S (S x)) (LTESucc LTEZero) =
     case decDiv (S (S k)) (LTESucc (LTESucc LTEZero)) (S (S x))
           {euc = eculidDivideAux (S (S k)) (S (S x)) (SIsNotZ)} of
-     (Yes prf) => help10 (S (S k)) (S (S x)) (S x) Refl prf
+     (Yes prf) => help10 (S (S k)) (k) Refl (S (S x)) (x) Refl prf
      (No contra) => factor2 (S (S k)) (S x) (LTESucc LTEZero)
 
 --Factorises a number completely with proof of folding
@@ -64,23 +100,11 @@ factorise (S Z) (LTESucc LTEZero) = ([] ** Refl)
 factorise (S (S k)) (LTESucc LTEZero) with
       (factor2 (S (S k)) (S k) (LTESucc LTEZero))
   factorise (S (S k)) (LTESucc LTEZero) |
-        (lst ** (fol, (ntMT ** (lastLt, pf2)))) = assert_total(
+        (lst ** (fol, (ntMT ** (lastLt, (pf2, primepf))))) = assert_total(
                (( (head {ok=ntMT} lst) ::
                   (fst (factorise (last {ok=ntMT} lst) lastLt))) **
                   (rewrite (snd (factorise (last {ok=ntMT} lst) lastLt))
                   in (sym pf2)) ))
-
---prime proof
-isPrime : (p : Nat) -> LTE 2 p -> Type
-isPrime p proofLTE = {k : Nat} -> isDivisible p k -> Either (k=1)(k=p)
-
---The smallest factor of a number is prime
-leastDivIsPrime : (n : Nat) -> LTE 2 n ->
-                  (p : Nat) -> (pGt2 : LTE 2 p) -> isDivisible n p ->
-                  (b : Nat) -> LT b p -> Not (b = 1) ->
-                  (isDivisible n b -> Void) ->
-                  isPrime p pGt2
-leastDivIsPrime n x p pGt2 y b z x1 f = ?er
 
 -- creates a list with all the factors of a number upto the second argument
 genFact : (n : Nat) -> Nat -> List (k : Nat ** isDivisible n k)
