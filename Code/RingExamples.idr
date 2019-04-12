@@ -1,6 +1,6 @@
 module RingExamples
 
-import Rings
+import Ring
 import RingProperties
 import Group
 import Group_property
