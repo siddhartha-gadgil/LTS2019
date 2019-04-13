@@ -261,3 +261,8 @@ succNotLTEnum Z (LTESucc _) impossible
 succNotLTEnum (S k) y =
 	impliesContrapositive (LTE (S (S k)) (S k) ) (LTE (S (k)) k )
 	  fromLteSucc (succNotLTEnum k) y
+
+|||Proof that an element of LTE m n implies an lte m n = True
+LTEmeanslteTrue: (m: Nat) -> (n: Nat) -> (LTE m n) -> (lte m n = True)
+LTEmeanslteTrue Z n LTEZero = Refl
+LTEmeanslteTrue (S left) (S right) (LTESucc x) = LTEmeanslteTrue left right x
