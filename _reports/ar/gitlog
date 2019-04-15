@@ -1,3 +1,88 @@
+commit 4cfaf271b49ef4c6b7b561e0f3f5ec2facdfa1b5
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 15:10:36 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 15:10:36 2019 +0530
+
+    Update LinearAlgebra.idr
+
+ Code/LinearAlgebra.idr | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit cb71957d0dd887477748cda8d20d46a0ef66776c
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 14:44:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 14:44:09 2019 +0530
+
+    LinearAlgebra.idr is now Total
+
+ Code/LinearAlgebra.idr | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit d2f0a02377956872940aaceaebe02651a8014982
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 14:43:30 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 14:43:30 2019 +0530
+
+    FieldAxioms.idr is now Total
+
+ Code/FieldAxioms.idr | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 903ffb59e3ad1179c05f321ed29247d177239cd7
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 14:42:39 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 14:42:39 2019 +0530
+
+    FinUtils.idr is now Total
+    
+    NOTE: To make this total, I needed to change the function `tonatFin`. Previously, it was used for modular values (as it was originally written for Base N arithmetic), but for other uses, this feature (which was blocking totality) is unnecessary.
+    
+    -- Abishek.
+
+ Code/FinUtils.idr | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+commit 7da1dc2176831402585d231a05c63be487913bef
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 14:41:23 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 14:41:23 2019 +0530
+
+    VectPerm.idr is now total.
+
+ Code/VectPerm.idr | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 19e85846db1af8860bd6fb269bb8248dc2d12b4d
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 14:39:54 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 14:39:54 2019 +0530
+
+    Updated for Totality.
+    
+    All files that I have contributed to are total.
+
+ _reports/ar/ar.md | 26 +++++++++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
+
+commit 7b741092307d65a97a051df9a389af0005b8e715
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 14:02:46 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 14:02:46 2019 +0530
+
+    Rationals.idr is Total
+    
+    Everything in this file is total now.
+
+ Code/Rationals.idr | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
 commit c1d4de437c24f0d1e520724b5ac71286f64267f5
 Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
 AuthorDate: Thu Apr 4 14:23:32 2019 +0530

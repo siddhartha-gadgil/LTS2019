@@ -1,3 +1,31 @@
+commit d9b8bc6e0ade0ccbdb7a2108a122faa24fc4c04f
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Thu Apr 11 10:43:43 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Thu Apr 11 10:43:43 2019 +0530
+
+    Made gcd total, fixed breaking of code in Primes
+
+ Code/Primes.idr | 11 ++++-------
+ Code/gcd.idr    | 20 +++++++++++---------
+ 2 files changed, 15 insertions(+), 16 deletions(-)
+
+commit 1bbbcaa25846ab900fbcdca3ceceafaad40318a2
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Mon Apr 1 01:12:57 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Mon Apr 1 01:12:57 2019 +0530
+
+    Completed GCD with proof
+
+ Code/GCDZZ.idr    |   3 +-
+ Code/NatOrder.idr |  60 +++++++++++++++++++++++++------
+ Code/NatUtils.idr |  44 +++++++++++++++++------
+ Code/Primes.idr   |   2 +-
+ Code/decDivZ.idr  |   2 +-
+ Code/gcd.idr      | 106 ++++++++++++++++++++++++++++++++++++++++++++++--------
+ 6 files changed, 178 insertions(+), 39 deletions(-)
+
 commit 10cb35bccf7766f925c9c00813b6837fa4d7abf0
 Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
 AuthorDate: Tue Feb 26 11:52:59 2019 +0530
