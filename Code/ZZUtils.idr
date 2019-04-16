@@ -174,6 +174,18 @@ negTimesZeroIsNotPos :(Pos (S k)) = (NegS j)*(Pos Z)->Void
 negTimesZeroIsNotPos {k}{j}prf =
   zeroTimesNegIsNotPos{k=k}{j=j}
      (rewrite (sym(multCommutativeZ (NegS j) (Pos Z))) in prf)
+|||Proof that a positive number is not a positive number times a negative number
+PosTimesNegIsNotPos:(Pos (S k)) = (Pos (S l))*(NegS j)->Void
+PosTimesNegIsNotPos Refl impossible
+|||Proof that a Positiv number is not a positive number times zero
+posIsNotZeroTimesPos: ((Pos (S k)) = (Pos Z)*(Pos (S j))) -> Void
+posIsNotZeroTimesPos Refl impossible
+|||proof that a positive number is not zero times a positive number
+posIsNotPosTimesZero: ((Pos(S k)) = (Pos (S j))*(Pos Z)) -> Void
+posIsNotPosTimesZero {k}{j}prf =
+       posIsNotZeroTimesPos{k=k}{j=j}
+          (rewrite (sym(multCommutativeZ ((Pos(S j))) (Pos Z))) in prf)
+
 
 |||Lemma that (c*d)*n = (c*n)*d
 multCommuAndAssocZ1: {c:ZZ}->{d:ZZ}->{n:ZZ}->(c*d)*n = (c*n)*d
