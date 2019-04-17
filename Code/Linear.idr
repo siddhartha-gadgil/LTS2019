@@ -3,8 +3,15 @@ module Linear
 import ZZ
 import Rationals
 import Data.Vect
+import GCDZZ
+import ZZUtils
 
+%default total
 %access public export
+
+-- Old code. It has been superseded by DiophantineSolver.
+
+{-
 
 NatToZZ: Nat -> ZZ
 NatToZZ Z = 0
@@ -28,12 +35,6 @@ Eucl (S k) b = case (lte (S (S k)) b) of
                     False => (S(fst(Eucl (minus (S k) b) b)), snd(Eucl (minus (S k) b) b))
                     True => (Z, S k)
 
-
-
-data SolExists : Type where
-  YesExists : SolExists
-  DNExist : SolExists
-
 isFactor : Nat -> Nat -> Type
 isFactor m n = (k : Nat ** (m * k = n)) -- will be useful in solving Diophantine equations:
                                         -- if the denominator is a factor of the numerator, there is an integer solution
@@ -42,6 +43,11 @@ is_a_zero: (a: ZZ) -> Bool
 is_a_zero (Pos Z) = True
 is_a_zero (Pos (S k)) = False
 is_a_zero (NegS k) = False
+-}
+
+data SolExists : Type where
+  YesExists : SolExists
+  DNExist : SolExists
 
 ApZZ : (f: ZZ -> ZZ)-> n = m -> f n = f m -- like apNat, but for ZZ
 ApZZ f Refl = Refl
@@ -49,7 +55,10 @@ ApZZ f Refl = Refl
 -- Helper functions for the case ax = 0 --
 
 ZeroSum: (a: ZZ) -> (b: ZZ) -> (a = 0) -> (b = 0) -> (a + b = 0) --sum of two zeroes is zero
-ZeroSum (Pos Z) (Pos Z) Refl Refl = Refl
+ZeroSum a b prf prf1 = rewrite prf in
+                       rewrite (plusZeroLeftNeutralZ (b)) in
+                        prf1
+
 
 triviality1: (a: ZZ) -> (b: ZZ) -> (b = 0) -> (a*b=0) -- premultiplying 0 by anything returns 0
 triviality1 a b prf = trans (apZZ (\x => a*x) b 0 prf) (multZeroRightZeroZ(a))
@@ -82,15 +91,13 @@ SolutionProof a b = trans (trans (triviality5 a b) (triviality6 a b)) (trivialit
 
 --Solving a linear equation ax + b = 0 in the case when b = 0 (Basically, this shows that ax=0 is uniquely solved by (0,1))
 
-trivialeqSolver : (a: ZZ) -> (b : ZZ) -> (b = 0) -> Either (x : ZZPair ** (SolExists, (fst x)*a + (snd x)*b = 0)) (SolExists)
-trivialeqSolver a b prf = Left ((0,1) ** (YesExists, (ZeroProof a b prf)))
+trivialeqSolver : (a: ZZ) -> (b : ZZ) -> (b = 0) -> Either (x : ZZPair ** ( (SolExists, (( (fst x)*a + (snd x)*b = 0 ),(NotZero (snd x)))))) (SolExists)
+trivialeqSolver a b prf = Left (((0,1) ** (YesExists, ((ZeroProof a b prf), PositiveZ))))
 
 -- Solving the linear equation ax+b = 0 in general
 
-eqSolver : (a: ZZ) -> (b : ZZ) -> (ZZNotZero b) -> Either (x : ZZPair ** (SolExists, a*(fst x) + b*(snd x) = 0)) (SolExists)
-eqSolver a b prf = case (is_a_zero(a)) of
-  (True) => Right (DNExist)
-  (False) => Left ((-b, a) ** (YesExists, (SolutionProof a b))) -- The solution is (-b/a), a rational number, with proof.
+eqSolver : (a: ZZ) -> (b : ZZ) -> (NotZero a) -> (NotZero b) -> Either (x : ZZPair ** ( (SolExists, a*(fst x) + b*(snd x) = 0), NotZero (snd x)) ) (SolExists)
+eqSolver a b x y = Left ((-b, a) ** ((YesExists, (SolutionProof a b)), x)) -- The solution is (-b/a), a rational number, with proof.
 
 -- Helper functions for ax + b = c
 
@@ -113,17 +120,72 @@ GeneralProof a b c = trans (helper2 a b c) (helper4 a b c)
 
 -- Solving the linear equation ax + b = c (2x +3 = 7, for example) over the rationals
 
-GeneralEqSolver: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: ZZNotZero a) ->
-  (x : ZZPair ** (SolExists, a*(fst x) + b*(snd x) = (snd x)*c))
-GeneralEqSolver a b c a0 = ( ( (c-b) , a ) ** (YesExists, (GeneralProof a b c) )) -- Solves the equation with proof
+GeneralEqSolver: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: NotZero a) ->
+  (x : ZZPair ** ( (SolExists, a*(fst x) + b*(snd x) = (snd x)*c), (NotZero (snd x))) )
+GeneralEqSolver a b c a0 = ( ( (c-b) , a ) ** ( (YesExists, (GeneralProof a b c)), a0 )) -- Solves the equation with proof
+
+{-
+
+-- This is previously used code. It has been superseded by DiophantineSolver
 
 -- Now, we can use the rational solution of the linear equation ax + b = c to check whether this equation has an integer
 -- solution; if it did, the denominator of the rational solution would divide the numerator. If it didn't, the equation
 -- would have no solutions in the integers.
 
-IsSolutionZ: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: ZZNotZero a) -> Either (ZZPair) (ZZ)
+IsSolutionZ: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: NotZero a) -> Either (ZZPair) (ZZ)
 IsSolutionZ a b c a0 = case (SND (Eucl (absZ(c-b)) (absZ a) )) of
                             Z => Right ((NatToZZ(FST (Eucl (absZ(c-b)) (absZ a) )))*(findSignDiff c b))
                             (S k) => Left((c-b),a)
 
-                            
+-}
+
+-- some helper functions for the DiophantineProof
+
+helper5: (quot: ZZ) -> (a: ZZ) -> (quot*a=a*quot)
+helper5 quot a = multCommutativeZ (quot) (a)
+
+helper6: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (quot: ZZ) -> (c-b=quot*a) -> (c-b=a*quot)
+helper6 a b c quot prf = trans (prf) (helper5 (quot) (a))
+
+helper7: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (quot: ZZ) -> (c-b=a*quot) -> ((c-b+b)=a*quot+b)
+helper7 a b c quot prf = ApZZ (\x => x+ b) (prf)
+
+helper8: (b: ZZ) -> (-b+b=0)
+helper8 b = plusNegateInverseRZ b
+
+helper10: (c: ZZ) -> (b: ZZ) -> ((c-b)+b=c)
+helper10 c b = rewrite sym (plusAssociativeZ (c) (-b) (b)) in
+               rewrite plusNegateInverseRZ (b) in
+               rewrite plusZeroRightNeutralZ c in
+               Refl
+
+helper11: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (quot: ZZ) -> (c-b=a*quot) -> (c=a*quot+b)
+helper11 a b c quot prf = trans (sym (helper10 c b)) (helper7 a b c quot prf)
+
+-- If a Diophantine equation has a solution, this generates the proof.
+
+DiophantineProof: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (quot: ZZ) -> (c-b=quot*a) -> ((a*quot+b=c))
+DiophantineProof a b c quot x = sym (helper11 (a) (b) (c) (quot) (helper6 a b c quot x))
+
+--This solves the equation ax+b=c and if it has an integer solution, it generates the solution with proof.
+
+DiophantineSolver: (a: ZZ) -> (b: ZZ) -> (c: ZZ) -> (a0: NotZero a)
+-> Either (x: ZZ ** (a*x+b=c)) (x : ZZPair ** ( (SolExists, a*(fst x) + b*(snd x) = (snd x)*c), (NotZero (snd x))) )
+DiophantineSolver a b c a0 = case (CheckIsQuotientZ (c-b) (a) a0) of
+                                  (Left l) => Left ((fst l) ** (DiophantineProof a b c (fst l) (snd l)))
+                                  (Right r) => Right (GeneralEqSolver a b c (a0))
+
+ -- Now, for 2 variable Diophantine equations
+
+||| The solution of the homogeneous equation ax + by =0 is any integer multiple of (-b,a)
+homogeneous: (a: ZZ) -> (b: ZZ) -> (k: ZZ) -> ((a*(k*(-b))+b*(k*a))=0)
+homogeneous a b k = rewrite (multAssociativeZ (a) (k) (-b)) in
+                    rewrite (multCommutativeZ (a) (k)) in
+                    rewrite (multAssociativeZ (b) (k) (a)) in
+                    rewrite (multCommutativeZ (b) (k)) in
+                    rewrite sym (multAssociativeZ (k) (a) (-b)) in
+                    rewrite sym (multAssociativeZ (k) (b) (a)) in
+                    rewrite sym (multDistributesOverPlusRightZ k (a*(-b)) (b*a)) in
+                    rewrite (SolutionProof (a) (b)) in
+                    rewrite multZeroRightZeroZ k in
+                    Refl

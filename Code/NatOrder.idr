@@ -12,15 +12,22 @@ LEQ a b = (k : Nat ** ((a + k) = b))
 
 |||New type for >= on Nat
 GEQ : (a : Nat) -> (b : Nat) -> Type
-GEQ a b = LEQ b a
+GEQ = toReverseRelation LEQ
 
 |||New type for < on Nat
 LNEQ : (a : Nat) -> (b : Nat) -> Type
-LNEQ a b = (LEQ a b, Not (a = b))
+LNEQ = toStrictRelation LEQ
 
 |||New type for > on Nat
 GNEQ : (a : Nat) -> (b : Nat) -> Type
-GNEQ a b = LNEQ b a
+GNEQ = toStrictReverseRelation LEQ
+
+|||Proof that a <= b, a = c and b = d implies c <= d
+eqPreservesLEQ : {a : Nat} -> {b : Nat} -> {c : Nat} -> {d : Nat} ->
+				(LEQ a b) -> (a = c) -> (b = d) -> (LEQ c d)
+eqPreservesLEQ {a} {b} {c} {d} proofLEQ proofEq1 proofEq2 =
+	case proofLEQ of
+	(k ** proofEq) => (k ** trans (trans (cong {f = (\n => n + k)} (sym proofEq1)) proofEq) proofEq2)
 
 |||Proof that 0 is the smallest natural number
 LEQZero : {n : Nat} -> LEQ Z n
@@ -65,6 +72,12 @@ notLNEQSucc {a} {b} proofNotLNEQ proofLNEQ = proofNotLNEQ (LNEQPred proofLNEQ)
 |||Proof that !((S a) < (S b)) implies !(a < b)
 notLNEQPred : {a : Nat} -> {b : Nat} ->  (Not (LNEQ (S a) (S b))) -> (Not (LNEQ a b))
 notLNEQPred {a} {b} proofNotLNEQ proofLNEQ = proofNotLNEQ (LNEQSucc proofLNEQ)
+
+|||Proof that a < b (i.e., a + k = b) implies k != 0
+lneqImpliesDiffNotZ : {a : Nat} -> {b : Nat} -> (proofLNEQ : LNEQ a b) -> (Not ((fst (fst proofLNEQ)) = Z))
+lneqImpliesDiffNotZ {a} {b} proofLNEQ kIsZ =
+	case proofLNEQ of
+	((k ** proofEq), aNotEqb) => aNotEqb (rewrite (sym (plusZeroRightNeutral a)) in (trans (cong {f = (\n => a + n)} (sym kIsZ)) proofEq))
 
 |||Proof that !(a < = b) implies b < a
 notLEQImpliesGNEQ : {a : Nat} -> {b : Nat} -> (Not (LEQ a b)) -> (GNEQ a b)
@@ -145,14 +158,28 @@ leqTotal {a} {b} = case (isLEQ a b) of
 							(Yes bLEQa) => (RightInc aNotLEQb bLEQa)
 							(No bNotLEQa) => void (notBothLEQ aNotLEQb bNotLEQa)
 
--- leqTotalOrder : isTotalOrder LEQ
--- leqTotalOrder = ((leqRefl, leqAntiSymmetric, leqTransitive), leqTotal)
+|||Proof that LEQ forms a total order
+leqTotalOrder : isTotalOrder LEQ
+leqTotalOrder = ((leqRefl, leqAntiSymmetric, leqTransitive), leqTotal)
 
-|||Proof that a <= b implies a <= b + c
+|||Proof that a <= b implies ! (b < a)
+leqImpliesNotLNEQ : {a : Nat} -> {b : Nat} -> (LEQ a b) -> (Not (LNEQ b a))
+leqImpliesNotLNEQ {a} {b} proofLEQ proofLNEQ = (snd proofLNEQ) (leqAntiSymmetric (fst proofLNEQ) proofLEQ)
+
+|||Proof that a < b implies ! (b <= a)
+lneqImpliesNotLEQ : {a : Nat} -> {b : Nat} -> (LNEQ a b) -> (Not (LEQ b a))
+lneqImpliesNotLEQ {a} {b} proofLNEQ proofLEQ = (snd proofLNEQ) (leqAntiSymmetric (fst proofLNEQ) proofLEQ)
+
+|||Proof that b != 0 implies a <= (b * a)
+leqMult : (a : Nat) -> (b : Nat) -> (Not (b = Z)) -> (LEQ a (b * a))
+leqMult a Z proofNotZ = void (proofNotZ Refl)
+leqMult a (S k) _ = ((k * a) ** Refl)
+
+|||Proof that a <= b implies a <= (b + c)
 leqPlusRight : {a : Nat} -> {b : Nat} -> (c : Nat) -> (LEQ a b) -> (LEQ a (b + c))
 leqPlusRight {a} {b} c (k ** proofEq) = ((k + c) ** rewrite (plusAssociative a k c) in (cong {f = (\n => (n + c))} proofEq))
 
-|||Proof that a + c <= b implies a <= b
+|||Proof that (a + c) <= b implies a <= b
 ltePlusLeft : {a : Nat} -> {b : Nat} -> {c : Nat} -> (LEQ (a + c) b) -> (LEQ a b)
 ltePlusLeft {a} {b} {c} (k ** proofEq) = ((c + k) ** rewrite (plusAssociative a c k) in proofEq)
 
@@ -205,25 +232,36 @@ leqMultIsLEQ {a = a0} {b = b0} {c = c0} {d = d0} proofLeftLEQ proofRightLEQ =
 |||Proof that (c * a) <= (c * b) and c != 0 implies a <= b
 leqDivConstantLeft : {a : Nat} -> {b : Nat} -> {c : Nat} -> (Not (c = Z)) ->
 					(LEQ (c * a) (c * b)) -> (LEQ a b)
---To be proved
+leqDivConstantLeft {a} {b} {c} proofNotZ proofLEQ =
+	case (leqTotal a b) of
+		Both aLEQb bLeQa => aLEQb
+		LeftInc aLEQb notbLeQa => aLEQb
+		RightInc notaLEQb bLEQa => (Z ** rewrite (plusZeroRightNeutral a) in (multLeftCancel c a b proofNotZ (leqAntiSymmetric proofLEQ (leqMultConstantLeft c bLEQa))))
 
 |||Proof that (a * c) <= (b * c) and c != 0 implies a <= b
 leqDivConstantRight : {a : Nat} -> {b : Nat} -> {c : Nat} -> (Not (c = Z)) ->
 					(LEQ (a * c) (b * c)) -> (LEQ a b)
---To be proved
+leqDivConstantRight {a} {b} {c} proofNotZ proofLEQ = leqDivConstantLeft proofNotZ (eqPreservesLEQ proofLEQ (multCommutative a c) (multCommutative b c))
 
 ------------------------------------------------------------------------------------------------------
 
 |||Convert from LEQ to LTE
 leqToLTE : {a : Nat} -> {b : Nat} -> (LEQ a b) -> (LTE a b)
 leqToLTE {a = Z} {b} _ = LTEZero
-leqToLTE {a = S m} {b = Z} proofLEQ = void(succNotLEQzero proofLEQ)
+leqToLTE {a = S m} {b = Z} proofLEQ = void (succNotLEQzero proofLEQ)
 leqToLTE {a = S m} {b = S n} (k ** proofEq) = LTESucc (leqToLTE {a = m} {b = n} (k ** predEqual proofEq))
 
 |||Convert from LTE to LEQ
 lteToLEQ : {a : Nat} -> {b : Nat} -> (LTE a b) -> (LEQ a b)
 lteToLEQ {a = Z} {b} _ = LEQZero
-lteToLEQ {a = S m} {b = Z} proofLTE = void(succNotLTEzero proofLTE)
+lteToLEQ {a = S m} {b = Z} proofLTE = void (succNotLTEzero proofLTE)
 lteToLEQ {a = S m} {b = S n} (LTESucc proofLTE) = LEQSucc (lteToLEQ {a = m} {b = n} proofLTE)
+
+|||Convert from LNEQ to LT
+lneqToLT : {a : Nat} -> {b : Nat} -> (LNEQ a b) -> (LT a b)
+lneqToLT {a = Z} {b = Z} proofLNEQ = void ((snd proofLNEQ) Refl)
+lneqToLT {a = Z} {b = (S k)} proofLNEQ = LTESucc LTEZero
+lneqToLT {a = S m} {b = Z} proofLNEQ = void (succNotLEQzero (fst proofLNEQ))
+lneqToLT {a = S m} {b = S n} ((k ** proofEq), proofNotEq) = LTESucc (lneqToLT {a = m} {b = n} ((k ** predEqual proofEq), (\mEqn => (proofNotEq (cong mEqn)))))
 
 -------------------------------------------------------------------------------------------------------

@@ -1,3 +1,519 @@
+commit 4cfaf271b49ef4c6b7b561e0f3f5ec2facdfa1b5
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 15:10:36 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 15:10:36 2019 +0530
+
+    Update LinearAlgebra.idr
+
+ Code/LinearAlgebra.idr | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit cb71957d0dd887477748cda8d20d46a0ef66776c
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 14:44:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 14:44:09 2019 +0530
+
+    LinearAlgebra.idr is now Total
+
+ Code/LinearAlgebra.idr | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit d2f0a02377956872940aaceaebe02651a8014982
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 14:43:30 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 14:43:30 2019 +0530
+
+    FieldAxioms.idr is now Total
+
+ Code/FieldAxioms.idr | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 903ffb59e3ad1179c05f321ed29247d177239cd7
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 14:42:39 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 14:42:39 2019 +0530
+
+    FinUtils.idr is now Total
+    
+    NOTE: To make this total, I needed to change the function `tonatFin`. Previously, it was used for modular values (as it was originally written for Base N arithmetic), but for other uses, this feature (which was blocking totality) is unnecessary.
+    
+    -- Abishek.
+
+ Code/FinUtils.idr | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+commit 7da1dc2176831402585d231a05c63be487913bef
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 14:41:23 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 14:41:23 2019 +0530
+
+    VectPerm.idr is now total.
+
+ Code/VectPerm.idr | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 19e85846db1af8860bd6fb269bb8248dc2d12b4d
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 14:39:54 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 14:39:54 2019 +0530
+
+    Updated for Totality.
+    
+    All files that I have contributed to are total.
+
+ _reports/ar/ar.md | 26 +++++++++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
+
+commit 7b741092307d65a97a051df9a389af0005b8e715
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 11 14:02:46 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 14:02:46 2019 +0530
+
+    Rationals.idr is Total
+    
+    Everything in this file is total now.
+
+ Code/Rationals.idr | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+commit c1d4de437c24f0d1e520724b5ac71286f64267f5
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 4 14:23:32 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 4 14:23:32 2019 +0530
+
+    Update ar.md
+
+ _reports/ar/ar.md | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+commit 2cab5820a02c86a3e1570e4de13e14fd3d71e732
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 4 14:22:34 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 4 14:22:34 2019 +0530
+
+    Update ar.md
+
+ _reports/ar/ar.md | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+commit df20483e0dc8c169ff4f0469e6af126e5a6a20e6
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 4 14:21:56 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 4 14:21:56 2019 +0530
+
+    elaborated on report
+
+ _reports/ar/ar.md | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
+
+commit 696e4623a4e66c0ba5894c407e13a5b8b1683440
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Thu Apr 4 14:00:36 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 4 14:00:36 2019 +0530
+
+    cleaned up some code
+    
+    I included proofs that the solution to some equation is a valid rational number (nonzero denominator). I cleaned up code that was used before but has been improved upon by something with proofs. I've left the previously used code for reference purposes (someone might find the ideas in there useful). I also made everything in here total.
+    
+    -- Abishek (AR-MA210)
+
+ Code/Linear.idr | 45 ++++++++++++++++++++++++++++-----------------
+ 1 file changed, 28 insertions(+), 17 deletions(-)
+
+commit 1f6523c3fdbbcaefd70d109a112be72e1f204fb4
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Wed Mar 27 18:05:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Mar 27 18:05:55 2019 +0530
+
+    Update FieldAxioms.idr
+
+ Code/FieldAxioms.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 1de0415b0ef64c8acb57dabb64b0018d8c924a0d
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Wed Mar 27 17:56:59 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Mar 27 17:56:59 2019 +0530
+
+    updated report for post-midterm
+    
+    I updated my report.
+    
+    -- Abishek (AR-MA210)
+
+ _reports/ar/ar.md | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
+
+commit 2ba0ed896f7843f33fc1b5573d5cddc1e0061280
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Wed Mar 27 17:35:01 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Mar 27 17:35:01 2019 +0530
+
+    Field Axioms Proven with EqRat
+    
+    I verified all the field axioms (except for the distributive laws for now) using the data type `EqRat` and its properties (symmetry, reflexivity, transitivity) for the rational numbers.
+    
+    -- Abishek (AR-MA210)
+
+ Code/FieldAxioms.idr | 89 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 89 insertions(+)
+
+commit 97a87e385b09e612cc42ada0ab33c95ac96e0c13
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Wed Mar 27 17:32:41 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Mar 27 17:32:41 2019 +0530
+
+    some edits
+    
+    I needed to make some minor edits.
+    
+    -- Abishek (AR-MA210)
+
+ Code/Rationals.idr | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
+
+commit 6ff899e9925dda5f393fe4ec78ec333e1297f2f4
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Mar 25 15:15:03 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Mar 25 15:15:03 2019 +0530
+
+    finished transitivity
+    
+    I finished the proof of transitivity of `EqRat`.
+    
+    -- Abishek
+
+ Code/Rationals.idr | 40 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 39 insertions(+), 1 deletion(-)
+
+commit 17ad9cec17709829c5e4fe653f33be654d272e88
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sun Mar 24 14:34:02 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 24 14:34:02 2019 +0530
+
+    proved one case of transitivity
+    
+    I proved one case of transitivity of equality of rational numbers.
+    
+    If X, Y, and Z are rationals, X=a/b, Y=c/d, Z=e/f, and ad=bc, cf=de, then I showed that af=be in the case where c is not 0, which is one of the cases of transitivity). It remains to be shown that if c is zero, then a and e are zero (and thus X and Z are equal).
+    
+    -- Abishek (AR-MA210).
+
+ Code/Rationals.idr | 55 ++++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 49 insertions(+), 6 deletions(-)
+
+commit 1cdb0b3e7257c33c64c84dbcefefa9d025d9a343
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Mar 23 14:42:39 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 23 14:42:39 2019 +0530
+
+    some equality facts
+    
+    I made (0,1) the canonical representation of the rational number 0 and likewise (1,1) for 1.
+
+ Code/Rationals.idr | 43 ++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 40 insertions(+), 3 deletions(-)
+
+commit 4c53b137b92168c6544b571117227cc2e2cc773c
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Fri Mar 22 20:44:59 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Mar 22 20:44:59 2019 +0530
+
+    implemented Shafil's suggestion
+    
+    I renamed the functions to avoid name clashes.
+
+ Code/Rationals.idr | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
+
+commit 1d3578673116e17cdf0bcf02f020c426a341f0cc
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Fri Mar 22 19:38:04 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Mar 22 19:38:04 2019 +0530
+
+    simplification with proof + equality of rationals
+    
+    I added a function which takes a rational number and produces the simplified form with proof.
+    Also, I started working on a custom equality type for rationals (a/b = c/d if ad=bc). I proved reflexivity and symmetry for this type. I am trying to be as careful as possible with this equality type.
+    
+    -- Abishek (AR-MA210).
+
+ Code/Rationals.idr | 58 ++++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 50 insertions(+), 8 deletions(-)
+
+commit edae7ff09cc1f6d32950709cd036dc700019f871
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sun Mar 17 18:16:04 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 17 18:16:04 2019 +0530
+
+    Associativity
+    
+    I verified associativity for addition and multiplication of rationals.
+    
+    I believe the distributive laws (to be done next) will require a custom equality type along with additive/multiplicative inverses.
+    
+    -- Abishek (AR-MA210)
+
+ Code/Rationals.idr | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
+
+commit 22456e077b6f72af87352833c47986afc797c606
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Wed Mar 13 22:17:22 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Mar 13 22:17:22 2019 +0530
+
+    multiplicative and additive inverse axioms
+    
+    I verified these axioms as well.
+    
+    -- Abishek (AR-MA210)
+
+ Code/Rationals.idr | 42 +++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 37 insertions(+), 5 deletions(-)
+
+commit 4cc705727bb2aedbbd367a5718f6a034a131f48e
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Wed Mar 13 20:45:21 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Mar 13 20:45:21 2019 +0530
+
+    field axioms for Q
+    
+    I started verifying the field axioms for the rational numbers. For those involving equality of a rational number to 1 or equality of a rational number to 0, I think we may need to use a custom equality type (like `EqRat` which Sriram defined in this file).
+    
+    -- Abishek (AR-MA210)
+
+ Code/Rationals.idr | 71 +++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 65 insertions(+), 6 deletions(-)
+
+commit 06db52f045e7610bd3de660e649290f7b65bdb08
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Tue Mar 12 16:03:44 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Mar 12 16:03:44 2019 +0530
+
+    started the non-homogeneous equation
+    
+    I proved that if (x1,y1) and (x2,y2) are solutions of c=ax+by, the difference (x1-x2,y1-y2) satisfies the homogeneous equation. This can be used to show that any solution is a particular solution plus a solution of the homogeneous equation.
+    
+    -- Abishek (AR-MA210).
+
+ Code/TwoVarDiophEq.idr | 51 ++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 49 insertions(+), 2 deletions(-)
+
+commit 63a5544c3f03e608843a1be39d0ddd5300d27a51
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sun Mar 10 10:49:34 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 10 10:49:34 2019 +0530
+
+    solved homogeneous 2 variable equation + filled hole
+    
+    I filled a hole in a helper function and added another helper function for transitioning between proofs of equalities in the homogeneous case.
+    
+    -- Abishek
+
+ Code/Linear.idr | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
+
+commit 28046f4826534cb4873a8f7f124d527901858e85
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sun Mar 10 00:46:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 10 00:46:07 2019 +0530
+
+    Update Linear.idr
+
+ Code/Linear.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 8e45d8cb8694fb15a925109ee4cd89367b60c695
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sun Mar 10 00:35:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 10 00:35:19 2019 +0530
+
+    Update Linear.idr
+
+ Code/Linear.idr | 43 ++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 38 insertions(+), 5 deletions(-)
+
+commit c4653702013e3fd9bffa16e4acd10fc6839c22a7
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sun Mar 10 00:34:13 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 10 00:34:13 2019 +0530
+
+    Update ZZUtils.idr
+
+ Code/ZZUtils.idr | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+commit 65d25b4c079774b3dc7b2717777386c832f08c11
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Mar 9 16:24:48 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 9 16:24:48 2019 +0530
+
+    solved one variable Diophantine Equations
+    
+    The function `DiophantineSolver` solves one variable diophantine equations with proof (if an integer solution exists, it shows the solution with proof; if not, it outputs the rational solution with proof).
+    
+    -- Abishek (AR-MA210)
+
+ Code/Linear.idr | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+commit 23981ade110dbaa1d8d05e6d421d57e7ec8462da
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Mar 9 16:21:16 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 9 16:21:16 2019 +0530
+
+    filled in holes
+    
+    I filled in some holes once I found/made the auxiliary functions required to finish the proofs.
+    
+    -- Abishek.
+
+ Code/ZZUtils.idr | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+commit fa1b0ebd26278f96eb1443b94e043ffc02bf72fe
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Fri Mar 8 22:35:33 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Mar 8 22:35:33 2019 +0530
+
+    added in the necessary auxiliary functions
+    
+    I added in some functions required for the function `CheckIsQuotientZ` from the Rationals.idr file into this. There are some small holes to be filled but for the most part it is complete.
+    
+    
+    -- Abishek
+
+ Code/ZZUtils.idr | 56 +++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 53 insertions(+), 3 deletions(-)
+
+commit 97bf91ac84a01a63e0d6fc58c023a600992cb134
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Fri Mar 8 22:34:04 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Mar 8 22:34:04 2019 +0530
+
+    Rationals and Integers in all cases
+    
+    I extended the function which checks if a rational number is an integer so that it works for any rational number. There were 6 possible cases.
+    
+    -- Abishek
+
+ Code/Rationals.idr | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
+
+commit 67b9c51b66720660cf150a0af6e7d26e0c3eea58
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Tue Mar 5 23:56:08 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Mar 5 23:56:08 2019 +0530
+
+    some functions on zero cases
+    
+    Added some utility functions for decidability of NotZero.
+    
+    The function nonZeroNotZero has holes that need to be filled.
+
+ Code/ZZUtils.idr | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+commit 3a1709e7e22facc2e57e3666f4a86bad4be2d6dc
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Tue Mar 5 23:54:34 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Mar 5 23:54:34 2019 +0530
+
+    Rationals and Integers
+    
+    I added a function which checks if a rational number is equal to an integer.
+    
+    -- Abishek (AR-MA210)
+
+ Code/Rationals.idr | 54 ++++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 36 insertions(+), 18 deletions(-)
+
+commit fbf98d4cd75262d2d079240ab0a67d3f7a185372
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Mar 2 16:44:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 2 16:44:07 2019 +0530
+
+    Permutations
+    
+    Based on what I did previously, I implemented two simple Boolean tests for permutations (which may be useful for other purposes in other projects). I also started implementing permutations as bijections. The function `PermutationBijection` (which works only given POSITIVE inputs) takes two Vectors of equal length (with possibly repeated elements) and tries to construct a bijection between them. When there exists one, it returns the bijection which takes one Vector to another in the form of a list (for example the list [0,2,3,1] means that X[0] = Y[0], X[1] = Y[2], X[2] = Y[3], X[3] = Y[1]). If there is no bijection between the two Vectors, it constructs one between whichever elements are present in both.
+    
+    It remains to prove that when the length of the list is `n`, the List produced by this function corresponds to a bijection.
+    
+    -- Abishek (AR-MA210)
+
+ Code/VectPerm.idr | 73 +++++++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 60 insertions(+), 13 deletions(-)
+
+commit 3b5326e473777a49b63ef75267290d598139f139
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Sat Mar 2 00:22:51 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 2 00:22:51 2019 +0530
+
+    comparing Vectors
+    
+    I used the function `improveElem` which I made before to start comparing elements between Vectors and deleting them if they were present in both Vectors. This can be used to define permutations recursively as follows:
+    
+    - two unit length Vectors are permutations if they are equal
+    - two Vectors are permutations of each other if deleting any common element from both of them produces two Vectors which a permutations.
+    
+    Defining permutations and using the tools developed is the next step.
+    
+    -- Abishek (AR-MA210)
+
+ Code/VectPerm.idr | 65 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 65 insertions(+)
+
+commit 926114d308371979f47e1893d7255fe3ce4872bc
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Tue Feb 26 23:25:23 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Tue Feb 26 23:25:23 2019 +0530
+
+    elem function, but with proof
+    
+    The library function `elem` can tell you whether an element is in a vector or not (Bool), but not where and how many times it occurs. I created a function which does this with proof; it finds all occurrences of an element in a vector with proof. This will be used in checking with proof if a vector is a permutation of another.
+    
+    -- Abishek (AR-MA210)
+
+ Code/VectPerm.idr | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
+
 commit 27d5f934c841f9f0dbe0c10b9a5417a98a6419b1
 Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
 AuthorDate: Mon Feb 25 09:20:21 2019 +0530

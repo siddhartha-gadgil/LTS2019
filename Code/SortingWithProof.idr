@@ -1,4 +1,4 @@
-module sorting_with_proof
+module SortingWithProof
 
 import Data.Vect
 import Data.Fin
@@ -7,6 +7,7 @@ import PermCons
 import Finite
 
 %access public export
+%default total
 
 ||| Type of proofs that a vector 'v' of length 'n' is sorted in increasing order.
 ||| It takes the following parameters : 'n'(length of the vector), 'v'(vector),
@@ -33,4 +34,4 @@ IsSorted n v = (k : Fin n) -> (SortProof n v k)
 total
 SortedVect : (n : Nat) -> (v : (NatVect n)) -> Type
 SortedVect n v = (v_sorted : (NatVect n) **
-                 (perm : (PermC n) ** (((applyPerm n Nat perm v) = v_sorted), (IsSorted n v))))
+                 (perm : (PermC n) ** (((applyPerm n Nat perm v) = v_sorted), (IsSorted n v_sorted))))

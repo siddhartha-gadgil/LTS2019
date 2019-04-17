@@ -53,12 +53,33 @@ sumZeroImpliesZero {a = Z} {b = Z} Refl = (Refl, Refl)
 sumZeroImpliesZero {a = Z} {b = S k} proofEq = void (SIsNotZ proofEq)
 sumZeroImpliesZero {a = S k} {b} proofEq = void (SIsNotZ proofEq)
 
+|||Proof that (a * b) = 0 implies a = 0 or b = 0
+multZeroImpliesZero : {a : Nat} -> {b : Nat} -> (a * b = Z) -> Either (a = Z) (b = Z)
+multZeroImpliesZero {a = Z} {b} proofZ = Left Refl
+multZeroImpliesZero {a = S k} {b = Z} proofZ = Right Refl
+multZeroImpliesZero {a = S k} {b = S l} proofZ = void (SIsNotZ proofZ)
+
 |||Proof that a + k = b and k != 0 implies a != b
 nonZeroSumNotEqual : {a : Nat} -> {b : Nat} -> {k : Nat} -> (a + k = b) -> (Not (k = Z)) -> (Not (a = b))
 nonZeroSumNotEqual {a} {b} {k} proofEq proofNotZ proofaEqb = proofNotZ kEqZ where
 	kEqZ = (plusLeftCancel a k Z aPluskEqaPlusZ) where
 		aPluskEqaPlusZ = (trans aPluskPlEqbPlusZ (sym ((cong {f = (\n => (n + Z))}) proofaEqb))) where
 			aPluskPlEqbPlusZ = rewrite (plusZeroRightNeutral b) in proofEq
+
+|||Proof that a + k = b and a != b implies k != 0
+nonEqualSumNotZero : {a : Nat} -> {b : Nat} -> {k : Nat} -> (a + k = b) -> (Not (a = b)) -> (Not (k = Z))
+nonEqualSumNotZero {a} {b} {k} proofEq proofaNotEqb proofkEqZ =
+	proofaNotEqb proofaEqb where
+		proofaEqb = rewrite (plusCommutative Z a) in
+					rewrite (sym proofkEqZ) in proofEq
+
+|||Proof that a != 0 implies a + b != 0
+nonZeroSumNotZeroLeft :  {a : Nat} -> (b : Nat) -> (Not (a = Z)) -> Not (a + b = Z)
+nonZeroSumNotZeroLeft {a} b proofNotZero proofZero = proofNotZero (fst (sumZeroImpliesZero proofZero))
+
+|||Proof that b != 0 implies a + b != 0
+nonZeroSumNotZeroRight :  {a : Nat} -> (b : Nat) -> (Not (b = Z)) -> Not (a + b = Z)
+nonZeroSumNotZeroRight {a} b proofNotZero proofZero = proofNotZero (snd (sumZeroImpliesZero proofZero))
 
 |||Proof that (S a) + b = a + (S b)
 plusSymmetricInS : {a : Nat} -> {b : Nat} -> ((S a) + b = a + (S b))
@@ -202,20 +223,21 @@ eqImpliesNotLTNotGT : {a : Nat} -> {b : Nat} -> (a = b) -> (Not (LT a b), Not (L
 eqImpliesNotLTNotGT {a = k} {b = k} Refl = (succNotLTEn, succNotLTEn)
 
 
-|||Proof that a*b = c*b implies a = c
-multRightCancel:(left1:Nat)->(left2:Nat)->(right:Nat)->Not (right =0)->(left1*right=left2*right)->(left1 = left2)
+|||Proof that a * c = b * c implies a = b
+multRightCancel : (left1 : Nat) -> (left2 : Nat) -> (right : Nat) ->
+				(Not (right = Z)) -> (left1 * right = left2 * right) -> (left1 = left2)
 multRightCancel left1 left2 Z rightnotzero prf = void (rightnotzero Refl)
 multRightCancel Z Z (S k) rightnotzero prf = Refl
-multRightCancel Z (S _) (S _) _ Refl impossible
-multRightCancel (S _) Z (S _) _ Refl impossible
-multRightCancel (S j) (S i) (S k) rightnotzero prf = cong (multRightCancel j i (S k) rightnotzero (plusLeftCancel (S k) (j*(S k)) (i*(S k))  prf))
-|||Proof that a*b = a*c implies b = c
-multLeftCancel : (left : Nat) -> (right1 : Nat) -> (right2 : Nat) -> Not(left = 0) -> (left*right1 = left*right2) -> (right1 = right2)
+multRightCancel Z (S _) (S _) _ proofEq = void (ZIsNotS proofEq)
+multRightCancel (S _) Z (S _) _ proofEq = void (SIsNotZ proofEq)
+multRightCancel (S j) (S i) (S k) rightnotzero prf = cong (multRightCancel j i (S k) rightnotzero (plusLeftCancel (S k) (j * (S k)) (i * (S k))  prf))
+
+|||Proof that c * a = c * b implies a = b
+multLeftCancel : (left : Nat) -> (right1 : Nat) -> (right2 : Nat) ->
+				(Not (left = Z)) -> (left * right1 = left * right2) -> (right1 = right2)
 multLeftCancel left right1 right2 lnotz prf =
-	multRightCancel right1 right2 left lnotz
-	 (rewrite (multCommutative  right1 left) in
-	  rewrite (multCommutative  right2 left) in
-		prf)
+	multRightCancel right1 right2 left lnotz (rewrite (multCommutative  right1 left) in
+										rewrite (multCommutative  right2 left) in prf)
 
 |||Proof that a not LTE b implies b LTE a
 -- taken from Lecture.GCD
@@ -231,3 +253,16 @@ max : (a : Nat) -> (b : Nat) -> (n : Nat ** ((LTE a n, LTE b n), Either (a=n) (b
 max a b = case isLTE a b of
 	(Yes prf) => (b ** ((prf, lteRefl), (Right Refl)))
 	(No contra) => (a ** ((lteRefl, (switchLTE a b contra)), (Left Refl)))
+
+|||Proof that (S(a)) is not lte a
+succNotLTEnum:(a:Nat)->(LTE (S(a)) a)->Void
+succNotLTEnum Z LTEZero impossible
+succNotLTEnum Z (LTESucc _) impossible
+succNotLTEnum (S k) y =
+	impliesContrapositive (LTE (S (S k)) (S k) ) (LTE (S (k)) k )
+	  fromLteSucc (succNotLTEnum k) y
+
+|||Proof that an element of LTE m n implies an lte m n = True
+LTEmeanslteTrue: (m: Nat) -> (n: Nat) -> (LTE m n) -> (lte m n = True)
+LTEmeanslteTrue Z n LTEZero = Refl
+LTEmeanslteTrue (S left) (S right) (LTESucc x) = LTEmeanslteTrue left right x

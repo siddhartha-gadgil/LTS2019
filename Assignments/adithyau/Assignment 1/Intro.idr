@@ -44,5 +44,5 @@ sillyZero n = sub n n (reflLTE n)
 idNat : Nat -> Nat
 idNat = \x => x
 
-loop: Nat -> Nat
-loop k = loop (S k)
+-- loop: Nat -> Nat
+-- loop k = loop (S k)

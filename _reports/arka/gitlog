@@ -1,3 +1,1140 @@
+commit 208677ed09b03008b828c235c65448879fb522dd
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Apr 11 00:37:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 00:37:07 2019 +0530
+
+    Patching
+
+ Code/Quotient_Type.idr | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit da1c06e46f6bee33c57380c3e7c031a4e798da81
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Apr 11 00:34:02 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 00:34:02 2019 +0530
+
+    Update arka.md
+
+ _reports/arka/arka.md | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit cdffe73d43309db9075bbd7fc7197d32353aa902
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Apr 11 00:27:36 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 00:27:36 2019 +0530
+
+    Updated report
+
+ _reports/arka/arka.md | 79 ++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 72 insertions(+), 7 deletions(-)
+
+commit a92a6d3e7a8257ebdcf67c969be67233eb3bb951
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Apr 11 00:26:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 00:26:55 2019 +0530
+
+    Add files via upload
+
+ Code/Relations.idr | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
+
+commit 5428caedf11a784fca8f201f5db6680bdc92a6b0
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Apr 11 00:25:51 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 11 00:25:51 2019 +0530
+
+    Finished some remaining proof
+
+commit aa99fa7c9d9b612b283443585717bd51f3371cb7
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Apr 6 11:13:18 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Apr 6 11:13:18 2019 +0530
+
+    Added comments
+
+ Code/FreeGroup.idr          |  73 ++++++++++++++++++++++++++++++++++++++++++++
+ Code/Graph_alt.idr          |   1 +
+ Code/Product_Type_Eq.idr    |   2 ++
+ Code/Quotient_Type.idr      |  10 +++++-
+ Code/Relations.idr          |  61 ++++++++++++++++++++----------------
+ Code/Scheme_Expressions.idr |  12 ++++++--
+ Code/ZZsubs.ibc             | Bin 0 -> 4659 bytes
+ Code/congruence.idr         |   2 +-
+ Code/pigeonhole.idr         |  13 +++++++-
+ 9 files changed, 141 insertions(+), 33 deletions(-)
+
+commit d774cfc9d2fa2e17308fc7acc7dffdb62f0d7ea8
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Apr 6 10:56:41 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Apr 6 10:56:41 2019 +0530
+
+    Defined some operations and proved some properties of equivalence relations.
+
+ Code/Relations.idr | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
+
+commit c8e2796410ad6bee791dfece5de456a76601d859
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Apr 6 10:48:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Apr 6 10:48:55 2019 +0530
+
+    Defined subtraction for ZZ_alt and proved that it passes through
+
+ Code/ZZmult.idr | 14 ++++++++++++++
+ Code/ZZplus.idr |  3 +++
+ Code/ZZsubs.idr | 34 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 51 insertions(+)
+
+commit 1bcbe2cfcff072f7a9b4ff296c4cccb548ed1014
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 30 22:46:17 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 30 22:46:17 2019 +0530
+
+    Proved that the relation on the function type is indeed an equivalence relation.
+
+ Code/Quotient_Type.idr | 79 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 79 insertions(+)
+
+commit f221d3f832685ed9d470d4a6bd305b8679bdccf4
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 30 22:16:42 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 30 22:16:42 2019 +0530
+
+    Hopefully fixed the error
+
+ Code/ZZ_alt.idr | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 55ffda117a2955ee7b131dd8543332a666c2f462
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 30 20:54:29 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 30 20:54:29 2019 +0530
+
+    Changed capitalisation error. Gave a relation on the functions between quotient types to have the function type between quotient types to be a quotient type itself.
+
+ Code/Quotient_Type.idr | 78 +++++++++++++++++++++++++++++---------------------
+ 1 file changed, 46 insertions(+), 32 deletions(-)
+
+commit 996f675d6bad3acb90dca41009952909d85e214a
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 30 16:23:27 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 30 16:23:27 2019 +0530
+
+    Finished the proof that ZZplus passes through the equivalence relation
+
+ Code/ZZplus.idr | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
+
+commit 9a868d4c40673a954e3cdbd9dc91e7b34365531d
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 30 15:53:17 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 30 15:53:17 2019 +0530
+
+    Started a proof that ZZplus passes through the equivalence relation
+
+ Code/ZZplus.idr | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+
+commit 3b8e31523726f596dfd3f73c26acfe978072b5ed
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sun Mar 24 20:52:23 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 24 20:52:23 2019 +0530
+
+    Started defining functions on ZZ1 (please check description)
+    
+    1. Defined plus for ZZ1
+    2. Proved that any equivalence relation factors through Equality
+    3. Proved that component wise equality is enough of Product types
+
+ Code/Product_Type_Eq.idr | 17 +++++++++++++++++
+ Code/Quotient_Type.idr   |  8 ++++++++
+ Code/ZZ_alt.idr          |  7 ++++++-
+ Code/ZZplus.idr          | 23 +++++++++++++++++++++++
+ 4 files changed, 54 insertions(+), 1 deletion(-)
+
+commit 787b64c19d1aee48142964437da2605a3ab6bae1
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sun Mar 24 15:19:00 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 24 15:19:00 2019 +0530
+
+    Added a notion of transportation for quotients.
+
+ Code/Quotient_Type.idr | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
+
+commit 21a046e64952c6f1cbd1278f3d85d62898bd4c98
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sun Mar 24 14:43:51 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 24 14:43:51 2019 +0530
+
+    Given a definition of a type family from a quotient type
+
+ Code/Quotient_Type.idr | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
+
+commit 322186071d193e5245997f0a91d3a8ca5864a34f
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sun Mar 24 11:19:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 24 11:19:09 2019 +0530
+
+    Given a definition of quotient types and functions between them.
+
+ Code/Quotient_Type.idr | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
+
+commit 67fe377691c7b8346501b7348dac16a637a57ad9
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sun Mar 24 09:53:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 24 09:53:09 2019 +0530
+
+    Finished the proof of transitivity
+
+ Code/ZZ_alt.idr | 144 +++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 110 insertions(+), 34 deletions(-)
+
+commit 373c683cebdbf64917570200b8ea3badb12715c8
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sun Mar 24 01:01:58 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 24 01:01:58 2019 +0530
+
+    Added an alternate definition of ZZ using quotients.
+    
+    1. Added an alternate definition of ZZ using quotients.
+    2. Proved reflexivity and symmetry.
+    3. Proof is transitivity is going on.
+
+ Code/ZZ_alt.idr | 99 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
+
+commit ca986f5d96479e1c9149b75cebe2771064b50d19
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sun Mar 24 00:59:59 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 24 00:59:59 2019 +0530
+
+    Deleted Misplaced file
+
+ ZZ_alt.idr | 99 --------------------------------------------------------------
+ 1 file changed, 99 deletions(-)
+
+commit 41e509b2773ea7c9c72a66fed68ba886897bc795
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sun Mar 24 00:59:24 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 24 00:59:24 2019 +0530
+
+    Added an alternate definition of Integers using quotients.
+    
+    1. Added an alternate definition of Integer using quotients.
+    2. Proved reflexivity.
+    3. Proved Symmetry.
+    4. Proof of transitivity is going on.
+
+ ZZ_alt.idr | 99 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
+
+commit 26d64f8d1c06f1bc3a2f07ae64fb7b8869f3feb9
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Fri Mar 22 23:00:26 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Mar 22 23:00:26 2019 +0530
+
+    Added a method to parse floating point numbers.
+    
+    Note - It only takes inputs of the form 'a.bc'(as list of characters) where both a and b are non empty lists of characters in 0 - 9, and c is an arbitrary list of characters.
+
+ Code/Scheme_Expressions.idr |   9 +++
+ Code/Scheme_Parsers.idr     | 161 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 170 insertions(+)
+
+commit 3de24a992d743dfe2456c07c587b133b046701be
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:40:15 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:40:15 2019 +0530
+
+    Some progress in insertion sort. The code is taking too long to compile.
+
+ Code/InsertionHelpers.idr   | 105 ++++++++++++++++
+ Code/InsertionProof.idr     | 300 ++++++++++++++++++++++++++++++++++++++++++++
+ Code/InsertionSort.idr      | 142 ---------------------
+ Code/PermCons.idr           |   4 +-
+ Code/PermConsProperties.idr |  53 ++++++++
+ Code/SortingWithProof.idr   |   2 +-
+ 6 files changed, 460 insertions(+), 146 deletions(-)
+
+commit 5dd763d6a2559e62bdbe9e886d7ddd7c219f95b5
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:11:00 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:11:00 2019 +0530
+
+    Delete ZZUtils.idr
+
+ ZZUtils.idr | 61 -------------------------------------------------------------
+ 1 file changed, 61 deletions(-)
+
+commit 42f7d3f3213f507f91c72d5bf3fafb2cf2423377
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:10:47 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:10:47 2019 +0530
+
+    Delete Sign.idr
+
+ Sign.idr | 39 ---------------------------------------
+ 1 file changed, 39 deletions(-)
+
+commit c3b339172545a5fe6c10fa26eb1f86fa761d8c48
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:10:30 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:10:30 2019 +0530
+
+    Delete Quotient_Group.idr
+
+ Quotient_Group.idr | 65 ------------------------------------------------------
+ 1 file changed, 65 deletions(-)
+
+commit 441c8e96f3f8a4822cbe870476973812278c765b
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:10:15 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:10:15 2019 +0530
+
+    Delete PermConsProperties.idr
+
+ PermConsProperties.idr | 53 --------------------------------------------------
+ 1 file changed, 53 deletions(-)
+
+commit 7e7b6ccaeeeb0cd0f2a5c2e42892d5f959845d23
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:10:02 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:10:02 2019 +0530
+
+    Delete Order.idr
+
+ Order.idr | 120 --------------------------------------------------------------
+ 1 file changed, 120 deletions(-)
+
+commit 90e70d0a5fa0190b18b3c8010df4a1f4d60c8d88
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:09:48 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:09:48 2019 +0530
+
+    Delete Merge.idr
+
+ Merge.idr | 179 --------------------------------------------------------------
+ 1 file changed, 179 deletions(-)
+
+commit caac0593b2807b10df74c96af3aef1a2e447935f
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:09:34 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:09:34 2019 +0530
+
+    Delete midterm-check.txt
+
+ midterm-check.txt | 85 -------------------------------------------------------
+ 1 file changed, 85 deletions(-)
+
+commit d4f5035eb6168a3c31031706628b7a0874ddbd39
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:09:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:09:19 2019 +0530
+
+    Delete Lecture.NatTree.idr
+
+ Lecture.NatTree.idr | 53 -----------------------------------------------------
+ 1 file changed, 53 deletions(-)
+
+commit 9482efa7ce3a226b2f3204286467b0bd2a58b321
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:09:03 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:09:03 2019 +0530
+
+    Delete Group.FiniteGenerate.idr
+
+ Group.FiniteGenerate.idr | 26 --------------------------
+ 1 file changed, 26 deletions(-)
+
+commit 7a871e29c303aae2f42fb4683a473c56ca43579f
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:08:50 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:08:50 2019 +0530
+
+    Delete gcd.idr
+
+ gcd.idr | 92 -----------------------------------------------------------------
+ 1 file changed, 92 deletions(-)
+
+commit 725b0d372eb635197910ea0b3c5fbbe1318dc2eb
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:08:36 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:08:36 2019 +0530
+
+    Delete ZZ.idr
+
+ ZZ.idr | 515 -----------------------------------------------------------------
+ 1 file changed, 515 deletions(-)
+
+commit 23fb43413c76cc6bd08158d4442568e34207db3c
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:08:23 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:08:23 2019 +0530
+
+    Delete PermCons.idr
+
+ PermCons.idr | 247 -----------------------------------------------------------
+ 1 file changed, 247 deletions(-)
+
+commit 0fa8593bae6dda1d79de375fa99c4bc6c95ec640
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:08:12 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:08:12 2019 +0530
+
+    Delete Ring.idr
+
+ Ring.idr | 153 ---------------------------------------------------------------
+ 1 file changed, 153 deletions(-)
+
+commit 505a3f768944ceb1343d59a85eaff29912966e60
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:08:00 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:08:00 2019 +0530
+
+    Delete Lists.idr
+
+ Lists.idr | 30 ------------------------------
+ 1 file changed, 30 deletions(-)
+
+commit 7418f44f1fe8c5fbbe5be9389663e074e38ebe69
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:07:48 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:07:48 2019 +0530
+
+    Delete Group_property.idr
+
+ Group_property.idr | 129 -----------------------------------------------------
+ 1 file changed, 129 deletions(-)
+
+commit cd6bf282e535d13c0a03eb8db7a33895339238dc
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:07:35 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:07:35 2019 +0530
+
+    Delete Lecture.RecRule.idr
+
+ Lecture.RecRule.idr | 46 ----------------------------------------------
+ 1 file changed, 46 deletions(-)
+
+commit b7ade325742e7ab8c5421d6d41f1f39b1d9a6b37
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:07:24 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:07:24 2019 +0530
+
+    Delete NatUtils.idr
+
+ NatUtils.idr | 233 -----------------------------------------------------------
+ 1 file changed, 233 deletions(-)
+
+commit fa2f962cc7a9f3f5b106e7fc8a6dd5178cb96ffa
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:07:12 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:07:12 2019 +0530
+
+    Delete Matrix.idr
+
+ Matrix.idr | 56 --------------------------------------------------------
+ 1 file changed, 56 deletions(-)
+
+commit 9a17dfc7ce2a82ce17ddb91d7873c3172062ebf7
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:07:01 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:07:01 2019 +0530
+
+    Delete Quicksort.idr
+
+ Quicksort.idr | 13 -------------
+ 1 file changed, 13 deletions(-)
+
+commit a586ffc7b6f1e39ad796294c21eabf7eda3651aa
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:06:52 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:06:52 2019 +0530
+
+    Delete SortingWithProof.idr
+
+ SortingWithProof.idr | 37 -------------------------------------
+ 1 file changed, 37 deletions(-)
+
+commit 18451ca10c162b940bab04bb400ce74baab9d179
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:06:42 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:06:42 2019 +0530
+
+    Delete congruence.idr
+
+ congruence.idr | 6 ------
+ 1 file changed, 6 deletions(-)
+
+commit 1f3d8a2620e01a3aa336c809aea0773df2b68e89
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:06:20 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:06:20 2019 +0530
+
+    Delete MultiSolver.idr
+
+ MultiSolver.idr | 184 --------------------------------------------------------
+ 1 file changed, 184 deletions(-)
+
+commit e429cea2c52465f52acf37f901f15849133a4182
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:06:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:06:09 2019 +0530
+
+    Delete Lecture.Tuple.idr
+
+ Lecture.Tuple.idr | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+commit 4527e2f628b2c6bab6aa24b9f5e72e09eafbe6df
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:05:56 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:05:56 2019 +0530
+
+    Delete FinUtils.idr
+
+ FinUtils.idr | 39 ---------------------------------------
+ 1 file changed, 39 deletions(-)
+
+commit a55787bb23de297ef2c725500303d51f631e6091
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:05:46 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:05:46 2019 +0530
+
+    Delete Linear.idr
+
+ Linear.idr | 129 -------------------------------------------------------------
+ 1 file changed, 129 deletions(-)
+
+commit fa078f2f4159b96f619eca9cf0a72e7d18a91902
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:05:34 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:05:34 2019 +0530
+
+    Delete InsertionHelpers.idr
+
+ InsertionHelpers.idr | 105 ---------------------------------------------------
+ 1 file changed, 105 deletions(-)
+
+commit d657210facac571fbb66998b59e11bb24f44b392
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:05:23 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:05:23 2019 +0530
+
+    Delete LinearAlgebra.idr
+
+ LinearAlgebra.idr | 210 ------------------------------------------------------
+ 1 file changed, 210 deletions(-)
+
+commit 4a89aab897f5519a95281c5d9e563ecfb49cb7e7
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:05:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:05:07 2019 +0530
+
+    Delete Primes.idr
+
+ Primes.idr | 361 -------------------------------------------------------------
+ 1 file changed, 361 deletions(-)
+
+commit 98bbbe75dfacf0a0987ac05e80ab51f72ffbfbcd
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:04:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:04:55 2019 +0530
+
+    Delete NatOrder.idr
+
+ NatOrder.idr | 229 -----------------------------------------------------------
+ 1 file changed, 229 deletions(-)
+
+commit 23270b252cb840e7180545fc4e7d604d4a9bc7d5
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:04:44 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:04:44 2019 +0530
+
+    Delete Lecture.Intro.idr
+
+ Lecture.Intro.idr | 58 -------------------------------------------------------
+ 1 file changed, 58 deletions(-)
+
+commit 6d9be75e65819738d9153dc41edfc4310519cec4
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:04:34 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:04:34 2019 +0530
+
+    Delete LectureEvens.idr
+
+ LectureEvens.idr | 88 --------------------------------------------------------
+ 1 file changed, 88 deletions(-)
+
+commit c27239c6187a697b5b52ee11de794b20031661e9
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:04:22 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:04:22 2019 +0530
+
+    Delete Lecture.GCD.idr
+
+ Lecture.GCD.idr | 20 --------------------
+ 1 file changed, 20 deletions(-)
+
+commit 85e3b59f26b994eb70c1b0f9077065051a476e3a
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:04:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:04:09 2019 +0530
+
+    Delete Graph_alt.idr.fixme
+
+ Graph_alt.idr.fixme | 45 ---------------------------------------------
+ 1 file changed, 45 deletions(-)
+
+commit 6dc1072a475eca0088f5d76235957d5e1adbf67f
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:03:58 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:03:58 2019 +0530
+
+    Delete Group_kernel.idr
+
+ Group_kernel.idr | 32 --------------------------------
+ 1 file changed, 32 deletions(-)
+
+commit 9d0daa332a193a87d49e08d1cd925d9fb91333df
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 01:03:46 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 01:03:46 2019 +0530
+
+    Delete Monoid.idr
+
+ Monoid.idr | 36 ------------------------------------
+ 1 file changed, 36 deletions(-)
+
+commit b7562bf667ac4b57d8f70a2935c1071bfc20c80a
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:43:33 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:43:33 2019 +0530
+
+    Delete Graphexamples.idr
+
+ Graphexamples.idr | 33 ---------------------------------
+ 1 file changed, 33 deletions(-)
+
+commit 47cd0fbed0ae4453f3d8eb55c23836b7cc739b3c
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:43:20 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:43:20 2019 +0530
+
+    Delete InsertionProof.idr
+
+ InsertionProof.idr | 295 -----------------------------------------------------
+ 1 file changed, 295 deletions(-)
+
+commit 8fc6f83eaf0d24a278adfb49b80b389ef000b106
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:43:08 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:43:08 2019 +0530
+
+    Delete GroupCosets.idr
+
+ GroupCosets.idr | 45 ---------------------------------------------
+ 1 file changed, 45 deletions(-)
+
+commit ae9d04f3764924287bb76e6ef5ef92db0d180876
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:42:54 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:42:54 2019 +0530
+
+    Delete Insertion_backup
+
+ Insertion_backup | 163 -------------------------------------------------------
+ 1 file changed, 163 deletions(-)
+
+commit f06494de35956ecd5cdab10519ac114f23e49318
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:42:42 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:42:42 2019 +0530
+
+    Delete DecOrderNat.idr
+
+ DecOrderNat.idr | 24 ------------------------
+ 1 file changed, 24 deletions(-)
+
+commit 1376dd88d0891e23103ea86cd1bed157be8e186a
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:42:28 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:42:28 2019 +0530
+
+    Delete DetDec.idr
+
+ DetDec.idr | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+commit 51772eacf4e66da1c1408fb59baafa71d5e7b141
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:41:49 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:41:49 2019 +0530
+
+    Delete Ring.Properties.idr
+
+ Ring.Properties.idr | 40 ----------------------------------------
+ 1 file changed, 40 deletions(-)
+
+commit f883fe9650c6157973714559416894995403310e
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:41:32 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:41:32 2019 +0530
+
+    Delete Graph_alt.idr
+
+ Graph_alt.idr | 45 ---------------------------------------------
+ 1 file changed, 45 deletions(-)
+
+commit a9c3978a7bb9069672e155f0d08a4ed4f885543c
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:41:14 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:41:14 2019 +0530
+
+    Delete Group_property2.idr
+
+ Group_property2.idr | 81 -----------------------------------------------------
+ 1 file changed, 81 deletions(-)
+
+commit 3fa2b1c7681b8663978425372b1b5cb5f51f5fe7
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:41:03 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:41:03 2019 +0530
+
+    Delete GroupCosetRep.idr
+
+ GroupCosetRep.idr | 29 -----------------------------
+ 1 file changed, 29 deletions(-)
+
+commit d456c43aafbbeeb0e46097f026641d7b3a288265
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:40:52 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:40:52 2019 +0530
+
+    Delete Group.idr
+
+ Group.idr | 93 ---------------------------------------------------------------
+ 1 file changed, 93 deletions(-)
+
+commit 2f24946b38d8e26973f315474a985b3a36e71068
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:40:34 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:40:34 2019 +0530
+
+    Delete pigeonhole.idr
+
+ pigeonhole.idr | 91 ----------------------------------------------------------
+ 1 file changed, 91 deletions(-)
+
+commit ea7519ca7073ba7e115875a8a7bfe621d926d227
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:38:59 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:38:59 2019 +0530
+
+    Delete InsertionSort.idr
+
+ InsertionSort.idr | 59 -------------------------------------------------------
+ 1 file changed, 59 deletions(-)
+
+commit 3b499e04acac2480a488c645a88545dba7e77c57
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:38:47 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:38:47 2019 +0530
+
+    Delete fn_to_vect.idr
+
+ fn_to_vect.idr | 74 ----------------------------------------------------------
+ 1 file changed, 74 deletions(-)
+
+commit d5e9aa2b29954be9e765a4a92fd7ef3aad2d8fd9
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:38:31 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:38:31 2019 +0530
+
+    Delete Choice.idr
+
+ Choice.idr | 3 ---
+ 1 file changed, 3 deletions(-)
+
+commit d5593d8039a646d36dd72eca831a8459c4e27381
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:38:19 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:38:19 2019 +0530
+
+    Delete bezout.idr
+
+ bezout.idr | 204 -------------------------------------------------------------
+ 1 file changed, 204 deletions(-)
+
+commit 2abfba7fb7b88d7c228e90d6bcc517b05aa1df4b
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:36:58 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:36:58 2019 +0530
+
+    Delete Field.idr
+
+ Field.idr | 30 ------------------------------
+ 1 file changed, 30 deletions(-)
+
+commit 4fb777c530248ebe6ee6007e73c62230714efd23
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:14:42 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:14:42 2019 +0530
+
+    Delete Finite.idr
+
+ Finite.idr | 36 ------------------------------------
+ 1 file changed, 36 deletions(-)
+
+commit cf53c4ebe8702e49a241de0a4689dc519dd2ec9e
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:14:29 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:14:29 2019 +0530
+
+    Delete Rationals.idr
+
+ Rationals.idr | 119 ----------------------------------------------------------
+ 1 file changed, 119 deletions(-)
+
+commit afd0d7a1744c243f86d5404de6220dbcdb4c1b40
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:14:17 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:14:17 2019 +0530
+
+    Delete LTE_Properties.idr
+
+ LTE_Properties.idr | 15 ---------------
+ 1 file changed, 15 deletions(-)
+
+commit b8373108268720f69526d5af6b7352fa6d44eac6
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:14:06 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:14:06 2019 +0530
+
+    Delete Group_property3.idr
+
+ Group_property3.idr | 47 -----------------------------------------------
+ 1 file changed, 47 deletions(-)
+
+commit f439e0db70b64e4d07a40cfc276341ce3e49fff6
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:13:54 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:13:54 2019 +0530
+
+    Delete Divisors.idr
+
+ Divisors.idr | 193 -----------------------------------------------------------
+ 1 file changed, 193 deletions(-)
+
+commit dd86a78d55b7774831a19116a52e2f7b7cc07451
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:13:43 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:13:43 2019 +0530
+
+    Deleted Misplaced File
+
+ GCDZZ.idr | 52 ----------------------------------------------------
+ 1 file changed, 52 deletions(-)
+
+commit d36f88d47d1681f3abe8c7ac8b3a8881fa8c88f6
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:13:31 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:13:31 2019 +0530
+
+    Deleted Misplaced File
+
+ Graph.idr | 142 --------------------------------------------------------------
+ 1 file changed, 142 deletions(-)
+
+commit 59aee1c9b59b3da69b3296c4e0506f33e9c4084d
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:13:18 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:13:18 2019 +0530
+
+    Deleted Misplaced File
+
+ Bezout.idr | 155 -------------------------------------------------------------
+ 1 file changed, 155 deletions(-)
+
+commit 5e1c35c97614cc87e9e4d851f88c050f19edcc40
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:13:05 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:13:05 2019 +0530
+
+    Deleted Misplaced File
+
+ FreeGroup.idr | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 34d7de4a9889d4089898c2bdc5d0f347f5ed4da0
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:11:25 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:11:25 2019 +0530
+
+    Deleted Misplaced File
+
+ BaseN.idr | 151 --------------------------------------------------------------
+ 1 file changed, 151 deletions(-)
+
+commit f90ef9349b8e1f8b2eeae89805ada6f43216c066
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:10:18 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:10:18 2019 +0530
+
+    Deleted Misplaces File
+
+ All_is_Refl.idr | 5 -----
+ 1 file changed, 5 deletions(-)
+
+commit 6452dccf43053e64a8bb7f7fdfd1e9bbb3e64510
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:09:50 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:09:50 2019 +0530
+
+    Deleted Misplaced file
+
+ Permutation.idr | 59 ---------------------------------------------------------
+ 1 file changed, 59 deletions(-)
+
+commit 611fdc4d78357d6da8fe1cea2d98d6f8c8809c65
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sat Mar 16 00:05:28 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 16 00:05:28 2019 +0530
+
+    Some progress in insertionSort
+    
+    Idris is taking too long to run the code
+
+ All_is_Refl.idr          |   5 +
+ BaseN.idr                | 151 ++++++++++++++
+ Bezout.idr               | 155 ++++++++++++++
+ Choice.idr               |   3 +
+ DecOrderNat.idr          |  24 +++
+ DetDec.idr               |  12 ++
+ Divisors.idr             | 193 ++++++++++++++++++
+ Field.idr                |  30 +++
+ FinUtils.idr             |  39 ++++
+ Finite.idr               |  36 ++++
+ FreeGroup.idr            |   1 +
+ GCDZZ.idr                |  52 +++++
+ Graph.idr                | 142 +++++++++++++
+ Graph_alt.idr            |  45 +++++
+ Graph_alt.idr.fixme      |  45 +++++
+ Graphexamples.idr        |  33 +++
+ Group.FiniteGenerate.idr |  26 +++
+ Group.idr                |  93 +++++++++
+ GroupCosetRep.idr        |  29 +++
+ GroupCosets.idr          |  45 +++++
+ Group_kernel.idr         |  32 +++
+ Group_property.idr       | 129 ++++++++++++
+ Group_property2.idr      |  81 ++++++++
+ Group_property3.idr      |  47 +++++
+ InsertionHelpers.idr     | 105 ++++++++++
+ InsertionProof.idr       | 295 +++++++++++++++++++++++++++
+ InsertionSort.idr        |  59 ++++++
+ Insertion_backup         | 163 +++++++++++++++
+ LTE_Properties.idr       |  15 ++
+ Lecture.GCD.idr          |  20 ++
+ Lecture.Intro.idr        |  58 ++++++
+ Lecture.NatTree.idr      |  53 +++++
+ Lecture.RecRule.idr      |  46 +++++
+ Lecture.Tuple.idr        |  12 ++
+ LectureEvens.idr         |  88 ++++++++
+ Linear.idr               | 129 ++++++++++++
+ LinearAlgebra.idr        | 210 +++++++++++++++++++
+ Lists.idr                |  30 +++
+ Matrix.idr               |  56 ++++++
+ Merge.idr                | 179 ++++++++++++++++
+ Monoid.idr               |  36 ++++
+ MultiSolver.idr          | 184 +++++++++++++++++
+ NatOrder.idr             | 229 +++++++++++++++++++++
+ NatUtils.idr             | 233 +++++++++++++++++++++
+ Order.idr                | 120 +++++++++++
+ PermCons.idr             | 247 +++++++++++++++++++++++
+ PermConsProperties.idr   |  53 +++++
+ Permutation.idr          |  59 ++++++
+ Primes.idr               | 361 +++++++++++++++++++++++++++++++++
+ Quicksort.idr            |  13 ++
+ Quotient_Group.idr       |  65 ++++++
+ Rationals.idr            | 119 +++++++++++
+ Ring.Properties.idr      |  40 ++++
+ Ring.idr                 | 153 ++++++++++++++
+ Sign.idr                 |  39 ++++
+ SortingWithProof.idr     |  37 ++++
+ ZZ.idr                   | 515 +++++++++++++++++++++++++++++++++++++++++++++++
+ ZZUtils.idr              |  61 ++++++
+ congruence.idr           |   6 +
+ fn_to_vect.idr           |  74 +++++++
+ gcd.idr                  |  92 +++++++++
+ midterm-check.txt        |  85 ++++++++
+ pigeonhole.idr           |  91 +++++++++
+ 63 files changed, 5878 insertions(+)
+
+commit f95962d9361f59f1e69c6c4c6a56da9ac1dad1ed
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Fri Mar 8 22:38:12 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Mar 8 22:38:12 2019 +0530
+
+    some updates in InsertionSort.idr
+
+ Code/InsertionSort.idr | 109 +++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 97 insertions(+), 12 deletions(-)
+
+commit 2d12be6bd2b092af54762751ed43864f49ae6cbf
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Fri Mar 8 02:26:11 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Mar 8 02:26:11 2019 +0530
+
+    Added some methods in sorting(see description)
+    
+    1. Started a proof based sorting.
+    2. Having problem with using case _ of
+    3. Gave proofs that LTE is reflexive and transitive
+
+ Code/DecOrderNat.idr      | 24 ++++++++++++
+ Code/InsertionSort.idr    | 93 +++++++++++++++++++++++++++++++++++++++++++----
+ Code/LTE_Properties.idr   | 15 ++++++++
+ Code/SortingWithProof.idr |  3 +-
+ 4 files changed, 126 insertions(+), 9 deletions(-)
+
+commit d9221e207abcc9752b932207f17daae0474736e9
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Mar 7 21:51:25 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Mar 7 21:51:25 2019 +0530
+
+    A proof that every loop is equal to Refl (as suggested by Prof. Gadgil)
+
+ Code/All_is_Refl.idr | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit a4d00a1001568adaa34a0d9cd8c8b0ad97291b42
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Thu Mar 7 02:49:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Mar 7 02:49:07 2019 +0530
+
+    Proved that permutations defined using constructors are bijections
+
+ Code/PermCons.idr | 206 +++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 134 insertions(+), 72 deletions(-)
+
+commit 22d03d6d28e90fb6346ef3a9ec4c3df32407794a
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Wed Mar 6 02:57:29 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Mar 6 02:57:29 2019 +0530
+
+    Gave some methods for permutations
+
+ Code/PermCons.idr | 181 +++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 173 insertions(+), 8 deletions(-)
+
+commit 9d37b0d02dde56199216715c824bd350ba46f899
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Wed Feb 27 23:44:06 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Feb 27 23:44:06 2019 +0530
+
+    Proved that for a group a*b = c implies b = inv(a) * c.
+
+ Code/Group_property2.idr | 13 ++++---------
+ Code/Group_property3.idr | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+), 9 deletions(-)
+
 commit 257252b8155c9b7b69992e95ecf619cead4128a3
 Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
 AuthorDate: Tue Feb 26 11:03:56 2019 +0530

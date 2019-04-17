@@ -1,3 +1,433 @@
+commit be324c1e5649ad0a683830b611ced1c7855deb1a
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 31 09:30:25 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 31 09:30:25 2019 +0530
+
+    Update report
+    
+    Update report
+
+ _reports/shafil/shafil.md | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
+
+commit 869efe59b6292916d32931e4e4c3e4e0fb887a46
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 31 09:29:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 31 09:29:09 2019 +0530
+
+    Corrected a misleading function name
+    
+    Corrected a misleading function name
+
+ Code/decDivZ.idr | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+commit 3e87c1bcc98912ff39fda17f12c684ad58a34485
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Mar 13 15:13:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Mar 13 15:13:09 2019 +0530
+
+    Changed implicit arguments to explicit in findAllSolutions
+    
+    Changed implicit arguments to explicit in findAllSolutions
+
+ Code/TwoVarDiophEq.idr | 45 +++++++++++++++++++++++++--------------------
+ 1 file changed, 25 insertions(+), 20 deletions(-)
+
+commit d7835b1311f71ee500db005643c42e6fd14ca72c
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Wed Mar 13 07:08:56 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Mar 13 07:08:56 2019 +0530
+
+    Completed findAllSolutions function
+    
+    Completed findAllSolutions function
+
+ Code/TwoVarDiophEq.idr | 140 ++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 108 insertions(+), 32 deletions(-)
+
+commit a0655ce72230985d241f9a949036ec7b169260bb
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Mar 11 15:09:10 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Mar 11 15:09:10 2019 +0530
+
+    Created a findAllSolutions function (not complete)
+    
+    |||Given three integers a, b and c, the findAllSolutions function outputs either
+    |||a proof that c = xa +yb is impossible or
+    |||a proof that all integers x and y satisfy the equation (this happens when a=b=c=0)
+    |||or 4 integers x1 , y1 , pa and pb such that for any integer k,
+    |||x=x1+k*pa  y=y1+k*pb is a solution of c=xa+yb
+    |||and whenever c=xa+yb ,there exists an integer, k such that
+    ||| x=x1+k*pa  y=y1+k*pb
+
+ Code/TwoVarDiophEq.idr | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
+
+commit 2f1e0139b683d91996cfb5c0470fa974dc399876
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Mar 11 15:07:41 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Mar 11 15:07:41 2019 +0530
+
+    some helper functions about notzero
+    
+    some helper functions about notzero
+
+ Code/ZZUtils.idr | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+commit c704d8a0e730623b7c5f028d4ae9a9877f4e1ce8
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 10 16:39:35 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 10 16:39:35 2019 +0530
+
+    a typo correction
+    
+    a typo correction
+
+ Code/ZZUtils.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit a28383f08769d144e8e2139b056849adbf1e52a1
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 10 16:38:28 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 10 16:38:28 2019 +0530
+
+    a typo correction
+    
+    a typo correction
+
+ Code/TwoVarDiophEq.idr | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+commit bc4affa9e53daf80f5c5fdd0a00f2570b8a471e1
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 10 16:35:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 10 16:35:07 2019 +0530
+
+    Complete characterization of solutions of two variable linear homogenous Diophantine equations
+    
+    Gave a general formula with proof of solutions of two variable linear homogenous Diophantine equations and proved that all solutions are of this form when the first integer is not zero.
+
+ Code/TwoVarDiophEq.idr | 114 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 114 insertions(+)
+
+commit eb4e6a1e1c79a2b459d6ff581bd81606ed81f690
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 10 16:32:05 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 10 16:32:05 2019 +0530
+
+    Cancellation laws for addition
+    
+    Proved cancellation laws for addition
+    and some other helper functions
+
+ Code/ZZUtils.idr | 51 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 50 insertions(+), 1 deletion(-)
+
+commit 54b5b7f61439ce6866114e0eaa452a52b00b25b3
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 10 16:30:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 10 16:30:45 2019 +0530
+
+    A helper function
+    
+    A helper function
+
+ Code/Divisors.idr | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+commit 1936d776f16cc22f6007898b096bd89e13159282
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 10 08:53:24 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 10 08:53:24 2019 +0530
+
+    Proved that (d|a) implies ((-d)|(-a))
+    
+    Proved that (d|a) implies ((-d)|(-a))
+
+ Code/Divisors.idr | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit 51d7334df7f9cd0e280e16537b33c0bf6fe01d65
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 10 08:52:14 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 10 08:52:14 2019 +0530
+
+    A decide divisibility function for integers
+    
+    Given any two integers a and b, The decDivisibleZ function returns proof that b|a when it is the case or a proof that b does not divide a.
+    Depends on Sriram's decDiv function.
+    Also showed the equivalence of isDivisible from Primes.idr and IsDivisibleZ from Divisors.idr for positive integers
+
+ Code/decDivZ.idr | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 78 insertions(+)
+
+commit 50be649c390cbbbdd302dc837f37d55666ce619a
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Mar 9 11:00:43 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 9 11:00:43 2019 +0530
+
+    Made all functions total
+    
+    All the functions that depended on the Euclid's algorithm are now total.
+    These include GCDCalc, gcdZZ, bez and bezoutCoeffs
+
+ Code/GCDZZ.idr | 93 +++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 49 insertions(+), 44 deletions(-)
+
+commit d4b9bc8057f5f9454a724ded36eb4455385c5def
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sat Mar 9 10:59:07 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Mar 9 10:59:07 2019 +0530
+
+    total Euclid algorithm with bezout coefficients
+    
+    Implemented a bounded gcd function which returns gcd along with bezout coefficients along with proofs
+
+ Code/BoundedGCD.idr | 65 ++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 59 insertions(+), 6 deletions(-)
+
+commit 7a03388bdc2ab34b063a9325e96a662e12ec78b0
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Mar 8 21:42:17 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Mar 8 21:42:17 2019 +0530
+
+    Some helper functions for creating a total Euclid algorithm
+    
+    Some helper functions for creating a total Euclid algorithm
+
+ Code/ZZUtils.idr | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+commit c86f457ae75e981af52e90e0052fd36f212202d2
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Mar 8 21:40:55 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Mar 8 21:40:55 2019 +0530
+
+    GCDCalc is now total
+    
+    GCDCalc is now total
+
+ Code/GCDZZ.idr | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
+
+commit 90d74014114bdbc80fd908f9f0471709b6e37220
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Mar 8 21:39:49 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Mar 8 21:39:49 2019 +0530
+
+    Proved that gcd (a,1) =1 for all integers a
+    
+    Proved that gcd (a,1) =1 for all integers a
+
+ Code/Divisors.idr | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
+
+commit 38666a17ff2f4ea837d868cb968617b330430c17
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Mar 8 21:38:48 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Mar 8 21:38:48 2019 +0530
+
+    boundedGCDZ which gives gcd with proof
+    
+    boundedGCDZ gives gcd with proof for two Non negative integers not both zero
+
+ Code/BoundedGCD.idr | 56 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+
+commit db43c3904e4522f452a5ba76f2775595e3513f1f
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Mar 4 22:32:50 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Mar 4 22:32:50 2019 +0530
+
+    corrected a minor typo
+    
+    corrected a minor typo
+
+ Code/ZZUtils.idr | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
+
+commit a544b6eda03a7fc607f1351224f0be02978b901e
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Mon Mar 4 22:31:54 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Mar 4 22:31:54 2019 +0530
+
+    Proved c|ab and gcd(c,a) =1 implies c|b
+    
+    Also defines a type, SmallestPosLinComb a b d that is inhabited iff  d is the smallest positive linear combination of a and b.
+    Proved that this is equivalent to GCDZ a b d
+
+ Code/GCDZZ.idr | 94 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 93 insertions(+), 1 deletion(-)
+
+commit 38bb9c724ca5dfd38cce47545345bae3d01958a0
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 3 22:38:37 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 3 22:38:37 2019 +0530
+
+    Proved that LTE (S a)  a is impossible
+    
+    Proved that LTE (S a)  a is impossible
+
+ Code/NatUtils.idr | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+commit 5f89fdae0810b4790591b3219a13f935440195fd
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 3 22:37:02 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 3 22:37:02 2019 +0530
+
+    Created a decide function for notbothzeroZ
+    
+    Created a decide function for notbothzeroZ and a few other helper functions
+
+ Code/ZZUtils.idr | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
+
+commit 8e4382bac9061924d2d8705b1a30bf7c1d5b99f9
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 3 22:35:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 3 22:35:45 2019 +0530
+
+    Defined GCD using the actual definition and showed that both definitions are equivalent
+    
+    Defined a GCDZr type which is the actual definition of GCD as the greatest of the common divisors and proved that it is equivalent to my earlier definition.
+
+ Code/GCDZZ.idr | 75 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 75 insertions(+)
+
+commit 236075cbcbdc31cbc2c4bb187a245daad1be43d0
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 3 14:58:39 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 3 14:58:39 2019 +0530
+
+    A helper function for gcdOfmultiple
+    
+    A helper function for gcdOfmultiple
+
+ Code/Divisors.idr | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+commit 027bf6e0eaf5220bb7544b27f9c023c5a48e4076
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Sun Mar 3 14:57:29 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Mar 3 14:57:29 2019 +0530
+
+    Proved that gcd (ma,mb) = m(gcd(a,b))
+    
+    Proved that gcd (ma,mb) = m(gcd(a,b))
+    Also used assert total on a few functions for now
+
+ Code/GCDZZ.idr | 47 +++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 41 insertions(+), 6 deletions(-)
+
+commit 7eb59b86df3524c5b34bb16f3f727c70aabcb094
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Mar 1 18:28:39 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Mar 1 18:28:39 2019 +0530
+
+    Proof that (-a)*(-b) = a*b
+    
+    Proof that (-a)*(-b) = a*b
+
+ Code/ZZUtils.idr | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+commit ca4a15f0110647e52be4ec3ec1b5990a34f0883f
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Fri Mar 1 18:27:45 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Mar 1 18:27:45 2019 +0530
+
+    Bezout coefficients for integers
+    
+    The bezoutCoeffs function returns bezout coefficients with proof for any two integers not both zero
+
+ Code/GCDZZ.idr | 40 +++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 37 insertions(+), 3 deletions(-)
+
+commit e68a5e0350e879fee38df8c9bc7992ed9480a18a
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Thu Feb 28 22:53:14 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 28 22:53:14 2019 +0530
+
+    A helper function for Bezout Lemma
+    
+    A helper function for Bezout Lemma
+
+ Code/ZZUtils.idr | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+commit 5256ffaaeca0c8812c5fa67056e4b3202fd946ca
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Thu Feb 28 22:52:12 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 28 22:52:12 2019 +0530
+
+    Bezout coefficients with proof
+    
+    The bez function returns the Bezout coefficients with proof that d = gcd (a,b) and d= m*a +n*b
+    for positive a and nonnegative b
+
+ Code/GCDZZ.idr | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+commit 4378d3f240b7bf94ddb2ef7788175938830fe69a
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Thu Feb 28 15:48:56 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 28 15:48:56 2019 +0530
+
+    Proved Cancellation law for multiplication of integers
+    
+    Proved Cancellation law for multiplication of integers.
+    Also proved that if ab =1 , then a=1 and b=1 or a=-1 and b=-1
+
+ Code/ZZUtils.idr | 77 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 77 insertions(+)
+
+commit eded6bcc0c2db3bbc7a350f67076afe1046d94da
+Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
+AuthorDate: Thu Feb 28 15:47:17 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Feb 28 15:47:17 2019 +0530
+
+    Proved that gcd ( (a/gcd(a,b)),(b/gcd(a,b)) ) =1
+    
+    Proved that  when two numbers are divided by their gcd, then the gcd of the new numbers is 1
+
+ Code/Divisors.idr | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
+
 commit 241dc9c4d3ffa47f8c0ac4e940c3fdfc80e99559
 Author:     shafilmaheenn <46956366+shafilmaheenn@users.noreply.github.com>
 AuthorDate: Mon Feb 25 23:31:48 2019 +0530

@@ -1,3 +1,101 @@
+commit aabc8cd1b3b6bece3d32d3504642788438345eb9
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sun Apr 14 02:42:32 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Apr 14 02:42:32 2019 +0530
+
+    LTE implies lte m n = True
+    
+    Added proof
+
+ Code/NatUtils.idr | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit 8c23c20530e8ae4a0aa3f2b0b221b5b76e6e10dd
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sun Apr 14 02:08:41 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Apr 14 02:08:41 2019 +0530
+
+    Totality and FinNatop
+    
+    Made some definitions total, and proved that tofinNat inverts tonatFin
+
+ Code/BaseN.idr | 160 ++++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 135 insertions(+), 25 deletions(-)
+
+commit 9693eb4e15003bbcc23a0a286688350a9cbe6428
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Apr 12 22:10:16 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Apr 12 22:10:16 2019 +0530
+
+    Rename Ring.Properties.idr to RingProperties.idr
+
+ Code/{Ring.Properties.idr => RingProperties.idr} | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 888eca995321eda2ec03fdd9137d03bb4c1a2207
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Apr 12 22:06:30 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Apr 12 22:06:30 2019 +0530
+
+    Ring.Properties is not an appropriate filename
+
+ Code/RingExamples.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit f06ac6751a38bd8712a7d7e7a369c7728b6c1c73
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Apr 12 21:42:40 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Apr 12 21:42:40 2019 +0530
+
+    Fized another import (apologies)
+    
+    Checked the others this time
+
+ Code/RingExamples.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 672e46e88ea97e6d3bb0d8e15671d278c234e7d0
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Apr 12 21:23:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Apr 12 21:23:09 2019 +0530
+
+    Fixed Ring
+
+ Code/RingExamples.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit cfa0920579de131a79e32532d5197874b51c0b92
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Apr 12 20:44:50 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Apr 12 20:44:50 2019 +0530
+
+    Created a file for concrete kinds of rings
+    
+    Proved that the integers form a ring
+
+ Code/RingExamples.idr | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+
+commit 1f9126b00b42e17353a5118d086e229e963c7eae
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Apr 12 17:04:00 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Apr 12 17:04:00 2019 +0530
+
+    Proofs that for a ring homomorphism f, f(0) = 0
+    
+    Proofs for two kinds of rings. Proving that IRHom is RHom was not coming through
+
+ Code/Ring.Properties.idr | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
 commit 9c8b18265a6ec0cb2405aab9c8f2164b796d1c12
 Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
 AuthorDate: Mon Feb 25 10:51:54 2019 +0530
