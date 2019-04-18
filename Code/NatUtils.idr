@@ -15,6 +15,11 @@ impliesContrapositive a b aImpliesb bFalse x = bFalse (aImpliesb x)
 functionExtendsEquality : (typ : Type) -> (f : typ -> typ) -> (n : typ) -> (m : typ) -> (n = m) -> (f n = f m)
 functionExtendsEquality type f m m Refl = Refl
 
+|||More General function extending equality
+total
+functionExtendsEquality2 : (typ1 : Type) -> (typ2 : Type) -> (f : typ1 -> typ2) -> (n : typ1) -> (m : typ1) -> (n = m) -> (f n = f m)
+functionExtendsEquality2 typ1 typ2 f m m Refl = Refl
+
 |||An injective predecessor "function"
 predInjective : (n : Nat) -> (Not (n = Z)) -> (k ** (S k) = n)
 predInjective Z proofNotZ = void (proofNotZ Refl)
