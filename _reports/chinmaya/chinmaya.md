@@ -3,6 +3,8 @@ author: Chinmaya Kausik
 layout : report
 ---
 
+All functions defined are now total.
+
 ## Groups
 
 ### Definitions
@@ -48,6 +50,12 @@ layout : report
 
 1. Proved that if a+a = a in a given ring, then a = 0
 2. Proved that a*0 = 0 and 0*a = 0
+3. Proved that if _f_ is a ring homomorphism between general rings (without multplicative identities), then f(0) = 0
+4. Proved that if _f_ is a ring homomorphism between rings with multiplicative identities, then f(0) = 0
+
+### Examples (in the file `RingExamples.idr`)
+
+1. Proved that _ZZ_ forms a ring under + and *
 
 ## Arithmetic in Base n
 
