@@ -212,7 +212,7 @@ gcdzReplace prf prf1 x = rewrite (sym prf) in
 |||GCD is unique even in this definition
 gcdrIsUnique:(GCDZr a b c)->(GCDZr a b d)->(c=d)
 gcdrIsUnique (comfactc,fc) (comfactd,fd) =
-  lteAndGteImpliesEqualZ (fc (comfactd)) (fd (comfactc))
+  lteAntiSymmetricZ (fc (comfactd)) (fd (comfactc))
 
 |||Proof that (GCDZr a b d) implies (GCDZ a b d)
 GCDZrImpliesGCDZ:{a:ZZ}->{b:ZZ}-> (GCDZr a b d)->(GCDZ a b d)
@@ -257,7 +257,7 @@ SmallestPosLinComb a b d = ((IsPositive d),(m**n**(d=(m*a)+(n*b))),
 smallestPosLinCombIsUnique :(SmallestPosLinComb a b c)->
     (SmallestPosLinComb a b d)->(c=d)
 smallestPosLinCombIsUnique (cPos,(m**n**prfc),fc) (dPos,(u**v**prfd),fd) =
-  lteAndGteImpliesEqualZ (fd cPos prfc) (fc dPos prfd)
+  lteAntiSymmetricZ (fd cPos prfc) (fc dPos prfd)
 
 |||Proof that  j+0=j+(n*0) for any integer n
 helping2:{j:ZZ}->(n:ZZ)->j+0=j+(n*0)
