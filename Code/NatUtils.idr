@@ -345,3 +345,8 @@ succNotLTEnum : (a : Nat) -> (LTE (S a) a) -> Void
 succNotLTEnum Z LTEZero impossible
 succNotLTEnum Z (LTESucc _) impossible
 succNotLTEnum (S k) (LTESucc proofLTE) = succNotLTEnum k proofLTE
+
+|||Proof that an element of LTE m n implies an lte m n = True
+LTEmeanslteTrue: (m: Nat) -> (n: Nat) -> (LTE m n) -> (lte m n = True)
+LTEmeanslteTrue Z n LTEZero = Refl
+LTEmeanslteTrue (S left) (S right) (LTESucc x) = LTEmeanslteTrue left right x
