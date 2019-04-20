@@ -261,7 +261,7 @@ smallestPosLinCombIsUnique (cPos,(m**n**prfc),fc) (dPos,(u**v**prfd),fd) =
 
 |||Proof that  j+0=j+(n*0) for any integer n
 helping2:{j:ZZ}->(n:ZZ)->j+0=j+(n*0)
-helping2 n = rewrite  multZeroRightZeroZ n in Refl
+helping2 n = rewrite multZeroRightZeroZ n in Refl
 |||Proof that any linear combination of 0 and 0 is 0
 linCombZeroZeroIsZero: (m:ZZ**n:ZZ**(k=(m*0)+(n*0)))->(k=0)
 linCombZeroZeroIsZero (m**n**lprf) =
