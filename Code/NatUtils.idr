@@ -344,4 +344,4 @@ max a b = case isLTE a b of
 succNotLTEnum : (a : Nat) -> (LTE (S a) a) -> Void
 succNotLTEnum Z LTEZero impossible
 succNotLTEnum Z (LTESucc _) impossible
-succNotLTEnum (S k) (LTESucc proofLTE) = succNotLTEnum k proofLT
+succNotLTEnum (S k) (LTESucc proofLTE) = succNotLTEnum k proofLTE
