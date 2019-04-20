@@ -3,6 +3,8 @@ author: Chinmaya Kausik
 layout : report
 ---
 
+All functions defined are now total.
+
 ## Groups
 
 ### Definitions
@@ -27,7 +29,7 @@ layout : report
 
 1. Defined _Coset Multiplication_ using the function `MulTrans` in the file `Cosets.idr`
 2. Generated the _Representative_ of an element of group in a given transversal using the function `repgen` in the file `CosetRep.idr`
-3. Prove that _Coset Representatives_ thus generated for the embedding of a transversal in its underlying group are the same as the transversal elements. This is, in some sense, the uniqueness of coset representatives.
+3. Proved that _Coset Representatives_ thus generated for the embedding of a transversal in its underlying group are the same as the transversal elements. This is, in some sense, the uniqueness of coset representatives.
 
 ## Rings
 
@@ -48,6 +50,12 @@ layout : report
 
 1. Proved that if a+a = a in a given ring, then a = 0
 2. Proved that a*0 = 0 and 0*a = 0
+3. Proved that if _f_ is a ring homomorphism between general rings (without multplicative identities), then f(0) = 0
+4. Proved that if _f_ is a ring homomorphism between rings with multiplicative identities, then f(0) = 0
+
+### Examples (in the file `RingExamples.idr`)
+
+1. Proved that _ZZ_ forms a ring under + and *
 
 ## Arithmetic in Base n
 
@@ -70,5 +78,11 @@ Defined the inductive type `Base` (with argument `n`) of numbers in _Base n_
 
 ### Proofs (in the file `Lists.idr`)
 
-1. Prove that the reverse function for lists is, in some sense, _Pseudo-contravariant with concatenation_ through the function `reviscontra`
-2. Prove that the  reverse function for lists is _Self-Inverse_ through the function `reveq`
+1. Proved that the reverse function for lists is, in some sense, _Pseudo-contravariant with concatenation_ through the function `reviscontra`
+2. Proved that the  reverse function for lists is _Self-Inverse_ through the function `reveq`
+
+## Nat Utilities
+
+### Proofs (in the file `NatUtils.idr`)
+
+1. Proved that a witness of LTE m n implies a witness of (lte m n = True)

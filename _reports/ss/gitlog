@@ -1,3 +1,37 @@
+commit c09dba524d9ea98d4084b66954a301197c7e969f
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Apr 12 18:16:25 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Apr 12 18:16:25 2019 +0530
+
+    Auxiliary function for proving that each factor is prime or 1.
+
+ Code/PrimeApple.idr | 74 +++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 49 insertions(+), 25 deletions(-)
+
+commit 251328143d1b5797105bda7651e76037741c25a0
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Thu Apr 11 18:11:33 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Thu Apr 11 18:11:33 2019 +0530
+
+    Modularised Primes
+
+ Code/PrimeApple.idr | 167 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Code/Primes.idr     | 147 ---------------------------------------------
+ 2 files changed, 167 insertions(+), 147 deletions(-)
+
+commit 5908506dd6bd982fed94422cd9c4eea002976eb3
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Wed Apr 10 20:44:21 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Wed Apr 10 20:44:21 2019 +0530
+
+    Updated and cleaned `factorise`
+
+ Code/Primes.idr | 101 ++++++++++++++------------------------------------------
+ 1 file changed, 24 insertions(+), 77 deletions(-)
+
 commit 0703c874a001167014734bce2c7541ed2d8b1f11
 Author:     SS-C4 <srirams@iisc.ac.in>
 AuthorDate: Wed Apr 10 01:11:15 2019 +0530

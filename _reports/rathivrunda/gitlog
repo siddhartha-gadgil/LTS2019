@@ -1,3 +1,29 @@
+commit 77cdadbbff5c007cae36ca04de693837245ed314
+Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
+AuthorDate: Sun Apr 14 16:39:15 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Apr 14 16:39:15 2019 +0530
+
+    Update Q.idr
+    
+    Added functions to prove identity and commutativity
+
+ Code/Q.idr | 94 ++++++++++++++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 80 insertions(+), 14 deletions(-)
+
+commit 69a6d22cf2df1ad9b83ba5efcc717ef3570268de
+Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
+AuthorDate: Sun Apr 14 01:07:33 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Apr 14 01:07:33 2019 +0530
+
+    Update Rats.idr
+    
+    added some functions for Rats
+
+ Code/Rats.idr | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 58 insertions(+), 3 deletions(-)
+
 commit 707ce724246543572b04ac02c54a312323356d2e
 Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
 AuthorDate: Fri Feb 15 19:41:02 2019 +0530
