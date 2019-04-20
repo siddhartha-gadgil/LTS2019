@@ -1,9 +1,8 @@
---sandbox GCD
-module sandboxGCD
+module NatGCD
 
-import sandboxNatUtils
-import sandboxNatOrder
-import sandboxNatDivisors
+import NatUtils
+import NatOrder
+import NatDivisors
 
 %default total
 %access public export
@@ -41,7 +40,8 @@ eqConservesCoprime : {a1 : Nat} -> {b1 : Nat} -> {a2 : Nat} -> {b2 : Nat} ->
 eqConservesCoprime {a1} {b1} Refl Refl proofCoprime = proofCoprime
 
 |||Proof that the gcd is unique
-gcdUnique : {a : Nat} -> {b : Nat} -> (gcd1 : (gcd a b)) -> (gcd2 : (gcd a b)) -> ((fst gcd1) = (fst gcd2))
+gcdUnique : {a : Nat} -> {b : Nat} ->
+		  (gcd1 : (gcd a b)) -> (gcd2 : (gcd a b)) -> ((fst gcd1) = (fst gcd2))
 gcdUnique {a} {b} (g1 ** (commDiv1, maxDiv1)) (g2 ** (commDiv2, maxDiv2)) = dividesAntiSymmetric (maxDiv1 g2 commDiv2) (maxDiv2 g1 commDiv1)
 
 |||Proof that gcd is symmetric
@@ -50,11 +50,13 @@ gcdSymmetric {a} {b} {g} (commonDiv, maxDiv) = (commonDivisorSymmetric commonDiv
 
 |||Proof that coprimality is symmetric
 coprimeSymmetric : {a : Nat} -> {b : Nat} -> (coprime a b) -> (coprime b a)
-coprimeSymmetric {a} {b} proofCoprime = (\n => (\commDiv => (proofCoprime n (commonDivisorSymmetric commDiv))))
+coprimeSymmetric {a} {b} proofCoprime =
+	(\n => (\commDiv => (proofCoprime n (commonDivisorSymmetric commDiv))))
 
 |||Proof that gcd (a, b) = 1 implies a and b are coprime
 gcdOneImpliesCoprime : {a : Nat} -> {b : Nat} -> (isGCD a b 1) -> (coprime a b)
-gcdOneImpliesCoprime {a} {b} (commonDivisor, maxDivisor) = (\n => (\commonDiv => dividesAntiSymmetric oneDivides (maxDivisor n commonDiv)))
+gcdOneImpliesCoprime {a} {b} (commonDivisor, maxDivisor) =
+	(\n => (\commonDiv => dividesAntiSymmetric oneDivides (maxDivisor n commonDiv)))
 
 |||Proof that gcd (a, b) exists implies that both a and b are not zero
 gcdImpliesNotBothZ : {a : Nat} -> {b : Nat} -> {g : Nat} ->
@@ -69,7 +71,8 @@ coprimeImpliesGCDOne : {a : Nat} -> {b : Nat} -> (coprime a b) -> (isGCD a b 1)
 coprimeImpliesGCDOne {a} {b} proofCoprime = (oneCommonDivisor, (\n => (\commonDiv => eqConservesDivisible oneDivides Refl (sym (proofCoprime n commonDiv)))))
 
 |||Proof that given g = gcd (a, b), 1 = gcd(a/g, b/g)
-divImpliesGCDOne : {a : Nat} -> {b : Nat} -> {g : Nat} -> (proofGCD : isGCD a b g) -> (isGCD (fst (fst (fst proofGCD))) (fst (snd (fst proofGCD))) 1)
+divImpliesGCDOne : {a : Nat} -> {b : Nat} -> {g : Nat} -> (proofGCD : isGCD a b g) ->
+			    (isGCD (fst (fst (fst proofGCD))) (fst (snd (fst proofGCD))) 1)
 divImpliesGCDOne {a} {b} {g} ((divLeft1, divRight1), maxDiv) =
 	coprimeImpliesGCDOne proofCoprime where
 		proofCoprime : (coprime (fst divLeft1) (fst divRight1))

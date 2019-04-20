@@ -157,7 +157,7 @@ posDivPosImpliesLte {d}{c}(x ** pf) cPos dPos =
 |||The Theorem that if c and d are positive, d|c and c|d =>(c=d)
 posDivAndDivByImpliesEqual: (IsDivisibleZ c d)->(IsDivisibleZ d c)->(IsPositive c)
   ->(IsPositive d) -> (c=d)
-posDivAndDivByImpliesEqual x y z x1 =lteAndGteImpliesEqualZ dLtec cLted where
+posDivAndDivByImpliesEqual x y z x1 =lteAntiSymmetric dLtec cLted where
   dLtec =posDivPosImpliesLte x z x1
   cLted =posDivPosImpliesLte y x1 z
 |||Gcd of a and b is unique

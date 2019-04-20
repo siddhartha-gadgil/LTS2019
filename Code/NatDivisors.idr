@@ -1,8 +1,7 @@
---sandbox NatDivisors
-module sandboxNatDivisors
+module NatDivisors
 
-import sandboxNatUtils
-import sandboxNatOrder
+import NatUtils
+import NatOrder
 
 %default total
 %access public export
@@ -30,7 +29,7 @@ isMaxDivisor a b d = (n : Nat) -> (isCommonDivisor a b n) -> (isDivisible d n)
 ||| Given a, b, and a proof that b != 0, returns q, r and proofs that a = r + (b * q) and  r < b (r < b as LT r b)
 --removed possible problems with Rohit's
 euclidDivideOld : (a : Nat) -> (b : Nat) -> (Not (b = Z)) ->
-				(q : Nat ** (r : Nat ** ((a = r + (q * b)), LT r b)))
+			   (q : Nat ** (r : Nat ** ((a = r + (q * b)), LT r b)))
 euclidDivideOld _ Z proofEq = void (proofEq Refl)
 euclidDivideOld Z (S k) SIsNotZ = (Z ** (Z ** (Refl, LTESucc LTEZero)))
 euclidDivideOld (S n) (S k) SIsNotZ =
@@ -57,7 +56,8 @@ euclidDivide (S n) (S k) SIsNotZ =
 -- General recursive functions for proofs using Euclid's division algorithms
 
 |||A general algorithm that runs recursively using Euclid's division, with proof (helper function with bound, use euclidRecursion instead)
-euclidRecursionBound : (bound : Nat) -> (a : Nat) -> (b : Nat) -> (LTE a bound) -> (LTE (S b) bound) -> (Either (Not (a = Z)) (Not (b = Z))) -> (proofType : (Nat -> Nat -> Type)) ->
+euclidRecursionBound : (bound : Nat) -> (a : Nat) -> (b : Nat) -> (LTE a bound) -> (LTE (S b) bound) -> (Either (Not (a = Z)) (Not (b = Z))) ->
+(proofType : (Nat -> Nat -> Type)) ->
 (baseLeft : (k : Nat) -> (Not (k = Z)) -> (proofType k Z)) ->
 (baseRight : (k : Nat) -> (Not (k = Z)) -> (proofType Z k)) ->
 (proofExtend : {a1 : Nat} -> {b1 : Nat} -> {r1 : Nat} -> {q1 : Nat} -> (proofType b1 r1) -> (a1 = r1 + (q1 * b1)) -> (proofType a1 b1)) ->
@@ -101,7 +101,7 @@ euclidRecursion a b notBothZ proofType baseLeft baseRight proofExtend =
 
 |||Proof d1 divides a1 and a1 = a2, d1 = d2 implies d2 divides a2
 eqConservesDivisible : {a1 : Nat} -> {a2 : Nat} -> {d1 : Nat} -> {d2 : Nat} ->
-					(isDivisible a1 d1) -> (a1 = a2) -> (d1 = d2) -> (isDivisible a2 d2)
+				   (isDivisible a1 d1) -> (a1 = a2) -> (d1 = d2) -> (isDivisible a2 d2)
 eqConservesDivisible {a1} {d1} proofDivides Refl Refl = proofDivides
 
 |||Proof that all natural numbers divide zero
@@ -131,11 +131,14 @@ zeroCommonDivisorLeft {n} notZ = (zeroDivisible notZ, divisionReflexive notZ)
 |||Proof that a common divisor of (a, b) is a common divisor of (b, a)
 commonDivisorSymmetric : {a : Nat} -> {b : Nat} -> {d : Nat} ->
 					(isCommonDivisor a b d) -> (isCommonDivisor b a d)
-commonDivisorSymmetric {a} {b} {d} (proofDividesa, proofDividesb) = (proofDividesb, proofDividesa)
+commonDivisorSymmetric {a} {b} {d} (proofDividesa, proofDividesb) =
+	(proofDividesb, proofDividesa)
 
 |||Proof that a divides b and b divides a implies a = b
-dividesAntiSymmetric : {a : Nat} -> {b : Nat} -> (isDivisible a b) -> (isDivisible b a) -> (a = b)
-dividesAntiSymmetric {a} {b} (k ** (leftEq, leftNotZ)) (l ** (rightEq, rightNotZ)) = multAntiSymmetric leftEq rightEq
+dividesAntiSymmetric : {a : Nat} -> {b : Nat} ->
+				   (isDivisible a b) -> (isDivisible b a) -> (a = b)
+dividesAntiSymmetric {a} {b} (k ** (leftEq, leftNotZ)) (l ** (rightEq, rightNotZ)) =
+	multAntiSymmetric leftEq rightEq
 
 ----------------------------------------------------------------------------------------------
 
@@ -149,50 +152,56 @@ dividesMultiple {a} {d} (k ** (proofDiv, notZ)) n = ((n * k) ** (proofEq, notZ))
 			cong {f = (\l => n * l)} proofDiv
 
 |||Proof that a divides n and b divides (n/a) implies b * a divides n
-multipleDivides : {n : Nat} -> {a : Nat} -> {b : Nat} -> (proofDiv : isDivisible n a) -> (isDivisible (fst proofDiv) b) -> (isDivisible n (b * a))
-multipleDivides {n} {a} {b} (k ** (proofDiv1, aNotZ)) (l ** (proofDiv2, bNotZ)) = (l ** (proofEq, nonZeroMultNotZero bNotZ aNotZ)) where
-	proofEq = rewrite (multAssociative l b a) in
-			rewrite (sym proofDiv2) in proofDiv1
+multipleDivides : {n : Nat} -> {a : Nat} -> {b : Nat} -> (proofDiv : isDivisible n a) ->
+			   (isDivisible (fst proofDiv) b) -> (isDivisible n (b * a))
+multipleDivides {n} {a} {b} (k ** (proofDiv1, aNotZ)) (l ** (proofDiv2, bNotZ)) =
+	(l ** (proofEq, nonZeroMultNotZero bNotZ aNotZ)) where
+		proofEq = rewrite (multAssociative l b a) in
+				rewrite (sym proofDiv2) in proofDiv1
 
 |||Proof that d divides a and n != 0 implies (n * d) divides (n * a)
 multipleDividesMultiple : {a : Nat} -> {d : Nat} -> (isDivisible a d) ->
 					 (n : Nat) -> (Not (n = Z)) -> (isDivisible (n * a) (n * d))
-multipleDividesMultiple {a} {d} (k ** (proofDiv, dNotZ)) n nNotZ = (k ** (proofEqExtend, (nonZeroMultNotZero nNotZ dNotZ))) where
-	proofEqExtend = rewrite (multAssociative k n d) in
-				 rewrite (multCommutative k n) in
-				 rewrite (sym (multAssociative n k d)) in
-				 cong {f = (\l => (n * l))} proofDiv
+multipleDividesMultiple {a} {d} (k ** (proofDiv, dNotZ)) n nNotZ =
+	(k ** (proofEqExtend, (nonZeroMultNotZero nNotZ dNotZ))) where
+		proofEqExtend = rewrite (multAssociative k n d) in
+					 rewrite (multCommutative k n) in
+					 rewrite (sym (multAssociative n k d)) in
+					 cong {f = (\l => (n * l))} proofDiv
 
 |||Proof that d is a common divisor of a and b implies d divides a + b
-dividesSum :  {a : Nat} -> {b : Nat} -> {d : Nat} ->
-			(isCommonDivisor a b d)-> (isDivisible (a + b) d)
+dividesSum : {a : Nat} -> {b : Nat} -> {d : Nat} ->
+		   (isCommonDivisor a b d)-> (isDivisible (a + b) d)
 dividesSum {a} {b} {d} ((m ** (proofDividesa, dNotZ1)), (n ** (proofDividesb, dNotZ2))) =
 	((m + n) ** ((distributeProof a b d m n proofDividesa proofDividesb), dNotZ1))
 
 |||Proof that d is a common divisor of a and b implies d divides x * a + y * b
-dividesLinearCombination :  {a : Nat} -> {b : Nat} -> {d : Nat} ->
-						(isCommonDivisor a b d) -> (x : Nat) -> (y : Nat) ->
-						(isDivisible ((x * a) + (y * b)) d)
+dividesLinearCombination : {a : Nat} -> {b : Nat} -> {d : Nat} ->
+					  (isCommonDivisor a b d) -> (x : Nat) -> (y : Nat) ->
+					  (isDivisible ((x * a) + (y * b)) d)
 dividesLinearCombination commonDivisorProof x y =
 	dividesSum ((dividesMultiple (fst commonDivisorProof) x), (dividesMultiple (snd commonDivisorProof) y))
 
 |||Proof that d divides (a + b) and d divides b implies d divides a
 dividesDifference : {a : Nat} -> {b : Nat} -> {d : Nat} ->
 				(isDivisible (a + b) d) -> (isDivisible b d) -> (isDivisible a d)
-dividesDifference {a} {b} {d} (n ** (proofDivSum, dNotZ1)) (m ** (proofDivb, dNotZ2)) = case (leqDivConstantRight dNotZ1 (eqPreservesLEQ (a ** (plusCommutative b a)) proofDivb proofDivSum)) of
+dividesDifference {a} {b} {d} (n ** (proofDivSum, dNotZ1)) (m ** (proofDivb, dNotZ2)) =
+	case (leqDivConstantRight dNotZ1 (eqPreservesLEQ (a ** (plusCommutative b a)) proofDivb proofDivSum)) of
 	(l ** proofEq) =>
-	(l ** (sym (plusLeftCancel b (l * d) a (rewrite (plusCommutative b a) in (rewrite proofDivSum in (rewrite proofDivb in (trans (sym (multDistributesOverPlusLeft m l d)) (cong {f = (\n => n * d)} proofEq)))))), dNotZ1))
+		(l ** (sym (plusLeftCancel b (l * d) a (rewrite (plusCommutative b a) in (rewrite proofDivSum in (rewrite proofDivb in (trans (sym (multDistributesOverPlusLeft m l d)) (cong {f = (\n => n * d)} proofEq)))))), dNotZ1))
 
 |||Proof that d divides b, d divides r and a = r + q * b implies d divides a
 dividesSumExtend : {a : Nat} -> {b : Nat} -> {q : Nat} -> {r : Nat} ->
 			    (isDivisible b d) -> (isDivisible r d) -> (a = r + (q * b)) ->
 			    (isDivisible a d)
-dividesSumExtend {a} {b} {q} {r} divB divR proofEq = (eqConservesDivisible (dividesSum (divR, dividesMultiple divB q)) (sym proofEq) Refl)
+dividesSumExtend {a} {b} {q} {r} divB divR proofEq =
+	(eqConservesDivisible (dividesSum (divR, dividesMultiple divB q)) (sym proofEq) Refl)
 
 |||Proof that d divides a, d divides b and a = r + q * b implies d divides r
 dividesDiffExtend : {a : Nat} -> {b : Nat} -> {q : Nat} -> {r : Nat} ->
 				(isDivisible a d) -> (isDivisible b d) -> (a = r + (q * b)) -> (isDivisible r d)
-dividesDiffExtend {a} {b} {q} {r} divA divB proofEq = dividesDifference (eqConservesDivisible divA proofEq Refl) (dividesMultiple divB q)
+dividesDiffExtend {a} {b} {q} {r} divA divB proofEq =
+	dividesDifference (eqConservesDivisible divA proofEq Refl) (dividesMultiple divB q)
 
 ----------------------------------------------------------------------------------------------
 
@@ -213,12 +222,14 @@ remConservesCommDiv {a} {b} {q} {r} (divA, divB) proofEq = (divB, divR) where
 |||Proof that given a = r + q * b, and d divides a and b, d divides b and r
 remExtendsMaxDiv : {a : Nat} -> {b : Nat} -> {q : Nat} -> {r : Nat} -> {d : Nat} ->
 			    (isMaxDivisor b r d) -> (a = r + (q * b)) -> (isMaxDivisor a b d)
-remExtendsMaxDiv maxDiv proofEq = (\n => (\commDiv => maxDiv n (remConservesCommDiv commDiv proofEq)))
+remExtendsMaxDiv maxDiv proofEq =
+	(\n => (\commDiv => maxDiv n (remConservesCommDiv commDiv proofEq)))
 
 |||Proof that given a = r + q * b, and d divides b and r, d divides a and b
 remConservesMaxDiv : {a : Nat} -> {b : Nat} -> {q : Nat} -> {r : Nat} -> {d : Nat} ->
 				 (isMaxDivisor a b d) -> (a = r + (q * b)) -> (isMaxDivisor b r d)
-remConservesMaxDiv maxDiv proofEq = (\n => (\commDiv => maxDiv n (remExtendsCommDiv commDiv proofEq)))
+remConservesMaxDiv maxDiv proofEq =
+	(\n => (\commDiv => maxDiv n (remExtendsCommDiv commDiv proofEq)))
 
 ----------------------------------------------------------------------------------------------
 
@@ -242,10 +253,11 @@ notDivisible {n} {r} {q} {d} rNotZ proofLNEQ proofEq (k ** (proofDiv, dNotZ)) =
 |||Decision procedure to check if n is divisible by d
 decDivisible : (n : Nat) -> (d : Nat) -> Dec (isDivisible n d)
 decDivisible n Z = No (\proofDivides => (snd (snd proofDivides)) Refl)
-decDivisible n (S d) = case (euclidDivide n (S d) SIsNotZ) of
-	(q ** (r ** ((proofEq, proofLNEQ)))) =>
-	case r of
-		Z => Yes (q ** (proofEq, SIsNotZ))
-		(S k) => No (notDivisible SIsNotZ proofLNEQ proofEq)
+decDivisible n (S d) =
+	case (euclidDivide n (S d) SIsNotZ) of
+		(q ** (r ** ((proofEq, proofLNEQ)))) =>
+			case r of
+				Z => Yes (q ** (proofEq, SIsNotZ))
+				(S k) => No (notDivisible SIsNotZ proofLNEQ proofEq)
 
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
