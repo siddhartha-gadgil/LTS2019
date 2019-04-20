@@ -1,4 +1,5 @@
-lteAntiSymmetricmodule Data.ZZ
+module Data.ZZ
+
 import NatUtils
 import Decidable.Equality
 import Sign
