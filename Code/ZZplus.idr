@@ -89,5 +89,69 @@ plusPassesThrough (a1, a2) (b1, b2) (c1, c2) (d1, d2) pf_ac pf_bd = let
         
     in
     pf20
+    
+isZero : (a : ZZ1) -> Type
+isZero a = (n : ZZ1) -> (ZZ_Rel (plus n a)  n)
+
+||| A proof that if a is zero then it is of the form (n,n)
+ZZ_property1 : (a : ZZ1) -> (isZero a) -> (n : Nat ** (ZZ_Rel a (n,n)))
+ZZ_property1 (a,b) pfZ = (Z ** (pfZ (Z,Z)))
+
+||| A proof that if any element of the form (n,n) is a zero element
+ZZ_property2 : (n : Nat) -> (isZero (n,n))
+ZZ_property2 n (a, b) = let
+    
+    pf1 : (plus a n = plus n a)
+        = plusCommutative a n
+    
+    pf2 : (plus (plus a n) b = plus (plus n a) b)
+        = congruence Nat Nat (plus a n) (plus n a) (\c => (plus c b)) pf1
+
+    pf3 : (plus n (plus a b) = plus (plus n a) b)
+        = plusAssociative n a b
+        
+    pf4 : (plus (plus a n) b = plus n (plus a b))
+        = trans pf2 (sym pf3)
+        
+    pf5 : (plus a b = plus b a)
+        = plusCommutative a b  
+        
+    pf6 : (plus n (plus a b) = plus n (plus b a))
+        = congruence Nat Nat (plus a b) (plus b a) (\c => (plus n c)) pf5
+        
+    pf7 : (plus n (plus b a) = plus (plus n b) a)
+        = plusAssociative n b a                  
+        
+    pf8 : (plus n b = plus b n)
+        = plusCommutative n b
+        
+    pf9 : (plus (plus n b) a = plus (plus b n) a)
+        = congruence Nat Nat (plus n b) (plus b n) (\c => (plus c a)) pf8
+        
+    pf10 : (plus n (plus b a) = plus (plus b n) a)
+         = trans pf7 pf9            
+         
+    pf11 : (plus n (plus a b) = plus (plus b n) a)
+         = trans pf6 pf10  
+         
+    pf12 : (plus (plus a n) b = plus (plus b n) a)
+         = trans pf4 pf11     
+         
+    in
+    pf12
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
