@@ -1,4 +1,5 @@
 module Data.ZZ
+
 import NatUtils
 import Decidable.Equality
 import Sign
@@ -398,7 +399,7 @@ addAndSubNeutralZ: (a:ZZ)->(b:ZZ)->(((a+b)+(-b))=a)
 addAndSubNeutralZ a b = rewrite (sym (plusAssociativeZ a b (-b))) in (rewrite (plusNegateInverseLZ b) in (rewrite (plusZeroRightNeutralZ a) in Refl))
 |||The theorem that a = b+c, then a+(-c) = b
 subOnBothSides: (a:ZZ)->(b:ZZ)->(c:ZZ)->(a=b+c)->(a+(-c)=b)
-subOnBothSides a b c prf =  rewrite (sym (addAndSubNeutralZ b c))in 
+subOnBothSides a b c prf =  rewrite (sym (addAndSubNeutralZ b c))in
        (plusConstantRightZ a (b+c) (-c) prf)
 
 
@@ -447,12 +448,12 @@ posDivByPosIsPos:{c:ZZ}->{d:ZZ}->{q:ZZ}->(IsPositive c)->(IsPositive d)->(c=(d*q
 posDivByPosIsPos {c}{d}{q} cPos dPos eqProof = notNotPositiveimpliesPositive (PosEqualsPosNegIsContra c d q cPos dPos eqProof)
 
 |||The theorem (m<=n) and (n<=m) implies n=m for integers
-lteAndGteImpliesEqualZ:{m:ZZ}-> {n:ZZ}->(LTEZ m n)-> (LTEZ n m)->(n=m)
-lteAndGteImpliesEqualZ (PositiveLTE x) (PositiveLTE y) = cong {f = Pos} (lteAndGTEImpliesEqual y x)
-lteAndGteImpliesEqualZ NegLessPositive (PositiveLTE _) impossible
-lteAndGteImpliesEqualZ NegLessPositive NegLessPositive impossible
-lteAndGteImpliesEqualZ NegLessPositive (NegativeLte _) impossible
-lteAndGteImpliesEqualZ (NegativeLte x) (NegativeLte y) = cong {f = NegS} (lteAndGTEImpliesEqual x y)
+lteAntiSymmetricZ:{m:ZZ}-> {n:ZZ}->(LTEZ m n)-> (LTEZ n m)->(n=m)
+lteAntiSymmetricZ (PositiveLTE x) (PositiveLTE y) = cong {f = Pos} (lteAntiSymmetric y x)
+lteAntiSymmetricZ NegLessPositive (PositiveLTE _) impossible
+lteAntiSymmetricZ NegLessPositive NegLessPositive impossible
+lteAntiSymmetricZ NegLessPositive (NegativeLte _) impossible
+lteAntiSymmetricZ (NegativeLte x) (NegativeLte y) = cong {f = NegS} (lteAntiSymmetric x y)
 
 |||A proof that if c and d are positive and d =c*q then (c<=d)
 posLteMultPosPosEqZ: {q:ZZ}->(c:ZZ)->(d:ZZ)->(IsPositive c)->(IsPositive d)->(d=c*q)->(LTEZ c d)
