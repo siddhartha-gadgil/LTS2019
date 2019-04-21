@@ -33,4 +33,9 @@ layout : report
   - I defined various other functions as auxiliary for the `decDiv` function, but are useful in their own right in providing contradictions and contrapositives.
 2. Using all the helper functions defined previously, I defined a `decDiv` function that given `a`, `b`, returns a `Dec (isDivisible a b)` type with proofs and contradictions depending on the values.
   - All cases are complete and `decDiv` is total as well (Required a lot of helpers and extensive use of `rewrite`s for the last case, and was _very difficult_). This will be an important building block for the rest of the _Primes_ project. This was completed in commit [Primes.idr](https://github.com/siddhartha-gadgil/LTS2019/pull/186/commits/66aad165c174a867ceb7032e8fed93cc327e5fb6)
-  - Lots of the named helper functions are useful in an independent setting as well; with respect to divisibility. 
+  - Lots of the named helper functions are useful in an independent setting as well; with respect to divisibility.
+3. I started work on Prime factorization.
+  - `factor2` returns two factors of a number such that the second one is prime. (Not proved yet)
+  - `factorise` factors a number completely with proof that the factors fold back under multiplication to generate the original input.
+  - (`List Nat` needs to be augmented to be `List (n : Nat ** isPrime n)` for the final version)
+  These were done in commits [Prime.idr](https://github.com/siddhartha-gadgil/LTS2019/commit/0703c874a001167014734bce2c7541ed2d8b1f11#diff-f7930854c023cabc916b04537cd33585) and  [PrimeApple.idr](https://github.com/siddhartha-gadgil/LTS2019/commit/251328143d1b5797105bda7651e76037741c25a0#diff-f7930854c023cabc916b04537cd33585)
