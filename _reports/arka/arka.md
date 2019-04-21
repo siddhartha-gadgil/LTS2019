@@ -123,6 +123,9 @@ the following
    the relation _ZZ_rel_.(In the file `ZZ_plus.idr`)
 3. Defined substraction for Integers and proved that it
    respects the relation _ZZ_rel_.(In the file `ZZ_subs.idr`).
+4. Defined the property of being a zero element w.r.t.plus 
+   and proved that it is equivalent to being of the form 
+   (n,n).
 
 ## Left Overs
 
