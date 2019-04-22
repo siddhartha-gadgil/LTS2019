@@ -1,3 +1,38 @@
+commit b5abba879102b74b08e5358f2461ffbee63191ba
+Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
+AuthorDate: Sat Apr 20 19:42:05 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Apr 20 19:42:05 2019 +0530
+
+    Update rathivrunda.md
+
+ _reports/rathivrunda/rathivrunda.md | 43 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
+
+commit 9ecb7c63c57113cde59e5af1ccfa44db5bd7fb7f
+Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
+AuthorDate: Wed Apr 17 00:32:09 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Apr 17 00:32:09 2019 +0530
+
+    Update ZZUtils.idr
+
+ Code/ZZUtils.idr | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+commit 8256efad53e85df32b17d99402af49aece7e8131
+Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
+AuthorDate: Wed Apr 17 00:27:22 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Wed Apr 17 00:27:22 2019 +0530
+
+    Update Q.idr
+    
+    Defined a transversal type as the simplified form of a Rational no. using erasure
+
+ Code/Q.idr | 79 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 74 insertions(+), 5 deletions(-)
+
 commit 77cdadbbff5c007cae36ca04de693837245ed314
 Author:     rathivrunda <47008758+rathivrunda@users.noreply.github.com>
 AuthorDate: Sun Apr 14 16:39:15 2019 +0530

@@ -6,13 +6,6 @@ import NatOrder
 %default total
 %access public export
 
-|||Proof that a < b implies (S a) = b or (S a) < b
-lneqImpliesEqOrLNEQ : (a : Nat) -> (b : Nat) -> (LNEQ a b) -> Either (S a = b) (LNEQ (S a) b)
-lneqImpliesEqOrLNEQ a b ((k ** proofEq), proofNotEq) = case k of
-	Z => void (proofNotEq (rewrite (sym (plusZeroRightNeutral a)) in proofEq))
-	(S Z) => Left (rewrite (plusCommutative (S Z) a) in proofEq)
-	(S (S n)) => Right ((S n ** trans plusSymmetricInS proofEq), nonZeroSumNotEqual (trans plusSymmetricInS proofEq) SIsNotZ)
-
 |||Auxilliary proof for euclidDivide
 --Proof to finish euclidDivide, couldn't add it as a where clause within euclidDivide. If someone knows how to do that, please do so.
 extendedEqualityProof : (a : Nat) -> (b : Nat) -> (q : Nat) -> (r : Nat)->
@@ -98,15 +91,6 @@ eqConservesDivisible {a} {d} (n ** proofDivides) Refl = (n ** proofDivides)
 dividesMultiple : {a : Nat} -> {d : Nat} -> {proofNotZ : Not (d = Z)} ->
 				(isDivisible a d proofNotZ) -> (c : Nat)-> (isDivisible (c * a) d proofNotZ)
 dividesMultiple {d} (n ** Refl) c = ((c * n) ** (rewrite (multAssociative c n d) in Refl))
-
-|||Proof of distributivity
-distributeProof: (a : Nat) -> (b : Nat) -> (d : Nat) -> (m : Nat) -> (n : Nat) ->
-(a = m * d) -> (b = n * d) -> ((a + b) = (m + n) * d)
-distributeProof a b d m n proofDividesa proofDividesb =
-	rewrite (multDistributesOverPlusLeft m n d) in
-		(trans (the (a + b = (m * d) + b) (v1)) v2) where
-			v1 = plusConstantRight a (m * d) b proofDividesa
-			v2 = plusConstantLeft b (n * d) (m * d) proofDividesb
 
 |||Proof that d is a common divisor of a and b implies d divides a + b
 dividesSum :  {a : Nat} -> {b : Nat} -> {d : Nat} -> {proofNotZ : Not (d = Z)} ->

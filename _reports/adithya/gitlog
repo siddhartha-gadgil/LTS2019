@@ -1,3 +1,127 @@
+commit 02523fd7d0c9bc60d530d420fad406e9e98f3dad
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sat Apr 20 21:47:37 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sat Apr 20 21:47:37 2019 +0530
+
+    I'm not sure what changed, but nothing seems to be broken
+
+ Code/GCDZZ.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5888e9ece95499ba617d4787edeca0ad84772c25
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sat Apr 20 21:36:09 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sat Apr 20 21:36:09 2019 +0530
+
+    more breaks fixed
+
+ Code/NatUtils.idr | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit 0b385fa5a59be21f5919299185fb33c29507623a
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sat Apr 20 21:23:43 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sat Apr 20 21:23:43 2019 +0530
+
+    fixed more breaks
+
+ Code/GCDZZ.idr | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 22ff15dd42dc612d53cca9a4e673103fdb78d4d2
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sat Apr 20 21:13:25 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sat Apr 20 21:13:25 2019 +0530
+
+    Fixed more breaks
+
+ Code/Divisors.idr | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit d8386f7a92b4e4ac8b764122ac030aee30c7d6ef
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sat Apr 20 20:58:10 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sat Apr 20 20:58:10 2019 +0530
+
+    Removed redundant definitions
+
+ Code/gcd.idr | 16 ----------------
+ 1 file changed, 16 deletions(-)
+
+commit 5da0d637a7a052f376898e4e4956c2827b7bfdce
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sat Apr 20 20:00:53 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sat Apr 20 20:00:53 2019 +0530
+
+    One more, because of random keyboard mash changes
+
+ Code/ZZ.idr | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 5ac2363d12bf11bf8b776ab768734987153e9b7f
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sat Apr 20 19:52:04 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sat Apr 20 19:52:04 2019 +0530
+
+    fixed some breaks
+
+ Code/ZZ.idr | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+commit c22774f9b5ac92ca577897b0a5753584c75237db
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sat Apr 20 19:44:24 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sat Apr 20 19:44:24 2019 +0530
+
+    Changed 1 character, literally
+
+ Code/NatUtils.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 64ea83ac17f772166bc5768491ad4593c4e8733d
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sat Apr 20 18:57:12 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sat Apr 20 18:57:12 2019 +0530
+
+    Added final copies of changes, deleted temporary files
+
+ Code/Divisors.idr                                |   2 +-
+ Code/InductiveTypes.idr                          |  36 +++
+ Code/{sandboxNatDivisors.idr => NatDivisors.idr} |  84 +++---
+ Code/{sandboxGCD.idr => NatGCD.idr}              |  21 +-
+ Code/NatOrder.idr                                | 121 ++++++---
+ Code/{sandboxPrime.idr => NatPrimes.idr}         |  58 ++++-
+ Code/NatUtils.idr                                | 182 +++++++++----
+ Code/sandboxNatOrder.idr                         | 316 -----------------------
+ Code/sandboxNatUtils.idr                         | 200 --------------
+ Code/sandboxOrder.idr                            | 122 ---------
+ 10 files changed, 350 insertions(+), 792 deletions(-)
+
+commit 668fa3e3586cdf0104d4b682d5fdd85a20efa69c
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Sat Apr 20 03:52:40 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Sat Apr 20 03:52:40 2019 +0530
+
+    Temporarily added files to ensure I don't lose all my work
+
+ Code/sandboxGCD.idr         | 222 +++++++++++++++++++++++++++++++
+ Code/sandboxNatDivisors.idr | 251 +++++++++++++++++++++++++++++++++++
+ Code/sandboxNatOrder.idr    | 316 ++++++++++++++++++++++++++++++++++++++++++++
+ Code/sandboxNatUtils.idr    | 200 ++++++++++++++++++++++++++++
+ Code/sandboxOrder.idr       | 122 +++++++++++++++++
+ Code/sandboxPrime.idr       |  98 ++++++++++++++
+ 6 files changed, 1209 insertions(+)
+
 commit d9b8bc6e0ade0ccbdb7a2108a122faa24fc4c04f
 Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
 AuthorDate: Thu Apr 11 10:43:43 2019 +0530

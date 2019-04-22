@@ -1,3 +1,112 @@
+commit 8921da8e78790d35bde529a11bb56652c053342b
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Apr 20 02:48:34 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Apr 20 02:48:34 2019 +0530
+
+    Update chinmaya.md
+
+ _reports/chinmaya/chinmaya.md | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+
+commit 99cccd49e89a4a1f64b1b283bcaa9840bf54321f
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Apr 20 02:42:10 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Apr 20 02:42:10 2019 +0530
+
+    Updated with new contributions
+
+ _reports/chinmaya/chinmaya.md | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+commit e98ae755ff15837a541959f2efd34b767c2b67b0
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Apr 20 02:27:10 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Apr 20 02:27:10 2019 +0530
+
+    Totality annotations for Lists.idr
+
+ Code/Lists.idr | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit b1f3636f62a4aaef4d5460e19a1bcd08cfc175a0
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Apr 20 02:23:40 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Apr 20 02:23:40 2019 +0530
+
+    Totality for RingProperties
+
+ Code/RingProperties.idr | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+commit 1e5b4c3a59a1a0acd1246d682785e58bc129b6b4
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Apr 20 02:20:59 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Apr 20 02:20:59 2019 +0530
+
+    Update GroupCosetRep.idr
+
+commit 27652c7717d320a61ded9dc173aafcaf96c618a1
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Apr 20 02:17:48 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Apr 20 02:17:48 2019 +0530
+
+    Totality annotations for GroupCosetRep
+
+ Code/GroupCosetRep.idr | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit ad4ef34a47886cd5d3fe9a5f18c7693f4daa48c7
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Apr 20 02:13:51 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Apr 20 02:13:51 2019 +0530
+
+    GroupCosets with totality annotations
+
+ Code/GroupCosets.idr | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+
+commit 3e4607a21ae22244b6e9f0a1503b1ffe2d95ff43
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Sat Apr 20 02:10:21 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sat Apr 20 02:10:21 2019 +0530
+
+    BaseN is now total
+
+ Code/BaseN.idr | 138 ++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 62 insertions(+), 76 deletions(-)
+
+commit 42713635212bb06a245c322dc33da35563a8efe7
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Apr 19 18:24:50 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Apr 19 18:24:50 2019 +0530
+
+    Transversal multiplication is a homomorphism
+    
+    Proofs that MulTrans is, in some sense, a magma homomorphism
+
+ Code/GroupTransversals.idr | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+commit 94c0eede87d7a2e1fa3dbf635fab4c141adad2b3
+Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
+AuthorDate: Fri Apr 19 18:22:42 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Fri Apr 19 18:22:42 2019 +0530
+
+    Alignment for module name and filename
+
+ Code/GroupCosetRep.idr | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 commit aabc8cd1b3b6bece3d32d3504642788438345eb9
 Author:     Chinmaya Kausik <39112310+Chinmaya-Kausik@users.noreply.github.com>
 AuthorDate: Sun Apr 14 02:42:32 2019 +0530
