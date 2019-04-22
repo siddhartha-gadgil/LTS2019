@@ -1,4 +1,4 @@
-module CosetRep
+module GroupCosetRep
 
 import Group
 import GroupCosets
