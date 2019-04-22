@@ -1,0 +1,115 @@
+---
+layout: default
+---
+  <div class="col-md-9">
+
+        <h1>MA 210: Logic, Types and Spaces </h1>
+      <div id="desc" class="section">
+        <h3> Course Syllabus </h3>
+          <p>
+            This course is an introduction to logic and foundations from both a modern point of view (based on type theory and its relations to topology) as well as in the traditional formulation based on first-order logic.
+          </p>
+          <h4>Topics:</h4>
+        <ul>
+
+          <li>Basic type theory: terms and types, function types, dependent types, inductive types.</li>
+          <li>First order logic: First order languages, deduction and truth, Models, Godel’s completeness and compactness theorems.</li>
+          <li>Church-Turing unsolvability theorems, Godel’s incompleteness theorem.</li>
+          <li>Homotopy Type Theory: propositions as types, the identity type family, topological view of the identity type, foundations of homotopy type theory.</li>
+        </ul>
+        <p>Most of the material will be developed using the dependently typed language <a href="https://www.idris-lang.org/" target="_blank">Idris</a>. Connections with programming in functional languages and the use of <em>dependent type theory</em> to integrate computations and proofs will be explored.
+</p>
+
+        <p> The code for this course, including the live code in lectures is available in the <a href="https://github.com/siddhartha-gadgil/LTS2019" target="_blank">repository</a> (the <em>octocat</em> on the top right corner also links to this). </p>
+
+      </div>
+
+      <h3>Aims, Background etc</h3>
+      <p>The main aim of this course is to give a <em>self-contained</em> exposition of the (topological) foundations of mathematics and computation known as <em>Homotopy Type Theory</em>. These are foundations that are close to real-life mathematics, allow an integration of programs and proofs, and have deep connection with . </p>
+
+      <p> The only background assumed is some basic mathematics, in particular being comfortable with proofs and with the concept of continuity (at least over real numbers). Some familiarity with programming will be helpful, but mainly a willingness to learn and write code. In particular no familiarity with <em>Idris</em> or functional programming, or with formal logic, is assumed. </p>
+
+      <p>Note that the topic of this course is <strong>not</strong> a mature subject. In particular there is no book at this level. This will require some maturity and open-mindedness from the students.</p>
+
+      <p>To get a head-start on the course, I recommend <a href="https://www.idris-lang.org/download/" target="_blank">installing Idris</a>. Using Idris is pleasant, but installation can be painful. On Windows, I suggest using the binary on that page. If you are using linux, you may find this <a href="https://www.reddit.com/r/Idris/comments/6hw2cz/trouble_installing_idris/" target="_blank">answer</a> helpful (i.e., use <code>stack</code>). You may also wish to get familiar with the version control system <code>git</code>. </p>
+
+
+      <div class="section" id ="Assignments">
+        <h3> <a href="assign-all.html">Assignments</a> </h3>
+        <p>At least 50% of the grade will be based on assignments and projects, which will be in <code>Idris</code>. Please e-mail your assignments to <a href="mailto:siddhartha.gadgil@gmail.com" target="_blank"> siddhartha.gadgil@gmail.com</a> with "LTS2019" in the subject. The submissions will be added to the repository the day after the due date, and no late submissions will be accepted.
+        </p>
+        {% assign sorted = site.assignments | sort: 'date' | reverse %}
+
+        <ul>
+
+          {% for ass in sorted  %}
+          <li>
+            <a href="{{ site.baseurl }}{{ ass.url }}.html"> {{ ass.title }}</a>, due by {{ ass.date | date: "%a, %d %b %Y" }}.
+          </li>
+          {% endfor %}
+        </ul>
+
+        <h3>Projects</h3>
+
+        Projects are to be submitted as <em>pull requests</em> on the <a href="https://github.com/siddhartha-gadgil/LTS2019" target="_blank">repository</a>. You will be graded based on total contribution to all the class projects, which can be based on my suggestions or your own ideas. My suggestions will be at the <a href="https://github.com/siddhartha-gadgil/LTS2019/issues" target="_blank">issue tracker</a> of the repository and will be labelled as projects. You are welcome to comment on these and seek clarifications. You may also start a new issue with a project idea.
+
+      </div>
+
+
+
+
+
+      <div id="refs" class="section">
+        <h3>Suggested books</h3>
+        <ol>
+          <li> Edwin Brady, <em>Type-Driven Development with Idris</em>, Manning Publications. </li>
+          <li> <em>Homotopy Type Theory: Univalent Foundations of Mathematics</em>, Institute for Advanced Studies, Princeton 2013; available at <a href="http://homotopytypetheory.org/book/" target="_blank"> http://homotopytypetheory.org/book/</a>.</li>
+          <li> Manin, Yu. I., <em>A Course in Mathematical Logic for Mathematicians</em>, Second Edition ,Graduate Texts in Mathematics, Springer-Verlag, 2010. </li>
+          <li> Srivastava, S. M., <em>A Course on Mathematical Logic</em>, Universitext, Springer-Verlag, 2008. </li>
+          <li> Abelson, Sussman and Sussman, <em>Structure and Interpretation of Computer Programs</em>, MIT Press, available at <a href="https://mitpress.mit.edu/sites/default/files/sicp/index.html" target="_blank">https://mitpress.mit.edu/sites/default/files/sicp/index.html</a>.</li>
+        </ol>
+      </div>
+
+      <div id ="details" class="section">
+        <h3> Course Details</h3>
+        <ul>
+          <li><strong>Instructor:</strong> <a href="http://math.iisc.ac.in/~gadgil" target="_blank"> Siddhartha Gadgil</a></li>
+          <li><strong>E-mail:</strong> <a href="mailto:siddhartha.gadgil@gmail.com" target="_blank"> siddhartha.gadgil@gmail.com</a>.</li>
+          <li> <strong>Office:</strong> N-15, Department of Mathematics. </li>
+          <li><strong>Timing: </strong>
+            Tuesday, Thursday 8:30 - 10:00 am.
+          </li>
+          <li><strong>Lecture Venue: </strong> LH-5, Department of Mathematics, IISc.</li>
+          <li> <strong>First Lecture:</strong> Thursday, January 3, 2019. </li>
+          <li><strong> Course Email Group:</strong> <em>lts2019@iisc.ac.in</em> </li>
+
+        </ul>
+
+      </div>
+
+
+
+    </div>
+
+    <div class="col-md-3 section" id ="Alerts">
+      <h4> <a href="assign-all.html">Upcoming Assignments</a> </h4>
+      {% assign sorted = site.assignments | sort: 'date' | reverse %}
+      <ul>
+
+        {% for ass in sorted  %}
+        <li>
+          <a href="{{ site.baseurl }}{{ ass.url }}.html"> {{ ass.title }}</a>, due by {{ ass.date | date: "%a, %d %b %Y" }}.
+        </li>
+        {% endfor %}
+      </ul>
+      <h4>  <a href="announce-all.html">Announcements</a> </h4>
+      {% assign sorted = site.announcements | sort: 'date' | reverse %}
+      <ul>
+      {% for ass in sorted  %}
+      <li>
+        <a href="{{ site.baseurl }}{{ ass.url }}.html"> {{ ass.title }}</a>
+        <div> {{ ass.content | truncatewords: 30 }}</div>
+      </li>
+      {% endfor %}
+    </ul>
+    </div>

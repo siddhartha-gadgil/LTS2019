@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>MA 210: Logic, Types and Spaces</title>
+    <link rel="icon" href="/IIScLogo.jpg">
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/extras.css" rel="stylesheet">
+
+      <link rel="stylesheet" href="/css/zenburn.css" rel="stylesheet">
+        <script src="/js/highlight.js" rel="stylesheet"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+jax: ["input/TeX", "output/HTML-CSS"],
+tex2jax: {
+  inlineMath: [ ['$', '$'] ],
+  displayMath: [ ['$$', '$$']],
+  processEscapes: true,
+  skipTags: ['script', 'noscript', 'style', 'textarea']
+},
+messageStyle: "none",
+"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+});
+</script>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">Instructor: <a href="http://math.iisc.ac.in/~gadgil" target="_blank">Siddhartha Gadgil</a></span>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="/index.html#">Home</a></li>
+            <!-- <li><a href="/index.html#refs">References</a></li>
+            <li><a href="/index.html#details">Details</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Assignments<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li class="dropdown-header">Assignments</li> -->
+                <li class="dropdown-header"><strong>Assignments</strong></li>
+                
+                
+                <li>
+                  <a href="/assignments/odds.html"> Odds and Evens</a>
+                </li>
+                
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Announcements<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header"><strong>Announcements</strong></li>
+                
+                
+                <!-- <li><a href="#">Something else here</a></li> -->
+
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Reports<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li class="dropdown-header"><strong>Reports</strong></li>
+              
+              <li>
+                <a href="/reports/adithya.html"> Adithya Upadhya</a>
+              </li>
+              
+              <li>
+                <a href="/reports/adit.html"> Adit Vishnu</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ar.html"> Abishek Rajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/arka.html"> Arka Ghosh</a>
+              </li>
+              
+              <li>
+                <a href="/reports/chinmaya.html"> Chinmaya Kausik</a>
+              </li>
+              
+              <li>
+                <a href="/reports/nabarun.html"> Nabarun Deka</a>
+              </li>
+              
+              <li>
+                <a href="/reports/rathivrunda.html"> Vrunda Rathi</a>
+              </li>
+              
+              <li>
+                <a href="/reports/rohit.html"> Rohit Kumar</a>
+              </li>
+              
+              <li>
+                <a href="/reports/shafil.html"> Shafil Maheenn</a>
+              </li>
+              
+              <li>
+                <a href="/reports/sideart.html"> Sidharth Soundarrajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ss.html"> S Sriram</a>
+              </li>
+              
+              <!-- <li><a href="#">Something else here</a></li> -->
+
+        </ul>
+      </li>
+        <!-- <li><a href="/notes-all.html">Notes</a></li> -->
+      </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li> <a href="https://www.idris-lang.org/" target="_blank">Idris-lang</a> </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Links <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li class="dropdown-header">Assignments</li> -->
+                <!-- <li class="dropdown-header"><strong>Links</strong></li> -->
+
+                <li>
+                  <a href="https://www.ias.edu/ideas/2014/voevodsky-origins" target="_blank"> Voevodsky: The Origins and Motivations of Univalent Foundations</a>
+                  <a href="https://mail.haskell.org/pipermail/haskell-cafe/2003-May/004343.html" target="_blank">Conor McBride on no total self-interpreters (following Turing)</a>
+                </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Notes <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <!-- <li class="dropdown-header">Assignments</li> -->
+              <!-- <li class="dropdown-header"><strong>Notes</strong></li> -->
+              
+              
+              <li>
+                <a href="/notes/meta.html"> About Notes</a>
+              </li>
+              
+              <li>
+                <a href="/notes/foundations.html"> Foundations of Mathematics and Computation</a>
+              </li>
+              
+              <li>
+                <a href="/notes/types-topics.html"> Type Theory topics</a>
+              </li>
+              
+          </ul>
+          </li>
+
+          <li> <a href="https://github.com/siddhartha-gadgil/LTS2019" target="_blank">
+          <img src="/GitHub-Mark-Light-32px.png" alt="Github"></img> </a> </li>
+          <li> <a href="https://gitter.im/siddhartha-gadgil/LTS2019" target="_blank"> <img src="https://badges.gitter.im/siddhartha-gadgil/LTS2019.svg" alt="gitter"></a>  </img></li>
+            <!-- <li><a href="/notes-all.html">Notes</a></li> -->
+
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container">
+
+
+<h3>Foundations of Mathematics and Computation</h3>
+<h4>Date: 12 December 2017</h4>
+
+<p></p>
+
+    <h3 id="axiomatic-foundations">Axiomatic foundations</h3>
+
+<p>Foundations of Mathematics should tell us what are true mathematical statements. The last layer of this is the most familiar, the <em>axioms</em> that we know are true in advance. But before we use, or even state, these, we must</p>
+
+<ul>
+  <li>Understand how we can build valid mathematical objects, and what are the ones we start with - the <strong>language</strong> of mathematics.</li>
+  <li>Which of these are <strong>statements</strong> - <em>is <code class="highlighter-rouge">$1 + 2$</code> true?</em> makes no sense – <strong>types</strong> of mathematical objects.</li>
+  <li>Specify how to make a <em>judgement</em> that one statement is true from knowing other statements are true (the <strong>rules of deduction</strong>).</li>
+</ul>
+
+<p>Given these, we form a <em>theory</em> by specifying that some statements, our axioms, are assumed to be true. We then have a meta-mathematical layer of judgements which is the collection of statements that we have judged to be true (more precisely, to have been proved).</p>
+
+<p>We emphasise that this is not the only way in which foundations can be built. Indeed the foundations we consider will have a much richer kind of language (not just a larger vocabulary) and so axioms will play only a minor role - indeed in the pure Type Theoretic foundations we have no axioms.</p>
+
+<h3 id="foundations-in-general">Foundations in general</h3>
+
+<p>All foundations we consider will have <strong>rules</strong> giving</p>
+
+<ul>
+  <li>a <strong>language</strong>  describing the objects we consider together with some information about their nature - which we will call <strong>types</strong>. Types are the analogue of <em>parts of speech</em> in natural languages.</li>
+  <li><strong>judgements</strong>  we make about these objects; including judgements of types which are required in the rules for forming languages.</li>
+</ul>
+
+<p>The rules must be clearly and unambiguously stated and straightforward to verify, including by a computer program.</p>
+
+<h3 id="higher-languages">Higher languages</h3>
+
+<p>While natural langauges have a vocabulary that grows over time, the <em>parts of speech</em> remain fixed. However in the higher languages we consider, we can <em>form</em> new parts of speech - essentially the part of speech of a word/phrase may be given by a <em>type-phrase</em>. Indeed there are three levels of languages we consider, which in terms of <em>terms</em> (analogues of words, phrases, sentences etc) and <em>types</em> (analogues of parts of speech) are:</p>
+
+<ul>
+  <li><strong>First-order</strong> : a fixed, often finite, set of types.</li>
+  <li><strong>Higher-order</strong> : types can be built from other types, for example if <code class="highlighter-rouge">$A$</code> and <code class="highlighter-rouge">$B$</code> are types we can form the <em>function type</em> <code class="highlighter-rouge">$A \to B$</code> (in programming languages these are often called <em>generics</em>).</li>
+  <li><strong>Dependent types</strong> : types can be formed not just from types but also terms
+    <ul>
+      <li>for instances vectors of a fixed length form a type;</li>
+      <li>indeed, types are <em>first-class</em>, i.e., we cna have functions (some of whose) arguments are types and functions whose results are types (or both).</li>
+    </ul>
+  </li>
+</ul>
+
+<p>We shall see how to build such a type theory, and how it also forms foundations for <em>computation</em>.</p>
+
+<h3 id="computation">Computation</h3>
+
+<p>We communicate with computers using <em>programming languages</em>, which are languages in the above sense. However, with the most common style of programming, so called <em>imperative programming</em>, the program to describe a mathematical computation is very different from a mathematical description, as it is a set of instructions to output the result of the described objects.</p>
+
+<p>However, <em>functional languages</em>, building on Church’s model of computation, have descriptions that are much closer to mathematical descriptions. For instance, in pseudo-code we may define <code class="highlighter-rouge">factorial(n)</code> as</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$factorial(n)$ := if $n = 0$ then $1$ else $n\cdot factorial(n-1)$
+</code></pre></div></div>
+<p>which is just as good a mathematical definition as any. Moreg generally, the only form of <em>looping</em> or used in functional programming is recursion, and there is no (explicit) <em>flow of control</em>.</p>
+
+<p>Indeed the foundations we study are to a substantial extent common for mathematics and computation, with the langauge for computation a restriction of the language used for mathematics. Code for a mathematical object is just an <em>effective</em> description of that object, which merely means that it does not invoke axioms (including logical axioms such as the law of excluded middle). This would not be musch use if our foundations were Set Theory, as in set theory we use axioms at the drop of a hat. But in the Type Theoretic foundations we study, we use axioms only if there is a strong reason to use.</p>
+
+<p>Examples such as the factorial function, or typical mathematical problems such as solving equations, give a misleadingly limited view of what we mean by computation. Since computation should include all operations that a computer needs to perform, we should include <em>interpreters</em>, i.e. a function <em>eval</em> so that</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>eval("$factorial(n)$ := if $n = 0$ then $1$ else $n\cdot factorial(n-1)$")($7$)
+</code></pre></div></div>
+<p>should give us <code class="highlighter-rouge">$factorial(7)$</code>.</p>
+
+<p>We can indeed write such interpreters, but such tasks will lead us to the deep unsolvability results of Turing and Godel.</p>
+
+
+<br>
+
+<h3><a href="/notes-all.html">All notes</a></h3>
+
+</div>
+<div class="container-fluid">
+  <br><br><br>
+  <div class="footer navbar-fixed-bottom bg-primary">
+    <h4>
+    &nbsp;<a href="http://math.iisc.ac.in" target="_blank">&nbsp; Department of Mathematics,</a>
+
+    &nbsp;<a href="http://iisc.ac.in" target="_blank">Indian Institute of Science.</a>
+  </h4>
+
+  </div>
+
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src='/js/bootstrap.min.js'></script>
+
+</body>
+</html>
+

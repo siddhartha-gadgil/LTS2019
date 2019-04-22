@@ -1,0 +1,18 @@
+{% include header.html %}
+
+<h3 class="text-center">{{page.title}}</h3>
+
+
+<p class="text-center">Due by {{ page.date | date: "%a, %d %b %Y" }}</p>
+
+<p>
+  Please e-mail your assignments to <a href="mailto:siddhartha.gadgil@gmail.com" target="_blank"> siddhartha.gadgil@gmail.com</a> with "LTS2019" in the subject. The submissions will be added to the repository the day after the due date, and no late submissions will be accepted.
+</p>
+<p></p>
+
+    {{ content }}
+
+<br>
+<h3><a href="../assign-all.html">All assignments</a></h3>
+
+{% include footer.html %}

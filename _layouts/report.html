@@ -1,0 +1,17 @@
+{% include header.html %}
+
+<h2 class="text-center"> Project Report for Logic, Types, Spaces 2019 </h2>
+<h3 class="text-center"> {{ page.author }} </h3>
+
+<h3 >Outline of the work done</h3>
+
+    {{ content }}
+
+<h3> Log of git commits by author </h3>
+
+
+<pre><code class="plaintext">
+{% include_relative gitlog %}
+</code></pre>
+
+{% include footer.html %}

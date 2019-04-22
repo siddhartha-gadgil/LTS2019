@@ -1,0 +1,14 @@
+---
+title: Notes
+---
+
+{% assign sorted = site.notes | sort: 'date'  %}
+
+{% for note in sorted %}
+
+<h3><a href="{{ site.baseurl}}{{note.url}}.html">{{ note.title }} </a> </h3>
+<h4>Date: {{ note.date | date_to_long_string }}</h4>
+<div>
+{{ note.content | truncatewords: 100 }}
+</div>
+{% endfor %}

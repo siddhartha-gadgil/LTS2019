@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>MA 210: Logic, Types and Spaces</title>
+    <link rel="icon" href="/IIScLogo.jpg">
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/extras.css" rel="stylesheet">
+
+      <link rel="stylesheet" href="/css/zenburn.css" rel="stylesheet">
+        <script src="/js/highlight.js" rel="stylesheet"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+      </script>
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+jax: ["input/TeX", "output/HTML-CSS"],
+tex2jax: {
+  inlineMath: [ ['$', '$'] ],
+  displayMath: [ ['$$', '$$']],
+  processEscapes: true,
+  skipTags: ['script', 'noscript', 'style', 'textarea']
+},
+messageStyle: "none",
+"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+});
+</script>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">Instructor: <a href="http://math.iisc.ac.in/~gadgil" target="_blank">Siddhartha Gadgil</a></span>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="/index.html#">Home</a></li>
+            <!-- <li><a href="/index.html#refs">References</a></li>
+            <li><a href="/index.html#details">Details</a></li> -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Assignments<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li class="dropdown-header">Assignments</li> -->
+                <li class="dropdown-header"><strong>Assignments</strong></li>
+                
+                
+                <li>
+                  <a href="/assignments/odds.html"> Odds and Evens</a>
+                </li>
+                
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Announcements<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header"><strong>Announcements</strong></li>
+                
+                
+                <!-- <li><a href="#">Something else here</a></li> -->
+
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Reports<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li class="dropdown-header"><strong>Reports</strong></li>
+              
+              <li>
+                <a href="/reports/adithya.html"> Adithya Upadhya</a>
+              </li>
+              
+              <li>
+                <a href="/reports/adit.html"> Adit Vishnu</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ar.html"> Abishek Rajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/arka.html"> Arka Ghosh</a>
+              </li>
+              
+              <li>
+                <a href="/reports/chinmaya.html"> Chinmaya Kausik</a>
+              </li>
+              
+              <li>
+                <a href="/reports/nabarun.html"> Nabarun Deka</a>
+              </li>
+              
+              <li>
+                <a href="/reports/rathivrunda.html"> Vrunda Rathi</a>
+              </li>
+              
+              <li>
+                <a href="/reports/rohit.html"> Rohit Kumar</a>
+              </li>
+              
+              <li>
+                <a href="/reports/shafil.html"> Shafil Maheenn</a>
+              </li>
+              
+              <li>
+                <a href="/reports/sideart.html"> Sidharth Soundarrajan</a>
+              </li>
+              
+              <li>
+                <a href="/reports/ss.html"> S Sriram</a>
+              </li>
+              
+              <!-- <li><a href="#">Something else here</a></li> -->
+
+        </ul>
+      </li>
+        <!-- <li><a href="/notes-all.html">Notes</a></li> -->
+      </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li> <a href="https://www.idris-lang.org/" target="_blank">Idris-lang</a> </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Links <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li class="dropdown-header">Assignments</li> -->
+                <!-- <li class="dropdown-header"><strong>Links</strong></li> -->
+
+                <li>
+                  <a href="https://www.ias.edu/ideas/2014/voevodsky-origins" target="_blank"> Voevodsky: The Origins and Motivations of Univalent Foundations</a>
+                  <a href="https://mail.haskell.org/pipermail/haskell-cafe/2003-May/004343.html" target="_blank">Conor McBride on no total self-interpreters (following Turing)</a>
+                </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Notes <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <!-- <li class="dropdown-header">Assignments</li> -->
+              <!-- <li class="dropdown-header"><strong>Notes</strong></li> -->
+              
+              
+              <li>
+                <a href="/notes/meta.html"> About Notes</a>
+              </li>
+              
+              <li>
+                <a href="/notes/foundations.html"> Foundations of Mathematics and Computation</a>
+              </li>
+              
+              <li>
+                <a href="/notes/types-topics.html"> Type Theory topics</a>
+              </li>
+              
+          </ul>
+          </li>
+
+          <li> <a href="https://github.com/siddhartha-gadgil/LTS2019" target="_blank">
+          <img src="/GitHub-Mark-Light-32px.png" alt="Github"></img> </a> </li>
+          <li> <a href="https://gitter.im/siddhartha-gadgil/LTS2019" target="_blank"> <img src="https://badges.gitter.im/siddhartha-gadgil/LTS2019.svg" alt="gitter"></a>  </img></li>
+            <!-- <li><a href="/notes-all.html">Notes</a></li> -->
+
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container">
+
+
+<h2 class="text-center"> Project Report for Logic, Types, Spaces 2019 </h2>
+<h3 class="text-center"> S Sriram </h3>
+
+<h3 >Outline of the work done</h3>
+
+    <h2 id="contributions">Contributions</h2>
+<h4 id="rationals">Rationals</h4>
+<ol>
+  <li>I implemented a function to simplify rationals and added a few more auxiliary functions to <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/f3333ebc609f4807cebee152a4b4691fdff298bb">Rationals.idr</a></li>
+  <li>I updated some of the types from <code class="highlighter-rouge">Integer</code> to <code class="highlighter-rouge">ZZ</code>, and provided casts for ease of use.</li>
+</ol>
+
+<h4 id="linear-equations">Linear Equations</h4>
+<ol>
+  <li>I created the initial framework for solving linear equations, in the commit <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/55bd91abd5b018088f85c3af26941d2d7a788f11">Linear.idr</a></li>
+  <li>I completed the last case in the proof (which was <em>difficult</em>), and finished the single equation solver with proof, in the commit <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/4d81e7e8dfb585de2e09997a5537b62092fbe4b5">Linear.idr</a></li>
+</ol>
+
+<h4 id="gcd">GCD</h4>
+<ol>
+  <li>I defined a divisibility type, which is useful for multiple purposes, and is present in different files as well (introduced in commit <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/62a2c8e960d6ecf9956b21e8d3037b0f71ac3521">gcd.idr</a>)</li>
+</ol>
+
+<h4 id="solving-multiple-linear-equations">Solving multiple linear Equations</h4>
+<ol>
+  <li>I created the file MultiSolver, (originally Linear.MultiSolver) and defined a bunch of useful computations required to solve a system of linear equations.
+    <ul>
+      <li>I defined minors and cofactors for a <code class="highlighter-rouge">n x n</code> square matrix with entries as <code class="highlighter-rouge">ZZPairs</code> and created the adjoint matrix to help make inverses.</li>
+      <li>I defined the inverse for a matrix (only the case where the determinant is non-zero)</li>
+      <li>I used the inverse to solve a system of linear equations, again only when the system is consistent.</li>
+      <li>This was in the commit <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/228398917996fa51a64aa4eb5d312d59dc796a63">Linear.MultiSolver.idr</a></li>
+    </ul>
+  </li>
+  <li>I defined the <code class="highlighter-rouge">Num</code> and <code class="highlighter-rouge">Neg</code> interfaces for <code class="highlighter-rouge">ZZPairs</code>, which are useful, as inbuilt functions require input of such an interface. This was mostly in commit <a href="https://github.com/siddhartha-gadgil/LTS2019/commit/74a47fb42abdeb7281f7524a1460922cb7fb8bff">Linear.MultiSolver.idr</a></li>
+</ol>
+
+<h4 id="natutils">NatUtils</h4>
+<ol>
+  <li>I added one lemma which given <code class="highlighter-rouge">LTE a b</code> and <code class="highlighter-rouge">LTE c d</code>, returns the type <code class="highlighter-rouge">LTE (a+c) (b+d)</code>. This is useful in an independent context as well.</li>
+</ol>
+
+<h4 id="primes">Primes</h4>
+<ol>
+  <li>I created the <code class="highlighter-rouge">Primes</code> module and defined some useful lemmas and definitions.
+    <ul>
+      <li>I created a divisibility type with slight modifications to ensure that it does not admit zero divisors (originally created in <strong>gcd.idr</strong>)</li>
+      <li>I implemented a type <code class="highlighter-rouge">totOrdNat</code>, which, given <code class="highlighter-rouge">a</code>, <code class="highlighter-rouge">b</code> : <code class="highlighter-rouge">Nat</code> returns a type with a proof if either <code class="highlighter-rouge">a = b</code>, <code class="highlighter-rouge">a &lt; b</code> or <code class="highlighter-rouge">a &gt; b</code></li>
+      <li>I defined various other functions as auxxilary for the <code class="highlighter-rouge">decDiv</code> function, but are useful in their own right in providing contradictions and contrapositives.</li>
+    </ul>
+  </li>
+  <li>Using all the helper functions defined previously, I defined a <code class="highlighter-rouge">decDiv</code> function that given <code class="highlighter-rouge">a</code>, <code class="highlighter-rouge">b</code>, returns a <code class="highlighter-rouge">Dec (isDivisible a b)</code> type with proofs and contradictions depending on the values.
+    <ul>
+      <li>Apart from the last case, all other cases are proved. The last case is left as a hole for now. (It requires the euclidean division with proof, which has been done recently, and will be included.)</li>
+    </ul>
+  </li>
+</ol>
+
+
+<h3> Log of git commits by author </h3>
+
+
+<pre><code class="plaintext">
+commit 1798fc49166d84bb76a1469bda812231b6c5dfac
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 22 08:38:45 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 22 08:38:45 2019 +0530
+
+    More fixes
+
+ Code/Primes.idr | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit c082b340180b0ef56116b2fc02ba35af0a2feee7
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 22 08:35:19 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 22 08:35:19 2019 +0530
+
+    Some more fixes
+
+ Code/Primes.idr | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+commit e1f48fc88b9722de00977c1ade68bfaec1792c0b
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 22 08:31:51 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 22 08:31:51 2019 +0530
+
+    Fixed code broken by subsequent commits.
+
+ Code/Primes.idr | 66 ++++++++++-----------------------------------------------
+ Code/gcd.idr    | 15 +++++++------
+ 2 files changed, 19 insertions(+), 62 deletions(-)
+
+commit 8fce576a81fbd3f6a1904ccdbe09694abd54a256
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Thu Feb 21 14:59:08 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Thu Feb 21 14:59:08 2019 +0530
+
+    Updated NatUtils with a few functions and almost completed the `decDiv` type
+
+ Code/NatUtils.idr | 18 ++++++++---
+ Code/Primes.idr   | 95 +++++++++++++++++++++++++++++++++++++++++++++----------
+ Code/gcd.idr      |  2 +-
+ 3 files changed, 92 insertions(+), 23 deletions(-)
+
+commit d2e8f0b3964fcabd5521f7e8a6ba19be539a7068
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Wed Feb 20 18:23:55 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Wed Feb 20 18:23:55 2019 +0530
+
+    Update report
+
+ _reports/ss/ss.md | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+commit 17f3801c5a952ff603b19726e20f923c9ab9933c
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Tue Feb 19 18:32:51 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Tue Feb 19 18:32:51 2019 +0530
+
+    decidability updated - one case left
+
+ Code/Primes.idr | 69 ++++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 61 insertions(+), 8 deletions(-)
+
+commit c082b7e4ba83d14b8d8ebb2ec576f6581d2edc26
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sat Feb 16 17:05:44 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sat Feb 16 17:05:44 2019 +0530
+
+    Commented out the code producing errors
+
+ Code/NatUtils.idr | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 6e97ab4697f5bd80ea08b4092c78eb279142249d
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sat Feb 16 16:57:26 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sat Feb 16 16:57:26 2019 +0530
+
+    Started work on a decidable routine for divisibility
+
+ Code/Primes.idr | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
+
+commit fde49aa31786e86e4a8f9ce622225c357ae40ab9
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sat Feb 16 14:55:56 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sat Feb 16 14:55:56 2019 +0530
+
+    Added some lemmas to Primes and NatUtils, will be useful in defining a decidable type for divisibility.
+
+ Code/NatUtils.idr | 10 ++++++++
+ Code/Primes.idr   | 77 +++++++++++++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 74 insertions(+), 13 deletions(-)
+
+commit 08869b00f722e0dffe01f86478762397bda444ac
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 15 18:55:37 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 15 18:55:37 2019 +0530
+
+    Updated the report with current progress
+
+ _reports/ss/ss.md | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
+
+commit f6b8654ee55cd3d58a7452dd68d206c7cd63605e
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Fri Feb 15 18:18:27 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Fri Feb 15 18:18:27 2019 +0530
+
+    Started work on primes. Defined a total order for Nats, and created a primitive primality checker
+
+ Code/Primes.idr | 57 ++++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 48 insertions(+), 9 deletions(-)
+
+commit 4ec18e3787fe0c4c6874f8ecedcc14931c70dca7
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Thu Feb 14 10:35:32 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Thu Feb 14 10:35:32 2019 +0530
+
+    Pushing.
+
+ Code/Primes.idr | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+commit 8d438c15a8a4837bd6dde5a066970f8d3eeda4a8
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Thu Feb 14 10:00:12 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Thu Feb 14 10:00:12 2019 +0530
+
+    Changed filename, and added the divZZ function in MultiSolver.idr (for Abishek's LinearAlgebra to compile)
+
+ Code/LinearAlgebra.idr                           | 8 ++++++--
+ Code/{Linear.MultiSolver.idr => MultiSolver.idr} | 8 ++++++--
+ 2 files changed, 12 insertions(+), 4 deletions(-)
+
+commit 4d81e7e8dfb585de2e09997a5537b62092fbe4b5
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Tue Feb 12 11:14:40 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Tue Feb 12 11:14:40 2019 +0530
+
+    Completed the proof.
+    GeneralEqSolver now can solve an equation
+    ax+b=c (a,b,c :ZZ)with proof that it is actually a solution.
+
+ Code/Linear.idr | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
+
+commit 5071a3bbe4ae3da0e2013e105ab3c20ae5aa6752
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sun Feb 10 09:16:59 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sun Feb 10 09:16:59 2019 +0530
+
+    Added usage instructions
+
+ Code/Linear.MultiSolver.idr | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit 74a47fb42abdeb7281f7524a1460922cb7fb8bff
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sun Feb 10 09:09:13 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sun Feb 10 09:09:13 2019 +0530
+
+    Changed input type to ZZPair and implemented a solver for a system of linear equations
+
+ Code/Linear.MultiSolver.idr | 98 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 63 insertions(+), 35 deletions(-)
+
+commit 228398917996fa51a64aa4eb5d312d59dc796a63
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sat Feb 9 21:42:41 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sat Feb 9 21:42:41 2019 +0530
+
+    Defined inverses for matrices of ZZPairsand framework for solving systems of linear equations
+
+ Code/BaseN.idr              |   1 +
+ Code/Linear.MultiSolver.idr | 147 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 148 insertions(+)
+
+commit 62a2c8e960d6ecf9956b21e8d3037b0f71ac3521
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Thu Feb 7 06:38:16 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Thu Feb 7 06:38:16 2019 +0530
+
+    Minor changes in Bezout (to ZZ) and almost complete proof of gcd dividing both a and b.
+
+ Code/Bezout.idr | 17 +++++++--------
+ Code/gcd.idr    | 64 +++++++++++++++++++++++++++++++++++++++++----------------
+ 2 files changed, 55 insertions(+), 26 deletions(-)
+
+commit 4c3f41272d4ae7351a8dd44ba1012ed612f8a947
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Wed Feb 6 05:56:57 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Wed Feb 6 05:56:57 2019 +0530
+
+    update simplifyRational and aux functions
+
+ Code/Rationals.idr | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
+
+commit 6be8c52558546ca254c4b1bc498e3b257d4ca280
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Wed Feb 6 05:55:44 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Wed Feb 6 05:55:44 2019 +0530
+
+    added ZZ.idr and converted some functions to ZZ
+
+ Code/ZZ.idr | 355 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 355 insertions(+)
+
+commit 55bd91abd5b018088f85c3af26941d2d7a788f11
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Mon Feb 4 13:04:20 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Mon Feb 4 13:04:20 2019 +0530
+
+    Added solver for single equation, also checking if the solution exists.
+    Proofs TBD.
+
+ Code/Linear.idr    | 16 ++++++++++++++++
+ Code/Rationals.idr |  2 ++
+ 2 files changed, 18 insertions(+)
+
+commit c92a54c3a915e40b049eabfa008c3bb482ca878a
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Tue Jan 29 13:59:56 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Tue Jan 29 13:59:56 2019 +0530
+
+    Shifted Rationals.idr to Code/
+
+ Code/Rationals.idr | 96 ++++++++++++++++++++++++++++++++++++------------------
+ Rationals.idr      | 87 -------------------------------------------------
+ 2 files changed, 64 insertions(+), 119 deletions(-)
+
+commit 20442039fe1f17278007c319120729b7755a2c89
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Mon Jan 28 07:41:05 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Mon Jan 28 07:41:05 2019 +0530
+
+    Added equality type and simplifyRational
+
+ Rationals.idr | 36 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
+
+commit f3333ebc609f4807cebee152a4b4691fdff298bb
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sun Jan 27 22:59:07 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sun Jan 27 22:59:07 2019 +0530
+
+    Added function to simplify rationals and to generate inverses of rationals.
+    Proofs still remain to be done. Boolean version of equality implemented.
+
+ Code/Rationals.idr | 35 ++++++++++++++++++++++++++++++++---
+ 1 file changed, 32 insertions(+), 3 deletions(-)
+
+</code></pre>
+
+</div>
+<div class="container-fluid">
+  <br><br><br>
+  <div class="footer navbar-fixed-bottom bg-primary">
+    <h4>
+    &nbsp;<a href="http://math.iisc.ac.in" target="_blank">&nbsp; Department of Mathematics,</a>
+
+    &nbsp;<a href="http://iisc.ac.in" target="_blank">Indian Institute of Science.</a>
+  </h4>
+
+  </div>
+
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src='/js/bootstrap.min.js'></script>
+
+</body>
+</html>
+
