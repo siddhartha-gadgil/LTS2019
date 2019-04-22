@@ -4,7 +4,9 @@ services:
 
 script:
   - docker build --tag myimage .
-  - travis_wait 30 docker run myimage
+  - while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
+  - docker run myimage
+  - kill %1
 
 after_script:
   - docker images
