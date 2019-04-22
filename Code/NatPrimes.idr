@@ -99,30 +99,4 @@ minDivOfIrreducible {p} proofLT proofIrred = (proofLT, ((divisionReflexive (ltOn
 		(Left kEq1) => lteSubstitutes lteRefl (sym (multOneLeftEqual proofEq kEq1)) Refl
 		(Right nEq1) => void (succNotLTEzero (fromLteSucc (lteSubstitutes nLT1 Refl nEq1)))
 
-{-
-
-|||Returns the smallest divisor (greater than 1) of a number with proof that it is the smallest factor
-minDivisor : (n : Nat) -> (LT 1 n) -> (d : Nat ** isMinDivisor n d)
-minDivisor Z proofLT = void (succNotLTEzero proofLT)
-minDivisor (S Z) (LTESucc proofLT) = void (succNotLTEzero proofLT)
-minDivisor (S (S k)) _ = (?hole)
-
-inducNat xs base step  where
-	xs : (k : Nat) -> Type
-	xs k = (d : Nat) -> (LTE (S (S d)) k) -> (Not (isDivisible n (S (S d))))
-	base : (xs Z)
-	base =
-	step : (k : Nat) -> (prev : (xs k)) -> (xs (S k))
-
---((LT 1 d), ((isDivisible n d), {k : Nat} -> (LT 1 k) -> (isDivisible n k) -> (LTE d k)))
-
-minDivisorIsIrreducible : {n : Nat} -> {d : Nat} -> (isMinDivisor n d) -> (isIrreducible d)
-
-|||Given a number n and a proof that 1 < n, returns whether it is prime or composite
-decPrime : (n : Nat) -> (LT 1 n) -> Either (Factorisation n) (isPrime n)
-
-
---|||A list of the prime factors of a number with their multiplicities
---primeFactorisation : (n : Nat) -> ((primeFactors : (List (((p : Nat) ** (isPrime p))))) ** (n = (foldList Nat 1 (*) (mapList ((p : Nat) ** (isPrime p)) Nat (\element => (fst element)) primeFactors))))
-
--}
+----------------------------------------------------------------------------------------------
