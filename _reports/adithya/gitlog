@@ -1,3 +1,15 @@
+commit b7cd4b678330ad1028400187bfb66684505fa725
+Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+AuthorDate: Mon Apr 22 12:22:45 2019 +0530
+Commit:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
+CommitDate: Mon Apr 22 12:22:45 2019 +0530
+
+    Added report
+
+ Code/NatPrimes.idr          | 28 +---------------------------
+ _reports/adithya/adithya.md | 44 +++++++++++++++++++++++++++++---------------
+ 2 files changed, 30 insertions(+), 42 deletions(-)
+
 commit 02523fd7d0c9bc60d530d420fad406e9e98f3dad
 Author:     Adithya Upadhya <37117201+adithyaupadhya@users.noreply.github.com>
 AuthorDate: Sat Apr 20 21:47:37 2019 +0530
