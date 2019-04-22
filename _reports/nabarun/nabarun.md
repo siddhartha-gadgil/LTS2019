@@ -21,3 +21,15 @@ I also started working on proving that the result of the mergesort function is s
   <li> Use the auxiliary theorem to construct a recursive prove that merge1 returns a sorted Vector.
   <li> Use this to Prove that mergesort returns a sorted Vector.
 </ul>
+
+### 3. Completing Quicksort
+<ul>
+<li>I provided a quicksort function (for Lists) that sorts and also provides a proof that the output List is sorted and is a permutation of the input List.
+<li>I started by creating types for a Preorder and a Totalorder.
+<li>Then I created a type (**ForAll**) that acts as a proposition that all the elements of a list satisfy some property p. I proved some theorems on this property (eg. mapping a list to another preserves the forall property, concatenation preserves it etc.)
+<li>I defined a LTE type for length of lists just like LTE for nat. I proved a few simple lemmas on this lte property of lists (**lemma1**, **lemma2** and **lemma3**). <li> I created types for a sorted list and permutation of a list. I proved theorems on permutation
+<li> I created a partition function (**partitionFunc**) that partitions the list and gives proof that the concatenation of the parts is a permutation of the original list.
+<li> I created a partition function (**ordPartition**) that partitions based on a total order and gives a proof that the elements in the two parts are ordered according to the pivot
+<li> Finally, I created an auxiliary function that will help perform quicksort and give proofs that the output is sorted according to the totatl order and that it is a permutation of the input.
+<li> I also gave an example for quicksort of natural numbers.
+</ul>
