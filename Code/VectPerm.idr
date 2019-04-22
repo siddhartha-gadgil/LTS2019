@@ -48,12 +48,12 @@ Index (FS k) (x::xs) = index k xs
 -- nearly the same as Chinmaya's 'tofinNat', but this is total because I used modnatNZ instead of Eucl
 
 intoFin : (a: Nat) -> (n : Nat) -> (Fin n)
-intoFin Z Z = ?intoFin_rhs_3
+intoFin Z Z = assert_unreachable
 intoFin Z (S k) = FZ
-intoFin (S k) Z = ?intoFin_rhs_1
+intoFin (S k) Z = assert_unreachable
 intoFin (S k) (S j) = case (isLTE (S k) (S j)) of
                            (Yes prf) => FS (intoFin k j)
-                           (No contra) => assert_total (intoFin (modNatNZ (S k) (S j) SIsNotZ) (S j))
+                           (No contra) => FZ
 
 -- returns the element at position n in a vector (indexing starts with 0 as usual, as we are using Fin)
 
