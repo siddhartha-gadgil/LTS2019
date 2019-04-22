@@ -1,3 +1,36 @@
+commit 6a783d4fb242cd80c079cb3f6de7d6356a433da8
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sun Apr 21 12:36:31 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Apr 21 12:36:31 2019 +0530
+
+    Characterised the property of being the zero element w.r.t. plus
+
+ Code/ZZplus.idr | 64 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
+
+commit a02b5afaf51be458ce7af126a5fdcf92378e4017
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sun Apr 21 11:29:13 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Apr 21 11:29:13 2019 +0530
+
+    Update arka.md
+
+ _reports/arka/arka.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit e53c1190a1af5bf5d6567cb845d0863e10dbc5cc
+Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
+AuthorDate: Sun Apr 21 11:28:33 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Sun Apr 21 11:28:33 2019 +0530
+
+    Update arka.md
+
+ _reports/arka/arka.md | 3 +++
+ 1 file changed, 3 insertions(+)
+
 commit 208677ed09b03008b828c235c65448879fb522dd
 Author:     Arka Ghosh <39467183+anotherArka@users.noreply.github.com>
 AuthorDate: Thu Apr 11 00:37:07 2019 +0530

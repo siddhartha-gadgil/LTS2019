@@ -1,3 +1,42 @@
+commit e5b8b2db46834ed2328c1085d65485c507968b49
+Author:     rohit3499 <47004225+rohit3499@users.noreply.github.com>
+AuthorDate: Mon Apr 22 11:54:13 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Apr 22 11:54:13 2019 +0530
+
+    Updated Report
+    
+    Added my contributions after the midsems.
+
+ _reports/rohit/rohit.md | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit e25deca402b42d13d639be174cd1de7f635b380f
+Author:     rohit3499 <47004225+rohit3499@users.noreply.github.com>
+AuthorDate: Thu Apr 18 16:33:16 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 18 16:33:16 2019 +0530
+
+    Added a more general function extending equality
+    
+    Now the function can map one type to a different type, instead of the same type
+
+ Code/NatUtils.idr | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit 4acf1f296eac60ce36b79a2e8f68b6629c327055
+Author:     rohit3499 <47004225+rohit3499@users.noreply.github.com>
+AuthorDate: Thu Apr 18 16:29:27 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 18 16:29:27 2019 +0530
+
+    Created File Module.idr with definitions and some properties
+    
+    Created the IsLeftModule type and proved some basic properties like r*0 = 0 and 0*m = 0.
+
+ Code/Module.idr | 135 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 135 insertions(+)
+
 commit 86fdf1a3c136695ea4336bfdebe980f86138c104
 Author:     rohit3499 <47004225+rohit3499@users.noreply.github.com>
 AuthorDate: Mon Feb 25 01:45:48 2019 +0530

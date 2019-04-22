@@ -1,3 +1,25 @@
+commit 86c07a7db67befa9208f1bb75a8587081ed43aa9
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sun Apr 21 10:47:56 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sun Apr 21 10:47:56 2019 +0530
+
+    mistakes corrected.
+
+ _reports/ss/ss.md | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit bb9d20d3736c072fcd72401316fe89e227f92c0d
+Author:     SS-C4 <srirams@iisc.ac.in>
+AuthorDate: Sun Apr 21 10:40:12 2019 +0530
+Commit:     SS-C4 <srirams@iisc.ac.in>
+CommitDate: Sun Apr 21 10:40:12 2019 +0530
+
+    Update report
+
+ _reports/ss/ss.md | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
 commit c09dba524d9ea98d4084b66954a301197c7e969f
 Author:     SS-C4 <srirams@iisc.ac.in>
 AuthorDate: Fri Apr 12 18:16:25 2019 +0530

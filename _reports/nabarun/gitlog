@@ -1,3 +1,25 @@
+commit 79eb67bf335758eb5531ae233e8e15ed4744e3af
+Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
+AuthorDate: Mon Apr 22 11:20:08 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Apr 22 11:20:08 2019 +0530
+
+    Updated quicksort
+
+ Code/Quicksort.idr | 131 ++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 120 insertions(+), 11 deletions(-)
+
+commit 42d3e728d6377521e17a8b84199638ba35d831cc
+Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
+AuthorDate: Thu Apr 18 18:59:48 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu Apr 18 18:59:48 2019 +0530
+
+    Updated Quicksort
+
+ Code/Quicksort.idr | 77 ++++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 72 insertions(+), 5 deletions(-)
+
 commit 8947e9eaf17acafcc833a9d51418d97d1a1d803b
 Author:     NabarunDeka <37304450+NabarunDeka@users.noreply.github.com>
 AuthorDate: Mon Feb 25 01:26:18 2019 +0530

@@ -1,3 +1,27 @@
+commit 0b4706289b8c80ebdc17564bc412dfce16f75082
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Apr 22 09:29:57 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Apr 22 09:29:57 2019 +0530
+
+    Update ar.md
+
+ _reports/ar/ar.md | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 3e897cad106bc86619f52d1deeb86ab14d42152b
+Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
+AuthorDate: Mon Apr 22 09:29:03 2019 +0530
+Commit:     GitHub <noreply@github.com>
+CommitDate: Mon Apr 22 09:29:03 2019 +0530
+
+    filled a hole
+    
+    I filled a hole that I forgot was here.
+
+ Code/VectPerm.idr | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
 commit 4cfaf271b49ef4c6b7b561e0f3f5ec2facdfa1b5
 Author:     AR-MA210 <46956815+AR-MA210@users.noreply.github.com>
 AuthorDate: Thu Apr 11 15:10:36 2019 +0530
