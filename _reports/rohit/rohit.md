@@ -9,6 +9,13 @@ Added the definitions of :-
   1) An Intergal Domains
   2) An Euclidean Norm over an Integral Domain
   3) An Euclidean Domain
+Added a file called Module.idr and added
+  1) The definitions of the types for distributivity of the action of the ring on the module
+  2) Added the definition for the IsLeftModule type
+  3) Added functions to recover the individual Distributivity types from the IsLeftModule type.
+  4) Added functions to recover the zero of the module from the IsLeftModule type
+  5) Proved that r.0 = 0 (Action of any ring element on zero is zero)
+  6) Proved that 0.m = 0 (Action of zero of the ring on any element is zero)
 
 ## Number Theory :
 
