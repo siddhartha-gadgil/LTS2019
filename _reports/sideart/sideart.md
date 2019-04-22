@@ -28,11 +28,11 @@ Have to further work on it once primes have been defined with the appropriate pr
 2. `twoPr` shows that two is a prime to verify the functioning of the `IsPrime` type.
 3. Proved that a number cannot be both prime and composite using `notBothPrimeandComp`, which utilises a helper function `aNotEqToMultA` (a not equal to na, where n is greater than 1).
 4. `genFact` generates a list of factors of a number along with the proof that they are factors.
-5. `isPrimeCalc` and `isCompositeCalc` check for primality of a number computationally. 
+5. `isPrimeCalc` and `isCompositeCalc` check for primality of a number computationally.
 
 ## Utility files ([Lists.idr](https://github.com/siddhartha-gadgil/LTS2019/blob/master/Code/Lists.idr))
 1. Created a file on lists to extract useful results from the `genFact` function mentioned earlier.
 
 ### Pending (for now)
-1. To show that any number greater than 2 is either prime or Composite.
+1. To show that any number greater than 2 is either prime or Composite. (Partially done, proof that number is composite based on genFact size has been included)
 2. To show that every divisor of a number is contained within the `genFact` list.
