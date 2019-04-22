@@ -4,7 +4,7 @@ services:
 
 script:
   - docker build --tag myimage .
-  - travis_wait 30 docker run myimage
+  - travis_wait 40 docker run myimage
 
 after_script:
   - docker images

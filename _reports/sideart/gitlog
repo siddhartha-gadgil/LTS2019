@@ -1,3 +1,451 @@
+commit 9c0a5615d9bf4a0853013c4208d79dbe3619e5a8
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Mon Apr 22 12:49:29 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Mon Apr 22 12:49:29 2019 +0530
+
+    update
+
+ .DS_Store                                          |   Bin 8196 -> 8196 bytes
+ .../0/B5465627D307BC93E8CC09C2977823BA25484925.gpg |   Bin
+ .../0/FEA1BE7D65D124C05693213EF0C5A0DF8B5FC01E.gpg |   Bin
+ Assignments/Basen.idr                              |   Bin 0 -> 1906 bytes
+ Assignments/Bezout.idr                             |   Bin 0 -> 1653 bytes
+ Assignments/ChinmayaOdds.idr                       |   Bin 0 -> 1814 bytes
+ Assignments/Evens.idr                              |   Bin 0 -> 2082 bytes
+ Assignments/InsertionSort.idr                      |   Bin 0 -> 674 bytes
+ Assignments/Intro.idr                              |   Bin 0 -> 966 bytes
+ Assignments/MyAss1.idr                             |   Bin 0 -> 495 bytes
+ Assignments/NatTree.idr                            |   Bin
+ Assignments/RecRule.idr                            |   Bin 0 -> 998 bytes
+ Assignments/Tuple.idr                              |   Bin 0 -> 212 bytes
+ Assignments/adithyau/Assignment 1/Evens.idr        |    78 +
+ Assignments/adithyau/Assignment 1/Intro.idr        |     0
+ Assignments/adithyau/Assignment 1/OddsandEvens.idr |    49 +
+ Assignments/arkasparko/Evens.idr                   |    74 +
+ Assignments/arkasparko/Intro.idr                   |    48 +
+ Assignments/arkasparko/Odd.idr                     |    99 +
+ Assignments/biswajitnag/Assignement1/Evens.idr     |    74 +
+ Assignments/biswajitnag/Assignement1/Intro.idr     |    48 +
+ Assignments/biswajitnag/Assignement1/desktop.ini   |     5 +
+ Assignments/biswajitnag/Assignement1/first.idr     |    65 +
+ Assignments/merge.idr                              |   Bin 0 -> 1308 bytes
+ Assignments/nabarundeka/Assignment1/Evens.idr      |    74 +
+ Assignments/nabarundeka/Assignment1/Intro.idr      |    48 +
+ .../nabarundeka/Assignment1/nabarundeka.idr        |    53 +
+ Assignments/piyushsati/Assignment1/Evens.idr       |    75 +
+ Assignments/piyushsati/Assignment1/Intro.idr       |    49 +
+ .../piyushsati/Assignment1/OddsAndEvens.idr        |    72 +
+ Assignments/rohitkumar-odds.idr                    |   Bin 0 -> 1884 bytes
+ Assignments/shafiln/Evens.idr                      |    74 +
+ Assignments/shafiln/Intro.idr                      |    48 +
+ Assignments/shafiln/assignment.idr                 |    59 +
+ Assignments/sidharths/lts/Assignment1.idr          |    43 +
+ Assignments/sidharths/lts/Evens.idr                |    74 +
+ Assignments/sidharths/lts/Intro.idr                |    48 +
+ Assignments/sorting_with_proof.idr                 |   Bin 0 -> 2260 bytes
+ Assignments/srirams/Odds and Evens/Evens.idr       |    74 +
+ Assignments/srirams/Odds and Evens/Intro.idr       |    48 +
+ .../srirams/Odds and Evens/Srirams.Odds.idr        |    60 +
+ Assignments/sum.sc                                 |   Bin 0 -> 721 bytes
+ Assignments/test.txt                               |   Bin 0 -> 28 bytes
+ Assignments/vrundarathi/Evens.idr                  |    74 +
+ Assignments/vrundarathi/Intro.idr                  |     1 +
+ Assignments/vrundarathi/VrundaOdd.idr              |    62 +
+ Code/AbishekRajanAssRecRule.idr                    |     0
+ Code/AditVishnuAssRecRule.idr                      |     0
+ Code/AdithyaUpadhyaAssRecRule.idr                  |     0
+ Code/All_is_Refl.idr                               |     0
+ Code/ArkaAssRecRule.idr                            |     0
+ Code/AssRecRule.idr                                |     0
+ Code/Bezout.idr                                    |   155 +
+ Code/BoundedGCD.idr                                |     0
+ Code/ChinmayaKausikAssRecRule.idr                  |     0
+ Code/Choice.idr                                    |     3 +
+ Code/DecOrderNat.idr                               |     0
+ Code/ExpressionParser.idr                          |     0
+ Code/Field.idr                                     |    30 +
+ Code/FieldAxioms.idr                               |     0
+ Code/FinUtils.idr                                  |     0
+ Code/Finite.idr                                    |    36 +
+ Code/FreeGroup.idr                                 |     0
+ Code/Graph.idr                                     |   142 +
+ Code/Graph_alt.idr                                 |     0
+ Code/Graphexamples.idr                             |     0
+ Code/Group.FiniteGenerate.idr                      |    26 +
+ Code/Group.idr                                     |    73 +
+ Code/Group_property.idr                            |   129 +
+ Code/Group_property2.idr                           |    81 +
+ Code/Group_property3.idr                           |    47 +
+ Code/HackyLang.idr                                 |     0
+ Code/InsertionHelpers.idr                          |     0
+ Code/InsertionProof.idr                            |     0
+ Code/InsertionSort.idr                             |     0
+ Code/LTE_Properties.idr                            |     0
+ Code/Lecture.GCD.idr                               |    20 +
+ Code/Lecture.Intro.idr                             |    58 +
+ Code/Lecture.NatTree.idr                           |    53 +
+ Code/Lecture.RecRule.idr                           |    46 +
+ Code/Lecture.Tuple.idr                             |    12 +
+ Code/LectureEvens.idr                              |    88 +
+ Code/Linear.idr                                    |     0
+ Code/LinearAlgebra.idr                             |     0
+ Code/LittleInterpreter.idr                         |     0
+ Code/LittleLang.idr                                |     0
+ Code/Matrix.idr                                    |    56 +
+ Code/Merge.idr                                     |   179 +
+ Code/Monoid.idr                                    |    36 +
+ Code/MultiSolver.idr                               |   184 +
+ Code/Order.idr                                     |     0
+ Code/Parsers.idr                                   |     0
+ Code/PermCons.idr                                  |     0
+ Code/PermConsProperties.idr                        |     0
+ Code/Permutation.idr                               |    59 +
+ Code/Primes.idr                                    |     0
+ Code/Product_Type_Eq.idr                           |     0
+ Code/Q.idr                                         |     0
+ Code/Quotient_Group.idr                            |    65 +
+ Code/Quotient_Type.idr                             |     0
+ Code/Rationals.idr                                 |     0
+ Code/Rats.idr                                      |     0
+ Code/Relations.idr                                 |     0
+ Code/Ring.idr                                      |   153 +
+ Code/RingExamples.idr                              |     0
+ Code/RohitKumarAssRecRule2.idr                     |     0
+ Code/Scheme_Expressions.idr                        |     0
+ Code/Scheme_Parsers.idr                            |     0
+ Code/ShafilMaheenNAssRecRule.idr                   |     0
+ Code/SidharthAssRecRule.idr                        |     0
+ Code/Sign.idr                                      |    39 +
+ Code/SortingWithProof.idr                          |     0
+ Code/SriramAssRecRule.idr                          |     0
+ Code/TwoVarDiophEq.idr                             |     0
+ Code/VrundaAssRecRule.idr                          |     0
+ Code/ZZUtils.idr                                   |     0
+ Code/ZZ_alt.idr                                    |     0
+ Code/ZZmult.idr                                    |     0
+ Code/ZZsubs.idr                                    |     0
+ Code/check-all.sh                                  |     5 +
+ Code/congruence.idr                                |     0
+ Code/decDivZ.idr                                   |     0
+ Code/fn_to_vect.idr                                |    74 +
+ Code/midterm-check.txt                             |    85 +
+ Code/nabarunAssRecRule.idr                         |     0
+ Code/pigeonhole.idr                                |     0
+ Code/rationals/Rationals.idr                       |    29 +
+ Code/sum.sc                                        |    40 +
+ Code/total-check-all.sh                            |     5 +
+ Dockerfile                                         |     4 +
+ Gemfile                                            |    25 +
+ Gemfile.lock                                       |    77 +
+ GitHub-Mark-Light-32px.png                         |   Bin 0 -> 1571 bytes
+ IIScLogo.jpg                                       |   Bin 0 -> 51171 bytes
+ LICENSE                                            |    21 +
+ README.md                                          |     6 +
+ Rakefile                                           |    23 +
+ Voevodsky.WhyHoTT.pdf                              |   Bin 0 -> 1514461 bytes
+ _announcements/project.md                          |     0
+ _assignments/odds.md                               |    25 +
+ _assignments/rec.md                                |     0
+ _config-local.yml                                  |     1 +
+ _config-production.yml                             |    14 +
+ _config.yml                                        |     0
+ _draft-assignments/am-gm.md                        |     0
+ _draft-assignments/conics.md                       |    23 +
+ _draft-assignments/gram-schmidt.md                 |     0
+ _draft-assignments/laplacian.md                    |    15 +
+ _draft-assignments/liouville.md                    |     0
+ _draft-assignments/partial-total.md                |     0
+ _draft-assignments/van-der-monde.md                |     0
+ _includes/footer.html                              |    21 +
+ _includes/header.html                              |   151 +
+ _layouts/assignment.html                           |    18 +
+ _layouts/default.html                              |     5 +
+ _layouts/draft-assignment.html                     |    11 +
+ _layouts/notes.html                                |    14 +
+ _layouts/report.html                               |    17 +
+ _local-site/Assignments/Basen.idr                  |    55 +
+ _local-site/Assignments/Bezout.idr                 |    36 +
+ _local-site/Assignments/ChinmayaOdds.idr           |    60 +
+ _local-site/Assignments/Evens.idr                  |    75 +
+ _local-site/Assignments/InsertionSort.idr          |    24 +
+ _local-site/Assignments/Intro.idr                  |    53 +
+ _local-site/Assignments/MyAss1.idr                 |    21 +
+ _local-site/Assignments/NatTree.idr                |    53 +
+ _local-site/Assignments/RecRule.idr                |    37 +
+ _local-site/Assignments/Tuple.idr                  |    12 +
+ .../Assignments/adithyau/Assignment 1/Evens.idr    |    78 +
+ .../Assignments/adithyau/Assignment 1/Intro.idr    |    48 +
+ .../adithyau/Assignment 1/OddsandEvens.idr         |    49 +
+ _local-site/Assignments/arkasparko/Evens.idr       |    74 +
+ _local-site/Assignments/arkasparko/Intro.idr       |    48 +
+ _local-site/Assignments/arkasparko/Odd.idr         |    99 +
+ .../Assignments/biswajitnag/Assignement1/Evens.idr |    74 +
+ .../Assignments/biswajitnag/Assignement1/Intro.idr |    48 +
+ .../biswajitnag/Assignement1/desktop.ini           |     5 +
+ .../Assignments/biswajitnag/Assignement1/first.idr |    65 +
+ _local-site/Assignments/merge.idr                  |    39 +
+ .../Assignments/nabarundeka/Assignment1/Evens.idr  |    74 +
+ .../Assignments/nabarundeka/Assignment1/Intro.idr  |    48 +
+ .../nabarundeka/Assignment1/nabarundeka.idr        |    53 +
+ _local-site/Assignments/odds.html                  |   255 +
+ .../Assignments/piyushsati/Assignment1/Evens.idr   |    75 +
+ .../Assignments/piyushsati/Assignment1/Intro.idr   |    49 +
+ .../piyushsati/Assignment1/OddsAndEvens.idr        |    72 +
+ _local-site/Assignments/rohitkumar-odds.idr        |    50 +
+ _local-site/Assignments/shafiln/Evens.idr          |    74 +
+ _local-site/Assignments/shafiln/Intro.idr          |    48 +
+ _local-site/Assignments/shafiln/assignment.idr     |    59 +
+ .../Assignments/sidharths/lts/Assignment1.idr      |    43 +
+ _local-site/Assignments/sidharths/lts/Evens.idr    |    74 +
+ _local-site/Assignments/sidharths/lts/Intro.idr    |    48 +
+ _local-site/Assignments/sorting_with_proof.idr     |    80 +
+ .../Assignments/srirams/Odds and Evens/Evens.idr   |    74 +
+ .../Assignments/srirams/Odds and Evens/Intro.idr   |    48 +
+ .../srirams/Odds and Evens/Srirams.Odds.idr        |    60 +
+ _local-site/Assignments/sum.sc                     |    40 +
+ _local-site/Assignments/test.txt                   |     1 +
+ _local-site/Assignments/vrundarathi/Evens.idr      |    74 +
+ _local-site/Assignments/vrundarathi/Intro.idr      |     1 +
+ _local-site/Assignments/vrundarathi/VrundaOdd.idr  |    62 +
+ _local-site/Code/BaseN.idr                         |   151 +
+ _local-site/Code/Bezout.idr                        |   155 +
+ _local-site/Code/Choice.idr                        |     3 +
+ _local-site/Code/Divisors.idr                      |   193 +
+ _local-site/Code/Field.idr                         |    30 +
+ _local-site/Code/FinUtils.idr                      |    39 +
+ _local-site/Code/Finite.idr                        |    36 +
+ _local-site/Code/GCDZZ.idr                         |    52 +
+ _local-site/Code/Graph.idr                         |   142 +
+ _local-site/Code/Graph_alt.idr.fixme               |    45 +
+ _local-site/Code/Graphexamples.idr                 |    33 +
+ _local-site/Code/Group.FiniteGenerate.idr          |    26 +
+ _local-site/Code/Group.idr                         |    73 +
+ _local-site/Code/GroupCosetRep.idr                 |    29 +
+ _local-site/Code/GroupCosets.idr                   |    45 +
+ _local-site/Code/Group_property.idr                |   129 +
+ _local-site/Code/Group_property2.idr               |    86 +
+ _local-site/Code/InsertionSort.idr                 |    39 +
+ _local-site/Code/Lecture.GCD.idr                   |    20 +
+ _local-site/Code/Lecture.Intro.idr                 |    58 +
+ _local-site/Code/Lecture.NatTree.idr               |    53 +
+ _local-site/Code/Lecture.RecRule.idr               |    46 +
+ _local-site/Code/Lecture.Tuple.idr                 |    12 +
+ _local-site/Code/LectureEvens.idr                  |    88 +
+ _local-site/Code/Linear.idr                        |   129 +
+ _local-site/Code/LinearAlgebra.idr                 |   210 +
+ _local-site/Code/Lists.idr                         |    30 +
+ _local-site/Code/Merge.idr                         |   179 +
+ _local-site/Code/Monoid.idr                        |    36 +
+ _local-site/Code/MultiSolver.idr                   |   184 +
+ _local-site/Code/NatOrder.idr                      |   229 +
+ _local-site/Code/NatUtils.idr                      |   233 +
+ _local-site/Code/Order.idr                         |   120 +
+ _local-site/Code/PermCons.idr                      |    22 +
+ _local-site/Code/Permutation.idr                   |    59 +
+ _local-site/Code/Primes.idr                        |   361 +
+ _local-site/Code/Quicksort.idr                     |    13 +
+ _local-site/Code/Quotient_Group.idr                |    65 +
+ _local-site/Code/Rationals.idr                     |   119 +
+ _local-site/Code/Ring.Properties.idr               |    40 +
+ _local-site/Code/Ring.idr                          |   153 +
+ _local-site/Code/Sign.idr                          |    39 +
+ _local-site/Code/SortingWithProof.idr              |    36 +
+ _local-site/Code/ZZ.idr                            |   515 +
+ _local-site/Code/ZZUtils.idr                       |    61 +
+ _local-site/Code/check-all.sh                      |     5 +
+ _local-site/Code/congruence.idr                    |     6 +
+ _local-site/Code/fn_to_vect.idr                    |    74 +
+ _local-site/Code/gcd.idr                           |    92 +
+ _local-site/Code/midterm-check.txt                 |    85 +
+ _local-site/Code/pigeonhole.idr                    |    80 +
+ _local-site/Code/rationals/Rationals.idr           |    29 +
+ _local-site/Code/sum.sc                            |    40 +
+ _local-site/Dockerfile                             |     4 +
+ _local-site/Gemfile                                |    25 +
+ _local-site/Gemfile.lock                           |    77 +
+ _local-site/GitHub-Mark-Light-32px.png             |   Bin 0 -> 1571 bytes
+ _local-site/IIScLogo.jpg                           |   Bin 0 -> 51171 bytes
+ _local-site/LICENSE                                |    21 +
+ _local-site/README.md                              |     6 +
+ _local-site/Rakefile                               |    23 +
+ _local-site/UM102Grades.csv                        |   106 +
+ _local-site/Voevodsky.WhyHoTT.pdf                  |   Bin 0 -> 1514461 bytes
+ _local-site/about/index.html                       |   245 +
+ _local-site/am-gm.md                               |     0
+ _local-site/announce-all.html                      |   226 +
+ _local-site/assets/main.css                        |   501 +
+ _local-site/assets/minima-social-icons.svg         |    33 +
+ _local-site/assign-all.html                        |   256 +
+ _local-site/bezout.idr                             |   204 +
+ _local-site/css/bootstrap-grid.css                 |  1912 +++
+ _local-site/css/bootstrap-grid.css.map             |     1 +
+ _local-site/css/bootstrap-grid.min.css             |     7 +
+ _local-site/css/bootstrap-grid.min.css.map         |     1 +
+ _local-site/css/bootstrap-reboot.css               |   331 +
+ _local-site/css/bootstrap-reboot.css.map           |     1 +
+ _local-site/css/bootstrap-reboot.min.css           |     8 +
+ _local-site/css/bootstrap-reboot.min.css.map       |     1 +
+ _local-site/css/bootstrap-theme.css                |   587 +
+ _local-site/css/bootstrap-theme.css.map            |     1 +
+ _local-site/css/bootstrap-theme.min.css            |     6 +
+ _local-site/css/bootstrap-theme.min.css.map        |     1 +
+ _local-site/css/bootstrap.bundle.js.map            |     1 +
+ _local-site/css/bootstrap.bundle.min.js.map        |     1 +
+ _local-site/css/bootstrap.css                      |  6757 ++++++++++
+ _local-site/css/bootstrap.css.map                  |     1 +
+ _local-site/css/bootstrap.js.map                   |     1 +
+ _local-site/css/bootstrap.min.css                  |    11 +
+ _local-site/css/bootstrap.min.css.map              |     1 +
+ _local-site/css/bootstrap.min.js.map               |     1 +
+ _local-site/css/default.css                        |   155 +
+ _local-site/css/extras.css                         |     7 +
+ _local-site/css/main.css                           |   501 +
+ _local-site/css/materialize.css                    |  9067 ++++++++++++++
+ _local-site/css/materialize.min.css                |    13 +
+ _local-site/css/zenburn.css                        |   118 +
+ _local-site/deploy                                 |     2 +
+ _local-site/draft-assignments/conics.html          |   254 +
+ _local-site/draft-assignments/laplacian.html       |   243 +
+ _local-site/feed.xml                               |    42 +
+ _local-site/gitlog                                 |   276 +
+ _local-site/gram-schmidt.md                        |     0
+ _local-site/index.html                             |   328 +
+ .../update/2017/02/03/welcome-to-jekyll.html       |   248 +
+ _local-site/js/bootstrap.bundle.js                 |  6461 ++++++++++
+ _local-site/js/bootstrap.bundle.js.map             |     1 +
+ _local-site/js/bootstrap.bundle.min.js             |     7 +
+ _local-site/js/bootstrap.bundle.min.js.map         |     1 +
+ _local-site/js/bootstrap.js                        |  2377 ++++
+ _local-site/js/bootstrap.js.map                    |     1 +
+ _local-site/js/bootstrap.min.js                    |     7 +
+ _local-site/js/bootstrap.min.js.map                |     1 +
+ _local-site/js/highlight.js                        |    30 +
+ _local-site/js/materialize.js                      | 12374 +++++++++++++++++++
+ _local-site/js/materialize.min.js                  |     6 +
+ _local-site/js/npm.js                              |    13 +
+ _local-site/liouville.md                           |     0
+ _local-site/local.sh                               |     1 +
+ _local-site/midterm-check.txt                      |     0
+ _local-site/notes-all.html                         |   246 +
+ _local-site/notes/foundations.html                 |   289 +
+ _local-site/notes/meta.html                        |   231 +
+ _local-site/notes/types-topics.html                |   277 +
+ _local-site/partial-total.md                       |     0
+ _local-site/reports/adit.html                      |   267 +
+ _local-site/reports/adithya.html                   |   511 +
+ _local-site/reports/ar.html                        |   772 ++
+ _local-site/reports/arka.html                      |   697 ++
+ _local-site/reports/chinmaya.html                  |   855 ++
+ _local-site/reports/nabarun.html                   |   330 +
+ _local-site/reports/rathivrunda.html               |   320 +
+ _local-site/reports/rohit.html                     |   322 +
+ _local-site/reports/shafil.html                    |   976 ++
+ _local-site/reports/sideart.html                   |   426 +
+ _local-site/reports/ss.html                        |   560 +
+ _local-site/test.sh                                |     9 +
+ _local-site/update-git                             |    11 +
+ _local-site/van-der-monde.md                       |     0
+ _notes/foundations.md                              |    57 +
+ _notes/languages-and-limits.md                     |     0
+ _notes/meta.md                                     |     6 +
+ _notes/types-topics.md                             |    32 +
+ _posts/2017-02-03-welcome-to-jekyll.markdown       |    25 +
+ _reports/adithya/adithya.md                        |    52 +
+ _reports/aditvishnu/adit.md                        |     6 +
+ _reports/aditvishnu/gitlog                         |    33 +
+ _reports/nabarun/nabarun.md                        |    23 +
+ _reports/shafil/gitlog                             |     0
+ _reports/shafil/shafil.md                          |     0
+ _reports/sideart/gitlog                            |   150 +
+ _reports/sideart/sideart.md                        |    38 +
+ about.md                                           |    15 +
+ announce-all.html                                  |    16 +
+ assign-all.html                                    |    18 +
+ css/bootstrap-grid.css                             |  1912 +++
+ css/bootstrap-grid.css.map                         |     1 +
+ css/bootstrap-grid.min.css                         |     7 +
+ css/bootstrap-grid.min.css.map                     |     1 +
+ css/bootstrap-reboot.css                           |   331 +
+ css/bootstrap-reboot.css.map                       |     1 +
+ css/bootstrap-reboot.min.css                       |     8 +
+ css/bootstrap-reboot.min.css.map                   |     1 +
+ css/bootstrap-theme.css                            |   587 +
+ css/bootstrap-theme.css.map                        |     1 +
+ css/bootstrap-theme.min.css                        |     6 +
+ css/bootstrap-theme.min.css.map                    |     1 +
+ css/bootstrap.bundle.js.map                        |     1 +
+ css/bootstrap.bundle.min.js.map                    |     1 +
+ css/bootstrap.css                                  |  6757 ++++++++++
+ css/bootstrap.css.map                              |     1 +
+ css/bootstrap.js.map                               |     1 +
+ css/bootstrap.min.css                              |    11 +
+ css/bootstrap.min.css.map                          |     1 +
+ css/bootstrap.min.js.map                           |     1 +
+ css/default.css                                    |   155 +
+ css/extras.css                                     |     0
+ css/main.scss                                      |    39 +
+ css/materialize.css                                |  9067 ++++++++++++++
+ css/materialize.min.css                            |    13 +
+ css/zenburn.css                                    |   118 +
+ deploy                                             |     2 +
+ feed.xml                                           |    30 +
+ index.html                                         |   115 +
+ js/bootstrap.bundle.js                             |  6461 ++++++++++
+ js/bootstrap.bundle.js.map                         |     1 +
+ js/bootstrap.bundle.min.js                         |     7 +
+ js/bootstrap.bundle.min.js.map                     |     1 +
+ js/bootstrap.js                                    |  2377 ++++
+ js/bootstrap.js.map                                |     1 +
+ js/bootstrap.min.js                                |     7 +
+ js/bootstrap.min.js.map                            |     1 +
+ js/highlight.js                                    |    30 +
+ js/materialize.js                                  | 12374 +++++++++++++++++++
+ js/materialize.min.js                              |     6 +
+ js/npm.js                                          |    13 +
+ local.sh                                           |     1 +
+ notes-all.html                                     |    14 +
+ update-git                                         |    11 +
+ 400 files changed, 103334 insertions(+)
+
+commit 71af6ed34b786ebe6feaf7b35addaee7036f2090
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Mon Apr 22 12:36:50 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Mon Apr 22 12:36:50 2019 +0530
+
+    eitherPrimeOrComp partially done
+
+ .DS_Store           | Bin 6148 -> 6148 bytes
+ Code/Order.idr      | 120 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Code/PrimeApple.idr |  31 ++++++++++----
+ 3 files changed, 143 insertions(+), 8 deletions(-)
+
+commit f350d5605e42e3fac009c8296648500bc4c36fdb
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Thu Apr 11 10:37:14 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Thu Apr 11 10:37:14 2019 +0530
+
+    update
+
+ Code/Lists.idr  |   1 -
+ Code/Primes.idr | 753 ++++++++++++++++++++++++++++----------------------------
+ 2 files changed, 382 insertions(+), 372 deletions(-)
+
+commit 92d14bc5d84aa79bb295a38720018890365002a6
+Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+AuthorDate: Sat Mar 2 18:39:46 2019 +0530
+Commit:     Sidharth Soundararajan <sidharths@iisc.ac.in>
+CommitDate: Sat Mar 2 18:39:46 2019 +0530
+
+    Update
+
+ Code/Group.FiniteGenerate.idr |  4 ++--
+ Code/Lists.idr                |  1 +
+ Code/Primes.idr               | 16 +++++++++++-----
+ 3 files changed, 14 insertions(+), 7 deletions(-)
+
 commit 2846bef2c91decaeea6e1a101a384495ab04675e
 Author:     Sidharth Soundararajan <sidharths@iisc.ac.in>
 AuthorDate: Mon Feb 25 18:32:10 2019 +0530
