@@ -181,11 +181,26 @@ notBothPrimeandComp {n = (S (S k))} pftwolten (pfprime , (a ** (b ** ((pfagtone,
                                   pfaeqn =  case (pfprime (b ** ((lteTransitive (LTESucc (LTEZero {right = (S Z)})) pfbgtone), pfneqab))) of
                                           Left pf => void ((Prelude.Basics.fst (ltImpliesNotEqNotGT {a=(S Z)} {b = a} pfagtone)) (sym pf))
                                           Right pf => pf
---
--- -- given n >= 2, it is either prime or Composite
--- eitherPrimeOrComp : {n : Nat} -> (pf : LTE 2 n) -> Either (isPrime n pf)(isComposite n pf)
--- eitherPrimeOrComp {n = Z} LTEZero impossible
--- eitherPrimeOrComp {n = Z} (LTESucc _) impossible
--- eitherPrimeOrComp {n = (S Z)} (LTESucc LTEZero) impossible
--- eitherPrimeOrComp {n = (S Z)} (LTESucc (LTESucc _)) impossible
--- eitherPrimeOrComp {n = (S (S k))} pflte = ?rhs_1
+
+
+-- generates a list of numbers from 2 to n-1
+listGen : (n: Nat) -> List Nat
+listGen Z = []
+listGen (S Z) = []
+listGen (S (S Z)) = []
+listGen (S (S (S k))) = listGen (S (S k)) ++ [S (S k)]
+
+--Since 1 and p already divide p, we just have to make sure that numbers between 2 and n-1 either divide or don't divide n
+
+
+
+
+-- given n >= 2, it is either prime or Composite
+eitherPrimeOrComp : {n : Nat} -> (pf : LTE 2 n) -> Either (isPrime n pf)(isComposite n pf)
+eitherPrimeOrComp {n = Z} LTEZero impossible
+eitherPrimeOrComp {n = Z} (LTESucc _) impossible
+eitherPrimeOrComp {n = (S Z)} (LTESucc LTEZero) impossible
+eitherPrimeOrComp {n = (S Z)} (LTESucc (LTESucc _)) impossible
+eitherPrimeOrComp {n = (S (S k))} pflte = case (Prelude.List.length (genFact (S (S k)) (S (S k)))) of
+                                (S (S Z)) => ?pfprme
+                                otherwise => Right (Prelude.Pairs.DPair.fst (fromMaybe (S Z ** oneDiv (S (S k))) (index' (S Z) (genFact (S (S k)) (S (S k))))) ** (fst (Prelude.Pairs.DPair.snd (fromMaybe (S Z ** oneDiv (S (S k))) (index' (S Z) (genFact (S (S k)) (S (S k)))))) ** ((?agt1, ?bgt1), snd (snd (Prelude.Pairs.DPair.snd (fromMaybe (S Z ** oneDiv (S (S k))) (index' (S Z) (genFact (S (S k)) (S (S k))))))))))
