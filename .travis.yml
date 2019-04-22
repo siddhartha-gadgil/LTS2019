@@ -6,7 +6,7 @@ install: travis_wait 30 mvn install
 
 script:
   - docker build --tag myimage .
-  - install: travis_wait 30  docker run myimage
+  - travis_wait 30  docker run myimage
 
 after_script:
   - docker images
